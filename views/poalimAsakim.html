@@ -1,0 +1,213 @@
+<div ng-show="!appData.loaderPoalim" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="funds-totals mainPageAcc" ng-init="init()" data-ng-class="{'openMoreNavEx': openMoreNav}">
+    <div data-ng-click="typesFiltersActive('sumCompanies')" data-ng-class="{'active': typesFilters.sumCompanies}">
+        <div class="title_sum">
+            <p>
+                סה"כ חשבונות
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="listExTitles">
+            {{listExTitles.sumCompanies}}
+        </div>
+        <div ng-show="!listExTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('SPIDER_BEGIN_WORK_DATE')" data-ng-class="{'active': typesFilters.SPIDER_BEGIN_WORK_DATE}">
+        <div class="title_sum">
+            <p ng-if="listExTitles.SPIDER_BEGIN_WORK_DATE !== 0">
+                בתהליך טעינה
+            </p>
+            <p ng-if="listExTitles.SPIDER_BEGIN_WORK_DATE == 0">
+                אין חשבונות בתהליך משיכה
+            </p>
+        </div>
+        <div class="sum-data-red" data-ng-show="listExTitles">
+            {{listExTitles.SPIDER_BEGIN_WORK_DATE}}
+        </div>
+        <div ng-show="!listExTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('BALANCE_LAST_UPDATED_DATE')" data-ng-class="{'active': typesFilters.BALANCE_LAST_UPDATED_DATE}">
+        <div class="title_sum">
+            <p>
+                נטענו היום
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="listExTitles">
+            {{listExTitles.BALANCE_LAST_UPDATED_DATE}}
+        </div>
+        <div ng-show="!listExTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div class="poalimTitle">
+        <i class="closeBack gotoMainAcc fa fa-times" title="חזור" ui-sref="mainAccountants.main"></i>
+        <div class="poalimTitlePlays">
+            <button ng-click="cleanSpiders()" ng-if="appData.adminSoft">
+                ניקוי חשבונות
+            </button>
+            <!--<button ng-click="showRunTypeApply()" ng-if="appData.adminSoft">-->
+                <!--הפעל חשבונות שלא נמשכו היום-->
+            <!--</button>-->
+            <button ng-click="playRunType()" ng-disabled="!appData.disablePlay">
+                הפעל טעינת מיניקי
+            </button>
+            <!--<button ng-click="runOtp()" ng-if="appData.otpList.length">-->
+                <!--OTP-->
+            <!--</button>-->
+            <button ng-click="getOtpToken()">
+                טעינה עם קוד זיהוי
+            </button>
+            <input ng-model-options="{ debounce: {'default': 500 }}"
+                   ng-model="freeSearch" placeholder="חיפוש"
+                   ng-change="filterAll()"
+                   ng-show="appData.poalimAsakimArr.length > 0 || freeSearch.length > 0">
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <div scroll-fill="{{scrollPage}}">
+        <div>
+            <div class="tablePoalim">
+                <div class="col-md-12" ng-show="filtered.length > 0">
+                    <table class="table table-striped table-bordered" ng-class="{'adminTable': appData.adminSoft}">
+                        <thead>
+                        <th>
+                                שם החברה
+                        </th>
+                        <th>
+                                שם החשבון
+                        </th>
+                        <th>
+                                סניף
+                        </th>
+                        <th>
+                                חשבון
+                        </th>
+                        <th>
+                                תאריך עדכון אחרון
+                        </th>
+                        <th>
+                                תאריך צילומי שיקים אחרון
+                        </th>
+                        <th>
+                                תחילת משיכה נתוני בנק
+                        </th>
+                        <th ng-if="appData.adminSoft">
+&nbsp;
+                        </th>
+                        </thead>
+                        <tbody scroll-fill="{{scrollHeightTable}}">
+                        <tr ng-repeat="a in filtered = (appData.poalimAsakim) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit" ng-class="{'titlelistCardsAcc': a.title}">
+                           <td ng-if="a.title">
+                               {{a.SPIDER_NAME}}
+                           </td>
+                            <td ng-if="!a.title">
+                               <span>
+                                   {{a.COMPANY_NAME}}
+                               </span>
+                                    <span ng-if="a.COMPANY_NAME == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td  ng-if="!a.title">
+                               <span>
+                                   {{a.ACCOUNT_NICKNAME}}
+                               </span>
+                                    <span ng-if="a.ACCOUNT_NICKNAME == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title">
+                               <span>
+                                   {{a.BANK_SNIF_ID}}
+                               </span>
+                                    <span ng-if="a.BANK_SNIF_ID == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title">
+                               <span>
+                                   {{a.BANK_ACCOUNT_ID}}
+                               </span>
+                                    <span ng-if="a.BANK_ACCOUNT_ID == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title">
+                               <span>
+                                   {{a.BALANCE_LAST_UPDATED_DATE}}
+                               </span>
+                                    <span ng-if="a.BALANCE_LAST_UPDATED_DATE == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title">
+                               <span ng-if="a.CHECKPIC_LAST_UPDATE_DATE !== null">
+                                   {{a.CHECKPIC_LAST_UPDATE_DATE}}
+                               </span>
+                               <span ng-if="a.CHECKPIC_LAST_UPDATE_DATE == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title">
+                               <span ng-if="a.SPIDER_BEGIN_WORK_DATE !== null">
+                                   {{a.SPIDER_BEGIN_WORK_DATE}}
+                               </span>
+                               <span ng-if="a.SPIDER_BEGIN_WORK_DATE == null">
+                                  &nbsp;
+                               </span>
+                            </td>
+                            <td ng-if="!a.title && appData.adminSoft">
+                                <!--<button ng-click="openOtpPop(a)" ng-disabled="a.OTP_TOKEN !== null" class="openOtpPopBtn" ng-class="{'greenBtn': a.OTP_TOKEN !== null}">-->
+<!--OTP-->
+                                <!--</button>-->
+                                <!--<button ng-click="openRunType(a)">-->
+                                    <!--הפעל-->
+                                <!--</button>-->
+                                <!--<i class="fi-widget" ng-click="spiderUpdatePop(a)"></i>-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="titleNotFilter" ng-show="filtered.length == 0">
+                    לא נמצאה התאמה
+                </div>
+            </div>
+        </div>
+        <div class="rowsSort" data-ng-show="appData.poalimAsakim.length > 0 && filtered.length > 0">
+            <div class="selectRows">
+                הצג
+                <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                    <option>150</option>
+                </select>
+                שורות
+            </div>
+            <div class="sumRows">
+                סה״כ שורות שנמצאו
+                {{filtered.length}}
+                מתוך
+                {{sumAllRows}}
+            </div>
+            <div class="pagRows" ng-show="filtered.length > 0 && filtered.length > entryLimit">
+                <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                            items-per-page="entryLimit" total-items="filtered.length" ng-model="currentPage"
+                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                            last-text="עמ׳ אחרון"></pagination>
+            </div>
+        </div>
+    </div>
+</div>

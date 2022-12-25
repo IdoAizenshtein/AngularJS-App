@@ -1,0 +1,115 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הגדרת חשבונית לבילינג
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="detailsPaymentFormPopCheck" class="css-form" novalidate
+              ng-submit="create_billing_invoice(appData.billingInvoice, detailsPaymentFormPopCheck)"
+              autocomplete="off">
+
+
+            <div class="wrapInputForm">
+                <div class="inputForm">
+                    <label style="vertical-align: top;">
+                        מזהה חשבון בילינג
+                    </label>
+                    <input id="billingAccountId__" name="billingAccountId__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           ng-model="appData.billingInvoice.billingAccountId"
+                           name="billingAccountId"
+                           autocomplete="off"/>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.paymentDate.$touched) && detailsPaymentFormPopCheck.paymentDate.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.paymentDate.$touched) && detailsPaymentFormPopCheck.paymentDate.$valid }">
+                    <label>
+                        תאריך חשבונית
+                    </label>
+                    <input id="paymentDate__" name="paymentDate__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           date-picker-set-date-pop
+                           onfocus="this.removeAttribute('readonly');"
+                           type="text"
+                           class="dpInput"
+                           ng-model="appData.billingInvoice.paymentDate"
+                           autocomplete="off"
+                           name="paymentDate"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.paymentDate.$touched) && detailsPaymentFormPopCheck.paymentDate.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.paymentDate.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.invoiceNumber.$touched) && detailsPaymentFormPopCheck.invoiceNumber.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.invoiceNumber.$touched) && detailsPaymentFormPopCheck.invoiceNumber.$valid }">
+                    <label>
+                        מספר חשבונית
+                    </label>
+                    <input id=invoiceNumber__" name="invoiceNumber__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');"
+                           class="ltrSide"
+                           type="text"
+                           ng-model="appData.billingInvoice.invoiceNumber"
+                           autocomplete="off"
+                           name="invoiceNumber"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.invoiceNumber.$touched) && detailsPaymentFormPopCheck.invoiceNumber.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.invoiceNumber.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.sumToBill.$touched) && detailsPaymentFormPopCheck.sumToBill.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.sumToBill.$touched) && detailsPaymentFormPopCheck.sumToBill.$valid }">
+                    <label>
+                        סכום חשבונית
+                    </label>
+                    <input id=sumToBill__" name="sumToBill__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');"
+                           class="ltrSide"
+                           type="text"
+                           ng-model="appData.billingInvoice.sumToBill"
+                           autocomplete="off"
+                           name="sumToBill"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.sumToBill.$touched) && detailsPaymentFormPopCheck.sumToBill.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.sumToBill.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+            <div class="groupButtonChecks">
+                <button type="button" ng-click="hidePopup()">
+                    בטל
+                </button>
+                <button type="submit"
+                        ng-disabled="!detailsPaymentFormPopCheck.$valid">
+                    שמור
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

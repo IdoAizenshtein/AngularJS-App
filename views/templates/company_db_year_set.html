@@ -1,0 +1,82 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+            {{appData.company_db_year_set.row.company_name}} <span> - {{getNameTypeSoft(appData.company_db_year_set.row.izu_source_program_id)}}</span>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.company_db_year_setLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div style="overflow: hidden" class="head">
+            <div style="width: 100px; padding-right:5px; float: right">
+                שנה
+            </div>
+            <div style="width: 200px; float: right">
+                בסיס נתונים
+            </div>
+            <div style="margin-right:-5px; width: 100px; float: right">
+                האם הוקם
+            </div>
+            <div style="width: 120px; float: right">
+                קבלת נתונים
+            </div>
+            <div style=" float: left">
+                &nbsp;
+            </div>
+        </div>
+        <div class="scrollDesign" style="height: 200px;
+overflow: auto">
+            <div ng-repeat="t in appData.company_db_year_set.company_db_year_set" style="overflow: hidden" class="row">
+                <div style="width: 100px; float: right">
+                    <input type="text" maxlength="4" number-onlys ng-model="t.DB_YEAR" autocomplete="off" ng-disabled="!t.edit" style="    width: 88px;">
+                </div>
+                <div style="width: 200px; float: right">
+                    <input type="text" ng-model="t.DB_NAME" autocomplete="off" ng-disabled="!t.edit" style="    width: 188px;">
+                </div>
+                <div style="width: 100px; float: right;">
+                    <input type="checkbox" ng-model="t.IND_HUKAM" ng-true-value="1" ng-false-value="0" disabled>
+                </div>
+                <div style="width: 120px; float: right">
+                    {{t.LAST_DATA_RECEIVED_DATE}}&nbsp;
+                </div>
+                <div style="float: left">
+   <span ng-click="t.edit=true" ng-if="!t.edit" class="link">
+       עריכה
+   </span>
+                    <span ng-click="t.edit=false; company_db_year_set(t.DB_NAME, t.DB_YEAR)"  ng-if="t.edit" class="link">
+       שמירה
+   </span>
+                </div>
+            </div>
+        </div>
+        <div style="height: 40px;overflow: hidden">
+            <span ng-click="add = !add" class="link" style="font: 18px/30px esterregular;">
+                + הוסף שנה
+            </span>
+        </div>
+        <div ng-if="add" class="row"
+             style="height: 40px;overflow: hidden">
+            <div style="width: 100px; float: right">
+                <input type="text" maxlength="4" number-onlys ng-model="appData.company_db_year_set.dbYear" style="    width: 88px;" placeholder="שנה"
+                       autocomplete="off">
+            </div>
+            <div style="width: 200px; float: right">
+                <input type="text" ng-model="appData.company_db_year_set.dbName" autocomplete="off" style="    width: 188px;" placeholder="בסיס נתונים">
+            </div>
+            <div style="width: 100px; float: right">
+                &nbsp;
+
+            </div>
+            <div style="width: 120px; float: right">
+                &nbsp;
+
+            </div>
+            <div style="float: left">
+                <span ng-click="add = false; company_db_year_set(appData.company_db_year_set.dbName, appData.company_db_year_set.dbYear)" class="link">
+       הוספה
+   </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+<div ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            הגדרות ספיידר
+        </h2>
+    </div>
+    <div class="popup-content">
+        <ul>
+            <li ng-click="tab='1'" ng-class="{'active':tab=='1'}">
+                spider 1.0
+            </li>
+            <li ng-click="tab='2'" ng-class="{'active':tab=='2'}">
+                spider 2.0
+            </li>
+        </ul>
+        <div ng-show="tab=='1'" class="tabPopUpdate">
+            <div>
+                <label>
+                    חשבון
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab1.SINGLE_ACCOUNT_ID">
+            </div>
+            <div>
+                <label>
+                    סניף
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab1.SINGLE_SNIF_ID">
+            </div>
+            <div>
+                <label>
+                    ימי הרצה
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab1.SINLE_DAYS_TO_RUN">
+            </div>
+            <div>
+                <label>
+                    סוג הרצה
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab1.RUN_TYPE">
+            </div>
+            <div class="rowEditManagWinButton">
+                <button ng-click="spiderUpdate()">
+                    שמור
+                </button>
+                <button ng-click="hidePopup()">
+                    ביטול
+                </button>
+            </div>
+        </div>
+        <div ng-show="tab=='2'" class="tabPopUpdate">
+            <div>
+                <label>
+                    חשבון
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.SINGLE_ACCOUNT_ID">
+            </div>
+            <div>
+                <label>
+                    סניף
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.SINGLE_SNIF_ID">
+            </div>
+            <div>
+                <label>
+                    ימי הרצה
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.SINLE_DAYS_TO_RUN">
+            </div>
+            <div>
+                <label>
+                    ימי מטח
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.MATAH_DAY_TO_RUN">
+            </div>
+            <div>
+                <label>
+                    צילומי שיקים
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.IND_CHECKPIC">
+            </div>
+            <div>
+                <label>
+                    כרטיסי אשראי
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.IND_CCARD_DATA">
+            </div>
+            <div>
+                <label>
+                    נילווים
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.IND_NILVIM">
+            </div>
+            <div>
+                <label>
+                    הרצה
+                </label>
+                <input type="text" ng-model="appData.spiderUpdatePopTab2.IND_RUN">
+            </div>
+            <div>
+                <label>
+                    עד תאריך
+                </label>
+                <input type="text" readonly="readonly" ng-model="appData.spiderUpdatePopTab2.DATE_TILL" date-picker-days class="DATE_TILL">
+            </div>
+            <div class="rowEditManagWinButton">
+                <button ng-click="spiderUpdate()">
+                    שמור
+                </button>
+                <button ng-click="hidePopup()">
+                    ביטול
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+<div>
+    <div class="popup-header">
+        <h2>
+            הוספת חברות מהירה
+
+            <div class="searchCompanyPop">
+                חיפוש:
+                <input type="text" ng-model="searchCompanyPop">
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.loaderPopExporter" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div ng-show="!appData.exporter_companies.length" class="wrapPopNotLength">
+            יש למשוך את החברות מהאקספורטר
+        </div>
+        <div class="buttonPopUp" ng-show="!appData.exporter_companies.length">
+            <button ng-click="hidePopup();reloadPageAndCompany();" ng-disabled="appData.disabledSendersExporter">
+                סגור
+            </button>
+        </div>
+        <div class="wrapPop" ng-show="appData.exporter_companies.length > 0">
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        שם החברה
+                    </th>
+                    <th>
+                        ח.פ.
+                        /
+                        ת.ז.
+                    </th>
+                    <th>
+                        דווח מע״מ
+                    </th>
+                    <th>
+                        תוכנה
+                    </th>
+                    <th>
+                        שם מסד נתונים
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                </thead>
+                <tbody vs-repeat="30">
+                <tr ng-repeat="a in appData.exporter_companies  | filter:searchCompanyPop"
+                    ng-show="!appData.disabledSendersExporter || (appData.disabledSendersExporter && a.check)">
+                    <td>
+                        <input type="checkbox" ng-model="a.check">
+                    </td>
+                    <td>
+                        {{a.COMPANY_NAME}}
+                    </td>
+                    <td>
+                        {{a.HP}}
+                    </td>
+                    <td>
+                        {{a.ESDER_MAAM}}
+                    </td>
+                    <td>
+                        {{accoConversions.getSourceProgramId(a.SOURCE_PROGRAM_ID)}}
+                    </td>
+                    <td>
+                        {{a.DATABASE_NAME}}
+                    </td>
+                    <td>
+                        <i ng-if="a.check" class="fa fa-circle"
+                           ng-class="{'red':a.status == 'fail','green':a.status == 'success'}"></i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="buttonPopUp" ng-show="appData.exporter_companies.length > 0">
+            <button ng-click="hidePopup(); reloadPageAndCompany();" ng-disabled="appData.disabledSendersExporter">
+                סגור
+            </button>
+            <button ng-click="send_exporter_companies()" ng-disabled="appData.disabledSendersExporter">
+                הוספה
+            </button>
+            <div ng-show="appData.counterExporter.suc > 0 || appData.counterExporter.fail > 0" class="counterExporter">
+                {{appData.counterExporter.suc}}
+                נוספו בהצלחה
+                ,
+                {{appData.counterExporter.fail}}
+                נכשלו
+            </div>
+        </div>
+        <div style="
+    position: absolute;
+    right: 15px;
+    bottom: 20px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-align: center;
+    font: 20px/30px EsterRegular, Arial;
+    color: #1387a9;
+"
+             ng-click="hidePopup(); addCompanyOpenModal()">
+            הקמה מתקדמת
+        </div>
+    </div>
+</div>

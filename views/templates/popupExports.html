@@ -1,0 +1,30 @@
+<div ng-init="init()" ng-controller="exportHashvCtrl">
+
+    <div class="popup-header">
+        <h2>
+            בחירת תאריכים לייצוא
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="datepicker_inputs">
+            <strong>מתאריך</strong>
+            <div class="datepicker_wrap">
+                <input date-picker type="text" readonly="readonly" ng-model="datesPicker.fromDatePicker" name="fromDatePicker">
+            </div>
+            <div class="between_line">-</div>
+            <strong>עד</strong>
+
+            <div class="datepicker_wrap">
+                <input date-picker type="text" readonly="readonly" ng-model="datesPicker.toDatePicker" name="toDatePicker">
+            </div>
+        </div>
+        <div class="buttonPopUpCompany">
+        <button ng-click="export(datesPicker)">
+            ייצא
+        </button>
+        <button ng-click="cancelEx()">
+            בטל
+        </button></div>
+    </div>
+    <h1>{{error}}</h1>
+</div>

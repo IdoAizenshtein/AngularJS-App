@@ -1,0 +1,83 @@
+<form name="form2" class="css-form" novalidate ng-submit="update2(form2)" autocomplete="off"  ng-init="initStates()">
+    <div class="wrapInputForm">
+        <label>
+            שם העסק:
+            <i tooltips-tazrim title="ניתן להכניס פרטים אישיים"></i>
+        </label>
+
+        <div class="inputForm"
+             data-ng-class="{'errorInput': (form2.$submitted || form2.cName.$touched) && form2.cName.$invalid, 'sucInput': (form2.$submitted || form2.cName.$touched) && form2.cName.$valid }">
+            <input id="cName__" name="cName__" style="display: none;" value="" type="text" autocomplete="off">
+            <input type="text"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   ng-model="user.cname" name="cName" required="" autocomplete="off" replace-and/>
+            <i>
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form2.$submitted || form2.cName.$touched" class="alertsMessages">
+            <div ng-show="form2.cName.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+        </div>
+    </div>
+    <div class="wrapInputForm">
+        <label>
+            מס' ח.פ. / ת.ז.:
+        </label>
+
+        <div class="inputForm"
+             data-ng-class="{'errorInput': (form2.$submitted || form2.uHp.$touched || form2.uHp.$invalid), 'sucInput': (form2.$submitted || form2.uHp.$touched) && form2.uHp.$valid }">
+            <input id="uHp__" name="uHp__" style="display: none;" value="" type="text" autocomplete="off">
+            <input ng-model-options="{ updateOn: 'blur'}"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   type="text" ng-model="user.hp" autocomplete="off" name="uHp"
+                   required="" legal-tz check-company-hp/>
+            <i>
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form2.$submitted || form2.uHp.$touched || form2.uHp.$invalid" class="alertsMessages">
+            <div ng-show="form2.uHp.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="form2.uHp.$error.integer">
+                מספר לא חוקי
+            </div>
+            <span ng-show="form2.uHp.$error.unique">
+ח.פ. זה קיים במערכת
+      </span>
+        </div>
+    </div>
+    <div class="wrapInputForm">
+        <label>
+            שם הבנק:
+        </label>
+
+        <div class="inputForm"
+             data-ng-class="{'errorInput': (form2.$submitted || form2.uBank.$touched) && form2.uBank.$invalid, 'sucInput': (form2.$submitted || form2.uBank.$touched) && form2.uBank.$valid }">
+            <select name="uBank" ng-model="user.myBanks" ng-options="item as item.name for item in banks"
+                    class="bank{{user.myBanks.val}}" required>
+                <option value="">שם הבנק בו מתנהל חשבון העסק</option>
+            </select>
+        </div>
+        <div ng-show="form2.$submitted || form2.uBank.$touched" class="alertsMessages">
+                 <span ng-show="form2.uBank.$error.required">
+        מידע זה הינו מידע חובה
+                </span>
+        </div>
+    </div>
+    <div class="groupButtonAndBack">
+        <button ng-click="back()" type="button">
+            חזור
+        </button>
+        <input type="submit" value="המשך"/>
+        <small>
+            רק עוד שלב אחד...
+        </small>
+    </div>
+</form>

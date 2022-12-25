@@ -1,0 +1,37 @@
+<div data-ng-init="init()">
+    <div class="funds-header">
+        <audio id="audioQa" style="display: none">
+            <source src="image/sounddesign.mp3" type="audio/mpeg">
+        </audio>
+        <div class="headerAnalisis qaManagment">
+            <ul class="tabs_links">
+                <li ng-repeat="a in appData.navHeaderQa">
+                    <div ng-click="clickNavQa(a.REPORT_CAT, true)" ng-class="{'active': a.REPORT_CAT == appData.activeNavQa}">
+                        {{a.REPORT_CAT_DESC}}
+                    </div>
+                </li>
+            </ul>
+            <div ng-if="$state.current.name == 'mainAccountants.bankDataManagement.view'" class="refrashCheck">
+                <input type="checkbox" ng-model="$parent.refrashCheck" ng-change="refrashPage()">
+                <p data-ng-click="$parent.refrashCheck = !$parent.refrashCheck;refrashPage();">
+                    רענן כל
+                </p>
+                <input type="text" data-ng-model="$parent.refrashMinutes"
+                       ng-change="$parent.refrashCheck = true;refrashPage()">
+                <p data-ng-click="$parent.refrashCheck = !$parent.refrashCheck;refrashPage();">
+                    דקות
+                </p>
+            </div>
+            <i class="closeBack fa fa-times" title="חזור" ng-click="goToPosScroll()"
+               ng-if="$state.current.name == 'mainAccountants.bankDataManagement.reportsManagement'"
+               ui-sref="mainAccountants.bankDataManagement.view"></i>
+        </div>
+    </div>
+
+    <div scroll-fill="135" class="bg-dark scrollDesign">
+        <div ng-if="loaderAccBank" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div ui-view="lazyLoadView"></div>
+    </div>
+</div>

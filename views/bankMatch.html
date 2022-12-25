@@ -1,0 +1,26 @@
+<div ng-init="init()">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+    <div class="page-content bg-dark-match scrollDesign" ng-class="{'nav-closed': appData.mainNavClosed}"
+         scroll-fill="{{bankMatchHeightScroll}}">
+        <div ng-show="!loaderMatch" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="tab-nav">
+            <h1>
+                התאמת בנקים
+            </h1>
+            <div ng-click="$state.go('bankMatch.set');loadBankPeulot();">
+                <a onclick="javascript:void(0)" ng-class="{'active':$state.current.name == 'bankMatch.set'}">
+                    פעולות שטרם הותאמו
+                </a>
+            </div>
+            <div ng-click="$state.go('bankMatch.cancel');loadBankPeulotCancel();">
+                <a onclick="javascript:void(0)" ng-class="{'active':$state.current.name == 'bankMatch.cancel'}">
+                    פעולות שהותאמו
+                </a>
+            </div>
+        </div>
+        <div ui-view="lazyLoadView" class="mainContentTabs"></div>
+    </div>
+</div>

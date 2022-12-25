@@ -1,0 +1,245 @@
+<div ng-init="init()" ng-controller="tazrimCtrl">
+
+    <div class="popup-header">
+        <h2>
+            הוספת
+            {{appData.typesAdd}}
+            חדשה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form>
+
+            <div class="wrap-first-labels">
+                <div>
+                    <label>
+                        ח-ן
+                    </label>
+
+                    <div><select ng-class="{'redBorder': appData.selectAccAddTazrim == 'null'}"
+                                 ng-model="appData.selectAccAddTazrim"
+                                 ng-change="initDateDef(appData.datePickerDefDate)"
+                                 ng-options="a.company_account_id as a.company_account_nickname for a in appData.selectBankAddRowTazrim"></select>
+                    </div>
+                </div>
+                <div>
+                    <label>
+                        סוג תשלום
+                    </label>
+
+                    <div><select ng-model="appData.selectTypeAddTazrim"
+                                 ng-options="item as item.paymentTypeName for item in appData.dataAddRow.paymentTypeSelect"></select>
+                    </div>
+                </div>
+    <span data-ng-init="openTypePeulaAdd = false;" data-ng-click="openTypePeulaAdd = true">
+        הזן סוגי פעולה
+    </span>
+            </div>
+
+
+            <div class="listTazrimAdd">
+                <section class="scrollDesign wrapContentList">
+                    <ul class="listChecks" data-ng-class="{'widthOpen': openTypePeulaAdd}">
+                        <li>
+                            <div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                תאריך
+                            </div>
+                            <div>
+                                תיאור
+                            </div>
+                            <div>
+                                אסמכתא
+                            </div>
+                            <div data-ng-show="openTypePeulaAdd">
+                                סוגי פעולה
+                            </div>
+                            <div>
+                                סכום
+                            </div>
+                            <div>
+                                &nbsp;
+                            </div>
+                        </li>
+                        <li ng-repeat="a in appData.dataAddRow.arrListChecks track by $index" class="clearfix"
+                            ng-class="{'asmachtaRed': a.redColorBorderAsmac || a.redColorBorderAsmacExist || a.textErrorAsmachta.length}">
+                            <div>
+                                {{$index + 1}}.
+                            </div>
+                            <div>
+                                <input type="text" readonly ng-if="appData.radioType == 'hozaa'" ng-model="a.day_id"
+                                       ng-class="{'redBorder': a.redColorBorderDate}"
+                                       date-picker-tazrim-add-row class="datePTaz" placeholder="בחירת תאריך..."
+                                       ng-click="addCheck($event)" ng-readonly="true">
+
+                                <input type="text" readonly ng-if="appData.radioType == 'hachnasa'" ng-model="a.day_id"
+                                       ng-class="{'redBorder': a.redColorBorderDate}"
+                                       date-picker-tazrim-add-row-ha class="datePTaz" placeholder="בחירת תאריך..."
+                                       ng-click="addCheck($event)" ng-readonly="true">
+                            </div>
+                            <div>
+                                <div>
+                                    <input type="text" ng-class="{'redBorder': a.redColorBorderTrans}"
+                                           ng-model="a.trans_name" placeholder="הזן תיאור" ng-keypress="addCheck($event)">
+                                </div>
+                            </div>
+                            <div>
+                                <input number-only-asmachta type="text" ng-if="appData.radioType == 'hozaa'"
+                                       ng-class="{'redBorder': a.redColorBorderAsmac || a.redColorBorderAsmacExist || a.textErrorAsmachta.length}"
+                                       ng-model="a.asmachta" placeholder="הזן אסמכתא (לא חובה)"
+                                       ng-keypress="addCheck($event)" ng-keyup="keyUpAsmachta(a.asmachta, $index)">
+                                <input number-only-asmachta type="text" ng-if="appData.radioType == 'hachnasa'"
+                                       ng-class="{'redBorder': a.redColorBorderAsmac}"
+                                       ng-model="a.asmachta" placeholder="הזן אסמכתא (לא חובה)"
+                                       ng-keypress="addCheck($event)">
+                            </div>
+                            <div class="typePeulot" data-ng-show="openTypePeulaAdd" data-ng-init="a.listPeulot = false;">
+                                <input type="text"
+                                       class="typePeula width163"
+                                       ng-click="$event.stopPropagation();a.listPeulot = !a.listPeulot;a.trans_type_name = '';"
+                                       data-ng-model="a.trans_type_name"
+                                       ng-change="a.listPeulot = true;"
+                                       placeholder="בחר סוג פעולה"
+                                       focus-li>
+                                <div ng-if="a.listPeulot" class="dropList left50 top27">
+                                    <ul>
+                                        <li key-navigation
+                                            ng-repeat="item in appData.transactionTypesReg | filter:a.trans_type_name"
+                                            tabindex="{{$index}}"
+                                            ng-click="$event.stopPropagation();a.trans_type_name = item.trans_type_name;a.trans_type_id = item.trans_type_id; a.listPeulot = false;"
+                                            ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                                            <input type="text" data-ng-model="item.trans_type_name"
+                                                   data-ng-init="item.edits = false" ng-disabled="!item.edits"
+                                                   data-ng-click="$event.stopPropagation();">
+                                            <img ng-if="item.ind_create_default_supplier !== 1" src="image/edit_title.png"
+                                                 data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                            <!--src="image/delete_update.png"-->
+                                            <!--data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                                        </li>
+
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesIN | filter:a.trans_type_name"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();a.trans_type_name = item.trans_type_name;a.trans_type_id = item.trans_type_id; a.listPeulot = false;"-->
+                                            <!--ng-if="appData.radioType == 'hachnasa' && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--data-ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1" src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesEX | filter:a.trans_type_name"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();a.trans_type_name = item.trans_type_name;a.trans_type_id = item.trans_type_id; a.listPeulot = false;"-->
+                                            <!--ng-if="appData.radioType == 'hozaa' && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--data-ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1" src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                                 <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                    </ul>
+                                    <div ng-click="appData.addTypePeulaPopUpForm = true">
+                                        הוסף סוג פעולה
+                                    </div>
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <input number-only ng-class="{'redBorder': a.redColorBorderHozaa}" type="text"
+                                       ng-model="a.hozaa" ng-if="appData.radioType == 'hozaa'"
+                                       placeholder="הזן סכום" ng-keypress="addCheck($event)">
+                                <input number-only ng-class="{'redBorder': a.redColorBorderHachnasa}" type="text"
+                                       ng-model="a.hachnasa" ng-if="appData.radioType == 'hachnasa'"
+                                       placeholder="הזן סכום" ng-keypress="addCheck($event)">
+                            </div>
+                            <div>
+                                <div ng-if="$index !== 0" ng-click="removeCheck($index)" class="removeCheck">
+                                    הסר תשלום
+                                </div>
+                                &nbsp;
+                            </div>
+                            <small ng-if="a.redColorBorderAsmac">
+                                שדה האסמכתא צריך להכיל לפחות 4 ספרות
+                            </small>
+                            <small ng-if="(a.redColorBorderAsmacExist || a.textErrorAsmachta.length) && appData.radioType == 'hozaa'">
+                                {{a.textErrorAsmachta}}
+                            </small>
+                        </li>
+                        <!--<li>-->
+                        <!--<div>-->
+                        <!--&nbsp;-->
+                        <!--</div>-->
+                        <!--<div ng-click="addCheck()" class="plusCheck">-->
+                        <!--הוספת תשלום-->
+                        <!--</div>-->
+                        <!--</li>-->
+                    </ul>
+                </section>
+
+                <div ng-click="addCheckNew()" class="plusCheck btnFloat">
+                    הוספת
+                    <span ng-if="appData.radioType == 'hachnasa'">
+הכנסה
+                    </span>
+                    <span ng-if="appData.radioType == 'hozaa'">
+הוצאה
+                    </span>
+                    נוספת
+                </div>
+                <div ng-click="addCheck()" class="plusCheck btnFloat">
+                    הוספת תשלום
+                    עוקב
+                </div>
+            </div>
+        </form>
+        <h1 class="alertErrorAsma">{{appData.errorAsma}}</h1>
+
+        <div class="buttonPopUp">
+            <button ng-click="hidePopup()">
+                ביטול
+            </button>
+            <button ng-click="addRow()" ng-disabled="addRowValidation()">
+                הוספה
+            </button>
+        </div>
+    </div>
+
+    <div class="bg-popupPeulaAdd" ng-if="appData.addTypePeulaPopUpForm"></div>
+    <div class="popupPeulaAdd" ng-if="appData.addTypePeulaPopUpForm">
+        <form novalidate ng-submit="addNewTransTypeFromPopUp()" name="addTypePeulaFromPopUpForm">
+            <div class="headPopInside">
+                הוספת סוג פעולה
+                <img src="image/close_popup.png" alt="סגור" class="popup-close"
+                     data-ng-click="appData.addTypePeulaPopUpForm = false;">
+            </div>
+            <div class="contentPopInside">
+                <div>
+                    <label>שם הפעולה</label>
+                    <input type="text" data-ng-model="appData.addTypePeulaFromPopUp" required=""
+                           name="addTypePeulaFromPopUp" ng-model-options="{ updateOn: 'blur'}">
+                </div>
+                <div class="buttonGr">
+                    <button type="submit" ng-disabled="addTypePeulaFromPopUpForm.$invalid">
+                        עדכן פרטים
+                    </button>
+                    <button ng-click="appData.addTypePeulaPopUpForm = false;" type="button">
+                        ביטול
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

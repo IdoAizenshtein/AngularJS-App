@@ -1,0 +1,495 @@
+<div class="bgHelpAcc" ng-if="Showhelp">&nbsp;
+
+</div>
+<i ng-if="Showhelp" class="closeBack closeHelpAcc fa fa-times " ng-click="$parent.Showhelp = false;">
+    <span>
+        סגור עזרה
+    </span>
+</i>
+
+<div ng-show="!appData.loaderAccMain" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+
+<div class="funds-totals mainPageAcc" ng-init="init()">
+    <div data-ng-click="typesFiltersActive('xFrom')" data-ng-class="{'active': typesFilters.xFrom}">
+        <div class="title_sum">
+            <p>
+                סה״כ חברות
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.xFrom}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <div data-ng-click="typesFiltersActive('currmonthMaamPayCount')"
+         data-ng-class="{'active': typesFilters.currmonthMaamPayCount}">
+        <div class="helpsss " ng-if="Showhelp">
+            <i class="fi-arrow-up"></i>
+            חברות להקלדה לפי הגדרת דיווח המע"מ
+        </div>
+
+        <div class="title_sum">
+            <p>
+                להקלדה החודש
+            </p>
+        </div>
+        <div class="sum-data-red" data-ng-show="appData.listTitles">
+            {{appData.listTitles.currmonthMaamPayCount}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('xIs')" data-ng-class="{'active': typesFilters.xIs}">
+        <div class="helpsss " ng-if="Showhelp">
+            <i class="fi-arrow-up"></i>
+            לכמה מתוכן הוקלדו נתונים החודש
+        </div>
+        <div class="title_sum">
+            <p>
+                הוקלדו החודש
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.xIs}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <!--<div data-ng-click="typesFiltersActive('currmonthMaamPayCountNot')" data-ng-class="{'active': typesFilters.currmonthMaamPayCountNot}">-->
+
+    <div data-ng-click="typesFiltersActive('currmonthMaamPayCountNot')"
+         data-ng-class="{'active': typesFilters.currmonthMaamPayCountNot}">
+        <div class="helpsss " ng-if="Showhelp">
+            <i class="fi-arrow-up"></i>
+            לכמה מתוכן נותרו להקליד
+        </div>
+        <div class="title_sum">
+            <p>
+                לא הוקלדו החודש
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.currmonthMaamPayCountNot}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div class="exportsMainAcc" data-ng-show="appData.listCom.length > 0">
+        <button ui-sref="mainAccountants.poalimAsakim" class="poalimButton">
+            טעינת פועלים לעסקים
+        </button>
+        <input type="text" ng-model="search.company_name" ng-change="filter()" placeholder="חיפוש חברה"
+               class="form-control"/>
+        <ul class="exports">
+            <li class="excel" exports-excel-main-acc>
+                <span>ייצוא לExcel</span>
+                <i></i>
+            </li>
+            <li class="mail" ng-click="sendMailer()">
+                <span>שליחה במייל</span>
+                <i></i>
+            </li>
+            <li class="print" exports-print-main-acc>
+                <span>הדפסה</span>
+                <i></i>
+            </li>
+        </ul>
+    </div>
+    <div class="blockWidth" data-ng-if="appData.adminSoft">
+        <div class="glyphicon halflings-option-horizontal" title="מתקדם" ng-click="openMoreNavScroll();"></div>
+        <button data-ng-click="getAllDeletedCompany()">
+            שחזור חברה שנמחקה
+        </button>
+    </div>
+</div>
+<div class="funds-totals mainPageAcc bottomTitleAcc" ng-if="openMoreNav">
+    <div data-ng-click="typesFiltersActive('last_export_status_have')"
+         data-ng-class="{'active': typesFilters.last_export_status_have}">
+        <div class="title_sum">
+            <p>
+                יוצאו דפי בנק
+            </p>
+        </div>
+        <div class="sum-data" ng-show="appData.listTitles">
+            {{appData.listTitles.last_export_status_have}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('export_status_big')"
+         data-ng-class="{'active': typesFilters.export_status_big}">
+        <div class="title_sum">
+            <p>
+                בעיות ביצוא
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.export_status_big}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <i class="speratorWidth"></i>
+
+    <div data-ng-click="typesFiltersActive('export_status')"
+         data-ng-class="{'active': typesFilters.export_status}">
+        <div class="title_sum">
+            <p>
+                יצוא תקין
+            </p>
+        </div>
+        <div class="sum-data-red" data-ng-show="appData.listTitles">
+            {{appData.listTitles.export_status}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('export_status_null')"
+         data-ng-class="{'active': typesFilters.export_status_null}">
+        <div class="title_sum">
+            <p>
+                לא יוצאו
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.export_status_null}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('status2')" data-ng-class="{'active': typesFilters.status2}">
+        <div class="title_sum">
+            <p>
+                בתהליך ייצוא
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.status2}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('token_status_have')"
+         data-ng-class="{'active': typesFilters.token_status_have}">
+        <div class="title_sum">
+            <p>
+                קיים ח-ן בנק
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.token_status_have}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('token_status')" data-ng-class="{'active': typesFilters.token_status}">
+        <div class="title_sum">
+            <p>
+                בעיות במשיכת ח-ן בנק
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.token_status}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('token_status_zero')"
+         data-ng-class="{'active': typesFilters.token_status_zero}">
+        <div class="title_sum">
+            <p>
+                משיכת ח-ן בנק תקינה
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.token_status_zero}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('token_status_null')"
+         data-ng-class="{'active': typesFilters.token_status_null}">
+        <div class="title_sum">
+            <p>
+                לא נמשך ח-ן בנק
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.token_status_null}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+    <div data-ng-click="typesFiltersActive('statusbig100')" data-ng-class="{'active': typesFilters.statusbig100}">
+        <div class="title_sum">
+            <p>
+                בתהליך משיכת ח-ן
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="appData.listTitles">
+            {{appData.listTitles.statusbig100}}
+        </div>
+        <div ng-show="!appData.listTitles" class="sum-data">
+            -
+        </div>
+    </div>
+
+</div>
+<div>
+    <div class="tableMainAcc">
+        <div class="col-md-12" ng-show="appData.filteredItems > 0">
+            <table ng-if="Showhelp" class="tableHelp ">
+                <tbody>
+                <tr style="">
+                    <td style="
+">
+                        <div class="helpstd">
+                            <i class="fi-arrow-up"></i>
+                            בלחיצה על חברה תועבר לעמוד פרופיל החברה בה מוצגים נתוני החברה בהרחבה
+                        </div>
+                    </td>
+                    <td>
+                        <div class="helpstd" style="
+">
+                            <i class="fi-arrow-up"></i>
+                            כמה מסמכים הוקלדו החודש, באיזה תאריך והשוואה לחודשים אחרונים בגרף משמאל
+                        </div>
+                    </td>
+                    <td>
+                        <div class="helpstd" style="
+">
+                            <i class="fi-arrow-up"></i>
+                            סטטוס החשבון ומתי התבצעה משיכה אחרונה
+                        </div>
+                    </td>
+                    <td>
+                        <div class="helpstd" style="
+">
+                            <i class="fi-arrow-up"></i>
+                            סטטוס יצוא ומתי בוצע ייצוא לחשבון זה לאחרונה
+                        </div>
+                    </td>
+                    <td>
+                        <div class="helpstd">
+                            <i class="fi-arrow-up"></i>
+                            הצגת מאזן בוחן/ דוח רווח והפסד בלחיצה
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <th>
+                    <a ng-click="sort_by('company_name');">
+                        שם החברה&nbsp;
+                        <i class="glyphicon glyphicon-sort"></i>
+                    </a>
+                </th>
+                <th>
+                    <a ng-click="sort_by('dateSort');">
+                        מסמכים&nbsp;
+                        <i class="glyphicon glyphicon-sort"></i>
+                    </a>
+                </th>
+                <th>
+                    <a ng-click="sort_by('sort_token_status');">
+                        ח-ן בנק
+                        &nbsp;
+                        <i class="glyphicon glyphicon-sort"></i>
+                    </a>
+                </th>
+                <th>
+                    <a ng-click="sort_by('sort_last_export_status');">
+                        ייצוא דפי בנק&nbsp;
+                        <i class="glyphicon glyphicon-sort"></i>
+                    </a>
+                </th>
+                <th>&nbsp;</th>
+                </thead>
+                <tbody scroll-fill="{{scrollHeightTable}}" vs-repeat>
+                <tr ng-repeat="data in appData.filteredMainAccAll = (appData.listCom | filter:search:strict | myfilter:typesFilters | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                    <td class="td_title1">
+                        <span data-ng-click="goToLink(data.company_id, 'listCompany')">
+                             {{ data.company_name }}
+                        </span>
+                    </td>
+                    <td class="td_id1">
+                        <div class="notDataGray"
+                             ng-if="(data.sum_inv_cur_mon <= 0 || data.sum_inv_cur_mon == null)  && (!data.last_inv_date || data.last_inv_date == '01/01/1980')">
+                            אין נתונים
+                        </div>
+                        <div data-ng-show="data.sum_inv_cur_mon > 0 || ((data.sum_inv_cur_mon <= 0 || data.sum_inv_cur_mon == null) && (data.last_inv_date && data.last_inv_date !== '01/01/1980'))">
+                            <img src="image/vSuc.png" alt="suc" ng-if="data.sum_inv_cur_mon > 0">
+                            <img src="image/xErr.png" alt="error"
+                                 ng-if="data.sum_inv_cur_mon <= 0 || data.sum_inv_cur_mon == null">
+
+                            <div class="keys">
+                                <strong>
+                                            <span ng-if="data.sum_inv_cur_mon <= 0 || data.sum_inv_cur_mon == null">
+                                                לא
+                                            </span>
+                                    הוקלדו החודש
+                                </strong>
+
+                                <p>
+                                    {{data.last_inv_date}} -
+                                    {{data.sum_inv_cur_mon}}
+                                </p>
+                            </div>
+                            <div class="chartDataSmall">
+                                <div chart-small></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-if="data.token_status == null || data.token_status !== 0 && !data.token_status">
+                            &nbsp;
+                        </div>
+                        <div ng-if="((data.token_status !== 8) && (data.token_status > 0 && data.token_status < 99)) || data.token_status == 157 || data.token_status == 158 || data.token_status == 122 || data.token_status == 6">
+                            <img src="image/xErr.png" alt="error">
+
+                            <div class="keys">
+                                <strong class="errorRed">
+                                    {{accoConversions.getStatustokensalerts(data.token_status)}}
+                                    <span ng-click="updateAccountPassword(data)" ng-if="data.token_status !== 122 && data.token_status !== 6">
+עדכון פרטים
+                                                </span>
+                                    <span ui-sref="mainAccountants.poalimAsakim" ng-if="data.token_status == 122 || data.token_status == 6">
+עדכון פרטים
+                                                </span>
+                                    <i class="token_nonzero" tooltips-mess
+                                       ng-if="data.token_nonzero_status_count && data.token_nonzero_status_count > 1"
+                                       title="קיימים {{data.token_nonzero_status_count}} חשבונות נוספים עם בעיות "></i>
+                                </strong>
+                                <p>
+                                    {{data.balance_last_updated_date}} - {{data.token_account_nickname}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-if="data.token_status == 0 || data.token_status == 8 || (data.token_status > 99 && data.token_status !== 157 && data.token_status !== 158 && data.token_status !== 122)">
+                            <img src="image/vSuc.png" alt="suc">
+
+                            <div class="keys">
+                                <strong>
+                                    {{accoConversions.getStatustokensalerts(data.token_status)}}
+                                </strong>
+
+                                <p>
+                                    {{data.balance_last_updated_date}} - {{data.token_account_nickname}}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-if="data.last_export_status == null || data.last_export_status < 0">
+                            &nbsp;
+                        </div>
+
+                        <div ng-if="data.last_export_status > 0">
+                            <img src="image/xErr.png" alt="error">
+
+                            <div class="keys">
+                                <strong>
+                                    {{accoConversions.getStatusCompanyEx(data.last_export_status)}}
+                                    <i class="token_nonzero" tooltips-mess
+                                       ng-if="data.export_nonzero_status_count && data.export_nonzero_status_count > 1"
+                                       title="קיימים {{data.export_nonzero_status_count}} חשבונות נוספים עם בעיות "></i>
+                                    <i data-ng-click="editAlerts(data, data.company_id)"
+                                       data-ng-class="{'editDescActive' :data.explain_desc !== null,'editDesc' :data.explain_desc == null}"></i>
+                                </strong>
+
+                                <p>
+                                    {{data.last_export_date}} - {{data.last_export_account_nickname}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div ng-if="data.last_export_status == 0">
+                            <img src="image/vSuc.png" alt="suc">
+
+                            <div class="keys">
+                                <strong>
+                                    פעיל
+                                </strong>
+
+                                <p>
+                                    {{data.last_export_date}}
+                                </p>
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                                <span ng-click="goToLink(data.company_id, 'maazan')">
+                                    מאזן בוחן
+                                </span>
+                        <span ng-click="goToLink(data.company_id, 'revah')">
+רווח והפסד
+                                </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titleNotFilter" ng-show="appData.filteredItems == 0">
+            לא נמצאה התאמה
+        </div>
+    </div>
+</div>
+<div class="rowsSort" data-ng-show="appData.listCom.length > 0 && appData.filteredItems > 0">
+    <div class="selectRows">
+        הצג
+        <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+            <option>150</option>
+        </select>
+        שורות
+    </div>
+    <div class="sumRows">
+        סה״כ שורות שנמצאו
+        {{appData.filteredItems}}
+        מתוך
+        {{appData.listCom.length}}
+    </div>
+    <div class="pagRows" ng-show="appData.filteredItems > 0 && appData.filteredItems > entryLimit">
+        <!--<div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true"-->
+        <!--total-items="appData.filteredItems" items-per-page="entryLimit" class="pagination-small"-->
+        <!--previous-text="&laquo;" next-text="&raquo;"></div>-->
+        <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)" items-per-page="entryLimit"
+                    total-items="appData.filteredItems" ng-model="currentPage" class="pagination-sm"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                    last-text="עמ׳ אחרון"></pagination>
+    </div>
+</div>
+
+

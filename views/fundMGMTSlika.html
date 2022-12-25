@@ -1,0 +1,163 @@
+<div ng-init="init()">
+
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+
+        <div class="funds-header">
+            <h2 class="page-header" style="display: inline-block;">
+                סליקת אשראי
+            </h2>
+
+
+            <div class="funds-action-bar clearfix">
+                <input data-ng-model="searchText" placeholder="חיפוש (לדוגמה: סיווג, תיאור, סוג פעולה)" class="searchText">
+                <select data-ng-model="accountFilter.company_account_id" data-ng-options="a.company_account_id as a.company_account_nickname for a in appData.selectedCompany.accounts.bank_account_list">
+                    <option value="">
+                        הצג כל החשבונות
+                    </option>
+                </select>
+                <button ng-click="showFilters = !showFilters; openMoreNavScroll();" class="open-filters">
+                    סינון מתקדם
+                </button>
+                <div class="buttons_href">
+                    <button title="טבלת נתונים" data-ng-click="$state.go('fundManagement.slika.table')" class="icon-table" data-ng-class="{'active': $state.current.name == 'fundManagement.slika.table'}"></button>
+                    <button title="גרף" data-ng-click="$state.go('fundManagement.slika.graph')" class="icon-graph" data-ng-class="{'active': $state.current.name == 'fundManagement.slika.graph'}"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters" data-ng-show="showFilters">
+            <div dropdown>
+                <div class="dropdown-toggle">
+                    לפי תאריך
+                </div>
+
+                <div class="dropdown-content">
+                    <form class="filter-form" autocomplete="off">
+                        <div class="form-control">
+                            <input id="dateFiltertype0" type="radio" data-ng-model="appData.dateFilter.type" value="0" ng-change="disabledDates();">
+                            <label for="dateFiltertype0">
+חודש
+                            </label>
+                            <select ng-model="dateFilter.byMonth" ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                            <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years" ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                        </div>
+                        <div class="form-control">
+                            <input id="dateFiltertype1" type="radio" data-ng-model="appData.dateFilter.type" value="1" ng-change="disabledDates();">
+                            <label for="dateFiltertype1">
+                                בין תאריכים
+                            </label>
+                            <div class="datepicker_inputs">
+                                <div class="datepicker_wrap">
+                                    <input date-picker readonly="readonly" ng-class="{'redErrors': appData.redErrorFilterType == '1'}" type="text" ng-model="datesPicker.fromDatePicker" name="fromDatePicker" ng-change="appData.dateFilter.type = '1';disabledDates();">
+                                </div>
+                                <div class="between_line">-</div>
+                                <div class="datepicker_wrap">
+                                    <input date-picker readonly="readonly" ng-class="{'redErrors': appData.redErrorFilterType == '1'}" type="text" ng-model="datesPicker.toDatePicker" name="toDatePicker" ng-change="appData.dateFilter.type = '1';disabledDates();">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control">
+                            <input id="dateFiltertype2" type="radio" data-ng-model="appData.dateFilter.type" value="2" ng-change="disabledDates();">
+                            <label for="dateFiltertype2">
+                                בין חודשים
+                            </label>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromMonth" data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromYear" data-ng-options="y for y in years" ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <div class="label_between">
+                                עד
+                            </div>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toMonth" data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toYear" data-ng-options="y for y in years" ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                        </div>
+                        <div class="form-control">
+                            <button data-ng-click="getSolekData(true)" class="dropdown-close button" ng-disabled="appData.redErrorFilterType !== false">
+                                עדכון
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div dropdown>
+                <div class="dropdown-toggle" data-ng-show="selectedSolkim == ''">
+                    לפי סולק
+                </div>
+                <div class="dropdown-toggle filtered-hint" data-ng-hide="selectedSolkim == ''">
+                    {{selectedSolkim}}
+                </div>
+                <div class="dropdown-content">
+                    <form class="filter-form type_peula" autocomplete="off">
+                        <div class="form-control inline-2">
+                            <input type="checkbox" data-ng-model="solekFilterAll" value="true" ng-change="toggleAllSolkim()" id="allSelect">
+                            <label style="font-weight: bold; color: #000000" for="allSelect">
+                                בחר/נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control inline-2" data-ng-repeat="d in solkim">
+                            <input type="checkbox" data-ng-model="solekFilter[d.value]" value="d.value" id="{{d.value}}">
+                            <label for="{{d.value}}">
+                                {{d.name}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <form class="filter-form inline" autocomplete="off">
+                    <div>
+                        סוג תשלום:
+                    </div>
+                    <div>
+                        <input id="exp0" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="0">
+                        <label for="exp0">
+                            רגיל
+                        </label>
+                    </div>
+                    <div>
+                        <input id="exp1" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="1">
+                        <label for="exp1">
+                            תשלומים
+                        </label>
+                    </div>
+                    <div>
+                        <input id="expall" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="">
+                        <label for="expall">
+                            הכל
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="funds-totals cardsTotals clearfix" ng-show="appData.selectedCompany.solekData.length > 1 && filteredDataAll.length">
+            <div>
+                <div class="title_sum">
+                    סה״כ
+                </div>
+                <div class="sum-plus"><span>&#8362;</span>{{roundFixed(trans_total)}}</div>
+            </div>
+            <ul class="exports cardsExports">
+                <li class="excel" exports-excel-slika>
+                    <span>ייצוא לExcel</span>
+                    <i></i>
+                </li>
+                <li class="mail" ng-click="sendMailer()">
+                    <span>שליחה במייל</span>
+                    <i></i>
+                </li>
+                <li class="print" exports-print-slika>
+                    <span>הדפסה</span>
+                    <i></i>
+                </li>
+            </ul>
+        </div>
+        <div ui-view="lazyLoadView"></div>
+    </div>
+
+</div>
+

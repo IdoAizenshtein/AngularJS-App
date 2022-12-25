@@ -1,0 +1,189 @@
+<div ng-init="init()">
+
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="funds-header headerCardsAna">
+            <h2 class="page-header" style="display: inline-block;">
+                כרטיסי אשראי
+            </h2>
+
+
+            <div class="funds-action-bar clearfix">
+                <div class="buttons_href">
+                    <button title="טבלת נתונים" data-ng-click="$state.go('fundManagement.cards.table')" class="icon-table" data-ng-class="{'active': $state.current.name == 'fundManagement.cards.table'}"></button>
+                    <button title="גרף" data-ng-click="$state.go('fundManagement.cards.graph')" class="icon-graph" data-ng-class="{'active': $state.current.name == 'fundManagement.cards.graph'}"></button>
+                </div>
+                <button ng-click="showFilters = !showFilters; openMoreNavScroll();" class="open-filters">
+                    סינון מתקדם
+                </button>
+                <select ng-model="accountFilter.company_account_id" data-ng-options="a.company_account_id as a.company_account_nickname for a in appData.selectedCompany.accounts.bank_account_list" ng-change="isPriShow = (appData.dateFilterTypesCards === '0' && accountFilter.company_account_id && isThisDate(dateFilter.byMonth, dateFilter.byYear)); filterTransaction();">
+                    <option value="">
+                        הצג כל החשבונות
+                    </option>
+                </select>
+                <div dropdown class="dropdownLeft">
+                    <button class="dropdown-toggle">
+                        תאריך נבחר:
+                        {{textTitlePage}}
+                    </button>
+                    <div class="dropdown-content">
+                        <form class="filter-form" autocomplete="off">
+                            <div class="form-control">
+                                <input type="radio" ng-model="appData.dateFilterTypesCards" value="00" id="dateFilter0"
+                                       ng-change="disabledDates();">
+                                <label for="dateFilter0" style="width: 300px;">
+לפי חיוב קרוב
+                                </label>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype0" type="radio" data-ng-model="appData.dateFilterTypesCards" value="0" ng-change="disabledDates();">
+                                <label for="dateFiltertype0">
+חודש
+                                </label>
+                                <select ng-model="dateFilter.byMonth" ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilterTypesCards = '0';disabledDates();"></select>
+                                <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years" ng-change="appData.dateFilterTypesCards = '0';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype1" type="radio" data-ng-model="appData.dateFilterTypesCards" value="1" ng-change="disabledDates();">
+                                <label for="dateFiltertype1">
+                                    בין תאריכים
+                                </label>
+                                <div class="datepicker_inputs">
+                                    <div class="datepicker_wrap">
+                                        <input ng-class="{'redErrors': appData.redErrorFilterType == '1'}" readonly="readonly" date-picker type="text" ng-model="datesPicker.fromDatePicker" name="fromDatePicker" ng-change="appData.dateFilterTypesCards = '1';disabledDates();">
+                                    </div>
+                                    <div class="between_line">-</div>
+                                    <div class="datepicker_wrap">
+                                        <input ng-class="{'redErrors': appData.redErrorFilterType == '1'}" readonly="readonly" date-picker type="text" ng-model="datesPicker.toDatePicker" name="toDatePicker" ng-change="appData.dateFilterTypesCards = '1';disabledDates();">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype2" type="radio" data-ng-model="appData.dateFilterTypesCards" value="2" ng-change="disabledDates();">
+                                <label for="dateFiltertype2">
+                                    בין חודשים
+                                </label>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromMonth" data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilterTypesCards = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromYear" data-ng-options="y for y in years" ng-change="appData.dateFilterTypesCards = '2';disabledDates();"></select>
+                                <div class="label_between">
+                                    עד
+                                </div>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toMonth" data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months" ng-change="appData.dateFilterTypesCards = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toYear" data-ng-options="y for y in years" ng-change="appData.dateFilterTypesCards = '2';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <button data-ng-click="getCardsAtid(true)" class="dropdown-close button" ng-disabled="appData.redErrorFilterType !== false">
+                                    עדכון
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters" data-ng-show="showFilters">
+            <div dropdown>
+                <div class="dropdown-toggle" data-ng-show="selectedCards == ''">
+לפי כרטיס
+                </div>
+                <div class="dropdown-toggle filtered-hint" data-ng-hide="selectedCards == ''">
+                    {{selectedCards}}
+                </div>
+                <div class="dropdown-content">
+                    <form class="filter-form type_peula" autocomplete="off">
+                        <div class="form-control inline-2">
+                            <input type="checkbox" data-ng-model="cardsFilterAll" value="true" ng-change="toggleAllCards()" id="cardsFilterAll0">
+                            <label style="font-weight: bold; color: #000000" for="cardsFilterAll0">
+                                בחר/נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control inline-2" data-ng-repeat="d in cards">
+                            <input type="checkbox" data-ng-model="cardsFilter[d.value]" value="d.value" id="cardsFilter{{d.value}}">
+                            <label for="cardsFilter{{d.value}}">
+                                {{d.name}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--<div>
+                <form class="filter-form inline" autocomplete="off">
+                    <div>
+                        סוג תשלום:
+                    </div>
+                    <div>
+                        <input id="exp0" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="0">
+                        <label for="exp0">
+                            רגיל
+                        </label>
+                    </div>
+                    <div>
+                        <input id="exp1" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="1">
+                        <label for="exp1">
+                            תשלומים
+                        </label>
+                    </div>
+                    <div>
+                        <input id="expall" type="radio" data-ng-model="paymentTypeFilter.ind_total" value="">
+                        <label for="expall">
+                            הכל
+                        </label>
+                    </div>
+                </form>
+            </div>-->
+
+            <div>
+                <form class="filter-form inline selectAllPeulot" autocomplete="off">
+                    <div>
+                        הצג:
+                    </div>
+                    <div>
+                        <input id="exp11" type="radio" value="true" ng-model="peulotRadio" name="selectAllPeulot">
+                        <label for="exp11">
+                            עם פעולות
+                        </label>
+                    </div>
+                    <div>
+                        <input id="exp22" type="radio" value="false" ng-model="peulotRadio" name="selectAllPeulot">
+                        <label for="exp22">
+                            ללא פעולות
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="funds-totals cardsTotals clearfix">
+            <div>
+                <div class="title_sum">
+                 סה״כ לחיוב
+                </div>
+                <div class="sum-plus redTotal" ng-hide="searchText.length > 0"><span>{{currency_id_fundMGMTCardsCtrl}}</span>{{getTotal(transTotal)}}</div>
+                <div class="sum-plus redTotal" ng-show="searchText.length > 0"><span>{{currency_id_fundMGMTCardsCtrl}}</span>{{getTotal(totalAll)}}</div>
+            </div>
+            <ul class="exports cardsExports">
+                <li exports-excel-cards-priority tooltips-tazrim title="Priority ייצוא לExcel" style="text-align: center;vertical-align: middle;line-height: 30px;" ng-if="accountFilter.company_account_id">
+                    P
+                </li>
+                <li class="excel" exports-excel-cards tooltips-tazrim="" title="ייצוא לExcel">
+                    <i></i>
+                </li>
+                <li class="mail" tooltips-tazrim ng-click="sendMailer()" title="שליחה במייל">
+                    <i></i>
+                </li>
+                <li class="print" tooltips-tazrim exports-print-card title="הדפסה">
+                    <i></i>
+                </li>
+            </ul>
+            <input data-ng-model="searchText" placeholder="חיפוש (לדוגמה: שם פעולה, סכום פעולה)" class="searchText">
+        </div>
+
+        <div ui-view="lazyLoadView"></div>
+    </div>
+
+</div>
+

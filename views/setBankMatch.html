@@ -1,0 +1,244 @@
+<div ng-show="appData.alertTabMatchNull" class="not_data_match">
+    לא נמצאו חשבונות
+</div>
+
+<div ng-show="appData.alertTabMatch == 0" class="not_data_match">
+    אין פעולות מהבנק שלא הותאמו לחברה זו - לפעולות מותאמות
+    <a ng-click="$state.go('bankMatch.cancel');loadBankPeulotCancel();">
+        לחץ כאן
+    </a>
+</div>
+
+<div ng-show="appData.bankMatchList.length > 0"
+     class="relative horizontal"
+     nav-slider init-onload=true
+     data="appData.lengthBankMatch">
+    <div class="funds-header">
+        <div class="row_data_select">
+            <p>
+                <img src="image/alertIconMatch.png">
+                יש לבחור פעולה מהרשימה ולהתאים אותה לפחות לאחת מהפעולות המומלצות המופיעות בתוצאות מטה.
+            </p>
+            <div class="removeAllArr" ng-click="removeListAllPeulot()">
+                הסר את כל הפעולות
+            </div>
+            <!--<select ng-model="appData.defaultCompanyAcc" ng-change="sortBankPeulot()"-->
+            <!--ng-options="item.company_account_id as item.company_account_nickname for item in appData.selectedCompany.accounts.bank_account_list"-->
+            <!--class="bank{{appData.selectBankMatchId}}"></select>-->
+            <!--<span class="label_date_select"> | &nbsp;</span>-->
+            <!--<div class="labelCancelMatch">-->
+            <!--<input type="checkbox" ng-model="$parent.checkRemoveMatch" id="checkRemove"-->
+            <!--ng-change="sortBankPeulot()">-->
+            <!--<label for="checkRemove">-->
+            <!--הצג מחוקים-->
+            <!--</label>-->
+            <!--</div>-->
+
+            <!--<input class="searchBankMatchCancelTop" ng-model-options="{ debounce: {'default': 500 }}"-->
+            <!--ng-model="$parent.termFilterMatchSet" placeholder="חיפוש" ng-change="sortBankPeulot()">-->
+            <!--<span class="label_date_select"> | &nbsp;</span>-->
+            <!--<div class="labelCancelMatch helpWmEvent">-->
+            <!--<label ng-click="openWalkthruById(250936)">-->
+            <!--עזור לי להתאים-->
+            <!--</label>-->
+        </div>
+        <!--<div class="data_sum_select" ng-if="appData.lengthBankMatch !== 0">נבחרו <span class="selected_match">{{appData.lengthActive}}</span>-->
+        <!--מתוך <span class="select_all_match">{{appData.lengthBankMatch}}</span></div>-->
+    </div>
+    <h2 class="date_sort_li_fixed"></h2>
+    <div class="nav-prev" ng-if="appData.lengthBankMatch > 0"></div>
+    <div class="nav-next" ng-if="appData.lengthBankMatch > 0"></div>
+    <div class="match_peulot scrollDesign">
+        <h1 ng-if="appData.lengthBankMatch == 0">כל הכבוד, הכל מותאם</h1>
+
+
+        <div ng-repeat="a in appData.datesListBankMatch track by $index"
+             ng-if="appData.lengthBankMatch !== 0 && appData.datesListBankMatch"
+             class="groupDateList cube{{appData.listBankMatchAfter[a].length}}">
+            <h2 class="date_sort_li">
+                {{a}}
+            </h2>
+
+            <div vs-repeat vs-horizontal>
+                <div class="liDateBank"
+                     ng-if="appData.listBankMatchAfter[a] && appData.listBankMatchAfter[a].length"
+                     ng-repeat="t in appData.listBankMatchAfter[a] track by $index"
+                     ng-click="setTableListBank(t.trans_id,t.company_account_id, $event)"
+                     ng-class="{'active': t.active}">
+                    <i ng-click="removeListOnePeula(t.trans_id)" tooltips title="הסר פעולה"></i>
+                    <div class="text" ng-class="{'notCheck': !t.picture_link || !checkPictureLink(t.picture_link)}">
+                        <p tooltip="{{t.trans_name}}" tooltips-elipsis>
+                            {{t.trans_name}}
+                        </p>
+                        <img src="image/zoomCheck.png" ng-if="t.picture_link && checkPictureLink(t.picture_link)"
+                             ng-click="openCheckImg(t.picture_link, t.company_account_id, t.trans_id)">
+                    </div>
+                    <div class="sum_match">
+                        <span ng-if="t.hozaa == null" class="green_match">₪ {{getTotal(t.hachnasa)}}</span>
+                        <span ng-if="t.hachnasa == null" class="red_match">₪ {{getTotal(t.hozaa)}}</span>
+                    </div>
+                    <div class="titlesBanksAll">
+                        <i class="bank{{t.account_name.number}}"></i>
+
+                        {{t.account_name.name}}
+                    </div>
+                    <div ng-if="t.asmachta !== null" class="asmacta_match">
+                        אסמכתא: {{t.asmachta}}
+                    </div>
+                </div>
+            </div>
+            <h2 class="date_sort_li" ng-if="appData.styleSetMatch == 'horizontal'">
+            {{a}}
+            </h2>
+        </div>
+
+
+
+    </div>
+    <div class="tableMatchBottom">
+        <div class="row_update_match" ng-if="appData.lengthBankMatch > 0">
+            <div class="right_row_update_match">
+                <h3> פעולות מומלצות להתאמה מהתזרים</h3>
+            </div>
+            <div class="left_row_update_match">
+                <p ng-click="openMoreNavScroll()" class="link"><img src="image/filterIcon.png">סינון
+                    תוצאות</p>
+                <p class="label_date_select">&nbsp;</p>
+                <p class="desc">
+                    נבחרו
+    <span>
+        {{appData.numberOfPeulotMatchBottom}}
+    </span>
+                    פעולות להתאמה
+
+                    בסך:
+
+                    <span>₪{{round2Fixed(appData.calcSumBankPeulot)}}</span>
+                </p>
+                <button ng-click="clickGa('התאמת פעולות-מסך התאמות בנקים');matchPeulot()">התאמת פעולה</button>
+            </div>
+        </div>
+        <div class="rowFilter clearfix" ng-show="openMoreNav">
+            <div class="inputSearch">
+                <input ng-model-options="{ debounce: {'default': 500 }}" ng-model="$parent.freeSearch"
+                       ng-change="filterBankMatch()"
+                       placeholder="חיפוש לפי שם, אסמכתא, סכום">
+            </div>
+            <div dropdown>
+                <div class="dropdown-toggle filtered-hint" ng-show="appData.groupFiltersMatch.sums.length > 0">
+                    <ul>
+                        <li ng-cloak class="animate-repeat"
+                            ng-show="appData.groupFiltersMatch.sums.length"
+                            style="color: #5a5e61;">
+                            סינון לפי סכומים
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown-content scrollDesign">
+                    <form class="filter-form type_trans" autocomplete="off">
+                        <div class="form-control">
+                            <input type="checkbox" ng-model="$parent.selectedAllPeula" id="changeAllPeula"
+                                   ng-click="checkAllPeula()"/>
+                            <label for="changeAllPeula">
+                                בחר / נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control" ng-repeat="t in appData.groupFiltersMatch.sums">
+                            <input type="checkbox" ng-model="t.paymentActive" id="{{t.val}}"
+                                   ng-change="filterBankMatch();">
+                            <label for="{{t.val}}" class="ltr">
+                                {{t.text}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div dropdown>
+                <div class="dropdown-toggle filtered-hint" ng-show="appData.groupFiltersMatch.typesOfPays.length > 0">
+                    <ul>
+                        <li ng-cloak class="animate-repeat"
+                            ng-show="appData.groupFiltersMatch.typesOfPays.length"
+                            style="color: #5a5e61;">
+                            סינון לפי סוגי תשלום
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown-content scrollDesign">
+                    <form class="filter-form type_trans" autocomplete="off">
+                        <div class="form-control">
+                            <input type="checkbox" ng-model="$parent.selectedAll" id="selectedAll"
+                                   ng-click="checkAll()"/>
+                            <label for="selectedAll">
+                                בחר / נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control" ng-repeat="t in appData.groupFiltersMatch.typesOfPays">
+                            <input type="checkbox" ng-model="t.paymentActive" id="{{t.target_payment_type_id}}"
+                                   ng-change="filterBankMatch()">
+                            <label for="{{t.target_payment_type_id}}">
+                                {{t.text}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <img src="image/close_popup.png" class="close" ng-click="openMoreNavScroll()">
+        </div>
+        <div class="table_data_match setMatchTableMain">
+            <div ng-show="!loaderMatchTable" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <div class="notDataTableMatch"
+                 ng-if="appData.lengthBankMatch == 0 || (appData.listTablePeulot[0].length == 0 && appData.listTablePeulot[1].length == 0) || appData.lengthRowTableMatch == 0">
+                אין פעולות להתאמה
+            </div>
+            <div class="thead_match"
+                 ng-if="appData.lengthBankMatch !== 0 && (appData.listTablePeulot[0].length !== 0 || appData.listTablePeulot[1].length !== 0) && appData.lengthRowTableMatch !== 0">
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>תאריך</div>
+                <div>שם הפעולה</div>
+                <div> סכום</div>
+                <div>אסמכתא</div>
+                <div> סוג</div>
+            </div>
+
+            <div class="tbody_match scrollDesign"
+                 scroll-fill="{{appData.tbodyMatchScroll}}">
+
+                <div class="rowMatchList" ng-repeat="a in appData.rowsTableBottomMatch track by $index"
+                     ng-class="{'activRow': a.check, 'title': a.title}">
+                    <div ng-if="!a.title">
+                        <input type="checkbox" ng-model="a.check" ng-change="calcSum()"/>
+                    </div>
+                    <div class="toolMa" ng-if="!a.title">
+                        <span ng-if="!a.target_ind_kvua" class="notBg"></span>
+                        <span ng-if="a.target_ind_kvua == true" tooltips-tazrim title="פעולה מחזורית קבועה"></span>
+                    </div>
+                    <div ng-if="!a.title">
+                        {{a.target_original_date}}
+                    </div>
+                    <div tooltips-elipsis tooltip="{{a.target_name}}" ng-if="!a.title">
+                        {{a.target_name}}
+                    </div>
+                    <div class="sumMatchTable" ng-class="{'expense': a.ind_expense}" ng-if="!a.title">
+                        {{round2Fixed(a.target_total)}}
+                    </div>
+                    <div ng-if="!a.title">
+                       <span ng-if="a.target_asmachta !== null">
+                                {{a.target_asmachta}}
+                        </span>
+                    </div>
+                    <div ng-if="!a.title">
+                        {{accoConversions.getTypePayment(a.target_payment_type_id)}}
+                    </div>
+                    <span ng-if="a.title">
+                        {{a.text}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

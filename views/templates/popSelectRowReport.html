@@ -1,0 +1,40 @@
+<div ng-controller="mainCtrl">
+    <div class="popup-header">
+        <h2>
+            הדפסת דו”ח - אפשרויות נוספות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <p>אילו פריטים נוספים יש לכלול במסמך המודפס?</p>
+        <div class="radioGroupChangeReports">
+            <div>
+                <input id="radio1_level1" type="radio" ng-model="appData.valueRadioPrint" value="level1">
+                <label for="radio1_level1">
+                    ללא פירוט
+                </label>
+            </div>
+            <div>
+                <input id="radio2_level2" type="radio" ng-model="appData.valueRadioPrint" value="level2">
+                <label for="radio2_level2">
+                    מפורט לפי קודי מיון
+                </label>
+            </div>
+            <div>
+                <input id="radio3_level3" type="radio" ng-model="appData.valueRadioPrint" value="level3">
+                <label for="radio3_level3">
+                    מפורט לפי קודי מיון וכרטיסים
+                </label>
+            </div>
+        </div>
+        <button exports-excel-revah data-ng-show="appData.typeExportReports == 'excel'">
+            ייצא
+        </button>
+        <button data-ng-show="appData.typeExportReports == 'mail'" ng-click="sendMailerRevah()">
+            עבור להזנת כתובת דוא״ל
+        </button>
+        <button data-ng-show="appData.typeExportReports == 'print'" exports-print-revah>
+            ייצא
+        </button>
+    </div>
+</div>
+

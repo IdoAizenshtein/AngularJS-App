@@ -1,0 +1,64 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+            שיוך חשבון לחברה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listUserAccountantsComLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" data-ng-model="filterAccUserCom" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש חברה">
+        </div>
+
+        <form novalidate ng-submit="transferAccount()" name="formAccUsersCom">
+            <div class="formAccUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+שם החברה
+                    </div>
+                    <div>
+שם מלא
+                    </div>
+                    <div>
+מס׳ ח.פ.
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listCompaniesAccountants | filterListUserAccCom:filterAccUserCom">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setUserNameCompanyList"
+                                   name="uuidAcc"
+                                   value="{{a.companyId}}" required/>
+                        </div>
+                        <div>
+                            {{a.companyName}}
+                        </div>
+                        <div>
+                            {{a.full_name}}
+                        </div>
+                        <div>
+                            {{a.companyHp}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsersCom.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

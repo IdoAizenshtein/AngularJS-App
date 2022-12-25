@@ -1,0 +1,384 @@
+<div ng-init="init()">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="messages" height-tabs>
+            <div class="general-alerts"
+                 data-ng-class="{'helpViewBg': appData.helpSignUp == true && appData.helpSignUpInd == 3}">
+                <h2>
+                    פעולות אחרונות
+                </h2>
+                <ul>
+                    <li ng-repeat="m in appData.selectedCompany.messagesAccList" class="alertsIc"
+                        ng-show="$state.current.name == 'general.accountant'">
+                        <div class="trans_date">
+                            {{accoConversions.getDayMonth(m.trans_date)}}
+                        </div>
+                        <div>
+                            <div class="account_nickname">
+                                {{m.account_nickname}}
+                            </div>
+                        </div>
+                        <div class="borderBottomMess">
+                            <div class="trans_name">
+                                {{m.trans_name}}
+                            </div>
+                            <div data-ng-class="{'red': m.ind_hova == 1}" class="total">
+                                ₪ {{getTotalRound(m.total)}}
+                            </div>
+                            <div ng-if="m.ind_conditional == 1" class="ind_conditional">
+                                | על תנאי |
+                            </div>
+                            <div ng-if="checkPictureLink(m.picture_link)" class="checksLink fa fa-picture-o" ng-style="{'color': m.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}" ng-click="openCheckImg(m.picture_link, m.company_account_id, m.trans_id)">
+                            </div>
+                        </div>
+                        <!--<div class="sumMessages">-->
+                        <!--<div>-->
+                        <!--יתרה-->
+                        <!--</div>-->
+                        <!--<div>-->
+                        <!--₪ {{getTotal(m.itra)}}-->
+                        <!--</div>-->
+                        <!--</div>-->
+                    </li>
+                    <li ng-repeat="b in appData.selectedCompany.messages" class="messFilterAccDate"
+                        ng-show="$state.current.name == 'general.funds'">
+                        <div class="trans_date">
+                            {{accoConversions.getDayMonth(b.dataTitle)}}
+                        </div>
+                        <div ng-repeat="c in b" class="wrapMessBank">
+                            <div class="account_nickname">{{c.dataTitle}}</div>
+                            <div ng-repeat="d in c" class="wrapMessOne">
+                                <div class="trans_name">{{d.trans_name}}</div>
+                                <div ng-class="{'red': d.ind_hova == 1}" class="total">
+                                    ₪ {{getTotalRound(d.total)}}
+                                </div>
+                                <div ng-if="d.ind_conditional == 1" class="ind_conditional">| על תנאי |</div>
+                                <div ng-if="checkPictureLink(d.picture_link)" class="checksLink fa fa-picture-o" ng-style="{'color': d.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}" ng-click="openCheckImg(d.picture_link, d.company_account_id, d.trans_id)">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="alertNotData" ng-show="appData.selectedCompany.messages.length == 0">
+                        <h3>אין התראות</h3>
+                    </li>
+                </ul>
+                <i ng-if="loaderLastPeulot" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </i>
+            </div>
+            <div class="ksafim-data-wrap ksafimList" ng-show="$state.current.name == 'general.funds'"
+                 data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 5}">
+                <i ng-if="loaderKsafimData" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </i>
+
+                <h2>ריכוז נתונים פיננסים</h2>
+                <ul class="ksafim-data" accordion-wrap
+                    data-ng-show="appData.selectedCompany && appData.selectedCompany.ksafimData">
+                    <li data-ng-show="appData.selectedCompany.ksafimData.ccardPeulotatidData.details.length != 0 && appData.selectedCompany.ksafimData.ccardPeulotatidData.total != 0"
+                        data-ng-class="{'selected':showCards}">
+                        <div>
+                            <div>
+                                כרטיסי אשראי
+                            </div>
+                            <div class="redColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.ccardPeulotatidData.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.ccardPeulotatidData.total)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show="appData.selectedCompany.ksafimData.ccardPeulotatidData.total != 0">
+                            <li data-ng-repeat="d in appData.selectedCompany.ksafimData.ccardPeulotatidData.details">
+                                <div tooltips-elipsis tooltip="{{d.tooltip}}" class="links" ng-click="$state.go('fundManagement.cards.table')">
+                                    {{d.tooltip}}
+                                </div>
+                                <div>
+                                    {{accoConversions.getDayMonth(d.trans_date)}}
+                                </div>
+                                <div>
+                                    <span>&#8362;</span>{{getTotal(d.trans_total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="appData.selectedCompany.ksafimData.outCheques.details.length != 0 && appData.selectedCompany.ksafimData.outCheques.total != 0"
+                        data-ng-class="{'selected':showOutCheques}">
+                        <div>
+                            <div>
+                                שיקים יוצאים
+                            </div>
+                            <div class="redColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.outCheques.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.outCheques.total)}}
+                            </div>
+                        </div>
+                        <ul ng-show=" appData.selectedCompany.ksafimData.outCheques.total != 0">
+                            <li ng-repeat="d in appData.selectedCompany.ksafimData.outCheques.details"
+                                ng-if="appData.selectedCompany.ksafimData.outCheques.details">
+                                <div class="links" ng-click="showPopOutLoans(d, 'outCheques')" tooltips-elipsis tooltip="{{d.description}}">
+                                    {{d.description}}
+                                </div>
+                                <div ng-if="d.due_date">{{accoConversions.getDayMonth(d.due_date)}}</div>
+                                <div ng-style="{'width': d.due_date ? '32%' : '28%'}">
+                                    <span>&#8362;</span>{{getTotal(d.total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="appData.selectedCompany.ksafimData.outLoans.details.length != 0 && appData.selectedCompany.ksafimData.outLoans.total != 0"
+                        data-ng-class="{'selected':showOutLoans}">
+
+                        <div>
+                            <div>
+                                הלוואות
+                            </div>
+                            <div class="redColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.outLoans.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.outLoans.total)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show=" appData.selectedCompany.ksafimData.outLoans.total != 0">
+                            <li data-ng-repeat="d in appData.selectedCompany.ksafimData.outLoans.details">
+                                <div class="links" ng-click="showPopOutLoans(d, 'outLoans')" tooltips-elipsis tooltip="{{d.loan_name}}">
+                                    {{d.loan_name}}
+                                </div>
+                                <div>
+                                    {{accoConversions.getDayMonth(d.loan_next_payment_date)}}
+                                </div>
+                                <div>
+                                    <span>&#8362;</span>{{getTotal(d.total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--<li data-ng-show="appData.selectedCompany.accounts.total_opening_balance != 0"
+                        data-ng-class="{'selected':showAccounts}">
+
+                        <div>
+                            <div>
+                                חשבונות בנק
+                            </div>
+                            <div>
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.accounts.total_opening_balance)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show="appData.selectedCompany.accounts.total_opening_balance != 0">
+                            <li data-ng-repeat="a in appData.selectedCompany.accounts.bank_account_list">
+                                <div class="links">
+                                    {{a.company_account_nickname}}
+                                </div>
+                                <div>&nbsp;</div>
+                                <div>
+                                    <span>&#8362;</span>{{getTotal(a.opening_balance)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>-->
+                    <li data-ng-show="appData.selectedCompany.ksafimData.solekPeulotatidData.details.length != 0 && appData.selectedCompany.ksafimData.solekPeulotatidData.total != 0"
+                        data-ng-class="{'selected':showSolekPeulotatidData}">
+
+                        <div>
+                            <div>
+                                סליקת אשראי
+                            </div>
+                            <div class="greenColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.solekPeulotatidData.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.solekPeulotatidData.total)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show=" appData.selectedCompany.ksafimData.solekPeulotatidData.total != 0">
+                            <li data-ng-repeat="d in appData.selectedCompany.ksafimData.solekPeulotatidData.details">
+                                <div class="links" ng-click="$state.go('fundManagement.slika')" tooltips-elipsis tooltip="{{d.tooltip}}">
+                                    {{d.tooltip}}
+                                </div>
+                                <div>
+                                    {{accoConversions.getDayMonth(d.trans_date)}}
+                                </div>
+                                <div>
+                                    <span>&#8362;</span>{{getTotal(d.trans_total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="appData.selectedCompany.ksafimData.inCheques.details.length != 0 && appData.selectedCompany.ksafimData.inCheques.total != 0"
+                        data-ng-class="{'selected':showInCheques}">
+
+                        <div>
+                            <div>
+                                שיקים נכנסים
+                            </div>
+                            <div class="greenColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.inCheques.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.inCheques.total)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show=" appData.selectedCompany.ksafimData.inCheques.total != 0">
+                            <li ng-repeat="d in appData.selectedCompany.ksafimData.inCheques.details"
+                                ng-if="appData.selectedCompany.ksafimData.inCheques.details">
+                                <div class="links" ng-click="showPopOutLoans(d, 'inCheques')" tooltips-elipsis tooltip="{{d.description}}">
+                                    {{d.description}}
+                                </div>
+                                <div ng-if="d.due_date">
+                                    {{accoConversions.getDayMonth(d.due_date)}}
+                                </div>
+                                <div ng-style="{'width': d.due_date ? '32%' : '28%'}">
+                                    <span>&#8362;</span>{{getTotal(d.total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="appData.selectedCompany.ksafimData.outDeposits.details.length != 0 && appData.selectedCompany.ksafimData.outDeposits.total != 0"
+                        data-ng-class="{'selected':showOutDeposits}">
+                        <div>
+                            <div>
+                                פקדונות
+                            </div>
+                            <div class="greenColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.ksafimData.outDeposits.total)}}">
+                                <span>&#8362;</span>{{getTotal(appData.selectedCompany.ksafimData.outDeposits.total)}}
+                            </div>
+                        </div>
+                        <ul data-ng-show=" appData.selectedCompany.ksafimData.outDeposits.total != 0">
+                            <li data-ng-repeat="d in appData.selectedCompany.ksafimData.outDeposits.details">
+                                <div class="links" ng-click="showPopOutLoans(d, 'outDeposits')" tooltips-elipsis tooltip="{{d.type_name}}">
+                                    {{d.type_name}}
+                                </div>
+                                <div>&nbsp;</div>
+                                <div>
+                                    <span>&#8362;</span>{{getTotal(d.total)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li data-ng-show="false">
+                        <div>
+                            <div>
+                                סה״כ
+                            </div>
+                            <div tooltips-elipsis tooltip="{{getTotal(maazanSum)}}">
+                                <span>&#8362;</span>{{getTotal(maazanSum)}}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="ksafim-data-wrap accList" ng-show="$state.current.name == 'general.accountant'">
+                <i ng-if="loaderAccListData" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </i>
+
+                <h2 ng-show="appData.selectedCompany.accListData.lekohothayavim.total !== null && appData.selectedCompany.accListData.lekohothayavim.total !== 0 && appData.selectedCompany.accListData.lekohotbezhut.total !== null && appData.selectedCompany.accListData.lekohotbezhut.total !== 0 && appData.selectedCompany.accListData.hovotsapakim.total !== null && appData.selectedCompany.accListData.hovotsapakim.total !== 0 &&  appData.selectedCompany.accListData.sapakimbezhut.total !== null && appData.selectedCompany.accListData.sapakimbezhut.total !== 0">
+                    יתרות לקוחות וספקים
+                </h2>
+                <ul class="ksafim-data" accordion-acc
+                    data-ng-show="appData.selectedCompany && appData.selectedCompany.accListData">
+                    <li ng-show="appData.selectedCompany.accListData.length != 0 && appData.selectedCompany.accListData.lekohothayavim.total !== null && appData.selectedCompany.accListData.lekohothayavim.total !== 0">
+                        <div>
+                            <div>
+                                לקוחות חייבים
+                            </div>
+                            <div class="greenColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.accListData.lekohothayavim.total,true)}}">
+                                <span>&#8362; </span>{{getTotal(appData.selectedCompany.accListData.lekohothayavim.total,true)}}
+                            </div>
+                        </div>
+                        <ul>
+                            <li ng-repeat="d in appData.selectedCompany.accListData.lekohothayavim.sapakimOrLekohot">
+                                <div tooltips-elipsis tooltip="{{d.name}}">
+                                    {{d.name}}
+                                </div>
+                                <div class="lastAcc">
+                                    <span>&#8362; </span>{{getTotal(d.current_balance, true)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-show="appData.selectedCompany.accListData.length != 0 && appData.selectedCompany.accListData.lekohotbezhut.total !== null && appData.selectedCompany.accListData.lekohotbezhut.total !== 0 ">
+                        <div>
+                            <div>
+                                לקוחות בזכות
+                            </div>
+                            <div class="redColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.accListData.lekohotbezhut.total,true)}}">
+                                <span>&#8362; </span>{{getTotal(appData.selectedCompany.accListData.lekohotbezhut.total,true)}}
+                            </div>
+                        </div>
+                        <ul>
+                            <li data-ng-repeat="d in appData.selectedCompany.accListData.lekohotbezhut.sapakimOrLekohot">
+                                <div tooltips-elipsis tooltip="{{d.name}}">
+                                    {{d.name}}
+                                </div>
+                                <div class="lastAcc">
+                                    <span>&#8362; </span>{{getTotal(d.current_balance, true)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-show="appData.selectedCompany.accListData.length != 0 && appData.selectedCompany.accListData.hovotsapakim.total !== null && appData.selectedCompany.accListData.hovotsapakim.total !== 0">
+                        <div>
+                            <div>
+                                חובות לספקים
+                            </div>
+                            <div class="redColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.accListData.hovotsapakim.total,true)}}">
+                                <span>&#8362; </span>{{getTotal(appData.selectedCompany.accListData.hovotsapakim.total,
+                                true)}}
+                            </div>
+                        </div>
+                        <ul>
+                            <li data-ng-repeat="d in appData.selectedCompany.accListData.hovotsapakim.sapakimOrLekohot">
+                                <div tooltips-elipsis tooltip="{{d.name}}">
+                                    {{d.name}}
+                                </div>
+                                <div class="lastAcc">
+                                    <span>&#8362; </span>{{getTotal(d.current_balance, true)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li ng-show="appData.selectedCompany.accListData.length != 0 && appData.selectedCompany.accListData.sapakimbezhut.total !== null && appData.selectedCompany.accListData.sapakimbezhut.total !== 0">
+                        <div>
+                            <div>
+                                מקדמות לספקים
+                            </div>
+                            <div class="greenColor" tooltips-elipsis tooltip="{{getTotal(appData.selectedCompany.accListData.sapakimbezhut.total,true)}}">
+                                <span>&#8362; </span>{{getTotal(appData.selectedCompany.accListData.sapakimbezhut.total,
+                                true)}}
+                            </div>
+                        </div>
+                        <ul>
+                            <li data-ng-repeat="d in appData.selectedCompany.accListData.sapakimbezhut.sapakimOrLekohot">
+                                <div tooltips-elipsis tooltip="{{d.name}}">
+                                    {{d.name}}
+                                </div>
+                                <div class="lastAcc">
+                                    <span>&#8362; </span>{{getTotal(d.current_balance, true)}}
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="skiraAll">
+            <div class="tab-nav">
+                <!--<select selecter-dd-->
+                        <!--ng-show="appData.selectedCompany.accounts.bank_account_list.length > 1 && $state.current.name == 'general.funds'"-->
+                        <!--ng-model="shownGraphIndexSelected"-->
+                        <!--data-ng-options="idx as a.company_account_nickname for (idx, a) in accountsWithAll"-->
+                        <!--ng-change="updateSelection(shownGraphIndexSelected)"-->
+                        <!--ng-click="selectActive = !selectActive" ng-class="{'selectActive' : selectActive == false}"-->
+                        <!--ng-blur="selectActive = !selectActive"></select>-->
+
+                <div>
+                    <a ui-sref="general.funds" data-ng-class="{'active':$state.current.name == 'general.funds'}">
+                        כספים
+                    </a>
+                </div>
+                <div>
+                    <a ui-sref="general.accountant"
+                       data-ng-class="{'active':$state.current.name == 'general.accountant'}">
+                        הנהלת חשבונות
+                    </a>
+                </div>
+            </div>
+
+            <div ui-view="lazyLoadView" scroll-fill="{{scrollHeightMain}}" class="bg-dark-withoutWidth" check-scroll></div>
+        </div>
+
+
+    </div>
+</div>

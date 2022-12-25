@@ -1,0 +1,61 @@
+<div ng-controller="taskManagerCtrl">
+    <div class="popup-header">
+        <h2>
+            סגירת קריאת שירות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="wrapPop">
+            <div class="trTask">
+                <p>
+                    הקלד מלל קצר שישלח ל{{appData.closeTASK_OPENER_NAME}}
+                    :
+                    {{appData.closeCLOSE_MAIL_TO_SEND}}
+                </p>
+            </div>
+
+            <div class="trTask">
+                <p class="widthFix">
+                    קטגוריה
+                </p>
+                <div>
+                    <select ng-model="appData.closeTaskCategoryID" ng-class="{'redErr': appData.closeTaskCategoryID == 'null'}"
+                            ng-options="a.TASK_CATEGORY_ID as a.TASK_CATEGORY_NAME for a in appData.usersWork_task_catagory"></select>
+                </div>
+            </div>
+            <div class="trTask" ng-if="appData.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d2'">
+                <p class="widthFix" style="font-size: 17px;">
+                    המלצת קטגוריה
+                </p>
+                <div>
+                    <input ng-model="appData.closeTASK_CATEGORY_COMMENT" type="text">
+                </div>
+            </div>
+            <div class="trTask" ng-if="appData.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d3'">
+                <p class="widthFix" style="font-size: 17px;">
+                    נושא ההדרכה
+                </p>
+                <div>
+                    <input ng-model="appData.closeTASK_CATEGORY_COMMENT" type="text">
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    תיאור
+                </p>
+                <div>
+                    <textarea ng-model="appData.closeTaskDesc"
+                              ng-class="{'redError': !appData.closeTaskDesc.length}"></textarea>
+                </div>
+            </div>
+            <div class="buttonGr">
+                <button ng-click="closeRowTaskSender()" ng-disabled="!appData.closeTaskDesc.length || appData.closeTaskCategoryID == 'null'">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()">
+                    ביטול
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

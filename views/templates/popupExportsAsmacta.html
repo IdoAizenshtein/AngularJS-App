@@ -1,0 +1,38 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+            הגדרת אסמכתא
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="asmachtaSett" novalidate ng-submit="asmachtaSettSbmit()">
+            <h2>
+                חדש! באופן חד פעמי - הגדר את מספר הספרות של האסמכתא שברצונך שייקלט בחשבשבת.
+            </h2>
+            <input type="text"
+                   name="asmachta"
+                   number-asmachta
+                   ng-model="appData.asmachtaSett"
+                   required
+                   placeholder="אנא הזן מס׳ הגדול מ2"
+                   ng-class="{'errorInput': (asmachtaSett.$submitted || asmachtaSett.asmachta.$touched) && (asmachtaSett.asmachta.$error.required || asmachtaSett.asmachta.$error.integer)}">
+
+            <div ng-show="asmachtaSett.$submitted || asmachtaSett.asmachta.$touched" class="alertsMessages">
+                <div ng-show="asmachtaSett.asmachta.$error.required">
+                    מידע זה הינו מידע חובה
+                </div>
+                <div ng-show="asmachtaSett.asmachta.$error.integer">
+יש לרשום מספר הגדול מ2
+                </div>
+            </div>
+            <div class="buttonPopUpCompany">
+                <button type="submit" ng-disabled="!asmachtaSett.$valid">
+                    הגדר וייצא
+                </button>
+                <button ng-click="cancelEx()" type="button">
+                    בטל
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

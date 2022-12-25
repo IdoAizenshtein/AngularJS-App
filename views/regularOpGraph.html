@@ -1,0 +1,142 @@
+<div class="mini-pies-peulot">
+    <div>
+        <div class="pieGraphPeulot">
+            <div pie-draw pie-data="appData.pieInPeulot"></div>
+            <div class="sum">
+                <div>
+                    הכנסות
+                </div>
+                <div class="in">
+                    <span>&#8362;</span>{{getTotal(appData.sumPeulotIn)}}
+                </div>
+            </div>
+        </div>
+        <div class="pieSmall" data-ng-repeat="a in appData.pieInPeulot.graph">
+            <div pie-draw
+                 pie-data="{data:appData.pieInPeulot.data, colors: setColor($index), tooltip: '&nbsp;'}"
+                 class="pieMini"></div>
+            <div class="namesPeulot">
+                <div class="nameMiniGraph">{{a.trans_name}}</div>
+                <div data-ng-style="{'color': appData.pieInPeulot.colors[$index]}"><span>&#8362;</span>{{getTotalComma(a.next_total)}}
+                </div>
+            </div>
+            <div class="lineGraphMini_peulot">
+                <table cellspacing="0" cellpadding="0" border="0" align="center"
+                       style="border-collapse: collapse;direction: rtl; border: none;padding: 0px 30px;">
+                    <tbody>
+                    <tr>
+                        <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                            <div ng-style="{'background': appData.pieInPeulot.colors[$index],'height': 100 * a.memuza_hodesh1 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh1)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                            <div ng-style="{'background': appData.pieInPeulot.colors[$index],'height': 100 * a.memuza_hodesh2 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh2)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                            <div ng-style="{'background': appData.pieInPeulot.colors[$index],'height': 100 * a.memuza_hodesh3 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh3)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh1)}}
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh2)}}
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh3)}}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="pieGraphPeulot">
+            <div pie-draw pie-data="appData.pieExPeulot"></div>
+            <div class="sum">
+                <div>
+                    הוצאות
+                </div>
+                <div class="ex">
+                    <span>&#8362;</span>{{getTotal(appData.sumPeulotEx)}}
+                </div>
+            </div>
+        </div>
+        <div class="pieSmall" data-ng-repeat="a in appData.pieExPeulot.graph">
+            <div pie-draw
+                 pie-data="{data:appData.pieExPeulot.data, colors: setColor1($index), tooltip: '&nbsp;'}"
+                 class="pieMini"></div>
+            <div class="namesPeulot">
+                <div class="nameMiniGraph">{{a.trans_name}}</div>
+                <div data-ng-style="{'color': appData.pieExPeulot.colors[$index]}"><span>&#8362;</span>{{getTotalComma(a.next_total)}}
+                </div>
+            </div>
+            <div class="lineGraphMini_peulot">
+                <table cellspacing="0" cellpadding="0" border="0" align="center"
+                       style="border-collapse: collapse;direction: rtl; border: none;padding: 0px 30px;">
+                    <tbody>
+                    <tr>
+                        <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                            <div ng-style="{'background': appData.pieExPeulot.colors[$index],'height': 100 * a.memuza_hodesh1 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh1)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                            <div ng-style="{'background': appData.pieExPeulot.colors[$index],'height': 100 * a.memuza_hodesh2 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh2)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                            <div ng-style="{'background': appData.pieExPeulot.colors[$index],'height': 100 * a.memuza_hodesh3 / graphSet(a) + '%'}"
+                                 title="{{getTotalComma(a.memuza_hodesh3)}} ₪" tooltips-reg
+                                 class="barGraph">
+                                &nbsp;
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh1)}}
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh2)}}
+                            </div>
+                        </td>
+                        <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                            <div class="dateGraph">
+                                {{dateShort(a.hodesh3)}}
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div></div>

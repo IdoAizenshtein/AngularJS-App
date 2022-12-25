@@ -1,0 +1,60 @@
+<div class="wrapListManag">
+    <div class="nopad-right" ng-repeat-start="a in appData.adminReports" ng-click="openCubeReports(a)"
+         ng-if="!a.lineBreakGroup" ng-class="{'flash animated': a.newObj}">
+        <div class="dashboard-stats">
+            <div class="left">
+                <h3 class="counter" style="color:{{a.style}}">
+                    <i>{{a.state_name}}
+                        <br>
+                        {{roundNum(a.sum_result)}}
+                    </i>
+                    {{a.sum_num}}
+                </h3>
+                <h4>{{a.report_name}}</h4>
+            </div>
+            <div class="right" style="background:{{a.style}}">
+                <i class="{{a.icon_num}}"></i>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat-end ng-if="a.lineBreakGroup" class="lineBreakGroup">
+        &nbsp;
+    </div>
+</div>
+
+<!--<h2 class="titlewrapListManag">-->
+<!--ניהול ייצוא רואי חשבון-->
+<!--</h2>-->
+<!--<div class="wrapListManag">-->
+<!--<div class="nopad-right" data-ng-repeat="a in appData.adminReports" ng-click="openCubeReports(a)"-->
+<!--ng-if="a.report_num > 100 && a.report_num < 200">-->
+<!--<div class="dashboard-stats">-->
+<!--<div class="left">-->
+<!--<h3 class="counter" style="color:{{a.style}}">{{a.sum_num}}</h3>-->
+<!--<h4>{{a.report_name}}</h4>-->
+<!--</div>-->
+
+<!--<div class="right" style="background:{{a.style}}">-->
+<!--<i class="{{a.icon_num}}"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<h2 class="titlewrapListManag">-->
+<!--דאטה בייס-->
+<!--</h2>-->
+<!--<div class="wrapListManag">-->
+<!--<div class="nopad-right" data-ng-repeat="a in appData.adminReports" ng-click="openCubeReports(a)"-->
+<!--ng-if="a.report_num > 200">-->
+<!--<div class="dashboard-stats">-->
+<!--<div class="left">-->
+<!--<h3 class="counter" style="color:{{a.style}}">{{a.sum_num}}</h3>-->
+<!--<h4>{{a.report_name}}</h4>-->
+<!--</div>-->
+
+<!--<div class="right" style="background:{{a.style}}">-->
+<!--<i class="{{a.icon_num}}"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

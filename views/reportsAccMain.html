@@ -1,0 +1,468 @@
+<div class="bgHelpAcc" ng-if="appData.ShowhelpReports">&nbsp;</div>
+<i ng-if="appData.ShowhelpReports" class="closeBack closeHelpAcc closeHelpReports fa fa-times"
+   ng-click="appData.ShowhelpReports = false;">
+    <span>
+        סגור עזרה
+    </span>
+</i>
+<div class="reportsAccWrap">
+    <div class="reportsAccRow">
+        <div class="reportsAccTd">
+            <div class="helpReportsAccTitle" ng-if="appData.ShowhelpReports">
+                <i class="fi-arrow-right"></i>
+                התראה על פעולות שכיחות (לפי סכום קבוע כל חודש) שלא הופיעו בחודש הנקוב
+            </div>
+
+            <div class="title">
+                <p>
+                    פעולות שכיחות שלא הופיעו
+                </p>
+
+                <div>
+                    <label>
+                        בחודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.monthexpens" ng-change="expenseMissingReport()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.yearexpens"
+                           ng-change="expenseMissingReport()">
+                </div>
+            </div>
+            <div class="expenseMissingReportTable">
+                <div ng-if="!loaderexpenseMissing" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <table>
+                    <thead data-ng-if="expenseMissingReportTable.length > 0">
+                    <tr>
+                        <th ng-click="sort_by('companyName');">
+                            לקוח
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by('transTypeCatName');">
+                            כרטיס
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by('date');">
+                            חודש הזנה אחרונה
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by('sum');">
+                            סכום קבוע
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody vs-repeat="30" ng-if="expenseMissingReportTable.length !== 0">
+                    <tr ng-repeat="a in expenseMissingReportTable  | orderBy : predicate :reverse">
+                        <td>
+                                <span data-ng-click="goToLink(a.companyId, 'listCompany')">
+                                       {{a.companyName}}
+                                </span>
+                        </td>
+                        <td>
+                                 <span data-ng-click="goToAnalisis(a.transTypeCatId, a.target_supplier_type_id, a.companyId, yearexpens)">
+                                       {{a.transTypeCatName}}
+                                </span>
+                        </td>
+                        <td>
+                            {{accoConversions.getYearMont(a.date)}}
+                        </td>
+                        <td>
+                            {{roundNum(a.sum)}}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+
+                    <tbody data-ng-class="{'heightHead': expenseMissingReportTable.length == 0}"
+                           ng-if="expenseMissingReportTable.length == 0">
+                    <tr>
+                        <td colspan="5" class="notTableData">
+                            אין נתונים
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="linkToTable">
+                                <span ui-sref="mainAccountants.reports.expenseMissingReportTable">
+                                                               לרשימה המלאה
+                                </span>
+                </div>
+            </div>
+        </div>
+        <div class="reportsAccTd">
+            <div class="helpReportsAccTitle" ng-if="appData.ShowhelpReports">
+                <i class="fi-arrow-right"></i>
+                אחוז השינוי של החודש הנקוב לעומת החודש הקודם של כרטיסי הנה"ח של הלקוחות
+            </div>
+            <div class="title">
+                <p>
+                    כרטיסים שגדלו/קטנו
+                </p>
+
+                <div>
+                    <label>
+                        מעל
+                        %
+                    </label>
+                    <input type="text" min="0" max="100" numeric="" ng-model="$parent.defaultsPrecentReports"
+                           ng-change="setDefaultsPrecentAcc()">
+                    <label>
+                        בחודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.monthchanged" ng-change="expenseChangedReport()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.yearchanged"
+                           ng-change="expenseChangedReport()">
+                </div>
+            </div>
+            <div class="expenseChangedReportTable">
+                <div ng-if="!loaderexpenseChanged" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <table>
+                    <thead data-ng-if="expenseChangedReportTable.length > 0">
+                    <tr>
+                        <th ng-click="sort_by2('companyName');">
+                            לקוח
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by2('transTypeCatName');">
+                            כרטיס
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by2('avgTotal');">
+                            חודש קודם
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by2('sum');">
+                            סכום
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by2('change.numChange');">
+                            שינוי
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody vs-repeat="30" ng-if="expenseChangedReportTable.length !== 0">
+                    <tr ng-repeat="a in expenseChangedReportTable  | orderBy : predicate2 :reverse2">
+                        <td>
+                                   <span data-ng-click="goToLink(a.companyId, 'listCompany')">
+                                       {{a.companyName}}
+                                   </span>
+                        </td>
+                        <td>
+                                <span data-ng-click="goToAnalisis(a.transTypeCatId, a.target_supplier_type_id, a.companyId, yearchanged)">
+                                       {{a.transTypeCatName}}
+                                </span>
+                        </td>
+                        <td>
+                            {{roundNum(a.avgTotal)}}
+                        </td>
+                        <td>
+                            {{roundNum(a.sum)}}
+                        </td>
+                        <td class="{{a.change.colorType}} {{a.change.direction}}">
+                            {{a.change.numChange}}
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tbody data-ng-class="{'heightHead': expenseChangedReportTable.length == 0}"
+                           ng-if="expenseChangedReportTable.length == 0">
+                    <tr>
+                        <td colspan="5" class="notTableData">
+                            אין נתונים
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table class="helpReportsTable" ng-if="appData.ShowhelpReports">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="helpReportsAccTable">
+                                <i class="fi-arrow-up"></i>
+                                בלחיצה על חברה תועבר לעמוד פרופיל החברה בה מוצגים נתוני החברה בהרחבה
+                            </div>
+                        </td>
+                        <td>
+                            <div class="helpReportsAccTable">
+                                <i class="fi-arrow-up"></i>
+                                בלחיצה על הכרטיס תועבר להצגת כל נתוני הנה"ח של הלקוח
+                            </div>
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="linkToTable">
+                                <span ui-sref="mainAccountants.reports.expenseChangedReportTable">
+                                                               לרשימה המלאה
+                                </span>
+                </div>
+            </div>
+        </div>
+        <div class="reportsAccTd">
+            <div class="title">
+                <p>
+                    הקלדות
+                </p>
+                <div>
+                    <label>
+                        מחודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.fromMonthType" ng-change="typing()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.fromYearType"
+                           ng-change="typing()">
+                    <label class="until">
+                        עד
+                    </label>
+                    <label>
+                        חודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.toMonthType" ng-change="typing()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.toYearType"
+                           ng-change="typing()">
+                </div>
+            </div>
+            <div class="expenseMissingReportTable">
+                <div ng-if="!loadertyping" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <table>
+                    <thead data-ng-if="appData.typing.months.length > 0">
+                    <tr>
+                        <th ng-repeat="a in monthTitle" ng-if="$index < 4" ng-click="sort_by3('name' + $index)">
+                            {{accoConversions.getDayMonthGraph(a['name' + $index])}}
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody vs-repeat="30" ng-if="appData.typing.months.length !== 0">
+                    <tr ng-repeat="a in itemsAll = (appData.arrTypingSmall) | orderBy : predicate3 :reverse3">
+                        <td ng-repeat="v in a" ng-if="$index == 0">
+                            {{a['name' + $index]}}
+                        </td>
+                        <td ng-repeat="v in a" ng-if="$index !== 0 && $index < 4">
+                            {{roundNum(a['name' + $index])}}
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tbody data-ng-class="{'heightHead': appData.typing.months.length == 0}"
+                           ng-if="appData.typing.months.length == 0">
+                    <tr>
+                        <td colspan="5" class="notTableData">
+                            אין נתונים
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="linkToTable">
+                                <span ui-sref="mainAccountants.reports.typing">
+                                                               לרשימה המלאה
+                                </span>
+                </div>
+            </div>
+        </div>
+        <div class="reportsAccTd">
+            <div class="title">
+                <p>
+                    התאמות
+                </p>
+
+                <div>
+                    <label>
+                        מחודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.fromMonthMatch" ng-change="dohMatch()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.fromYearMatch"
+                           ng-change="dohMatch()">
+                    <label class="until">
+                        עד
+                    </label>
+                    <label>
+                        חודש
+                    </label>
+                    <select name="month_nav" data-ng-model="$parent.toMonthMatch" ng-change="dohMatch()">
+                        <option value="01">ינואר</option>
+                        <option value="02">פברואר</option>
+                        <option value="03">מרץ</option>
+                        <option value="04">אפריל</option>
+                        <option value="05">מאי</option>
+                        <option value="06">יוני</option>
+                        <option value="07">יולי</option>
+                        <option value="08">אוגוסט</option>
+                        <option value="09">ספטמבר</option>
+                        <option value="10">אוקטובר</option>
+                        <option value="11">נובמבר</option>
+                        <option value="12">דצמבר</option>
+                    </select>
+                    <label>
+                        שנה
+                    </label>
+                    <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.toYearMatch"
+                           ng-change="dohMatch()">
+                </div>
+
+            </div>
+            <div class="expenseMissingReportTable">
+                <div ng-if="!loaderMatch" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <table>
+                    <thead ng-if="appData.dohMatch.length > 0">
+                    <tr>
+                        <th ng-click="sort_by4('COMPANY_NAME')">
+                            שם חברה
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by4('MONTH_ID')">
+                            חודש
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by4('PEULOT_COUNT')">
+                            סה״כ פעולות
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                        <th ng-click="sort_by4('IMP_MATCH_COUNT')">
+                            לא מותאמות
+                            <i class="glyphicon glyphicon-sort"></i>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody vs-repeat="30" ng-if="appData.dohMatch.length !== 0">
+                    <tr ng-repeat="a in itemsAll = (appData.dohMatch) | orderBy : predicate4 :reverse4">
+                        <td>
+                            {{a.COMPANY_NAME}}
+                        </td>
+                        <td>
+                            {{accoConversions.getDayMonthGraph(a.MONTH_ID)}}
+                        </td>
+                        <td>
+                            {{a.PEULOT_COUNT}}
+                        </td>
+                        <td>
+                            {{a.IMP_MATCH_COUNT}}
+                        </td>
+                    </tr>
+                    </tbody>
+
+                    <tbody data-ng-class="{'heightHead': appData.dohMatch.length == 0}"
+                           ng-if="appData.dohMatch.length == 0">
+                    <tr>
+                        <td colspan="5" class="notTableData">
+                            אין נתונים
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <div class="linkToTable">
+                                <span ui-sref="mainAccountants.reports.match">
+                                                               לרשימה המלאה
+                                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

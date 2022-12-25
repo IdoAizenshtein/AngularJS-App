@@ -1,0 +1,88 @@
+<div ng-controller="bankMatchCtrl">
+    <div class="popup-header">
+        <h2>
+            בטל התאמה לפעולה:
+            {{appData.transDescAzonlyPop}}
+        </h2>
+    </div>
+
+    <div class="popup-content">
+        <div class="row_update_match" ng-show="appData.lengthBankMatch !== 0 && appData.peulotTableCancel.length !== 0">
+            <div class="right_row_update_match">
+                <h3> התאמה לפעולות</h3>
+
+                <p>
+                    בטל התאמה עם הפעולה הרשומה למעלה
+                </p>
+            </div>
+            <div class="left_row_update_match">
+                <button ng-click="cancelMatchPeulot()">
+                    בטל התאמה
+                </button>
+            </div>
+        </div>
+        <div class="table_data_match">
+            <div ng-show="!appData.loaderMatchTable" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <div class="notDataTableMatch"
+                 ng-if="appData.peulotTableCancel.length == 0 && appData.lengthBankMatch > 0">
+                הפעולה סומנה כ"התעלם מהפעולה - לא נמצאה התאמה",
+            <span ng-click="cancelMatchPeulot('match_link_id')">
+לחץ להחזיר למסך התאמות
+</span>
+
+            </div>
+            <div class="notDataTableMatch"
+                 ng-if="appData.lengthBankMatch == 0">
+                אין פעולות להתאמה
+
+                </span>
+            </div>
+            <div class="thead_match"
+                 ng-if="appData.lengthBankMatch !== 0 && appData.peulotTableCancel.length !== 0">
+                <!--<div>&nbsp;</div>-->
+                <div>&nbsp;</div>
+                <div>תאריך התאמה</div>
+                <div>שם הפעולה</div>
+                <div> סכום</div>
+                <div>אסמכתא</div>
+                <div> סוג</div>
+            </div>
+            <div class="tbody_match"
+                 ng-if="appData.lengthBankMatch !== 0 && appData.peulotTableCancel.length !== 0">
+                <div ng-repeat="a in appData.peulotTableCancel" class="rowMatchList"
+                     ng-class="{'activRow': a.active}">
+                    <!--<div>-->
+                        <!--<input type="radio" ng-model="$parent.appData.match_link_id" name="match_link_id"-->
+                               <!--value="{{a.match_link_id}}" ng-change="checkRadioAll()"/>-->
+                    <!--</div>-->
+                    <div class="toolMa">
+                        <span ng-if="!a.target_ind_kvua" class="notBg"></span>
+                        <span ng-if="a.target_ind_kvua == 1" tooltips-tazrim title="פעולה מחזורית קבועה"></span>
+                    </div>
+                    <div>
+                        {{a.target_original_date}}
+                    </div>
+                    <div tooltips-elipsis tooltip="{{a.target_name}}">
+                        {{a.target_name}}
+                    </div>
+                    <div class="sumMatchTable" ng-class="{'expense': a.ind_expence == 1}">
+                        {{round2Fixed(a.target_total)}}
+                    </div>
+                    <div>
+                        {{a.target_asmachta}}
+                    </div>
+                    <div>
+                        {{accoConversions.getTypePayment(a.target_payment_type_id)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

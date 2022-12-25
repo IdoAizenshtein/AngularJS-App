@@ -1,0 +1,216 @@
+<div ng-if="!showPopPassword" class="showPopPasswordForm">
+    <form name="showPopPasswordForm" novalidate ng-submit="checkpopPasswordCompaiesTab(showPopPasswordForm)">
+        <p>
+            אנא הקלד סיסמה:
+        </p>
+
+        <div class="inputsPass"
+             ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+            <input style="display:none" type="password" autocomplete="off">
+            <input pass-tab-spider
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   autocomplete="off" type="password" ng-model="popPasswordCompaiesTab" name="pass" required="">
+        </div>
+        <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+            <div ng-show="showPopPasswordForm.pass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="showPopPasswordForm.pass.$error.valid">
+                הסיסמה אינה נכונה
+            </div>
+        </div>
+        <button type="submit">
+            אישור
+        </button>
+    </form>
+</div>
+
+
+<div ng-if="showPopPassword">
+    <div ng-show="!loaderSpider" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+
+    <div class="funds-totals" ng-init="init()" data-ng-class="{'openMoreNavEx': openMoreNav}">
+            <div class="spiderListSearch">
+                <input ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-model="freeSearch" placeholder="חיפוש"
+                       ng-show="appData.spiderList.length > 0 || freeSearch.length > 0">
+            </div>
+    </div>
+
+    <div>
+        <div>
+            <div>
+                <div class="tableSpiderList">
+                    <div class="col-md-12" ng-show="filtered.length > 0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <th  ng-click="sort_by('ACC_NAME');">
+                                רו"ח
+                            </th>
+                            <th  ng-click="sort_by('STATUS');">
+                                סטטוס
+                            </th>
+                            <th ng-click="sort_by('RUN_TYPE');">
+                                הרצה
+                            </th>
+                            <th ng-click="sort_by('DATE_LAST_RUN');">
+                                ת. הרצה אחרון
+                            </th>
+                            <th ng-click="sort_by('IND_MORNING_RUN');">
+                                תזמון בוקר
+                            </th>
+                            <th ng-click="sort_by('IND_NIGHT_RUN');">
+                                תזמון לילה
+                            </th>
+                            <th ng-click="sort_by('IND_BIZIBOX_SPIDER');">
+                                מחשבי ביזיבוקס
+                            </th>
+                            <th ng-click="sort_by('IND_URGENT');">
+                                דחיפות
+                            </th>
+                            <th ng-click="sort_by('DATE_LAST_MODIFIED_SORT');">
+                                ת. שינוי אחרון
+                            </th>
+                            <th ng-click="sort_by('DATE_CREATED_SORT');">
+                                ת. יצירה
+                            </th>
+                            <th ng-click="sort_by('SPIDER_ID');">
+                                מזהה
+                            </th>
+                            </thead>
+                            <tbody scroll-fill="{{scrollHeightTable}}">
+                            <tr ng-repeat="a in filtered = (appData.spiderList | filter:freeSearch | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                <td>
+                                    <div ng-if="a.ACC_NAME !== null">
+                                        {{a.ACC_NAME}}
+                                    </div>
+                                    <div ng-if="a.ACC_NAME == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.STATUS !== null">
+                                        {{accoConversions.getStatustokensalerts(a.STATUS)}}
+                                    </div>
+                                    <div ng-if="a.STATUS == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.RUN_TYPE !== null" ng-init="a.disabledRunType = true">
+                                        <span ng-click="spiderUpdatePop(a)" class="underline">
+                                            {{a.RUN_TYPE}}
+                                        </span>
+                                        <!--<i ng-click="a.disabledRunType = !a.disabledRunType; spiderUpdate(a, 'inrun_type', 'RUN_TYPE')" ng-class="{'fa fa-pencil': a.disabledRunType, 'fi-upload': !a.disabledRunType}"></i>-->
+                                    </div>
+                                    <div ng-if="a.RUN_TYPE == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.DATE_LAST_RUN !== null">
+                                        {{a.DATE_LAST_RUN}}
+                                    </div>
+                                    <div ng-if="a.DATE_LAST_RUN == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_MORNING_RUN !== null">
+                                       <input type="checkbox" ng-model="a.IND_MORNING_RUN" ng-true-value="1" ng-false-value="0" ng-change="spiderUpdates(a, 'inind_morning_run', 'IND_MORNING_RUN')">
+                                    </div>
+                                    <div ng-if="a.IND_MORNING_RUN == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_NIGHT_RUN !== null">
+                                        <input type="checkbox" ng-model="a.IND_NIGHT_RUN" ng-true-value="1" ng-false-value="0" ng-change="spiderUpdates(a, 'inind_night_run', 'IND_NIGHT_RUN')">
+                                    </div>
+                                    <div ng-if="a.IND_NIGHT_RUN == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_BIZIBOX_SPIDER !== null">
+                                        <input type="checkbox" ng-model="a.IND_BIZIBOX_SPIDER" ng-true-value="1" ng-false-value="0" ng-change="spiderUpdates(a, 'inind_bizibox_spider', 'IND_BIZIBOX_SPIDER')">
+                                    </div>
+                                    <div ng-if="a.IND_BIZIBOX_SPIDER == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_URGENT !== null">
+                                        <input type="checkbox" ng-model="a.IND_URGENT" ng-true-value="1" ng-false-value="0" ng-change="spiderUpdates(a, 'inind_urgent', 'IND_URGENT')">
+                                    </div>
+                                    <div ng-if="a.IND_URGENT == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.DATE_LAST_MODIFIED !== null">
+                                        {{a.DATE_LAST_MODIFIED}}
+                                    </div>
+                                    <div ng-if="a.DATE_LAST_MODIFIED == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.DATE_CREATED !== null">
+                                        {{a.DATE_CREATED}}
+                                    </div>
+                                    <div ng-if="a.DATE_CREATED == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.SPIDER_ID !== null" class="spiderLogWrap">
+                                        <i ng-click="openLogs(a.SPIDER_ID)" class="fa fa-terminal"></i>
+                                        <div>
+                                            {{a.SPIDER_ID}}
+                                        </div>
+                                    </div>
+                                    <div ng-if="a.SPIDER_ID == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="titleNotFilter" ng-show="filtered.length == 0">
+                        לא נמצאה התאמה
+                    </div>
+                </div>
+            </div>
+            <div class="rowsSort" data-ng-show="appData.spiderList.length > 0 && filtered.length > 0">
+                <div class="selectRows">
+                    הצג
+                    <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>150</option>
+                    </select>
+                    שורות
+                </div>
+                <div class="sumRows">
+                    סה״כ שורות שנמצאו
+                    {{filtered.length}}
+                    מתוך
+                    {{appData.spiderList.length}}
+                </div>
+                <div class="pagRows" ng-show="filtered.length > 0 && filtered.length > entryLimit">
+                    <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                                items-per-page="entryLimit" total-items="filtered.length" ng-model="currentPage"
+                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                first-text="עמ׳ ראשון"
+                                last-text="עמ׳ אחרון"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

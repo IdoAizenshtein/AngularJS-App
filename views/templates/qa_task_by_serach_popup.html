@@ -1,0 +1,203 @@
+<div ng-controller="taskManagerCtrl">
+    <div class="popup-header">
+        <h2>
+            חיפוש מתקדם
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="detailsPaymentFormPop"
+              class="css-form"
+              novalidate
+              ng-submit="qa_task_by_serach(detailsPaymentFormPop)"
+              autocomplete="off">
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$valid }">
+                    <label>
+                        שם חברה
+                    </label>
+                    <input id="cName__" name="cName__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.qa_task_by_serach.companyName"
+                           name="cName"
+                           autocomplete="off"
+                           ng-required="false"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$valid }">
+                    <label>
+                        ח.פ.
+                    </label>
+                    <input id="uHp__" name="uHp__" style="display: none;" value="" type="text" autocomplete="off">
+                    <input ng-model-options="{ updateOn: 'blur'}"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           class="ltrSide"
+                           type="text"
+                           ng-model="appData.qa_task_by_serach.companyHp"
+                           autocomplete="off" name="uHp"
+                           maxlength="9"
+                           minlength="8"
+                           ng-required="false"
+                           legal-tz-hp/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.uHp.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.uHp.$error.integer">
+                        מספר לא חוקי
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$valid }">
+                    <label>
+                        מספר באג בג'ירה
+                    </label>
+                    <input id="uName__" name="uName__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.qa_task_by_serach.jiraBugId" name="uName"
+                           ng-required="false"
+                           autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.uName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="wrapInputForm">-->
+                <!--<div class="inputForm"-->
+                     <!--data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.task_id.$touched) && detailsPaymentFormPop.task_id.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.task_id.$touched) && detailsPaymentFormPop.task_id.$valid }">-->
+                    <!--<label>-->
+                        <!--taskId-->
+                    <!--</label>-->
+                    <!--<input id="task_id__" name="task_id__" style="display: none;" value="" type="text"-->
+                           <!--autocomplete="off">-->
+                    <!--<input type="text"-->
+                           <!--readonly-->
+                           <!--ng-required="false"-->
+                           <!--check-uuid-->
+                           <!--onfocus="this.removeAttribute('readonly');"-->
+                           <!--ng-model="appData.qa_task_by_serach.taskId"-->
+                           <!--name="task_id"-->
+                           <!--autocomplete="off"-->
+                           <!--replace-and/>-->
+                <!--</div>-->
+                <!--<div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.task_id.$touched) && detailsPaymentFormPop.task_id.$invalid"-->
+                     <!--class="alertsMessages">-->
+                    <!--<div ng-show="detailsPaymentFormPop.task_id.$error.required">-->
+                        <!--מידע זה הינו מידע חובה-->
+                    <!--</div>-->
+                    <!--<div ng-show="detailsPaymentFormPop.task_id.$error.format">-->
+                        <!--פורמט הטוקן אינו תקין-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="wrapInputForm">
+                <div class="inputForm">
+                    <label>
+                        מספר קריאה
+                    </label>
+                    <input id="numberOfCustomer__" name="numberOfCustomer__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           number-only
+                           ng-required="false"
+                           readonly="readonly"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.qa_task_by_serach.taskNumber"
+                           name="numberOfCustomer"
+                           autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.accountant_office_id.$touched) && detailsPaymentFormPop.accountant_office_id.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.accountant_office_id.$touched) && detailsPaymentFormPop.accountant_office_id.$valid }">
+                    <label>
+                        שם משרד
+                    </label>
+                    <input id="accountant_office_id__" name="accountant_office_id__" style="display: none;" value=""
+                           type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           ng-required="false"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.qa_task_by_serach.officeName"
+                           name="accountant_office_id"
+                           autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.accountant_office_id.$touched) && detailsPaymentFormPop.accountant_office_id.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.accountant_office_id.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$valid }">
+                    <label>
+                        תיאור
+                    </label>
+                    <input id="cAddress__" name="cAddress__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           ng-required="false"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.qa_task_by_serach.desc" name="cAddress"
+                           autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cAddress.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="groupButtonChecks">
+                <button type="button" ng-click="hidePopup()">
+                    בטל
+                </button>
+                <button type="submit"
+                        ng-disabled="!detailsPaymentFormPop.$valid">
+                    אישור
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

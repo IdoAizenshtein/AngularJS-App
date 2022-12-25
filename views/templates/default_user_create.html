@@ -1,0 +1,118 @@
+<div ng-controller="companysCtrl">
+    <div class="popup-header">
+        <h2>
+עדכון פרטי חברה
+        </h2>
+    </div>
+    
+    <div class="popup-content">
+        <form name="editCompanyForm" ng-show="!appData.companyEditDisabledButton" novalidate ng-submit="editCompany(editCompanyForm);">
+            <div class="wrapInputForm">
+                <label>
+                    שם מלא
+                </label>
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (editCompanyForm.$submitted || editCompanyForm.uName.$touched) && editCompanyForm.uName.$invalid, 'sucInput': (editCompanyForm.$submitted || editCompanyForm.uName.$touched) && editCompanyForm.uName.$valid }">
+                    <input style="display:none" type="text" autocomplete="off">
+                    <input type="text"
+                           readonly
+                           required
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.default_user_create.defUserName" name="uName" placeholder="חובה"
+                           ng-pattern="/\s/"/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="editCompanyForm.$submitted || editCompanyForm.uName.$touched" class="alertsMessages">
+                    <div ng-show="editCompanyForm.uName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="editCompanyForm.uName.$error.pattern">
+                        יש לרשום שם פרטי ושם משפחה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    כתובת דוא”ל:
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (editCompanyForm.$submitted || editCompanyForm.uEmail.$touched) && editCompanyForm.uEmail.$invalid, 'sucInput': (editCompanyForm.$submitted || editCompanyForm.uEmail.$touched) && editCompanyForm.uEmail.$valid }">
+                    <input style="display:none" type="email" autocomplete="off">
+                    <input type="email"
+                           readonly
+                           required
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.default_user_create.defUserEmail" name="uEmail" placeholder="חובה"
+                           class="mailLtr"
+                           ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/" user-checks-company/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="editCompanyForm.$submitted || editCompanyForm.uEmail.$touched" class="alertsMessages">
+      <span ng-show="editCompanyForm.uEmail.$error.required">
+        מידע זה הינו מידע חובה
+      </span>
+                    <span ng-show="editCompanyForm.uEmail.$error.pattern">
+        כתובת המייל שהזנת אינה תקינה
+      </span>
+                    <span ng-show="editCompanyForm.uEmail.$error.unique">
+מייל זה קיים במערכת
+      </span>
+                </div>
+
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    טלפון נייד:
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (editCompanyForm.$submitted || editCompanyForm.uTel.$touched) && editCompanyForm.uTel.$invalid, 'sucInput': (editCompanyForm.$submitted || editCompanyForm.uTel.$touched) && editCompanyForm.uTel.$valid }">
+                    <input style="display:none" type="tel" autocomplete="off">
+                    <input type="tel"
+                           readonly
+                           required
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off"
+                           ng-model="appData.default_user_create.defUserCell" placeholder="חובה" name="uTel"
+                           ensure-unique-tel-not-req/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="editCompanyForm.$submitted || editCompanyForm.uTel.$touched" class="alertsMessages">
+                    <div ng-show="editCompanyForm.uTel.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="editCompanyForm.uTel.$error.minlength || editCompanyForm.uTel.$error.maxlength || editCompanyForm.uTel.$error.integer">
+                        המספר שהזנת אינו חוקי
+                    </div>
+                </div>
+            </div>
+            <div class="addCompanySubmit">
+                <input type="submit" value="עדכון" ng-disabled="appData.companyEditDisabledButton"/>
+            </div>
+            <input type="hidden" ng-click="resetCompany(editCompanyForm)" id="resetCompany" value="Reset"/>
+        </form>
+        <div ng-if="appData.companyEditDisabledButton" class="companyEditWrap">
+            <p>
+                לאחר לחיצת על אישור, ישלח מייל בשמך ללקוח עם אישור לקבלת המייל היומי
+            </p>
+            <div class="buttonGr">
+                <button ng-click="default_user_create(appData.default_user_create, true);">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div ng-show="$parent.appData.loaderAccMangPage" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="funds-totals mainPageAcc mangagerAccWrap" ng-init="init()">
+    <ul class="tabCardsAcc">
+        <li ui-sref="mainAccountants.managerAcc.companyDetails" ui-sref-active="active" ng-click="loadAccMangPage()">
+            <span>
+פרטי משתמש
+            </span>
+        </li>
+        <li ui-sref="mainAccountants.managerAcc.office" ui-sref-active="active" ng-click="loadAccMangPage()">
+            <span>
+משרד
+            </span>
+        </li>
+    </ul>
+</div>
+<div ui-view="lazyLoadView"></div>

@@ -1,0 +1,527 @@
+<div data-ng-if="!appData.selectedCompany">
+    <h2 class="content-header">
+        אנא בחר חברה
+    </h2>
+</div>
+<div ng-show="appData.selectedCompany && !appData.selectedCompany.tokens || appData.selectedCompany && appData.loaderSettAcc"
+     class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="wrap-account-settings" ng-show="appData.selectedCompany">
+    <section class="titles_accou">
+        <h2 data-ng-class="{'helpViewColor': appData.helpSignUp == true && appData.helpSignUpInd == 11}"
+            ng-click="appData.accounts_and_cc = !appData.accounts_and_cc">
+            <i class="fa" ng-class="{'fa-caret-down':appData.accounts_and_cc, 'fa-caret-left':!appData.accounts_and_cc}"
+               ng-if="appData.selectedCompany.tokens.accounts_and_cc.length"></i>
+            חשבונות בנק
+        </h2>
+        <button data-ng-click="openBankAccountsPopup()" class="plus-btn"
+                data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 11}">
+            הוסף חשבון בנק +
+        </button>
+        <div class="showAllDeleted squaredFour" ng-if="appData.selectedCompany.tokens.accounts_and_cc.length">
+            <input id="showAllDeleted" type="checkbox" ng-model="appData.showAllDeleted">
+            <label for="showAllDeleted">
+                <span>
+הצג חשבונות שנמחקו
+                </span>
+            </label>
+        </div>
+    </section>
+    <!--<div ng-repeat="account in appData.selectedCompany.tokens.accounts_and_cc" ng-show="appData.accounts_and_cc && !account.notShow">-->
+    <div ng-repeat="account in appData.selectedCompany.tokens.accounts_and_cc" ng-show="appData.accounts_and_cc">
+        <div class="account-header">
+            <strong class="account-bank-name" ng-if="account.token !== null">
+                <i class="bank_{{account.token.BankNumber}}"></i>
+                בנק
+                {{accoConversions.getBankName(account.token.BankNumber)}}
+            </strong>
+            <strong class="account-bank-name" ng-if="account.token == null">
+                ללא פרטי כניסה
+            </strong>
+            <button ng-if="appData.adminSoft && account.token !== null && account.token.BankNumber !== 999"
+                    ng-click="showRunType(account.token.token, account.token.tokenType)"
+                    class="showRunTypeButton">
+                טעינה חוזרת
+            </button>
+            <button ng-if="appData.adminSoft && account.token !== null && account.token.BankNumber !== 999"
+                    ng-click="tokenUpdatedatesmeshicha(account.token.token)" class="showRunTypeButton">
+                משיכה לפי ימים
+            </button>
+            <div class="left-account-header" ng-show="account.token !== null && account.token.ind_otp_token !== 1">
+                <strong class="account-status">
+                    סטטוס:
+                    <!--<span ng-class="account.token.status > 1 ? 'off' : 'on'" ng-if="(!account.notShow || !account.accounts.length) && account.token.main_multy_company == null && account.token.status !== 4444 && account.token.BankNumber !== 999">-->
+                        <!--<span class="statusRed">-->
+<!--לא פעיל-->
+                        <!--</span>-->
+                    <!--</span>-->
+                    <!--ng-if="(account.notShow && account.accounts.length) || account.token.main_multy_company !== null || account.token.status == 4444 || account.token.BankNumber == 999"-->
+                    <span ng-class="account.token.status > 1 ? 'off' : 'on'">
+                        <span ng-if="account.token.status == 157 || account.token.status == 158" class="statusDiscode"
+                              ng-click="updateCardPassword(account)">
+                            {{accoConversions.getStatus(account.token.status)}}
+                        </span>
+                        <span ng-if="account.token.status == 2 || account.token.status == 4 || account.token.status == 5"
+                              class="statusRed" ng-click="updateAccountPassword(account)">{{accoConversions.getStatus(account.token.status)}}<i
+                                class="fa fa-exclamation-circle" ng-if="account.token_data.status == 2"></i>
+                        </span>
+                          <span ng-if="account.token.status == 3" class="statusRed" ng-click="updateAccount(account)">{{accoConversions.getStatus(account.token.status)}}</span>
+                        <span ng-if="account.token.status !== 157 && account.token.status !== 158 && account.token.status !== 2 && account.token.status !== 4 && account.token.status !== 5 && account.token.status !== 3"
+                              class="on">{{accoConversions.getStatus(account.token.status)}}<i
+                                class="fa fa-check-circle" ng-if="account.token.status == 0"></i>
+                        </span>
+                    </span>
+                </strong>
+                <strong class="account-delete" ng-click="deleteToken(account, $index)"
+                        ng-show="(!account.notShow || !account.accounts.length) && account.token.main_multy_company == null && account.token.status !== 4444 && account.token.BankNumber !== 999">
+                    <i class="fa fa-trash"></i>
+                    מחיקת חשבון
+                </strong>
+                <strong class="account-update" data-ng-click="updateAccountPassword(account)"
+                        ng-show="account.token.status !== 4444 && account.token.BankNumber !== 999">
+                    <i class="fa fa-cog"></i>
+                    עדכון סיסמא
+                </strong>
+                <strong class="account-update" data-ng-click="updateAccount(account)"
+                        ng-show="account.token.status !== 4444 && account.token.BankNumber !== 999">
+                    <i class="fa fa-cog"></i>
+                    עדכון פרטים
+                </strong>
+            </div>
+        </div>
+
+        <table class="account-body" data-ng-show="account.accounts.length > 0">
+            <thead data-ng-show="(account.token !== null) || (account.token == null && appData.showAllDeleted)">
+            <tr>
+                <th>
+                    שם חשבון
+                </th>
+                <th>
+                    מס׳ חשבון
+                </th>
+                <th>
+                    סניף
+                </th>
+                <th>
+                    כרטיסי אשראי
+                </th>
+                <th>
+                    עדכון אחרון
+                </th>
+                <th class="lastTh">
+                    פעולות
+                </th>
+                <th class="adminSoftTh" ng-if="appData.adminSoft">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="subaccount in account.accounts">
+            <tr ng-class="{'deleted':subaccount.deleted, 'showCards': subaccount.showCards}"
+                ng-show="(subaccount.deleted && appData.showAllDeleted) || (!subaccount.deleted)">
+                <td>
+                    <i ng-if="subaccount.kinuy !== null" data-ng-class="{'save': subaccount.edit}" title="עריכה"
+                       data-ng-click="subaccount.edit = !subaccount.edit; editNameBank(subaccount.edit, subaccount.company_account_id, subaccount.kinuy)"></i>
+                    <input data-ng-init="subaccount.edit = false" type="text" ng-disabled="!subaccount.edit"
+                           size="{{(subaccount.kinuy.length) - 1}}"
+                           ng-model="subaccount.kinuy">
+                    <!--<span ng-if="subaccount.currency_id && subaccount.currency_id !== null">-->
+                    <!--{{accoConversions.getCurrency(subaccount.currency_id)}}-->
+                    <!--</span>-->
+                </td>
+                <td>
+                    {{subaccount.bank_account_id}}
+                </td>
+                <td>
+                    {{subaccount.bank_snif_id}}
+                </td>
+                <td class="btnNotLine cardOpen" ng-click="subaccount.showCards = !subaccount.showCards">
+                    <p data-ng-show="subaccount.credit_cards.length > 0">
+                        <span ng-if="subaccount.credit_cards.length == 1">כרטיס אחד</span>
+                        <span ng-if="subaccount.credit_cards.length > 1">
+                            {{subaccount.credit_cards.length}} כרטיסים
+                        </span>
+                    </p>
+                </td>
+                <td>
+                    <div ng-if="subaccount.lastUpdateDate">
+                        {{subaccount.lastUpdateDate}}
+                    </div>
+                </td>
+                <td class="btnNotLine">
+                    <strong ng-if="subaccount.edit && subaccount.ind_primary_account == false"
+                            class="strongBtnTdAcc pointerBtn"
+                            ng-click="setPrimBank(subaccount.company_account_id)" style="color: #1387a9;">
+                        הגדר כראשי
+                    </strong>
+                    <strong ng-if="subaccount.ind_primary_account == true" class="strongBtnTdAcc">
+                        הוגדר כראשי
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="subaccount.company_account_id !== null && subaccount.deleted == false"
+                            ng-click="deleteBankAccount(subaccount, $parent.$index, $index)">
+                        <i class="fa fa-trash"></i>
+                        מחיקה
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="subaccount.company_account_id !== null && subaccount.deleted == true"
+                            ng-click="recoverBankAccount(subaccount, account.token.token, account)">
+                        <i class="fa fa-undo"></i>
+                        שחזור חשבון
+                    </strong>
+                </td>
+                <td ng-if="appData.adminSoft" class="adminSoftPeulot btnNotLine">
+                    <!--<i class="fa fa-bug" title="פתיחת באג" tooltips  ng-click="openBug(account.token.token, subaccount.company_account_id, subaccount.kinuy)"></i>-->
+                    <i tooltips-left class="fa fa-compress"
+                       title="בצע איחוד של חשבון זה שהפסיק להיטען עם חשבון ממשיך"
+                       ng-click="openConsolidation(subaccount.company_account_id, account.token.token)"></i>
+                    <i tooltips-left class="fa fa-forward" title="העברת חשבון זה לחברה אחרת"
+                       ng-click="openTranfer(subaccount.company_account_id)"></i>
+                </td>
+            </tr>
+            <tr ng-if="subaccount.showCards && subaccount.credit_cards.length > 0" class="header_credit credit_cards">
+                <td>
+                    סוג כרטיס
+                </td>
+                <td>
+                    חברת אשראי
+                </td>
+                <td>
+                    מס׳ כרטיס
+                </td>
+                <td>
+                    עדכון אחרון
+                </td>
+                <td></td>
+                <td></td>
+                <td ng-if="appData.adminSoft"></td>
+            </tr>
+            <tr ng-show="(subaccount.showCards) || (subaccount.showCards && card.deleted && appData.showAllDeleted) || (subaccount.showCards && !card.deleted)"
+                ng-repeat="card in subaccount.credit_cards" class="credit_cards" ng-class="{'deleted':card.deleted}">
+                <td>
+                    {{card.kinuy}}
+                </td>
+                <td>
+                    {{accoConversions.getCardType(card.credit_card_type_id)}}
+                </td>
+                <td>
+                    {{card.credit_card_no}}
+                </td>
+                <td>
+                    <div ng-if="card.balance_last_update_date">
+                        {{getDate(card.balance_last_update_date)}}
+                    </div>
+                </td>
+                <td></td>
+                <td class="btnNotLine">
+                    <strong class="strongBtnTdAcc pointerBtn" ng-show="card.deleted == false"
+                            ng-click="deleteCreditCardInside(card, $parent.$parent.$index ,$parent.$index, $index)">
+                        <i class="fa fa-trash"></i>
+                        מחיקה
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn" ng-show="card.deleted == true"
+                            ng-click="recoverCreditCardInside(card)">
+                        <i class="fa fa-undo"></i>
+                        שחזור חשבון
+                    </strong>
+                </td>
+                <td ng-if="appData.adminSoft"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <section class="titles_accou">
+        <h2 data-ng-class="{'helpViewColor': appData.helpSignUp == true && appData.helpSignUpInd == 11}"
+            ng-click="appData.out_of_banks_cc = !appData.out_of_banks_cc">
+            <i class="fa" ng-class="{'fa-caret-down':appData.out_of_banks_cc, 'fa-caret-left':!appData.out_of_banks_cc}"
+               ng-if="appData.selectedCompany.tokens.out_of_banks_cc.length"></i>
+            כרטיסי אשראי חוץ בנקאים
+        </h2>
+        <button data-ng-click="openCardsPopup()" class="plus-btn"
+                data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 11}">
+            הוסף כרטיס אשראי +
+        </button>
+        <div class="showAllDeleted squaredFour" ng-if="appData.selectedCompany.tokens.out_of_banks_cc.length">
+            <input id="showAllDeletedB" type="checkbox" ng-model="appData.showAllDeletedB">
+            <label for="showAllDeletedB">
+                <span>
+הצג חשבונות שנמחקו
+                </span>
+            </label>
+        </div>
+    </section>
+    <div data-ng-repeat="account in appData.selectedCompany.tokens.out_of_banks_cc" ng-show="appData.out_of_banks_cc">
+        <div class="account-header">
+            <strong class="account-bank-name" ng-if="account.token !== null">
+                <i class="fa fa-credit-card"></i>
+                {{accoConversions.getCardType(account.token.BankNumber)}}
+            </strong>
+            <strong class="account-bank-name" ng-if="account.token == null">
+                ללא פרטי כניסה
+            </strong>
+            <button ng-if="appData.adminSoft && account.token !== null"
+                    ng-click="showRunType(account.token.token, account.token.tokenType)"
+                    class="showRunTypeButton">
+                טעינה חוזרת
+            </button>
+            <button ng-if="appData.adminSoft && account.token !== null"
+                    ng-click="tokenUpdatedatesmeshicha(account.token.token)" class="showRunTypeButton">
+                משיכה לפי ימים
+            </button>
+            <div class="left-account-header" ng-show="account.token !== null">
+                <strong class="account-status">
+                    סטטוס:
+                    <span ng-class="account.token.status > 1 ? 'off' : 'on'">
+                        <span ng-if="account.token.status == 2 || account.token.status == 4 || account.token.status == 5"
+                              class="statusRed" ng-click="updateCardPassword(account)">{{accoConversions.getStatus(account.token.status)}}<i
+                                class="fa fa-exclamation-circle" ng-if="account.token.status == 2"></i>
+                        </span>
+                        <span ng-if="account.token.status == 3" class="statusRed" ng-click="updateCard(account)">{{accoConversions.getStatus(account.token.status)}}</span>
+                        <span ng-if="account.token.status !== 2 && account.token.status !== 4 && account.token.status !== 5 && account.token.status !== 3"
+                              class="on">{{accoConversions.getStatus(account.token.status)}}<i
+                                class="fa fa-check-circle" ng-if="account.token.status == 0"></i>
+                        </span>
+                    </span>
+                </strong>
+                <strong class="account-delete" data-ng-click="deleteToken(account, $index)"
+                        ng-show="account.token.status !== 4444">
+                    <i class="fa fa-trash"></i>
+                    מחיקת חשבון
+                </strong>
+                <strong class="account-update" data-ng-click="updateCardPassword(account)"
+                        ng-show="account.token.status !== 4444">
+                    <i class="fa fa-cog"></i>
+                    עדכון סיסמא
+                </strong>
+                <strong class="account-update" data-ng-click="updateCard(account)"
+                        ng-show="account.token.status !== 4444">
+                    <i class="fa fa-cog"></i>
+                    עדכון פרטים
+                </strong>
+            </div>
+        </div>
+
+        <table class="account-body" ng-show="account.credit_cards.length > 0">
+            <thead>
+            <tr>
+                <th>
+                    סוג כרטיס
+                </th>
+                <th>
+                    ח-ן
+                </th>
+                <th>
+                    שם כרטיס
+                </th>
+                <th>
+                    עדכון אחרון
+                </th>
+                <th class="lastTh">
+                    פעולות
+                </th>
+                <th class="adminSoftTh" ng-if="appData.adminSoft">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="card in account.credit_cards" ng-class="{'deleted':card.deleted}"
+                ng-show="(!card.deleted) || (card.deleted && appData.showAllDeletedB)">
+                <td>
+                    {{accoConversions.getCardType(card.credit_card_type_id)}}
+                </td>
+                <td>
+                    <div class="editableIconsWrap">
+                     <span ng-if="!card.editable">
+                    {{getNickname(card.company_account_id)}}
+                    </span>
+                        <select class="editableValueCard" ng-if="card.editable"
+                                ng-options="item as item.kinuy for item in appData.accConsolidationSolek track by item.company_account_id"
+                                ng-model="card.editableValue"></select>
+                        <i ng-if="appData.editSoleks" class="editableIcons" ng-init="card.editable = false;"
+                           ng-class="{'fa fa-floppy-o':card.editable, 'fa fa-pencil':!card.editable }"
+                           ng-click="openConsolidationCards(card, card.company_account_id)"></i>
+                        <i ng-if="appData.editSoleks && card.editable" class="fa fa-times-circle"
+                           ng-click="card.editableValue = card.company_account_id;card.editable = false;"></i>
+                    </div>
+                </td>
+                <td>
+                    {{card.kinuy}}
+                </td>
+                <td>
+                    <div ng-if="card.balance_last_update_date">
+                        {{getDate(card.balance_last_update_date)}}
+                    </div>
+                </td>
+                <td class="btnNotLine">
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="card.company_account_id !== null && card.deleted == false"
+                            ng-click="deleteCreditCard(card, $parent.$index, $index)">
+                        <i class="fa fa-trash"></i>
+                        מחיקה
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="card.company_account_id !== null && card.deleted == true"
+                            ng-click="recoverCreditCard(card, account.token.token)">
+                        <i class="fa fa-undo"></i>
+                        שחזור חשבון
+                    </strong>
+                </td>
+                <td ng-if="appData.adminSoft" class="adminSoftPeulot">
+                    <i class="fa fa-bug" title="פתיחת באג" tooltips
+                       ng-click="openBug(account.token.token, card.credit_card_id, accoConversions.getCardType(card.credit_card_type_id))"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <section class="titles_accou">
+        <h2 ng-class="{'helpViewColor': appData.helpSignUp == true && appData.helpSignUpInd == 11}"
+            ng-click="appData.solkimArr = !appData.solkimArr">
+            <i class="fa" ng-class="{'fa-caret-down':appData.solkimArr, 'fa-caret-left':!appData.solkimArr}"
+               ng-if="appData.selectedCompany.tokens.solkim.length"></i>
+            חשבונות סליקה
+        </h2>
+        <button data-ng-click="openSlikaPopup()" class="plus-btn"
+                data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 11}">
+            הוסף חשבון סליקה +
+        </button>
+        <div class="showAllDeleted squaredFour" ng-if="appData.selectedCompany.tokens.solkim.length">
+            <input id="showAllDeletedC" type="checkbox" ng-model="appData.showAllDeletedC">
+            <label for="showAllDeletedC">
+                <span>
+הצג חשבונות שנמחקו
+                </span>
+            </label>
+        </div>
+    </section>
+    <div data-ng-repeat="account in appData.selectedCompany.tokens.solkim" ng-show="appData.solkimArr">
+        <div class="account-header">
+            <strong class="account-bank-name" ng-if="account.token_data !== null">
+                <i class="fa fa-credit-card"></i>
+                {{accoConversions.getSlika(account.token_data.BankNumber)}}
+            </strong>
+            <strong class="account-bank-name" ng-if="account.token_data == null">
+                ללא פרטי כניסה
+            </strong>
+            <button ng-if="appData.adminSoft && account.token_data !== null"
+                    ng-click="showRunType(account.token_data.token, account.token_data.tokenType)"
+                    class="showRunTypeButton">
+                טעינה חוזרת
+            </button>
+            <button ng-if="appData.adminSoft && account.token_data !== null"
+                    ng-click="tokenUpdatedatesmeshicha(account.token_data.token)" class="showRunTypeButton">
+                משיכה לפי ימים
+            </button>
+            <div class="left-account-header" ng-show="account.token_data !== null">
+                <strong class="account-status">
+                    סטטוס:
+                    <span ng-class="account.token_data.status > 1 ? 'off' : 'on'">
+                        <span ng-if="account.token_data.status == 2 || account.token_data.status == 4 || account.token_data.status == 5"
+                              class="statusRed" ng-click="updateSlikaPassword(account)">{{accoConversions.getStatus(account.token_data.status)}}<i
+                                class="fa fa-exclamation-circle" ng-if="account.token_data.status == 2"></i>
+                        </span>
+                        <span ng-if="account.token_data.status !== 2 && account.token_data.status !== 4 && account.token_data.status !== 5"
+                              class="on">{{accoConversions.getStatus(account.token_data.status)}}<i
+                                class="fa fa-check-circle" ng-if="account.token_data.status == 0"></i>
+                        </span>
+                    </span>
+                </strong>
+                <strong class="account-delete" data-ng-click="deleteToken(account, $index)"
+                        ng-show="account.token_data.status !== 4444">
+                    <i class="fa fa-trash"></i>
+                    מחיקת חשבון
+                </strong>
+                <strong class="account-update" data-ng-click="updateSlikaPassword(account)"
+                        ng-show="account.token_data.status !== 4444">
+                    <i class="fa fa-cog"></i>
+                    עדכון סיסמא
+                </strong>
+                <strong class="account-update" data-ng-click="updateSlika(account)"
+                        ng-show="account.token_data.status !== 4444">
+                    <i class="fa fa-cog"></i>
+                    עדכון פרטים
+                </strong>
+            </div>
+        </div>
+        <table class="account-body" data-ng-show="account.solek_data.length > 0">
+            <thead>
+            <tr>
+                <th>
+                    שם סולק
+                </th>
+                <th>
+                    מס׳ סולק
+                </th>
+                <th>
+                    בנק
+                </th>
+                <th>
+                    מס׳ חשבון
+                </th>
+                <th>
+                    עדכון אחרון
+                </th>
+                <th class="lastTh">
+                    פעולות
+                </th>
+                <th class="adminSoftTh" ng-if="appData.adminSoft">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-ng-repeat="subaccount in account.solek_data" ng-class="{'deleted':subaccount.deleted}"
+                ng-show="(!subaccount.deleted) || (subaccount.deleted && appData.showAllDeletedC)">
+                <td>
+                    {{subaccount.solek_nickname}}
+                </td>
+                <td tooltips title="לסולק זה קיימים {{subaccount.cycle_day}} מותגים">
+                    {{subaccount.solek_num}}
+                </td>
+                <td>
+                    {{getNickname(subaccount.company_account_id)}}
+                </td>
+                <td>
+                    <div class="editableIconsWrap">
+                    <span ng-if="!subaccount.editable">
+                        {{subaccount.bank_account_number}}
+                    </span>
+                        <select class="editableValueCard" ng-if="subaccount.editable"
+                                ng-options="item as item.kinuy for item in appData.accConsolidationSolek track by item.company_account_id"
+                                ng-model="subaccount.editableValue"></select>
+                        <i ng-if="appData.editSoleks" class="editableIcons" ng-init="subaccount.editable = false;"
+                           ng-class="{'fa fa-floppy-o':subaccount.editable, 'fa fa-pencil':!subaccount.editable }"
+                           ng-click="openConsolidationSolek(subaccount, subaccount.company_account_id)"></i>
+                        <i ng-if="appData.editSoleks && subaccount.editable" class="fa fa-times-circle"
+                           ng-click="subaccount.editableValue = subaccount.company_account_id;subaccount.editable = false;"></i>
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="subaccount.balance_last_updated_date">
+                        {{getDate(subaccount.balance_last_updated_date)}}
+                    </div>
+                </td>
+                <td class="btnNotLine">
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="account.company_account_id !== null && subaccount.deleted == false"
+                            ng-click="deleteSlika(account, $parent.$index, $index)">
+                        <i class="fa fa-trash"></i>
+                        מחיקה
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn"
+                            ng-show="account.company_account_id !== null && subaccount.deleted == true"
+                            ng-click="recoverSlika(subaccount, account.token_data.token)">
+                        <i class="fa fa-undo"></i>
+                        שחזור חשבון
+                    </strong>
+                    <strong class="strongBtnTdAcc pointerBtn" ng-click="openTranfer(subaccount.solek_id, true)"
+                            ng-show="appData.companies.length > 1">
+                        <i class="fa fa-forward"></i>
+                        העבר חברה
+                    </strong>
+                </td>
+                <td class="adminSoftPeulot" ng-if="appData.adminSoft">
+                    <i class="fa fa-bug" title="פתיחת באג" tooltips
+                       ng-click="openBug(account.token_data.token, subaccount.solek_id, subaccount.solek_nickname)"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div ng-init="init()">
+    <section class="wrap_login">
+        <form autocomplete="off" class="login-form" name="loginForm" novalidate ng-submit="loginUser(loginForm)" ng-show="showAlertExplorerVersion == false" ng-cloak>
+            <img src="image/newLogo.png" class="logoLogin" style="width: 200px;">
+            <strong ng-show="loginForm.$submitted || loginForm.email.$touched || loginForm.password.$touched">
+                   <span ng-show="loginForm.email.$error.required && loginForm.password.$error.required">
+                                       יש למלא דוא"ל וסיסמה.
+               </span>
+                <div ng-show="loginForm.email.$error.unique || loginForm.password.$error.unique">
+                    {{error}}
+                </div>
+            </strong>
+            <strong ng-show="(loginForm.$submitted || loginForm.email.$touched) && loginForm.email.$error.required && !loginForm.password.$error.required">
+                   יש למלא דוא״ל.
+            </strong>
+            <strong ng-show="(loginForm.$submitted || loginForm.password.$touched) && loginForm.password.$error.required && !loginForm.email.$error.required">
+                   יש למלא סיסמה.
+            </strong>
+
+            <div class="form-control">
+                <label>
+                    דוא"ל / שם משתמש
+                    <i tooltips-tazrim title="כתובת הדואר אלקטרוני שאיתה נרשמת למערכת">&nbsp;</i>
+                </label>
+
+                <div class="inputLogin userLogin"
+                     data-ng-class="{'has-error': (loginForm.$submitted || loginForm.email.$touched) && loginForm.email.$invalid, 'sucInput': (loginForm.$submitted || loginForm.email.$touched) && loginForm.email.$valid }">
+                    <input id="email__" name="email__" style="display: none;" value="" autocomplete="off">
+                    <input type="text" required="" name="email" data-ng-model="appData.user.email" autocomplete="off">
+                    <i></i>
+                </div>
+            </div>
+            <div class="form-control">
+                <label>
+                    סיסמה
+                </label>
+
+                <div class="inputLogin passwordLogin"
+                     data-ng-class="{'has-error': (loginForm.$submitted || loginForm.password.$touched) && loginForm.password.$invalid, 'sucInput': (loginForm.$submitted || loginForm.password.$touched) && loginForm.password.$valid }">
+                    <input id="password__" name="password__" style="display: none;" value="" type="password" autocomplete="off">
+                    <input name="password" required="" data-ng-model="appData.user.password" type="password"
+                           autocomplete="off">
+                    <i></i>
+                </div>
+            </div>
+            <div class="form-control remember">
+                <input id="rememberMe" data-ng-model="appData.user.rememberMe" type="checkbox">
+                <label for="rememberMe">
+                    זכור אותי במחשב זה
+                </label>
+            </div>
+            <div class="forgot-password" data-ng-click="$state.go('forgotPassword')">
+                שכחת סיסמה?
+            </div>
+            <div class="form-control">
+                <input type="submit" value="כניסה למערכת" ng-disabled="loaderSubmit"/>
+            </div>
+            <img src="image/login_logos.png" class="logos"/>
+            <ul>
+                <li><a href="http://898.tv/bizibox" target="_blank">TeamViewer</a></li>
+                <li>
+                    <i>&#9679;</i>
+                </li>
+                <li><a ui-sref="signup" ui-sref-active="active" href="javascript:void(0)" target="_self">הרשמה בחינם</a></li>
+            </ul>
+        </form>
+        <div class="wrapIe" ng-show="showAlertExplorerVersion == true" ng-cloak>
+            <div class="alertIe">
+                <img src="image/newLogo.png" class="logoLogin" style="width: 200px;">
+
+                <h1>לקוח יקר!</h1>
+
+                <p>הנך גולש בדפדפן אקספלורר גרסה {{appData.browserDetect.version}}.</p>
+                <p>
+                    תוכנה זו מותאמת לשימוש בגרסאות אקספלורר 10 ומעלה.
+                    <br/>
+                    לגלישה מיטבית
+                    <a href="http://www.google.co.il/intl/iw/chrome/browser/">הורד דפדפן כרום</a>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>

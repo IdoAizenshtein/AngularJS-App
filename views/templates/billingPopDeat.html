@@ -1,0 +1,187 @@
+<div ng-controller="settingsCtrl" class="pagePopDeatBill">
+    <div class="popup-header">
+        <h2>
+{{appData.BILLING_ACCOUNT_ID_SAVE_COMPANY_NAME}}
+
+            <div ng-click="appData.showItemPopInsidePassType='addItemPopInside';appData.showItemPopInsidePass=true;" ng-if="appData.adminSoft">
+                הוסף פריט
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.user_get_billing_account.length > 2" class="select_user_get_billing_account" style="display: none">
+            <label>
+                העבר לכרטיס
+            </label>
+            <select>
+                <option>
+                    בחר כרטיס
+                </option>
+                <option ng-repeat="a in appData.user_get_billing_account" ng-if="$index > 0">
+                    {{a.EXTSP_CARDNUMBER5}}
+                </option>
+            </select>
+        </div>
+        <div ng-show="!appData.billing_account_getitems.length" class="alertNotLenItems">
+                לא נמצאו חיובים עתידיים
+        </div>
+
+        <div class="wrapPop"  ng-show="appData.billing_account_getitems.length">
+            <div class="headerTab">
+<!--                ng-if="appData.user_get_billing_account.length > 2"-->
+                <div  style="display: none">
+                    &nbsp;
+                </div>
+                <div>
+                    פריט
+                </div>
+                <div>
+                    כמות
+                </div>
+                <div>
+                    אחוז הנחה לפריט
+                </div>
+                <div>
+                    הנחה לפריט
+                </div>
+                <div>
+                    תוקף הנחה לפריט
+                </div>
+                <div>
+                    תוקף לפריט
+                </div>
+                <div>
+                    סכום
+                </div>
+                <div>
+כרטיס
+                </div>
+                <div ng-if="appData.adminSoft">
+                    &nbsp;
+                </div>
+            </div>
+            <ul vs-repeat="30">
+                <li ng-repeat="a in appData.billing_account_getitems"  ng-init="a.editabled=false">
+<!--                    ng-if="appData.user_get_billing_account.length > 2"-->
+                    <div  style="display: none">
+                        <input type="checkbox" ng-model="a.check">
+                    </div>
+                    <div>
+                        {{a.ITEM_DESC}}
+                    </div>
+                    <div>
+                        <input type="text" ng-model="a.AMOUNT" ng-disabled="!a.editabled" number-only>
+                    </div>
+                    <div>
+                        <input type="text" ng-model="a.DISCOUNT_PRC" ng-disabled="!a.editabled" number-only>
+                    </div>
+                    <div>
+                        <input type="text" ng-model="a.DISCOUNT" ng-disabled="!a.editabled" number-only>
+                    </div>
+                    <div>
+                        <input type="text"
+                               ng-model="a.DISCOUNT_EXP"
+                               ng-disabled="!a.editabled"
+                               date-picker-all>
+                    </div>
+                    <div>
+                        <input type="text"
+                               ng-model="a.EFFECTIVE_DATE"
+                               ng-disabled="!a.editabled"
+                               date-picker-all>
+                    </div>
+                    <div>
+                       {{a.ITEM_PRICE_BEFORE_VAT}}&nbsp;
+                    </div>
+                    <div>
+                        <select ng-model="a.BILLING_ACCOUNT_ID" ng-disabled="!a.editabled"
+                                ng-options="item.billing_account_id as item.name for item in appData.groupOfCardsPop">
+                        </select>
+                    </div>
+                    <div class="btnEdit" ng-if="appData.adminSoft">
+                        <div ng-show="a.editabled==false" ng-click="a.editabled=true">ערוך</div>
+                        <div ng-show="a.editabled==true" ng-click="appData.showItemPopInsidePassType='saveEditItemInside';appData.showItemPopInsidePass=true;appData.saveAItemBill=a;a.editabled=false;">שמור</div>
+                        <div ng-show="a.editabled==true" ng-click="a.editabled=false; openItem()">בטל</div>
+                        <div ng-show="a.editabled==false" ng-click="appData.showItemPopInsidePassType='deleteEditItemInside';appData.showItemPopInsidePass=true;appData.saveAItemBill=a;a.editabled=false;">מחק</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="add-content" ng-if="appData.showItemPopInside && appData.adminSoft">
+        <div ng-show="appData.itemCollectetionsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+        </div>
+        <img src="image/close_popup.png" class="close_popup" ng-click="appData.showItemPopInside = false">
+        <div class="formAccUsers">
+            <div class="headerFormUserAcc">
+                <div>
+                    מספר
+                </div>
+                <div>
+                    שם פריט
+                </div>
+                <div>
+                    סכום
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+            <ul vs-repeat="30">
+                <li ng-repeat="a in appData.itemCollectetions | filter:filterAccUser">
+                    <div>
+                        {{a.ITEM_ID}}
+                        &nbsp;
+                    </div>
+                    <div>
+                        {{a.ITEM_DESC}}
+                        &nbsp;
+                    </div>
+                    <div>
+                        {{a.ITEM_PRICE_BEFORE_VAT}}
+                        &nbsp;
+                    </div>
+                    <div>
+                        <button ng-click="addItemCollInside(a)">
+                            בחר
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <form  class="showPopPasswordForm add-content" ng-if="appData.showItemPopInsidePass && appData.adminSoft" name="showPopPasswordForm" novalidate ng-submit="checkpopPasswordBill()">
+        <img src="image/close_popup.png" alt="סגור" class="popup-close" ng-click="appData.showItemPopInsidePass = false">
+        <p>
+            אנא הקלד סיסמה:
+        </p>
+
+        <div class="inputsPass"
+             ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+            <input style="display:none" type="password" autocomplete="off">
+            <input pass-tab-companies
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   autocomplete="off" type="password" ng-model="popPasswordCompaiesTab" name="pass" required="">
+        </div>
+        <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+            <div ng-show="showPopPasswordForm.pass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="showPopPasswordForm.pass.$error.valid">
+                הסיסמה אינה נכונה
+            </div>
+        </div>
+        <button type="submit" ng-disabled="!showPopPasswordForm.$valid">
+            אישור
+        </button>
+    </form>
+</div>

@@ -1,0 +1,104 @@
+<div data-ng-init="loadSettCards()" class="wrapSettingCards">
+    <div ng-show="!loaderCardsSett" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <div ng-if="appData.settingsCards.length == 0" class="titleNotCards">
+        אין נתונים לחברה זו
+    </div>
+    <div data-ng-repeat="a in appData.settingsCards | unique:'source_program_id'" class="groupSource">
+        <h2>
+            הגדרת כרטיסי בנק -
+            {{accoConversions.getSourceProgramId(a.source_program_id)}}
+        </h2>
+
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        כרטיס הנה״ח
+                    </th>
+                    <th>
+                        תיאור
+                    </th>
+                    <th ng-show="hideColmnCrads">
+                        פעולה אחרונה
+                    </th>
+                    <th ng-show="hideColmnCrads">
+                        יתרה
+                    </th>
+                    <th>
+                        בנק
+                    </th>
+                    <th>
+                        סניף
+                    </th>
+                    <th>
+                        חשבון
+                    </th>
+                    <th ng-show="hideColmnCrads">
+                        פעולה אחרונה
+                    </th>
+                    <th ng-show="hideColmnCrads">
+                        יתרה
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="b in appData.settingsCards" ng-if="a.source_program_id == b.source_program_id">
+                    <td>
+                        {{b.cust_id}}
+                    </td>
+                    <td>
+                        {{b.company_customer_name}}
+                    </td>
+                    <td ng-show="hideColmnCrads">
+                        <span ng-if="b.hb_desc">
+                        {{b.hb_desc}}
+                        </span>
+                    </td>
+                    <td class="sum" ng-show="hideColmnCrads">
+                        <span ng-if="b.hb_itra">
+                                                   ₪ {{roundFixed(b.hb_itra)}}
+                        </span>
+                    </td>
+                    <td>
+                        {{b.bank_name}}
+                    </td>
+                    <td>
+                        {{b.bank_snif_id}}
+                    </td>
+                    <td>
+                        {{b.bank_account_id}}
+                    </td>
+                    <td ng-show="hideColmnCrads">
+                        <span ng-if="b.bt_desc">
+                        {{b.bt_desc}}
+                        </span>
+                    </td>
+                    <td class="sum" ng-show="hideColmnCrads">
+                        <span ng-if="b.bt_itra">
+                                                   ₪ {{roundFixed(b.bt_itra)}}
+                        </span>
+                    </td>
+                    <td class="openBankCard">
+                        &nbsp;
+                     <span ng-if="b.company_account_id == null" ng-click="openBankCard(b)">
+הוסף חשבון
+                     </span>
+                           <span ng-if="b.company_account_id !== null" ng-click="openBankCard(b)" class="buttonCardsSpan">
+עדכן חשבון
+                     </span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+</div>

@@ -1,0 +1,69 @@
+<div ng-controller="mainCtrl" ng-init="checkLeftScroll()">
+    <div class="headPopTasks">
+        <div class="rightSide">
+            <h1>
+                מתחילים לעבוד עם bizibox
+            </h1>
+            <p>
+                לומדים לעבוד עם bizibox ב-
+
+                <span ng-if="appData.getWalkthrus.length == 1">
+                    שלב אחד
+                </span>
+                  <span ng-if="appData.getWalkthrus.length > 1">
+                  {{appData.getWalkthrus.length}}
+
+                      שלבים קצרים
+                  </span>
+            </p>
+        </div>
+        <div class="leftSide">
+            <strong>
+                <span>
+                                    %{{appData.precentPopStepCompleted}}
+                </span>
+
+                הושלמו מהתהליך
+            </strong>
+            <div class="progressBar">
+                <span style="width: {{appData.precentPopStepCompleted}}%"></span>
+            </div>
+        </div>
+    </div>
+    <div class="navBanksSlider">
+        <i id="rightNavClickPop" style=" display: none;">
+            <span>
+            </span>
+        </i>
+        <i id="leftNavClickPop" style="display: none;">
+               <span>
+            </span>
+        </i>
+    </div>
+    <ul nav-slider-pop>
+        <li ng-repeat="v in appData.getWalkthrus"
+            ng-class="{'taskFirst':v.taskFirst, 'isUnCompleted':v.IsCompleted == 0 && !v.taskFirst, 'isCompleted':v.IsCompleted == 1}">
+            <img src="image/{{v.NameImg}}.png" ng-if="v.taskFirst||v.IsCompleted == 1">
+            <img src="image/{{v.NameImg}}gray.png" ng-if="v.IsCompleted == 0 && !v.taskFirst">
+
+            <h1>
+                {{v.Name}}
+            </h1>
+            <p>
+                {{v.Description}}
+            </p>
+            <button ng-click="openWalkthruByIndex(v)">
+                <span ng-if="v.taskFirst">
+                    המשך
+                </span>
+                <span ng-if="v.IsCompleted == 0 && !v.taskFirst">
+                    טרם הושלם
+                </span>
+                <span ng-if="v.IsCompleted == 1">
+<i class="fa fa-check"></i>
+                    הושלם
+                </span>
+            </button>
+        </li>
+    </ul>
+</div>

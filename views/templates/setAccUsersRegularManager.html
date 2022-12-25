@@ -1,0 +1,128 @@
+<div ng-controller="mainCtrl">
+    <div class="popup-header">
+        <h2>
+            בחירת משתמש
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listUserAccountantsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" data-ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+
+            <div class="inputsRadio">
+                <div ng-click="getRegularUsers(true)"
+                     style="float: right;cursor: pointer;
+    margin: 0;
+    margin-left: 25px;
+font: bold 18px esterregular;
+    color: #494c53;
+">
+                    <i class="fa fa-refresh"></i>
+                    רענון נתונים
+                </div>
+                <input id="dateFiltertype0" type="radio" ng-model="appData.get_users" value="get_regular_users"
+                       ng-change="getRegularUsers();">
+                <label for="dateFiltertype0">
+                    חברות פעילות
+                </label>
+                <input id="dateFiltertype1" type="radio" ng-model="appData.get_users" value="get_deleted_users"
+                       ng-change="getRegularUsers();">
+                <label for="dateFiltertype1">
+                    חברות מחוקות
+                </label>
+            </div>
+        </div>
+
+        <form novalidate ng-submit="userCopypriv(true)" name="formAccUsers">
+            <div class="formAccUsers regUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+
+                    <div style="
+    width: 125px;
+">
+                        שם
+                    </div>
+                    <div style="
+                    width: 180px;
+                    ">
+                        שם משתמש
+                    </div>
+                    <div style="
+    width: 120px;
+">
+                        תפקיד
+                    </div>
+                    <div style="
+    width: 185px;
+">
+                        שם חברה
+                    </div>
+                    <div style="
+    width: 70px;
+">
+                        ח.פ.
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listUserRegAccountants | filter:filterAccUser">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setUserNameAccList"
+                                   name="uuidAcc"
+                                   value="{{a}}" required/>
+                        </div>
+                        <div ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
+                             style="
+    width: 125px;
+">
+                            {{a.NAME}}
+                        </div>
+                        <div ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
+                             style="
+    width: 180px;
+">
+                            {{a.USER_NAME}}
+                        </div>
+                        <div
+                                ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
+                                style="
+    width: 120px;
+">
+                            {{a.JOB_TITLE_NAME}}
+                        </div>
+                        <div
+                                ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
+                                style="
+    width: 185px;
+">
+                            {{a.COMPANY_NAME}}
+                        </div>
+                        <div
+                                ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
+                                style="
+    width: 70px;
+">
+                            {{a.COMPANY_HP}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsers.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

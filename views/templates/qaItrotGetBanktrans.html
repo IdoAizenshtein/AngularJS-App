@@ -1,0 +1,196 @@
+<div ng-controller="windowsManagCtrl">
+    <div class="popup-header">
+        <h2>
+            {{appData.qa_itrot_list_row.COMPANY_NAME}}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="windowsManagAccTdWrap">
+            <div class="title">
+                <p>מס' חשבון נבחר
+                    :
+                    {{appData.qa_itrot_list_row.BANK_ACCOUNT_ID}}
+                </p>
+                <input type="text" ng-model="searchMatchInside"
+                       placeholder="חיפוש"
+                       class="searchTyping" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-show="appData.qa_itrot_list.length > 0 || searchMatchInside.length > 0"/>
+                <ul class="exports" ng-show="appData.qa_itrot_get_banktrans.length > 0">
+                    <li class="excel" exports-excel-qaitrot="" tooltips-tazrim="" title="ייצוא לExcel">
+                        <i></i>
+                    </li>
+                    <li class="mail" tooltips-tazrim="" ng-click="sendMailer()" title="שליחה במייל">
+                        <i></i>
+                    </li>
+                    <li class="print" tooltips-tazrim="" exports-print-qaitrot="" title="הדפסה">
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="windowsReportTable">
+                <div ng-if="appData.loaderWindowsInside" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <div class="titleNotFilter" ng-show="itemsAllPop.length == 0">
+                    לא נמצאה התאמה
+                </div>
+                <table ng-show="appData.qa_itrot_get_banktrans.length > 0 && itemsAllPop.length > 0">
+                    <thead ng-if="itemsAllPop.length > 0">
+                    <tr>
+                        <th>
+                            ת. טעינה
+                        </th>
+                        <th>
+                            ת. פעולה
+                        </th>
+                        <th>
+                            תיאור פעולה
+                        </th>
+                        <th>
+                            אסמכתא
+                        </th>
+                        <th>
+                            סכום
+                        </th>
+                        <th>
+                            זכות/חובה
+                        </th>
+                        <th>
+                            קוד פעולה
+                        </th>
+                        <th>
+                            יתרה
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody style="height: 300px;overflow: auto;">
+                    <tr ng-repeat="a in itemsAllPop = (appData.qa_itrot_get_banktrans | filter:searchMatchInside) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+                        ng-class="{'redRow': a.STYLE == 'red'}">
+                        <td>
+                            <div ng-if="a.LOAD_DATE !== null">
+                                {{a.LOAD_DATE}}
+                            </div>
+                            <div ng-if="a.LOAD_DATE == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.TRANS_DATE !== null">
+                                {{a.TRANS_DATE}}
+                            </div>
+                            <div ng-if="a.TRANS_DATE == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.TRANS_DESC_AZONLY !== null">
+                                {{a.TRANS_DESC_AZONLY}}
+                            </div>
+                            <div ng-if="a.TRANS_DESC_AZONLY == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.ASMACHTA !== null">
+                                {{a.ASMACHTA}}
+                            </div>
+                            <div ng-if="a.ASMACHTA == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.TOTAL !== null">
+                                {{roundNum(a.TOTAL)}}
+                            </div>
+                            <div ng-if="a.TOTAL == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.IND_HOVA !== null">
+                                {{a.IND_HOVA}}
+                            </div>
+                            <div ng-if="a.IND_HOVA == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.KOD_PEULA !== null">
+                                {{a.KOD_PEULA}}
+                            </div>
+                            <div ng-if="a.KOD_PEULA == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-if="a.ITRA !== null">
+                                {{roundNum(a.ITRA)}}
+                            </div>
+                            <div ng-if="a.ITRA == null">
+                                &nbsp;
+                            </div>
+                        </td>
+                        <td>
+                            <button ng-click="deletePeulotInside(a)">
+                                מחק
+                            </button>
+                            <i ng-if="a.LAST_EXPORT_DATE !== null" class="fa fa-exclamation-triangle triangleRed"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rowsSort typingPage"
+                 ng-show="appData.qa_itrot_get_banktrans.length > 0 && itemsAllPop.length > 0">
+                <div class="selectRows">
+                    הצג
+                    <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>150</option>
+                    </select>
+                    שורות
+                </div>
+                <div class="sumRows">
+                    סה״כ שורות שנמצאו
+                    {{itemsAllPop.length}}
+                    מתוך
+                    {{appData.qa_itrot_get_banktrans.length}}
+                </div>
+                   <span ng-click="updateFixed()" class="linkFixed">
+סגור וסמן כתוקן
+                   </span>
+
+                <div class="pagRows" ng-show="itemsAllPop.length > 0 && itemsAllPop.length > entryLimit">
+                    <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                                items-per-page="entryLimit" total-items="itemsAllPop.length" ng-model="currentPage"
+                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                first-text="עמ׳ ראשון"
+                                last-text="עמ׳ אחרון"></pagination>
+                </div>
+            </div>
+        </div>
+        <div class="bg-popupPeulaAdd" ng-if="appData.deletePopUpInside"></div>
+        <div class="popUpInsideWrap" ng-if="appData.deletePopUpInside">
+            <div class="headPopInside">
+                אישור מחיקה
+                <img src="image/close_popup.png" alt="סגור" class="popup-close"
+                     ng-click="appData.deletePopUpInside = false;">
+            </div>
+            <div class="contentPopInside">
+                <h1 class="alertTitles"> האם אתה בטוח שאתה רוצה למחוק?</h1>
+
+                <div class="buttons_deleted">
+                    <button ng-click="deleteNext()">מחק</button>
+                    <button ng-click="appData.deletePopUpInside = false;">בטל מחיקה</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

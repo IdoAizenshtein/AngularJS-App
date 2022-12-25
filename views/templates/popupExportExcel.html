@@ -1,0 +1,59 @@
+<div ng-init="init()" ng-controller="tazrimCtrl">
+    <div class="popup-header">
+        <h2>
+            ייבוא פעולות מאקסל
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form>
+            <div class="wrap-first-labels">
+                <div>
+                    <label>
+                        ח-ן
+                    </label>
+                    <select ng-model="appData.selectAccAddTazrim"
+                            ng-options="a.company_account_id as a.company_account_nickname for a in appData.selectedCompany.accounts.bank_account_list"></select>
+                </div>
+                <div data-ng-click="downloadExcelTemplate()" class="link">
+                    הורד תבנית קובץ
+                </div>
+            </div>
+            <div class="wrapUpload">
+                <div class="uploadFiles">
+                    <div class="fileUpload btn btn-primary">
+                        <span>העלה קובץ</span>
+                        <input type="file" id="uploadBtn" class="upload"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" fileread/>
+                    </div>
+                    <input id="uploadFile" placeholder="בחר קובץ" data-ng-model="valTextFile" disabled="disabled"/>
+                </div>
+                <div class="importFileRow">
+                    <div class="delete_old_payments">
+                        <input type="checkbox" ng-model="appData.Excel_delete_old_payments" id="delete_old_payments"
+                               ng-change="excelDeleteOldPayments()">
+                        <label for="delete_old_payments">
+                            לדרוס נתונים ישנים שנוצרו מטעינות אקסל קודמות
+                        </label>
+                    </div>
+                    <div ng-if="!importShow">
+                        &nbsp;
+                    </div>
+                    <div ng-if="importShow && !appData.alertErrorUploadExcel">
+
+                        נמצאו
+                        {{appData.excelChecks.length}}
+
+                        שורות נתונים
+                    </div>
+                    <div ng-if="appData.alertErrorUploadExcel == true" class="redText">
+                        {{appData.alertErrorUploadExcelText}}
+                    </div>
+                </div>
+                <button ng-click="updateSubmitExport()" class="buttonUpload"
+                        ng-disabled="!appData.excelChecks || appData.excelChecks.length == 0 || appData.alertErrorUploadExcel">
+                    טען קובץ
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

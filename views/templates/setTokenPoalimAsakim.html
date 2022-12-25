@@ -1,0 +1,23 @@
+<div data-ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+בחירת חשבון להפעלה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="mailer">
+            <form autocomplete="off">
+                <fieldset>
+                    <label>
+                        בחר בחשבון הרצוי
+                    </label>
+                    <select ng-model="appData.otpTokenFromPopUp" class="otpTokenFromPopUp"
+                            ng-options="a.OTP_TOKEN as a.TARGET_USERNAME for a in appData.otpList"></select>
+                </fieldset>
+                <button ng-click="runOtpFromPopUp()">
+                    שלח
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

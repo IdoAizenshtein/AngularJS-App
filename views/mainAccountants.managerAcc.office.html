@@ -1,0 +1,298 @@
+<div ng-if="appData.ACCOUNTANT_OFFICE_ID_VAL" class="leftSideAccManager">
+    <button class="openRowEditableBtn" ng-click="popupOpenServiceCall()" title="פתיחת קריאת שירות">+</button>
+    <h2 style="font: 18px esterregular;
+    border-bottom: 3px solid #cacaca;
+    margin-bottom: 0px;
+    display: inline-block;
+    padding: 6px 11px 1px 0px;">
+        קריאות שירות
+    </h2>
+    <div class="general-alerts scrollDesign" scroll-fill="150">
+        <ul>
+            <li ng-repeat="m in appData.get_acco_office_timeline" class="alertsIc link"
+                ng-click="goToTaskManager(m.TASK_ID)">
+                <div style="position: absolute;
+    right: 0;
+    top: 0;
+    width: 11px;
+    height: 11px;
+    background: {{m.TASK_COLOR}};
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 0px #333;
+    z-index: 9999;"></div>
+                <div class="trans_date">
+                    {{m.FORMAT_DATE}}
+                </div>
+
+                <div>
+                    <div class="account_nickname">
+                        {{m.TITLE}}
+                    </div>
+                </div>
+                <div>
+                    <img style="width: 13px;cursor: pointer;" ng-if="m.ORIGINAL_DESC !== null" src="image/info_icon.png"
+                         tooltips-white title="{{m.ORIGINAL_DESC}}">
+                    <strong ng-if="m.TASK_DESC !== null">
+                        {{m.TASK_DESC}}
+                    </strong>
+                </div>
+                <div class="borderBottomMess">
+                    <div>
+                        {{m.LAST_CHANGE}}
+                    </div>
+                </div>
+            </li>
+            <li class="alertNotData" ng-show="appData.get_acco_office_timeline.length == 0">
+                <h3>אין קריאות שירות</h3>
+            </li>
+        </ul>
+        <i ng-if="loaderLastPeulot" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </i>
+    </div>
+</div>
+<div ng-if="appData.ACCOUNTANT_OFFICE_ID_VAL" class="mainCenterManager scrollDesign" scroll-fill="115">
+    <div style="display: flex;flex-direction: row;justify-content: space-between;flex: 1;padding: 10px 0px;">
+        <div style="display: flex;flex-direction: column;flex: 1;">
+            <div style="margin-bottom: 10px" class="get_acco_office_details">
+                <h2>
+                    {{appData.get_acco_office_details[0].ACCOUNTANT_OFFICE_NAME}}
+                </h2>
+                <div class="flex_get_acco_office_details">
+                    <div class="row">
+                        <div class="title">
+                            כתובת
+                        </div>
+                        <div class="input" ng-class="{'active': focus1 === true}">
+                            <input type="text"
+                                   ng-focus="focus1 = true"
+                                   ng-enter="focus1 = false; saveRowsOffice_details()"
+                                   ng-blur="focus1 = false; saveRowsOffice_details()"
+                                   ng-model="appData.get_acco_office_details[0].ACC_ADDRESS"/>
+                        </div>
+                    </div>
+                    <!--<div class="row">-->
+                    <!--<div class="title">-->
+                    <!--טלפון ראשי-->
+                    <!--</div>-->
+                    <!--<div class="input" ng-class="{'active': focus2 === true}">-->
+                    <!--<input type="text"-->
+                    <!--ng-focus="focus2 = true"-->
+                    <!--ng-enter="focus2 = false; saveRowsOffice_details()"-->
+                    <!--ng-blur="focus2 = false; saveRowsOffice_details()"-->
+                    <!--ng-model="appData.get_acco_office_details[0].PHONE1"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="row">-->
+                    <!--<div class="title">-->
+                    <!--טלפון משני-->
+                    <!--</div>-->
+                    <!--<div class="input" ng-class="{'active': focus3 === true}">-->
+                    <!--<input type="text"-->
+                    <!--ng-focus="focus3 = true"-->
+                    <!--ng-enter="focus3 = false; saveRowsOffice_details()"-->
+                    <!--ng-blur="focus3 = false; saveRowsOffice_details()"-->
+                    <!--ng-model="appData.get_acco_office_details[0].PHONE2"/>-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <div class="row">
+                        <div class="title">
+                            דוא”ל
+                        </div>
+                        <div class="input" ng-class="{'active': focus4 === true}">
+                            <input type="text"
+                                   ng-focus="focus4 = true"
+                                   ng-enter="focus4 = false; saveRowsOffice_details()"
+                                   ng-blur="focus4 = false; saveRowsOffice_details()"
+                                   ng-model="appData.get_acco_office_details[0].EMAIL"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="flex:1">
+                <h2>
+                    אנשי קשר/הערות
+                </h2>
+                <div class="notes">
+                    <ol class="scrollDesign">
+                        <li ng-repeat="m in appData.acc_office_getnotes">
+                            <textarea ng-disabled="!m.disabled"
+                                      elastic ng-model="m.NOTE_ORDER"
+                                      style="height: auto;resize: none;">
+                            </textarea>
+                            <textarea ng-disabled="!m.disabled"
+                                      elastic ng-model="m.NOTE_TEXT"
+                                      style="height: auto;resize: none;">
+                            </textarea>
+                            <div style="float: left;margin-left: 10px;">
+                                <i class="fa fa-pencil-square-o"
+                                   ng-show="!m.disabled"
+                                   ng-click="editRowsNote(m)">
+                                </i>
+                                <i class="fa fa-floppy-o"
+                                   ng-show="m.disabled"
+                                   ng-click="saveRowsNote(m)">
+                                </i>
+                            </div>
+                        </li>
+                    </ol>
+                    <button class="openRowEditableBtn" ng-click="addNote()" tooltips-white title="הוספת הערה">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div style="display: flex;flex-direction: column;flex: 1;">
+            <div style="flex:1" class="tableExporters">
+                <h2>
+                    אקספורטרים
+                </h2>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <th>
+                        &nbsp;
+                    </th>
+                    <th>
+                        שם מחשב
+                    </th>
+                    <th>
+                        גרסה
+                    </th>
+                    <th>
+                        שידור אחרון
+                    </th>
+                    <th>
+                        הערות
+                    </th>
+                    </thead>
+                    <tbody style="overflow: auto;
+    flex: 1;
+    max-height: 30vh;">
+                    <tr ng-repeat="a in appData.get_exporters_details">
+                        <td>
+                            <div style="
+    width: 11px;
+    height: 11px;
+    background: {{a.COMPUTER_STATUS}};
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 0px #333;
+    z-index: 9999;"></div>
+                        </td>
+                        <td><span ng-if="a.EXP_COMPUTER_NAME !== null">{{a.EXP_COMPUTER_NAME}}</span><span
+                                ng-if="a.EXP_COMPUTER_NAME == null">&nbsp;</span></td>
+                        <td><span ng-if="a.VER_NUM !== null">{{a.VER_NUM}}</span><span
+                                ng-if="a.VER_NUM == null">&nbsp;</span></td>
+                        <td><span
+                                ng-if="a.COMPUTER_LAST_REPORT_DATE !== null">{{a.COMPUTER_LAST_REPORT_DATE}}</span><span
+                                ng-if="a.COMPUTER_LAST_REPORT_DATE == null">&nbsp;</span></td>
+                        <td>
+                            <input type="text"
+                                   ng-model="a.EXP_COMMENT"
+                                   ng-enter="saveRowsExporter(a)"
+                                   ng-blur="saveRowsExporter(a)"
+                            />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="flex:1" class="get_acco_office_users">
+                <h2>
+                    משתמשים
+                </h2>
+                <div class="table table-striped table-bordered">
+                    <div class="thead">
+                        <div class="th">
+                            <div>
+                                שם פרטי
+                            </div>
+                        </div>
+                        <div class="th">
+
+                            <div>
+                                משפחה
+                            </div>
+                        </div>
+                        <div class="th">
+
+                            כניסה אחרונה
+                        </div>
+                        <div class="th">
+
+                            <div>
+                                מייל
+                            </div>
+                        </div>
+                        <div class="th">
+
+                            <div>
+                                טלפון
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tbody" style="overflow: auto;
+    flex: 1;
+    max-height: 30vh;">
+
+                        <div class="tr" ng-repeat="a in appData.get_acco_office_users">
+                            <div class="td">
+                                <div class="input"
+                                     ng-class="{'active': a.focus === true}"
+                                     style="    padding-right: 1px;margin-right: 2px;">
+                                    <input type="text"
+                                           ng-focus="a.focus = true"
+                                           ng-enter="a.focus = false; saveRowsUsers(a)"
+                                           ng-blur="a.focus = false; saveRowsUsers(a)"
+                                           ng-model="a.FIRST_NAME"
+                                    />
+                                </div>
+                            </div>
+                            <div class="td">
+                                <div class="input"
+                                     style="padding-right: 1px;margin-right: 2px;"
+                                     ng-class="{'active': a.focus === true}">
+                                    <input type="text"
+                                           ng-model="a.LAST_NAME"
+                                           ng-focus="a.focus = true"
+                                           ng-enter="a.focus = false; saveRowsUsers(a)"
+                                           ng-blur="a.focus = false; saveRowsUsers(a)"
+                                    />
+                                </div>
+                            </div>
+                            <div class="td">
+<span
+        ng-if="a.LAST_LOGIN_DATE !== null">{{a.LAST_LOGIN_DATE}}</span><span
+                                    ng-if="a.LAST_LOGIN_DATE == null">&nbsp;</span></div>
+                            <div class="td">
+<span
+        ng-if="a.MAIL !== null">{{a.MAIL}}</span><span
+                                    ng-if="a.MAIL == null">&nbsp;</span></div>
+                            <div class="td">
+                                <div class="input"
+                                     style="padding-right: 1px;margin-right: 2px;"
+                                     ng-class="{'active': a.focus === true}">
+                                    <input type="text"
+                                           style="direction: ltr;"
+                                           ng-model="a.CELL_PHONE"
+                                           ng-focus="a.focus = true"
+                                           ng-enter="a.focus = false; saveRowsUsers(a)"
+                                           ng-blur="a.focus = false; saveRowsUsers(a)"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-if="!appData.ACCOUNTANT_OFFICE_ID_VAL"
+     style="font: 20px/44px esterregular;
+    color: #333539;
+    text-align: center;
+    padding-top: 85px;">
+    לא קיימים נתונים, יש לבחור רואה חשבון עם שדה
+    ACCOUNTANT_OFFICE_ID
+    מלא
+</div>

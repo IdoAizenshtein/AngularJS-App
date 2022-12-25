@@ -1,0 +1,356 @@
+nav.main_nav {
+  width: 187px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  background: #3e4046;
+  top: 55px;
+
+  &.close_side {
+    width: 56px;
+
+    li a {
+      font-size: 0px;
+      i {
+        font: normal normal normal 14px/31px FontAwesome;
+        margin-right: 5px;
+        vertical-align: middle;
+      }
+
+      &:active, &:hover {
+        padding-right: 0;
+      }
+
+      div {
+        opacity: 0;
+      }
+    }
+  }
+
+  -webkit-transition: all 0.7s;
+  -moz-transition: all 0.7s;
+  -ms-transition: all 0.7s;
+  -o-transition: all 0.7s;
+  transition: all 0.7s;
+}
+
+nav ul.menu {
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+    display: block;
+    text-decoration: none;
+
+    a {
+      display: block;
+      text-decoration: none;
+      font-family: @fontRegular;
+      color: #c2c3c7;
+      padding-right: 50px;
+      line-height: 40px;
+      vertical-align: middle;
+      border-right: 3px solid #3e4046;
+      font-size: 18px;
+
+      div {
+        opacity: 1;
+        -webkit-transition: all 0.7s;
+        -moz-transition: all 0.7s;
+        -ms-transition: all 0.7s;
+        -o-transition: all 0.7s;
+        transition: all 0.7s;
+        cursor: pointer;
+      }
+    }
+
+    &.topNavLink {
+      margin-top: 14px;
+    }
+  }
+}
+
+.menu li a.active, .menu li a:hover, .menu li a.actives {
+  background: #333539;
+  border-right: 3px solid #1387a9;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-right: 50px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.nav_inline {
+  list-style: none;
+  background: #333539;
+  border-right: 3px solid #1387a9;
+  -webkit-transition: all 0.7s;
+  -moz-transition: all 0.7s;
+  -ms-transition: all 0.7s;
+  -o-transition: all 0.7s;
+  transition: all 0.7s;
+  display: none;
+  li {
+    margin-top: 0 !important;
+
+    a {
+      background: transparent !important;
+      font: 16px/29px 'EsterRegular', Arial !important;
+      color: #c2c3c7 !important;
+      border-bottom: 1px solid #3e4046;
+      padding-right: 8px !important;
+      margin-right: 16px;
+      border-right: none !important;
+      margin-left: 16px;
+
+      &.actives {
+        font: 16px/34px 'esterebold', Arial !important;
+        color: #fff !important;
+      }
+      &.active {
+        font: 16px/34px 'esterebold', Arial !important;
+        color: #fff !important;
+      }
+      &:hover {
+        font: 16px/34px 'esterebold', Arial !important;
+        color: #fff !important;
+      }
+    }
+
+    &:last-child a {
+      border-bottom: none;
+    }
+  }
+}
+
+nav.main_nav {
+  a.skiraNavIcon {
+    background: url(../image/nav1.png) no-repeat 151px center;
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav1.png) no-repeat 151px center;
+    }
+  }
+  a.tazrimNavIcon {
+    background: url(../image/nav2.png) no-repeat 149px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav2.png) no-repeat 149px center;
+    }
+  }
+  a.ksafimNavIcon {
+    background: url(../image/nav3.png) no-repeat 149px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav3.png) no-repeat 149px center;
+    }
+  }
+  a.analysisNavIcon {
+    background: url(../image/nav4.png) no-repeat 151px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav4.png) no-repeat 151px center;
+    }
+  }
+  a.reportsNavIcon {
+    background: url(../image/nav5.png) no-repeat 149px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav5.png) no-repeat 149px center;
+    }
+  }
+  a.companyNavIcon {
+    background: url(../image/companys.png) no-repeat 145px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/companys.png) no-repeat 145px center;
+    }
+  }
+
+  a.exportsIcon {
+    background: url(../image/export-icon.png) no-repeat 152px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/export-icon.png) no-repeat 152px center;
+    }
+  }
+  a.cardsIcon {
+    background: url(../image/navCard.png) no-repeat 152px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/navCard.png) no-repeat 152px center;
+    }
+  }
+
+  a.teamIcon {
+    background: url(../image/nav6.png) no-repeat 152px center;
+
+    &:hover, &.active, &.actives {
+      background: #333539 url(../image/nav6.png) no-repeat 152px center;
+    }
+  }
+  &.close_side {
+    a.skiraNavIcon {
+      background: url(../image/nav1.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav1.png) no-repeat center center !important;
+      }
+    }
+    a.tazrimNavIcon {
+      background: url(../image/nav2.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav2.png) no-repeat center center !important;
+      }
+    }
+    a.ksafimNavIcon {
+      background: url(../image/nav3.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav3.png) no-repeat center center !important;
+      }
+    }
+    a.analysisNavIcon {
+      background: url(../image/nav4.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav4.png) no-repeat center center !important;
+      }
+    }
+    a.reportsNavIcon {
+      background: url(../image/nav5.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav5.png) no-repeat center center !important;
+      }
+    }
+    a.companyNavIcon {
+      background: url(../image/companys.png) no-repeat center center !important;
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/companys.png) no-repeat center center !important;
+      }
+    }
+    a.cardsIcon {
+      background: url(../image/navCard.png) no-repeat center center !important;
+
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/navCard.png) no-repeat center center !important;
+      }
+    }
+
+    a.exportsIcon {
+      background: url(../image/export-icon.png) no-repeat center center !important;
+
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/export-icon.png) no-repeat center center !important;
+      }
+    }
+
+    a.teamIcon {
+      background: url(../image/nav6.png) no-repeat center center !important;
+
+      &:hover, &.active, &.actives {
+        background: #333539 url(../image/nav6.png) no-repeat center center !important;
+      }
+    }
+
+  }
+
+}
+
+.main_nav.close_side .open_side {
+  display: none;
+}
+
+.main_nav.close_side {
+  .open_side_menu {
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    right: 56px;
+    bottom: 8px;
+    width: 14px;
+    z-index: 9999;
+    float: none;
+    background: #333539;
+    height: 20px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 20px;
+    vertical-align: middle;
+    span{
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-right: 6px solid #c2c3c7;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 20px;
+      margin-top: 1.5px;
+    }
+  }
+}
+
+.main_nav.close_side {
+  li.open_nav_side {
+    overflow: auto;
+    width: 56px;
+    transition: all 0.3s ease-in-out;
+    a.open_side_settings {
+      transition: all 0.3s ease-in-out;
+      float: none;
+      margin: 0;
+      width: 56px;
+      background-position: center center;
+    }
+  }
+}
+
+li.open_nav_side {
+  height: 40px;
+  background: #333539;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: 4;
+  overflow: hidden;
+
+  & > a.open_side_settings {
+    width: 70px;
+    height: 40px;
+    background: url(../image/open_side_settings.png) no-repeat center right;
+    cursor: pointer;
+    float: right;
+    border-top: 3px solid #333539;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+    border-right: none;
+    text-align: left;
+    line-height: 39px;
+    margin-right: 10px;
+
+    &:hover, &.actives {
+      background: url(../image/open_side_settings_hover.png) no-repeat center right;
+      border-top: 3px solid #1387a9;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      color: white;
+    }
+  }
+
+  .open_side {
+    width: 42px;
+    height: 40px;
+    background: url(../image/open_side.png) no-repeat center center;
+    cursor: pointer;
+    float: left;
+
+    &:hover {
+      background: url(../image/open_side_hover.png) no-repeat center center;
+    }
+  }
+}

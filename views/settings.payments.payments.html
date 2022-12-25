@@ -1,0 +1,20 @@
+<div class="tab-nav" style="padding: 0px 0px 20px 0px;">
+    <div>
+        <a ui-sref="settings.paymentsDetails.details" ui-sref-active="active" ng-click="groupOfCardsValChange(appData.groupOfCardsVal)">
+            תשלומים‎
+        </a>
+    </div>
+    <div>
+        <a ui-sref="settings.paymentsDetails.clients" ui-sref-active="active" ng-click="existing_company_calc()">
+            לקוחות קיימים
+        </a>
+    </div>
+    <div>
+        <a ui-sref="settings.paymentsDetails.potentialCustomers" ui-sref-active="active" ng-click="get_potential_companies()">
+            לקוחות פוטנציאלים
+        </a>
+    </div>
+</div>
+
+
+<div ui-view="lazyLoadView" class="settingsPaymentsDetails"></div>

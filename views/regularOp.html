@@ -1,0 +1,85 @@
+<div ng-init="init()">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content bg-dark regPage scrollDesign" data-ng-class="{'nav-closed': appData.mainNavClosed}"
+         scroll-fill="{{bankMatchHeightScroll}}">
+        <div ng-show="loaderPeulot" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div ng-show="appData.showCubeAll" class="not_data_match">
+            לא נמצאו חשבונות
+        </div>
+        <div class="funds-header" ng-show="!appData.showCubeAll">
+            <div class="titleReg" ng-if="$state.current.name == 'regularOp.cube'"
+                 data-ng-class="{'helpViewColor': appData.helpSignUp == true && (appData.helpSignUpInd > 6 && appData.helpSignUpInd < 10)}">
+                הכנסות מחזוריות
+            </div>
+            <div class="titleReg" ng-if="$state.current.name == 'regularOp.graph'">
+                פעולות קבועות
+            </div>
+            <div class="titleReg" ng-if="$state.current.name == 'regularOp.table'">
+                <div class="sum">
+                    <div>
+סה״כ הכנסות
+                    </div>
+                    <div class="in">
+                        <span>&#8362;</span>{{getTotal(appData.sumPeulotIn)}}
+                    </div>
+                </div>
+                <div class="sum">
+                    <div>
+סה״כ הוצאות
+                    </div>
+                    <div class="ex">
+                        <span>&#8362;</span>{{getTotal(appData.sumPeulotEx)}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="funds-action-bar clearfix">
+                <select ng-model="appData.selectedItem" ng-change="loadData()"
+                        ng-options="item as item.company_account_nickname for item in appData.selectedCompany.accounts.bank_account_list"
+                        class="bank{{appData.selectedItem.bank_id}}"></select>
+                <ul class="exports exMehuadGr">
+                    <li class="excel" exports-excel-regular-op tooltips-tazrim="" title="ייצוא לExcel">
+                        <i></i>
+                    </li>
+                    <li class="mail" tooltips-tazrim="" ng-click="sendMailer()" title="שליחה במייל">
+                        <i></i>
+                    </li>
+                    <li class="print" tooltips-tazrim="" exports-print-regular-op title="הדפסה">
+                        <i></i>
+                    </li>
+                </ul>
+                <input type="text" ng-model="appData.searchTablePeulot" ng-if="$state.current.name == 'regularOp.table'"
+                       placeholder="חיפוש"
+                       class="form-control"
+                       ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-show="appData.peulotKvuot.length > 0 || appData.transkvuotHtmlGetlist.length || appData.searchTablePeulot.length > 0"/>
+
+                <div class="buttons_href regularOpBtn">
+                    <button tooltips-tazrim title="קוביות" data-ng-click="$state.go('regularOp.cube')"
+                            class="icon-table"
+                            data-ng-class="{'active': $state.current.name == 'regularOp.cube'}"></button>
+                    <button tooltips-tazrim title="גרף" data-ng-click="$state.go('regularOp.graph')" class="icon-pie"
+                            data-ng-class="{'active': $state.current.name == 'regularOp.graph'}"></button>
+                    <button tooltips-tazrim title="טבלה" data-ng-click="$state.go('regularOp.table')"
+                            class="icon-tables" ng-class="{'active': $state.current.name == 'regularOp.table'}"><i
+                            class="fa fa-table"></i></button>
+                </div>
+            </div>
+            <div class="add_rows_taz tablePeulotAdd" ng-if="$state.current.name == 'regularOp.table'">
+                <label>הוספה:</label>
+                <button ng-click="addPeula('in')">
+                    הכנסה
+                </button>
+                <button ng-click="addPeula('ex')">
+                    הוצאה
+                </button>
+            </div>
+        </div>
+        <div ui-view="lazyLoadView" ng-show="!appData.showCubeAll"></div>
+    </div>
+</div>
+

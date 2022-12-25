@@ -1,0 +1,142 @@
+<div ng-controller="regularOpCtrl">
+    <div class="popup-header">
+        <h2>
+            עריכת הכנסה
+
+            -
+            {{appData.setPopDef17.intrans_name}}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="table_data">
+            <!--<div class="rows_items">-->
+            <!--<label>שם ההכנסה</label>-->
+            <!--<div class="input_item">-->
+            <!--<input type="text" data-ng-model="appData.setPopDef17.intrans_name"-->
+            <!--ng-disabled="true">-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="rows_items intotal">-->
+            <!--<label>-->
+            <!--סכום-->
+            <!--</label>-->
+            <!--<div class="input_item">-->
+            <!--<input type="text" number-only data-ng-model="appData.setPopDef17.intotal"-->
+            <!--ng-disabled="appData.setPopDef17.updateSum !== '3' || appData.setPopDef17.autoUpdateType == '3'">-->
+
+            <!--<div ng-class="{'green': appData.setPopDef17.updateSum !== '3', 'red': appData.setPopDef17.updateSum == '3'}" ng-show="appData.setPopDef17.autoUpdateType !== '3'">-->
+            <!--עדכון אוטומאטי-->
+            <!--<span ng-if="appData.setPopDef17.updateSum == '3'">-->
+            <!--לא-->
+            <!--</span>-->
+            <!--פעיל-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="rows_items">
+                <div class="titleDiv">
+                    פתח צפי הכנסות לתזרים:
+                </div>
+                <div ng-if="appData.setPopDef17.disabledOption1">
+                    <small class="disabledOption1">
+שים לב!
+                        לא ניתן לחשב צפי לסליקה
+                    </small>
+                </div>
+                <div class="radio_list">
+                    <input id="pay1" type="radio" ng-model="appData.setPopDef17.autoUpdateType" ng-disabled="appData.setPopDef17.disabledOption1" value="1"
+                           ng-change="changeText()">
+                    <label for="pay1">
+                        פתח צפי אוטומאטי ע״י המערכת
+                    </label>
+                </div>
+                <div class="radio_list">
+                    <input id="pay4" type="radio" ng-model="appData.setPopDef17.autoUpdateType" value="4"
+                           ng-change="changeText()">
+                    <label for="pay4">
+                        פתח צפי פעם בחודש
+                        <span ng-show="appData.setPopDef17.autoUpdateType == '4'">
+                            ,
+                            בכל יום:
+
+                            <select ng-model="appData.setPopDef17.autoUpdateTypeDDMonth" class="autoUpdateTypeDD">
+<option ng-repeat="n in [].constructor(32) track by $index" value="{{$index}}" ng-if="$index > 0">
+{{$index}}
+    </option>
+                            </select>
+
+                            סכום:
+                              <input type="text" number-only data-ng-model="appData.setPopDef17.intotal" class="setPopDef17intotal">
+                        </span>
+                    </label>
+                </div>
+                <div class="radio_list">
+                    <input id="pay2" type="radio" ng-model="appData.setPopDef17.autoUpdateType" value="2"
+                           ng-change="changeText()">
+                    <label for="pay2">
+                        פתח צפי פעם בשבוע
+
+                        <span ng-show="appData.setPopDef17.autoUpdateType == '2'">
+                            ,
+                            בכל יום:
+
+                            <select ng-model="appData.setPopDef17.autoUpdateTypeDD" class="autoUpdateTypeDD">
+                                <option value="1">
+                                    א
+                                </option>
+                                <option value="2">
+                                    ב
+                                </option>
+                                <option value="3">
+                                    ג
+                                </option>
+                                <option value="4">
+                                    ד
+                                </option>
+                                <option value="5">
+                                    ה
+                                </option>
+                                <option value="6">
+                                    ו
+                                </option>
+                            </select>
+
+                            סכום:
+                              <input type="text" number-only data-ng-model="appData.setPopDef17.intotal" class="setPopDef17intotal">
+                        </span>
+                    </label>
+                </div>
+                <div class="radio_list">
+                    <input id="pay3" type="radio" ng-model="appData.setPopDef17.autoUpdateType" value="3"
+                           ng-change="changeText()">
+                    <label for="pay3">
+                        אל תפתח צפי, הראה לי רק הכנסות בפועל
+                    </label>
+                </div>
+            </div>
+            <!--<div class="rows_items" ng-hide="appData.setPopDef17.autoUpdateType == '3'">-->
+            <!--<div class="titleDiv">-->
+            <!--עדכון סכומים לפי:-->
+            <!--</div>-->
+            <!--<div class="radio_peulot">-->
+            <!--<input id="updateSum1" type="radio" ng-model="appData.setPopDef17.updateSum" value="1" ng-disabled="appData.setPopDef17.autoUpdateType == '3'">-->
+            <!--<label for="updateSum1">-->
+            <!--עדכן לפי ממוצע-->
+            <!--{{appData.setPopDef17.textUpdateSum1}}-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--<div class="radio_peulot">-->
+            <!--<input id="updateSum3" type="radio" ng-model="appData.setPopDef17.updateSum" value="3" ng-disabled="appData.setPopDef17.autoUpdateType == '3'">-->
+            <!--<label for="updateSum3">-->
+            <!--עדכן לפי הצפי המוזן למעלה-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+            <button ng-click="incomPeulaType17Send()"
+                    ng-disabled="(appData.setPopDef17.intotal == '' && appData.setPopDef17.intotal !== 0) || (appData.setPopDef17.disabledOption1 && appData.setPopDef17.autoUpdateType == '1')">
+                עדכון פעולה
+            </button>
+        </div>
+    </div>
+</div>
+

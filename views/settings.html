@@ -1,0 +1,83 @@
+<div ng-init="init()">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <h2 class="page-header" ng-class="{'helpViewColor': appData.helpSignUp == true && appData.helpSignUpInd == 11}">
+            הגדרות
+
+        </h2>
+        <div class="changetoggle" ng-if="$state.current.name == 'settings.accounts'">
+            <div>
+                <p>
+                    התאמת בנקים:
+                    <strong ng-style="{'color': appData.toggleChangeSet ? '#5b5e64' : '#1387a9'}"> זהירה</strong>
+                    /
+                    <strong ng-style="{'color': !appData.toggleChangeSet ? '#5b5e64' : '#1387a9'}"> מואצת</strong>
+                </p>
+                <label class="toggle">
+                    <input type="checkbox" ng-model="appData.toggleChangeSet"
+                           ng-change="sethamlaza(appData.toggleChangeSet)">
+
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div class="changetoggle" ng-if="$state.current.name == 'settings.cards'">
+            <p>
+                מתקדם:
+            </p>
+            <label class="toggle">
+                <input type="checkbox" ng-model="hideColmnCrads" ng-change="allowHideColmnCrads()">
+
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+        </div>
+        <div class="changetoggle" ng-show="$state.current.name == 'settings.users'">
+            <input type="text" class="searchSettUsers" ng-model="searchSettUsers" placeholder="חיפוש"
+                   ng-model-options="{ debounce: {'default': 500 }}">
+        </div>
+        <div class="tab-nav">
+            <div>
+                <a ui-sref="settings.accounts" ui-sref-active="active"
+                   data-ng-class="{'helpViewColor': appData.helpSignUp == true && appData.helpSignUpInd == 11}">
+                    הגדרת חשבונות
+                </a>
+            </div>
+            <div>
+                <a ui-sref="settings.changePassword" ui-sref-active="active">
+                    שינוי סיסמא
+                </a>
+            </div>
+            <div>
+                <a ui-sref="settings.alerts" ui-sref-active="active">
+                    מיילים/התראות
+                </a>
+            </div>
+            <div>
+                <a ui-sref="settings.cards" ui-sref-active="active">
+                    הגדרות כרטיסים
+                </a>
+            </div>
+            <div ng-if="appData.adminSoft">
+                <a ui-sref="settings.companies" ui-sref-active="active" ng-click="appData.collections = false;loadCompanyDet();">
+                    הגדרות חברה
+                </a>
+            </div>
+            <div ng-if="appData.adminSoft">
+                <a ui-sref="settings.users" ui-sref-active="active" ng-click="loadCompanyGetusers()">
+                    ניהול משתמשים
+                </a>
+            </div>
+            <div>
+                <a ng-click="loadAsimon()" ui-sref="settings.about" ui-sref-active="active">
+אודות
+                </a>
+            </div>
+        </div>
+        <div ui-view="lazyLoadView" scroll-fill="168" class="bg-dark scrollDesign"></div>
+    </div>
+</div>

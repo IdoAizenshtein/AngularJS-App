@@ -1,0 +1,144 @@
+<div ng-init="init()" ng-controller="overviewAccCtrl">
+    <div class="popup-header">
+        <h2>
+            בדיקת נתונים לח-ן
+            {{accoConversions.getBankName(appData.uuidRowApply.bank_id)}} {{ appData.uuidRowApply.bank_account_id }}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.loaderPopApplyover" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="wrapPopApply" ng-show="appData.loaderPopApplyover || appData.showApply3or7 == true">
+            <label>
+                כרטיס הנה״ח
+            </label>
+            <select ng-if="appData.uuidRowApply.last_export_status !== 3 && appData.uuidRowApply.last_export_status !== 7"
+                    ng-change="applySend();" ng-model="appData.hashCartisListModel"
+                    ng-options="item as (item.hash_id + ' - ' + item.hash_name)  for item in appData.hashCartisList">
+            </select>
+            <span class="sendreport" data-ng-click="sendHashReport()">
+               דווח על בעיה
+           </span>
+            <div class="rowApplyData">
+                {{accoConversions.getStatusNameExApply("", appData.resBankPageFullCheck.result_status)}}
+
+                <span ng-if="appData.resBankPageFullCheck.result_status == 44">
+                   {{appData.resBankPageFullCheck.peulot[0].trans_date}}
+                </span>
+            </div>
+            <div class="rowApplyDataLink" ng-if="appData.resBankPageFullCheck.peulot.length > 0"
+                 ng-click="appData.openPeula = !appData.openPeula">
+                <span ng-if="appData.resBankPageFullCheck.result_status == 44">
+הצג יתרות אחרונות
+                </span>
+                <span ng-if="appData.resBankPageFullCheck.result_status !== 44">
+                הצג תנועות
+                </span>
+            </div>
+            <div ng-if="appData.resBankPageFullCheck.peulot.length > 0" ng-show="appData.openPeula"
+                 class="tableExApply">
+                <!--<div class="exportsExcelApply" tooltips-tazrim title="ייצוא לאקסל" exports-excel-hash-page>-->
+                <!--<i></i>-->
+                <!--</div>-->
+                <div class="side">
+                    <div class="titleSide">
+                                <span ng-if="appData.resBankPageFullCheck.result_status == 44">
+התנועה האחרונה בתוכנת הנה"ח
+                                </span>
+                        <span ng-if="appData.resBankPageFullCheck.result_status !== 44">
+פעולות קיימות בחשבשבת
+  </span>
+                    </div>
+                    <div class="rowSide" ng-repeat="peula in appData.resBankPageFullCheck.peulot"
+                         ng-if="peula.data_source == 'BP'">
+                        <div class="dateSide">{{peula.trans_date}}</div>
+
+                        <div class="nameSide" tooltips-tazrim title="{{peula.trans_desc}}"> | &nbsp;
+                            {{peula.trans_desc}}
+                        </div>
+
+                        <div class="totalSide" ng-style="{'color':(peula.ind_hova == 1) ? 'red' : 'green' }">
+                            {{roundFixed(peula.total)}}
+                        </div>
+                    </div>
+                </div>
+                <span class="divider"></span>
+
+                <div class="side">
+                    <div class="titleSide">
+                                      <span ng-if="appData.resBankPageFullCheck.result_status == 44">
+התנועה הראשונה בביזיבוקס
+                                      </span>
+                        <span ng-if="appData.resBankPageFullCheck.result_status !== 44">
+פעולות קיימות בביזיבוקס
+  </span>
+                    </div>
+                    <div class="rowSide" ng-repeat="peula in appData.resBankPageFullCheck.peulot"
+                         ng-if="peula.data_source == 'BT'">
+                        <div class="dateSide">{{peula.trans_date}}</div>
+
+                        <div class="nameSide" tooltips-tazrim title="{{peula.trans_desc}}"> | &nbsp;
+                            {{peula.trans_desc}}
+                        </div>
+
+                        <div class="totalSide" ng-style="{'color':(peula.ind_hova == 1) ? 'red' : 'green' }">
+                            {{roundFixed(peula.total)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rowApplyData" ng-if="appData.resBankPageFullCheck.efresh !== 0">
+                קיים הפרש יתרות:
+                <span>    {{roundFixed( appData.resBankPageFullCheck.efresh)}}
+                  </span>
+                ₪
+            </div>
+            <div class="rowApplyData" ng-if="appData.resBankPageFullCheck.result_status !== 44">
+                יתרה אחרונה בחשבשבת:
+                <span>
+ {{roundFixed( appData.resBankPageFullCheck.hash_end_day_itra)}}
+                                             </span>
+                ₪
+            </div>
+            <div class="rowApplyData" ng-if="appData.resBankPageFullCheck.result_status !== 44">
+                יתרה אחרונה בביזיבוקס:
+                <span>
+                                 {{roundFixed( appData.resBankPageFullCheck.bizibox_end_day_itra)}}
+             </span>
+                ₪
+            </div>
+            <div ng-show="appData.resBankPageFullCheck.efresh !== 0" class="rowApplyData">
+                <input type="checkbox"
+                       ng-model="appData.checkboxAppr"
+                       id="appr"/>
+                <label for="appr">
+                    bizibox תיצור פעולת דמה בשם "תיקון יתרה"
+                    ע״ס
+                    <span style="direction: ltr; display: inline-block;">
+                     {{roundFixed( appData.resBankPageFullCheck.efresh)}}
+                   </span>
+                    ₪
+                    <span class="tooltipExApply" tooltips-tazrim
+                          title="על מנת לייבא דפי בנק חייבת להיות רצף יתרות בחשבשבת"></span>
+
+                </label>
+            </div>
+            <div class="buttonPopUpCompany">
+                <button ng-click="exportApply()"
+                        ng-disabled="!appData.checkboxAppr || appData.resBankPageFullCheck.result_status == 3  || appData.resBankPageFullCheck.result_status == 123">
+                 <span ng-if="appData.resBankPageFullCheck.result_status !== 3  && appData.resBankPageFullCheck.result_status !== 123">
+אשר
+             </span>
+                    <span ng-if="appData.resBankPageFullCheck.result_status == 3  || appData.resBankPageFullCheck.result_status == 123">
+                 לא ניתן לייצא
+             </span>
+                </button>
+                <button ng-click="cancelEx()">
+                    בטל
+                </button>
+            </div>
+        </div>
+    </div>
+    <h1>{{error}}</h1>
+</div>

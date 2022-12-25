@@ -1,0 +1,88 @@
+<div ng-controller="mainAccountantsCardsCtrl">
+    <div class="popup-header">
+        <h2>
+            הגדרת כרטיסים
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.list_ccard_izu_cust_curr_getLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div style="overflow: hidden" class="head">
+            <div style="width: 140px; float: right;">
+                תאריך ייצוא אחרון
+            </div>
+            <div style="width: 140px; float: right">
+                סטטוס ייצוא אחרון
+            </div>
+            <div style="width: 100px;  float: right">
+                מטבע
+            </div>
+            <div style="width: 200px; float: right">
+                כרטיס הנה״ח
+            </div>
+            <div style="margin-right:-5px; width: 135px; float: right">
+                כרטיס בנק הנה״ח
+            </div>
+            <div style="float: left">
+                &nbsp;
+            </div>
+        </div>
+        <div class="scrollDesign" style="height: 110px;overflow: auto">
+            <div ng-repeat="t in appData.list_ccard_izu_cust_curr_get" style="overflow: hidden" class="row">
+                <div style="width: 140px; float: right;">
+                    {{t.LAST_EXPORT_DATE}}&nbsp;
+                </div>
+                <div style="width: 140px; float: right;">
+                    {{accoConversions.getStatusCompanyEx(t.LAST_EXPORT_STATUS)}}&nbsp;
+                </div>
+                <div style="width: 100px; float: right">
+                    {{accoConversions.getCurrencyId(t.CURRENCY_ID)}}&nbsp;
+                </div>
+                <div style="width: 200px; float: right">
+                    {{t.IZU_CUST_ID}}&nbsp;
+                </div>
+                <div style="width: 135px; float: right;">
+                    {{t.IZU_ACCOUNT_CUST_ID}}&nbsp;
+                </div>
+                <div style="float: left">
+
+
+   <span ng-if="!t.IZU_CUST_ID"
+         ng-click="hashCartisLists(appData.uuidRowApply.company_id, 'vi', t)" class="link">
+       עריכה
+   </span>
+                    <i class="fa fa-trash" ng-if="t.IZU_CUST_ID" style="cursor: pointer"
+                       ng-click="card_matach_clean_export(t.CCARD_IZU_CUST_CURRENCY_ID)"></i>
+
+                </div>
+            </div>
+        </div>
+        <div style="
+    text-align: left;
+">
+            <button ng-click="appData.ccard_izu_cust_curr_getRun = false; hidePopup(); appData.ccardGetmahzorihiuvListType = false;"
+                    style="background: #1387a9;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…EiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top, #1387a9 0%, #117b9a 50%, #10728f 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1387a9), color-stop(50%, #117b9a), color-stop(100%, #10728f));
+    background: -webkit-linear-gradient(top, #1387a9 0%, #117b9a 50%, #10728f 100%);
+    background: -o-linear-gradient(top, #1387a9 0%, #117b9a 50%, #10728f 100%);
+    background: -ms-linear-gradient(top, #1387a9 0%, #117b9a 50%, #10728f 100%);
+    background: linear-gradient(to bottom, #1387a9 0%, #117b9a 50%, #10728f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1387a9', endColorstr='#10728f', GradientType=0);
+    color: #fff;
+    font-family: esterebold;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 18px;
+    height: 30px;
+    padding: 0px 25px;
+    font-family: esterregular;">
+                אישור
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,116 @@
+<div ng-init="init()" ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הרשאות עבור
+            {{appData.childUserIdPopUpSett.name}}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.loaderPopSett" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchCompanyPop">
+            <input type="text" ng-model="searchCompanyPop.COMPANY_NAME"
+                   ng-model-options="{ debounce: {'default': 500 }}" placeholder="חיפוש חברה">
+            <p ng-if="searchCompanyPop.companyName">
+
+                נמצאו
+                {{appData.listteamSettings.length}}
+                התאמות
+            </p>
+        </div>
+        <div class="wrapPop" ng-show="!appData.loaderPopSett && appData.listteamSettings.length > 0">
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                        שם החברה
+                    </th>
+                    <th>
+                        ח.פ.
+                    </th>
+                    <th>
+                        סמן הכל
+                    </th>
+                    <th>
+                        כספים
+                    </th>
+                    <th>
+                        הנה״ח
+                    </th>
+                </tr>
+                </thead>
+                <tbody vs-repeat="30">
+                <tr ng-repeat="a in appData.listteamSettings = (appData.teamSettings | filter:searchCompanyPop:strict)">
+                    <td>
+                        {{a.COMPANY_NAME}}&nbsp;
+                    </td>
+                    <td>
+                        {{a.COMPANY_HP}}&nbsp;
+                    </td>
+                    <td ng-init="(a.IND_KSAFIM_PRIV == 1 && a.IND_ANHALATHESHBONOT_PRIV == 1) ? a.indAccPriv = true : a.indAccPriv = false;">
+                        <input ng-disabled="a.disabled" type="checkbox"
+                               ng-change="appData.showItemPopInsidePassword = a;appData.showItemPopInsidePassword.small = null;"
+                               ng-model="a.indAccPriv"
+                               ng-checked="a.IND_KSAFIM_PRIV == 1 && a.IND_ANHALATHESHBONOT_PRIV == 1">
+                    </td>
+                    <td>
+                        <input ng-disabled="a.disabled" ng-model="a.IND_KSAFIM_PRIV"
+                               ng-change="appData.showItemPopInsidePassword = a;appData.showItemPopInsidePassword.small = 'ksafim'"
+                               type="checkbox"
+                               ng-true-value="1" ng-false-value="0">
+                    </td>
+                    <td>
+                        <input ng-disabled="a.disabled" ng-model="a.IND_ANHALATHESHBONOT_PRIV"
+                               ng-change="appData.showItemPopInsidePassword = a;appData.showItemPopInsidePassword.small = 'anhalatheshbonot'"
+                               type="checkbox"
+                               ng-true-value="1" ng-false-value="0">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form style="width: 100%;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    background: #fffffff2;
+    left: 0;
+    bottom: 0;
+    z-index: 9;
+    height: 100%;"
+              class="showPopPasswordForm add-content" ng-if="appData.showItemPopInsidePassword!==false"
+              name="showPopPasswordForm" novalidate
+              ng-submit="setCheckSend(showPopPasswordForm)">
+            <img src="image/close_popup.png" alt="סגור" class="popup-close" ng-click="closePopPass()">
+            <p>
+                על מנת להוסיף/להסיר הרשאות לחברה {{appData.showItemPopInsidePassword.COMPANY_NAME}} הזן סיסמה:
+            </p>
+
+            <div class="inputsPass"
+                 ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+                <input style="display:none" type="password" autocomplete="off">
+                <input pass-tab-team-settings
+                       readonly
+                       onfocus="this.removeAttribute('readonly');"
+                       autocomplete="off" type="password" ng-model="popPasswordCompaiesTab" name="pass" required="">
+            </div>
+            <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+                <div ng-show="showPopPasswordForm.pass.$error.required">
+                    מידע זה הינו מידע חובה
+                </div>
+                <div ng-show="showPopPasswordForm.pass.$error.valid">
+                    הסיסמה אינה נכונה
+                </div>
+            </div>
+            <button type="submit">
+                אישור
+            </button>
+        </form>
+
+
+    </div>
+</div>

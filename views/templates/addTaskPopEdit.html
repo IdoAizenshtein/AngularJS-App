@@ -1,0 +1,215 @@
+<div ng-controller="taskManagerCtrl">
+    <div class="popup-header">
+        <h2>
+            עריכת קריאת שירות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.loaderTasksEdit" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="wrapPop">
+            <div class="trTask">
+                <p class="widthFix">
+                    משימה ל:
+                </p>
+
+                <div>
+                    <select ng-model="appData.addTaskPop.taskUserId"
+                            ng-options="a.USER_ID as a.NAME for a in appData.usersWork"
+                            ng-change="updatePopTask('taskUserId', appData.addTaskPop.taskUserId)"></select>
+                </div>
+                <p class="paddRight">
+                    סוג משימה:
+                </p>
+
+                <div>
+                    <select ng-model="appData.addTaskPop.tasks_type"
+                            ng-change="updatePopTask('taskType', appData.addTaskPop.tasks_type)"
+                            ng-options="a.QA_TASK_TYPE_ID as a.QA_TASK_TYPE_DESC for a in appData.usersWork_tasks_typePop"></select>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    קטגוריה
+                </p>
+
+                <div>
+                    <select ng-model="appData.addTaskPop.task_category_id"
+                            ng-change="updatePopTask('task_category_id', appData.addTaskPop.task_category_id)"
+                            ng-options="a.TASK_CATEGORY_ID as a.TASK_CATEGORY_NAME for a in appData.usersWork_task_catagory">
+                    </select>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    נושא
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.taskTitle"
+                           ng-disabled="appData.addTaskPopDisabled.taskTitle">
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.taskTitle == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.taskTitle = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.taskTitle == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.taskTitle = true; updatePopTask('taskTitle', appData.addTaskPop.taskTitle)"></i>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    תיאור
+                </p>
+
+                <div>
+                 <textarea ng-model="appData.addTaskPop.taskDesc"
+                           ng-disabled="appData.addTaskPopDisabled.taskDesc"></textarea>
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.taskDesc == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.taskDesc = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.taskDesc == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.taskDesc = true; updatePopTask('taskDesc', appData.addTaskPop.taskDesc)"></i>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    שם הפותח
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.TASK_OPENER_NAME" class="input50InsidePoP"
+                           ng-disabled="appData.addTaskPopDisabled.TASK_OPENER_NAME">
+                    <i ng-show="appData.addTaskPopDisabled.TASK_OPENER_NAME == true" class="fa fa-pencil"
+                       ng-click="appData.addTaskPopDisabled.TASK_OPENER_NAME = false"></i>
+                    <i ng-show="appData.addTaskPopDisabled.TASK_OPENER_NAME == false" class="fa fa-floppy-o"
+                       ng-click="appData.addTaskPopDisabled.TASK_OPENER_NAME = true; updatePopTask('task_opener_name', appData.addTaskPop.TASK_OPENER_NAME)"></i>
+                </div>
+
+
+                <p class="paddRight">
+                    מייל
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.CLOSE_MAIL_TO_SEND" class="input50InsidePoP"
+                           ng-disabled="appData.addTaskPopDisabled.CLOSE_MAIL_TO_SEND">
+                    <i ng-show="appData.addTaskPopDisabled.CLOSE_MAIL_TO_SEND == true" class="fa fa-pencil"
+                       ng-click="appData.addTaskPopDisabled.CLOSE_MAIL_TO_SEND = false"></i>
+                    <i ng-show="appData.addTaskPopDisabled.CLOSE_MAIL_TO_SEND == false" class="fa fa-floppy-o"
+                       ng-click="appData.addTaskPopDisabled.CLOSE_MAIL_TO_SEND = true; updatePopTask('CLOSE_MAIL_TO_SEND', appData.addTaskPop.CLOSE_MAIL_TO_SEND)"></i>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    מספר קריאה
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.TASK_NUMBER" class="input50InsidePoP"
+                           ng-disabled="appData.addTaskPopDisabled.TASK_NUMBER">
+                    <i style="width: 13.72px; height: 16px;display: inline-block;"></i>
+                </div>
+
+                <p class="paddRight">
+                    באג בג׳ירה
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.JIRA_BUG_ID" class="input50InsidePoP"
+                           ng-disabled="appData.addTaskPopDisabled.jira_bug_id">
+                    <i ng-show="appData.addTaskPopDisabled.jira_bug_id == true" class="fa fa-pencil"
+                       ng-click="appData.addTaskPopDisabled.jira_bug_id = false"></i>
+                    <i ng-show="appData.addTaskPopDisabled.jira_bug_id == false" class="fa fa-floppy-o"
+                       ng-click="appData.addTaskPopDisabled.jira_bug_id = true; updatePopTask('jira_bug_id', appData.addTaskPop.JIRA_BUG_ID)"></i>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    קישור למסמך
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.driveLink" class="link"
+                           ng-disabled="appData.addTaskPopDisabled.driveLink">
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.driveLink == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.driveLink = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.driveLink == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.driveLink = true; updatePopTask('driveLink', appData.addTaskPop.driveLink)"></i>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    עדיפות
+                </p>
+
+                <div>
+                    <select ng-model="appData.addTaskPop.priority"
+                            ng-change="updatePopTask('priority', appData.addTaskPop.priority)"
+                            ng-options="a.QA_TASK_PRIORTY_ID as a.QA_TASK_PRIORTY_DESC for a in appData.usersWork_priorityPop"></select>
+                </div>
+                <p class="paddRight">
+                    סטטוס משימה
+                </p>
+
+                <div>
+                    <select ng-model="appData.addTaskPop.stateType"
+                            ng-change="updatePopTask('stateType', appData.addTaskPop.stateType)"
+                            ng-options="a.QA_TASK_STATE_ID as a.QA_TASK_STATE_DESC for a in appData.usersWork_statesPop"></select>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    TOKEN
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.token"
+                           ng-disabled="appData.addTaskPopDisabled.token">
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.token == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.token = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.token == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.token = true; updatePopTask('token', appData.addTaskPop.token)"></i>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    COMPANY_ID
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.COMPANY_ID"
+                           ng-disabled="appData.addTaskPopDisabled.COMPANY_ID">
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.COMPANY_ID == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.COMPANY_ID = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.COMPANY_ID == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.COMPANY_ID = true; updatePopTask('COMPANY_ID', appData.addTaskPop.COMPANY_ID)"></i>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    COMPANY_ACCOUNT_ID
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.addTaskPop.COMPANY_ACCOUNT_ID"
+                           ng-disabled="appData.addTaskPopDisabled.COMPANY_ACCOUNT_ID">
+                </div>
+                <i ng-show="appData.addTaskPopDisabled.COMPANY_ACCOUNT_ID == true" class="fa fa-pencil"
+                   ng-click="appData.addTaskPopDisabled.COMPANY_ACCOUNT_ID = false"></i>
+                <i ng-show="appData.addTaskPopDisabled.COMPANY_ACCOUNT_ID == false" class="fa fa-floppy-o"
+                   ng-click="appData.addTaskPopDisabled.COMPANY_ACCOUNT_ID = true; updatePopTask('COMPANY_ACCOUNT_ID', appData.addTaskPop.COMPANY_ACCOUNT_ID)"></i>
+            </div>
+            <div class="trTask" ng-if="appData.adminSoft">
+                <p class="widthFix">
+                    טלפון לחזרה
+                </p>
+
+                <div>
+                    <input type="text"
+                           ng-model="appData.addTaskPop.USER_CELL_PHONE"
+                           ng-disabled="true">
+                </div>
+            </div>
+
+            <div class="trTask" ng-if="appData.adminSoft" style="text-align: left; margin-top: -14px;">
+                <p style="display: inline-block;text-align: left;float: left;font-size: 16px;cursor: pointer;color: #1387a9;text-decoration: underline;" ng-click="openPopEmail()">
+                    מייל ללקוח לא זמין
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+

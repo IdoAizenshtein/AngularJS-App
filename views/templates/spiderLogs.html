@@ -1,0 +1,30 @@
+<div ng-controller="spiderListCtrl">
+    <div class="popup-header">
+        <h2>
+            logs spider - {{appData.spider_get_log.id}}
+
+            <div class="restInterval">
+                <input id="restInterval" type="checkbox" ng-model="appData.spider_get_log.restInterval" ng-change="loaIntervalLogs()">
+                <label for="restInterval">טעינת לוג אוטומטית</label>
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="logsSpiders">
+            <div ng-if="!appData.spider_get_log.log.length" class="notLogsSpiders">
+                לא נמצאו לוגים
+            </div>
+            <table ng-if="appData.spider_get_log.log.length > 0">
+                <tr ng-repeat="a in appData.spider_get_log.log">
+                    <td>
+                        {{a.EXTRACT_DATE}}
+                    </td>
+                    <td>
+                        {{a.ERRORDESC}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

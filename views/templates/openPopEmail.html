@@ -1,0 +1,41 @@
+<div ng-controller="taskManagerCtrl">
+    <div class="popup-header">
+        <h2>
+            <span>
+מייל ללקוח לא זמין
+            </span>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form autocomplete="off" name="supportForm" novalidate ng-submit="prepare_return_mail()">
+            <div class="wrapPop">
+                <div class="trTask" style="    font: 18px/30px esterregular;
+    color: #576066;
+    margin-left: 15px;">
+                    הקלד מלל שישלח ל{{appData.addTaskPop.TASK_OPENER_NAME}} | {{appData.addTaskPop.CLOSE_MAIL_TO_SEND}}
+                </div>
+                <div class="trTask">
+                    <p class="widthFix">
+                        הערה
+                    </p>
+                    <div>
+                    <textarea
+                            ng-required="false"
+                            placeholder="אם לא תתווסף כאן הערה, יישלח טקסט קבוע בלבד"
+                            ng-model="appData.addTaskPop.description"
+                            autocomplete="off"></textarea>
+                    </div>
+                </div>
+                <div class="buttonGr">
+                    <button type="submit">
+                        אישור
+                    </button>
+                    <button ng-click="hidePopup()" type="button">
+                        ביטול
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

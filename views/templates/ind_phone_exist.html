@@ -1,0 +1,90 @@
+<div>
+    <div class="popup-header">
+        <h2>
+            עדכון טלפון נייד
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="logerPhone" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="steps" ng-if="appData.stepPhone === 1">
+            <strong>
+                אנו מעדכנים את הפרטים האישיים במערכת על מנת לתת לכם שירות טוב יותר,
+            </strong>
+            <p>
+                אנא עדכנו את מספר הטלפון הנייד שלכם שיאפשר שחזור סיסמה במקרה הצורך
+            </p>
+            <form autocomplete="off" name="phoneForm" novalidate
+                  ng-submit="sendSmsService(appData.phoneNumber, null, 2)">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': phoneForm.$submitted || phoneForm.uTel.$touched || phoneForm.uTel.$invalid, 'sucInput': (phoneForm.$submitted || phoneForm.uTel.$touched) && phoneForm.uTel.$valid }">
+                    <label>
+                        מס' טלפון נייד
+                    </label>
+                    <input id="uTel__" name="uTel__" style="display: none;" value="" type="tel"
+                           autocomplete="off">
+                    <input readonly placeholder="טלפון"
+                           onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                           type="tel" ng-model="appData.phoneNumber" autocomplete="off" name="uTel"
+                           required="" ng-minlength="10" ng-maxlength="10" maxlength="10"
+                           ensure-unique-cell-phone/>
+                </div>
+                <div ng-show="phoneForm.$submitted || phoneForm.uTel.$touched || phoneForm.uTel.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="phoneForm.uTel.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="phoneForm.uTel.$error.minlength || phoneForm.uTel.$error.maxlength || phoneForm.uTel.$error.integer">
+                        מספר הטלפון שהוזן לא חוקי
+                    </div>
+                </div>
+                <div class="btn">
+                    <button ng-disabled="!phoneForm.$valid">
+                        עדכן מספר ושלח קוד אימות
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="steps" ng-if="appData.stepPhone === 2">
+            <strong>
+                אנא הזינו את הקוד שנשלח אליכם לנייד (מספר הטלפון שהוזן)
+            </strong>
+
+            <div class="inputForm"
+                 data-ng-class="{'errorInput': appData.codeNumberNotCorrect}">
+                <label style="width: 185px;">
+                    קוד חד פעמי בן 6 ספרות
+                </label>
+                <input id="uTel1__" name="uTel1__" style="display: none;" value="" type="tel"
+                       autocomplete="off">
+                <input type="tel" readonly autocomplete="off" name="uTel1" onfocus="this.removeAttribute('readonly');"
+                       class="ltrSide" ng-model="appData.codeNumber" maxlength="6" number-only>
+            </div>
+            <div ng-if="appData.codeNumberNotCorrect" class="alertsMessages2">
+                הקוד שהוזן לא תואם לקוד שנשלח, אנא נסו שנית
+            </div>
+
+            <div>
+                <span class="link" ng-click="appData.stepPhone=1;appData.codeNumber='';">
+                                    חזור לעדכון טלפון נייד
+                </span>
+            </div>
+
+            <div class="btn">
+                <button ng-if="appData.codeNumber.length === 6"
+                        ng-click="sendSmsService(appData.phoneNumber, appData.codeNumber, 3)">
+                    סיום
+                </button>
+            </div>
+
+        </div>
+        <div class="steps" ng-if="appData.stepPhone === 3">
+            <strong class="finishText">
+                הטלפון עודכן במערכת,
+                <br>
+                תודה
+            </strong>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<div ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            הפעלת bizibox spider
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div>
+            <input type="checkbox" id="id1" ng-model="appData.checkboxRunType[0].val">
+            <label for="id1">
+                עו"ש + כרטיסי אשראי
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="id2" ng-model="appData.checkboxRunType[1].val">
+            <label for="id2">
+                נלווים (פקדונות, הלוואות, שקים למשמרת)
+            </label>
+        </div>
+        <div>
+            <input type="checkbox" id="id3" ng-model="appData.checkboxRunType[2].val">
+            <label for="id3">
+                צילומי שקים
+                <span class="alertRunType" ng-if="appData.checkboxRunType[2].val == true"> - שים לב - פעולת משיכת צילומי השקים עלולה להיות ממושכת </span>
+            </label>
+        </div>
+        <div ng-if="appData.runtypeRows && appData.adminSoft" class="runtypeRows">
+            <label>מספר ימים למשיכה</label>
+            <input type="text" number-only ng-model="appData.runtypeRows.single_day_to_run">
+        </div>
+        <div class="buttonAppro">
+            <button ng-click="playRunType()">
+                אישור
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,555 @@
+<div class="scrollDesign insideContent clientTable">
+    <div class="closeState">
+        <img src="image/close_popup.png" class="closeAllAlrets" ng-click="$state.go('settings.payments')"
+             alt="חזור"
+             title="חזור" tooltips-mess="">
+    </div>
+    <div ng-show="loaderSettPays" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+
+    <div class="titlesState">
+        <div ng-click="filters_calc(false,false, 'allFiltersSett');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.allFiltersSett==true}">
+            <h3>
+                סה"כ חברות
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.existing_company_calc_main">
+                         {{appData.existing_company_calc_main.length}}
+                </span>
+                <span ng-if="!appData.existing_company_calc_main">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_calc(false,false, 'SUG_HIUV1');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.SUG_HIUV1==true}">
+            <h3>
+                לפי חברה
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[9]">
+                   {{appData.sums_existing_company[9]}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[9]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_calc(false,false, 'SUG_HIUV2');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.SUG_HIUV2==true}">
+            <h3>
+                לפי שורה
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[10]">
+                   {{appData.sums_existing_company[10]}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[10]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_calc(false,false, 'allFiltersSett0');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.allFiltersSett0==true}">
+            <h3>
+                תשלום למשרד כיום
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[0]">
+                         <small>₪</small>{{roundNum(appData.sums_existing_company[0])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[0]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_calc(false,false, 'IND_BANK_ITEM');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.IND_BANK_ITEM==true}">
+            <h3>
+                בנקים כיום
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[1]">
+                      {{appData.sums_existing_company[1]}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[1]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_calc(false,false, 'IND_CARD_ITEM');"
+             style="cursor: pointer;" ng-if="!appData.remove" class="hover"
+             ng-class="{'active': typesFilters.IND_CARD_ITEM==true}">
+            <h3>
+                אשראי היום
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[2]">
+                   {{appData.sums_existing_company[2]}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[2]">
+                 -
+                </span>
+            </p>
+        </div>
+
+
+
+        <div ng-if="!appData.remove">
+            <h3>
+                הפרש בנקים
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[3]">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[3])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[3]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-if="!appData.remove">
+            <h3>
+                הפרש אשראי
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[4]">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[4])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[4]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                בנקים חדש
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[5]">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[5])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[5]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                אשראי חדש
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[6]">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[6])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[6]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                תשלום חדש
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[7]">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[7])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[7]">
+                 -
+                </span>
+            </p>
+        </div>
+        <div ng-if="!appData.remove">
+            <h3>
+                פער
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company[8]"
+                      ng-class="{'red': appData.sums_existing_company[8] >0, 'black': appData.sums_existing_company[8] == 0, 'green': appData.sums_existing_company[8] < 0}">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company[8])}}
+                </span>
+                <span ng-if="!appData.sums_existing_company[8]">
+                 -
+                </span>
+            </p>
+        </div>
+
+
+        <div class="leftSideState funds-action-bar">
+            <div>
+                <img src="image/info_icon.png" tooltips-white
+                     title="סוג חיוב דיפולטי למשרד שיקבע לאיזה סוג חיוב תיכנס חברה חדשה הבאה שתיווצר"
+                     style="
+    width: 11px;
+    cursor: pointer;
+    float: right;
+    margin-top: 10px;
+    margin-left: 4px;
+">
+                סוג חיוב דיפולט: לפי
+                {{accoConversions.getTypeHiuv(appData.existing_company_calc_main[0].V_SUG_HIUV)}}
+                <button class="sugBtn" ng-click="set_sug_hiuv_all_pass()">
+                    שנה
+                </button>
+            </div>
+            <div class="divider">
+                |
+            </div>
+            <button class="sugBtn" ng-click="set_sug_hiuv_all()">
+                החלף סוג חיוב למשרד
+            </button>
+            <div class="divider">
+                |
+            </div>
+            <button ng-click="openMoreNav=!openMoreNav;"
+                    class="open-filters">
+                סינון מתקדם
+            </button>
+            <div class="divider">
+                |
+            </div>
+            <div>
+                <input type="text" ng-model="search"
+                       placeholder="חיפוש"
+                       class="form-control" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-show="appData.existing_company_calc.length > 0 || search.length > 0"/>
+                <div class="divider">
+                    |
+                </div>
+                <ul class="exports">
+                    <li class="excel" exports-excel-settings-details-clients tooltips-tazrim title="ייצוא לExcel">
+                        <i></i>
+                    </li>
+                    <li class="mail" tooltips-tazrim ng-click="sendMailerClients()" title="שליחה במייל">
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-settings-details-clients title="הדפסה">
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="filters" ng-show="openMoreNav">
+        <img src="image/close_popup.png" ng-click="openMoreNav = false;" style="
+    float: right;
+    margin-top: 13px;
+    margin-left: 20px;
+    margin-right: 4px;
+    cursor: pointer;
+">
+        <div>
+            <input id="remove" type="checkbox" ng-model="appData.remove">
+            <label for="remove">
+                הסתר שורות
+            </label>
+        </div>
+        <div class="divider">
+            |
+        </div>
+        <div class="datepicker_inputs">
+            <div class="divider">
+                מ-
+            </div>
+            <div class="datepicker_wrap">
+                <input date-picker-tazrim-add type="text"
+                       ng-model="appData.datesPicker.fromDatePicker"
+                       readonly="readonly"
+                       class="radioDates"
+                       name="fromDatePicker"
+                       ng-change="disabledDates();"
+                       ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+            </div>
+            <div class="divider">
+                עד -
+            </div>
+            <div class="datepicker_wrap">
+                <input date-picker-tazrim-add type="text"
+                       ng-model="appData.datesPicker.toDatePicker"
+                       readonly="readonly"
+                       class="radioDates"
+                       name="toDatePicker"
+                       ng-change="disabledDates();"
+                       ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+            </div>
+            <div>
+                <button ng-click="filters_calc(true)">
+                    סנן
+                </button>
+            </div>
+        </div>
+        <div class="divider">
+            |
+        </div>
+        <div>
+            <div style="
+    direction: rtl;
+    text-align: right;
+    margin-left: 6px;
+    float: right;
+    font: 18px/40px esterregular;
+    margin-left: 10px;">
+                סוג חיוב:
+            </div>
+            <select ng-model="appData.typeHiuv" ng-change="filters_calc()">
+                <option value="0">
+                    הכל
+                </option>
+                <option value="1">
+                    לפי חברה
+                </option>
+                <option value="2">
+                    לפי שורה
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <div class="tableMainAccCards" ng-class="{'isRemove': appData.remove}">
+        <div class="col-md-12" ng-show="appData.existing_company_calc.length > 0">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <th>
+                    <span ng-click="sort_by_client('COMPANY_NAME')">
+                                                 חברה
+                        <i class="fa fa-caret-down" ng-if="predicate === 'COMPANY_NAME'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('SUG_HIUV')">
+                    סוג חיוב
+                        <i class="fa fa-caret-down" ng-if="predicate === 'SUG_HIUV'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('DATE_CREATED')">
+                    תאריך הקמה
+                        <i class="fa fa-caret-down" ng-if="predicate === 'DATE_CREATED'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('TASHLUM_KAVUA_BANKIM')">
+                    חשבונות בנק
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_KAVUA_BANKIM'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('TASHLUM_KAVUA_ASHRAI')">
+                    כרטיסי אשראי
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_KAVUA_ASHRAI'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('BANK_ROWS_HODESH_KODEM')">
+                    שורות בנק חודש קודם
+                        <i class="fa fa-caret-down" ng-if="predicate === 'BANK_ROWS_HODESH_KODEM'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('ASHRAI_ROWS_HODESH_KODEM')">
+                    שורות כ.אשראי חודש קודם
+                        <i class="fa fa-caret-down" ng-if="predicate === 'ASHRAI_ROWS_HODESH_KODEM'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('TASHLUM_KAVUA_TOTAL')">
+                    תשלום קיים
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_KAVUA_TOTAL'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('TASHLUM_PERROW_BANKIM')">
+                    תשלום בנקים חדש
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_PERROW_BANKIM'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('TASHLUM_PERROW_ASHRAI')">
+                    תשלום אשראי חדש
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_PERROW_ASHRAI'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('TASHLUM_PERROW_TOTAL')">
+                    סה"כ תשלום חדש
+                        <i class="fa fa-caret-down" ng-if="predicate === 'TASHLUM_PERROW_TOTAL'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('PAAR_BANKIM')">
+                    פער בנקים
+                        <i class="fa fa-caret-down" ng-if="predicate === 'PAAR_BANKIM'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('PAAR_ASHRAI')">
+                    פער אשראי
+                        <i class="fa fa-caret-down" ng-if="predicate === 'PAAR_ASHRAI'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th ng-if="!appData.remove">
+                         <span ng-click="sort_by_client('PAAR_TOTAL')">
+                    פער לחברה
+                        <i class="fa fa-caret-down" ng-if="predicate === 'PAAR_TOTAL'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                </thead>
+                <tbody scroll-fill="{{scrollHeightTableInside}}">
+                <tr ng-repeat="a in filtered = (appData.existing_company_calc | filter:search | orderBy : predicate:reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit track by $index">
+                    <td>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <div ng-click="set_sug_hiuv(a.COMPANY_ID, a.SUG_HIUV, a.COMPANY_NAME)" class="SUG_HIUV">
+                            {{accoConversions.getTypeHiuv(a.SUG_HIUV)}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.DATE_CREATED}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td ng-if="!appData.remove">
+                        <div class="ltr">
+                            {{a.TASHLUM_KAVUA_BANKIM}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td ng-if="!appData.remove">
+                        <div class="ltr">
+                            {{a.TASHLUM_KAVUA_ASHRAI}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ltr">
+                            {{a.BANK_ROWS_HODESH_KODEM}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ltr">
+                            {{a.ASHRAI_ROWS_HODESH_KODEM}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td ng-if="!appData.remove">
+                        <div class="ltr">
+                            {{a.TASHLUM_KAVUA_TOTAL}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ltr">
+                            {{a.TASHLUM_PERROW_BANKIM}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ltr">
+                            {{a.TASHLUM_PERROW_ASHRAI}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="ltr">
+                            {{a.TASHLUM_PERROW_TOTAL}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+
+                    <td ng-if="!appData.remove">
+                        <div class="ltr">
+                            {{a.PAAR_BANKIM}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td ng-if="!appData.remove">
+                        <div class="ltr">
+                            {{a.PAAR_ASHRAI}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td ng-if="!appData.remove">
+                        <div class="ltr"
+                             ng-class="{'red': a.PAAR_TOTAL >0, 'black': a.PAAR_TOTAL == 0, 'green': a.PAAR_TOTAL < 0}">
+
+                            {{a.PAAR_TOTAL}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titleNotFilter" ng-show="!filtered.length && !loaderSettPays">
+            לא נמצאה התאמה
+        </div>
+    </div>
+    <div class="rowsSort" ng-show="filtered.length > 0">
+        <div class="selectRows">
+            הצג
+            <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+            </select>
+            שורות
+        </div>
+        <div class="sumRows">
+            סה״כ שורות שנמצאו
+            {{filtered.length}}
+            מתוך
+            {{appData.existing_company_calc.length}}
+        </div>
+        <div class="pagRows" ng-show="appData.existing_company_calc.length > 0 && filtered.length > entryLimit">
+            <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                        items-per-page="entryLimit"
+                        total-items="appData.existing_company_calc.length" ng-model="currentPage"
+                        class="pagination-sm"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                        last-text="עמ׳ אחרון"></pagination>
+        </div>
+    </div>
+</div>

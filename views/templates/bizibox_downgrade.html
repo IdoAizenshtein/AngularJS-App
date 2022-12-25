@@ -1,0 +1,34 @@
+<div ng-controller="overviewAccCtrl">
+    <div class="popup-header">
+        <h2>
+            bizibox downgrade
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="showPopPasswordForm" novalidate ng-submit="bizibox_downgrade_send()" class="showPopPasswordForm">
+            <p>
+                אנא הקלד סיסמה:
+            </p>
+
+            <div class="inputsPass"
+                 ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+                <input style="display:none" type="password" autocomplete="off">
+                <input pass-user-id-def type="password" ng-model="popPasswordCompaiesTab"
+                       readonly
+                       onfocus="this.removeAttribute('readonly');"
+                       autocomplete="off" name="pass" required="">
+            </div>
+            <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+                <div ng-show="showPopPasswordForm.pass.$error.required">
+                    מידע זה הינו מידע חובה
+                </div>
+                <div ng-show="showPopPasswordForm.pass.$error.valid">
+                    הסיסמה אינה נכונה
+                </div>
+            </div>
+            <button type="submit" ng-disabled="!showPopPasswordForm.$valid">
+                אישור
+            </button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הזנת סיסמה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="showPopPasswordForm">
+            <form name="showPopPasswordFormCancel" novalidate ng-submit="set_default_user_id_def(showPopPasswordFormCancel)">
+                <p>
+                    אנא הקלד סיסמה:
+                </p>
+
+                <div class="inputsPass"
+                     ng-class="{'errorInput': (showPopPasswordFormCancel.$submitted || showPopPasswordFormCancel.pass.$touched) && (showPopPasswordFormCancel.pass.$error.required || showPopPasswordFormCancel.pass.$error.valid)}">
+                    <input style="display:none" type="password" autocomplete="off">
+                    <input pass-user-id-def autocomplete="off" type="password"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="popPasswordCompaiesTab" name="pass" required="">
+                </div>
+                <div ng-show="showPopPasswordFormCancel.$submitted || showPopPasswordFormCancel.pass.$touched" class="alertsMessages">
+                    <div ng-show="showPopPasswordFormCancel.pass.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="showPopPasswordFormCancel.pass.$error.valid">
+                        הסיסמה אינה נכונה
+                    </div>
+                </div>
+                <button type="submit">
+                    אישור
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

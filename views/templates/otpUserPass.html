@@ -1,0 +1,42 @@
+<div data-ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            הזנת סיסמא
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="mailer">
+            <form autocomplete="off">
+                <fieldset>
+                    <div>
+                        <label>שם משתמש:</label>
+                        <input id="userPoalim__" name="userPoalim__" style="display: none;" value="" type="text"
+                               autocomplete="off">
+                        <input type="text" ng-model="appData.otpUserPass.user"
+                               readonly
+                               onfocus="this.removeAttribute('readonly');"
+                               autocomplete="off" name="userPoalim"/>
+                    </div>
+                    <div>
+                        <label>סיסמא קבועה:</label>
+                        <input id="passPoalim__" name="passPoalim__" style="display: none;" value="" type="text"
+                               autocomplete="off">
+                        <input type="text" ng-model="appData.otpUserPass.pass"
+                               readonly
+                               onfocus="this.removeAttribute('readonly');"
+                               autocomplete="off" name="passPoalim"/>
+                    </div>
+                </fieldset>
+                <div class="updatePassPoalimBtn">
+                    <button ng-disabled="!appData.otpUserPass.user.length || !appData.otpUserPass.pass.length"
+                            ng-click="updatePassPoalim()">
+אישור
+                    </button>
+                </div>
+                <div ng-if="appData.alertOTP" class="alertOTP">
+                    פרטי כניסה ל OTP זה קיים במערכת, אם חשבון זה ימצא בהפעלה הרגילה הוא יימשך
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

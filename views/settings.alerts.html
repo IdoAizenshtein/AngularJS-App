@@ -1,0 +1,95 @@
+<div data-ng-init="msgTypeCategoriesGet()" class="wrapSettingMess">
+    <div>
+
+        <h3 ng-if="checksMessType('43e97298-c80e-4b70-b198-967709716513')">
+            כספים
+        </h3>
+        <h4>
+            מיילים
+        </h4>
+        <div data-ng-repeat="a in appData.settingsMessages track by $index"
+             ng-if="a.data_category_id == '43e97298-c80e-4b70-b198-967709716513' && a.message_type_cat_name.indexOf('מייל') !== -1">
+
+            <div>
+                <input type="checkbox" ng-change="changeSett()" data-ng-model="a.enabled" id="{{a.message_type_cat_id}}"/>
+
+                <label for="{{a.message_type_cat_id}}">
+                    {{a.message_type_cat_name}}
+                </label>
+            </div>
+        </div>
+        <h4>
+            התראות
+        </h4>
+        <div data-ng-repeat="a in appData.settingsMessages track by $index"
+             ng-if="a.data_category_id == '43e97298-c80e-4b70-b198-967709716513' && a.message_type_cat_name.indexOf('מייל') == -1">
+
+            <div>
+                <input type="checkbox" ng-change="changeSett()" data-ng-model="a.enabled" id="{{a.message_type_cat_id}}"/>
+
+                <label for="{{a.message_type_cat_id}}">
+                    {{a.message_type_cat_name}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3 ng-if="checksMessType('6b265854-958a-4501-8207-d9f99d8d3f2a')">
+            הנהלת חשבונות
+        </h3>
+
+        <div data-ng-repeat="a in appData.settingsMessages track by $index"
+             ng-if="a.data_category_id == '6b265854-958a-4501-8207-d9f99d8d3f2a'">
+            <div>
+                <input type="checkbox" ng-change="changeSett()"  data-ng-model="a.enabled" id="{{a.message_type_cat_id}}"/>
+
+                <label for="{{a.message_type_cat_id}}">
+                    {{a.message_type_cat_name}}
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <h3 ng-if="checksMessType('2a8d5739-ad17-4d7e-9c3d-a8df37db11d6')">
+            לקוחות
+        </h3>
+
+        <div data-ng-repeat="a in appData.settingsMessages track by $index"
+             ng-if="a.data_category_id == '2a8d5739-ad17-4d7e-9c3d-a8df37db11d6'">
+            <div>
+                <input type="checkbox" ng-change="changeSett()"  data-ng-model="a.enabled" id="{{a.message_type_cat_id}}"/>
+
+                <label for="{{a.message_type_cat_id}}">
+                    {{a.message_type_cat_name}}
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+        <h3 ng-if="checksMessType('55c086c9-1303-47ea-8b63-824116e1de4a')">
+            מכירות
+        </h3>
+
+        <div data-ng-repeat="a in appData.settingsMessages track by $index"
+             ng-if="a.data_category_id == '55c086c9-1303-47ea-8b63-824116e1de4a'">
+            <div>
+                <input type="checkbox" ng-change="changeSett()"  data-ng-model="a.enabled" id="{{a.message_type_cat_id}}"/>
+
+                <label for="{{a.message_type_cat_id}}">
+                    {{a.message_type_cat_name}}
+                </label>
+            </div>
+        </div>
+
+    </div>
+    <div class="wrapBuMessSett">
+        <button data-ng-click="userSetmsgtypeCat()" ng-disabled="!changeSet">
+            שמור שינויים
+        </button>
+    </div>
+
+</div>

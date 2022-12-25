@@ -1,0 +1,132 @@
+<div class="scrollDesign insideContent clientTablePoten">
+    <div class="closeState">
+        <img src="image/close_popup.png" class="closeAllAlrets" ng-click="$state.go('settings.payments')"
+             alt="חזור"
+             title="חזור" tooltips-mess="">
+    </div>
+
+    <div class="titlesState">
+        <div>
+            <h3>
+                תשלום עתידי משוער
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.sums_existing_company_ITEM_PRICE_BEFORE_VAT">
+                        <small>₪</small>{{roundNum(appData.sums_existing_company_ITEM_PRICE_BEFORE_VAT)}}
+                </span>
+                <span ng-if="!appData.sums_existing_company_ITEM_PRICE_BEFORE_VAT">
+                  -
+                </span>
+            </p>
+        </div>
+
+
+        <div class="leftSideState funds-action-bar">
+            <div>
+                <input type="text" ng-model="search"
+                       placeholder="חיפוש"
+                       class="form-control" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-show="appData.get_potential_companies.length > 0 || search.length > 0"/>
+                <div class="divider">
+                    |
+                </div>
+                <ul class="exports">
+                    <li class="excel" exports-excel-settings-details-clients-poten tooltips-tazrim title="ייצוא לExcel">
+                        <i></i>
+                    </li>
+                    <li class="mail" tooltips-tazrim ng-click="sendMailerClientsPoten()" title="שליחה במייל">
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-settings-details-clients-poten title="הדפסה">
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div ng-show="loaderSettPays" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <div class="tableMainAccCards">
+        <div class="col-md-12" ng-show="appData.get_potential_companies.length > 0">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <th>
+                    <span ng-click="sort_by_client('COMPANY_NAME')">
+                                                 חברה
+                        <i class="fa fa-caret-down" ng-if="predicate === 'COMPANY_NAME'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('AVG_ROWS')">
+ממוצע שורות
+                        <i class="fa fa-caret-down" ng-if="predicate === 'AVG_ROWS'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                <th>
+                         <span ng-click="sort_by_client('ITEM_PRICE_BEFORE_VAT')">
+תשלום בנקים משוער
+                        <i class="fa fa-caret-down" ng-if="predicate === 'ITEM_PRICE_BEFORE_VAT'"
+                           ng-class="{'fa-caret-up':reverse, 'fa-caret-down': !reverse}"></i>
+                    </span>
+                </th>
+                </thead>
+                <tbody scroll-fill="{{scrollHeightTableInside}}">
+                <tr ng-repeat="a in filtered = (appData.get_potential_companies | filter:search | orderBy : predicate:reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                    <td>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.AVG_ROWS}}
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{roundNum(a.ITEM_PRICE_BEFORE_VAT)}}
+                            &nbsp;
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titleNotFilter" ng-show="!filtered.length && !loaderSettPays">
+            לא נמצאה התאמה
+        </div>
+    </div>
+    <div class="rowsSort" ng-show="filtered.length > 0">
+        <div class="selectRows">
+            הצג
+            <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+            </select>
+            שורות
+        </div>
+        <div class="sumRows">
+            סה״כ שורות שנמצאו
+            {{filtered.length}}
+            מתוך
+            {{appData.get_potential_companies.length}}
+        </div>
+        <div class="pagRows" ng-show="appData.get_potential_companies.length > 0 && filtered.length > entryLimit">
+            <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                        items-per-page="entryLimit"
+                        total-items="appData.get_potential_companies.length" ng-model="currentPage"
+                        class="pagination-sm"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                        last-text="עמ׳ אחרון"></pagination>
+        </div>
+    </div>
+</div>

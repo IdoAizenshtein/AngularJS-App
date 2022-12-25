@@ -1,0 +1,25 @@
+<div class="cubeHTML">
+    <h4>{{action.trans_name}}</h4>
+    <div>
+        <h5><span>&#8362;</span>{{getTotal(action.total)}}</h5>
+        <div class="cubeHTML-graph">
+            <div class="cubeHTML-graph-wrapper">
+                <div>
+                    <div data-ng-style="{'height': m1H + 'px'}"></div>
+                    <div>{{getMonth('' + action.hodesh1)}}</div>
+                </div>
+                <div>
+                    <div data-ng-style="{'height': m2H + 'px'}"></div>
+                    <div>{{getMonth('' + action.hodesh2)}}</div>
+                </div>
+                <div>
+                    <div data-ng-style="{'height': m3H + 'px'}"></div>
+                    <div>{{getMonth('' + action.hodesh3)}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cube-bottom" data-ng-click="openTable()">
+        <div>&#x25BE;</div>
+    </div>
+</div>

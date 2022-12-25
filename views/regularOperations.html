@@ -1,0 +1,46 @@
+<div ng-init="init()">
+
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+
+        <h2 class="page-header">
+            הגדרות
+        </h2>
+        <select ng-model="myBanks" ng-options="bank.name  for bank in banks"></select>
+        <div class="content_bank">
+            <h2>{{ myBanks.name }}</h2>
+            <div class="ssl_title">
+                <img src="image/ssl_bank.png" alt="" />
+                <p>אתר זה עושה שימוש בטכנולוגיית SSL 128 bit שהינה התקן המוביל לאבטחת מידע באינטרנט ואשר אושרה לשימוש על-ידי כל אתרי הבנקים.</p>
+            </div>
+            <form autocomplete="off" ng-model="formsBanks">
+                <fieldset>
+                    <h3 ng-style="{'background-color':myBanks.color, 'color':'white'}">פרטי הכניסה לחשבון הבנק</h3>
+                    <div ng-repeat="(i, label) in myBanks.inputs track by $index">
+                        <label>
+                            {{ label.name }}
+                        </label>
+                        <div class="input">
+                            <input type="text" ng-model="label.data" placeholder="{{label.placeholders}}" name="{{label.val}}" />
+                        </div>
+                        <a href="javascript:void" title="הערה">
+                            <img src="image/tooltip.png" alt="הערה">
+                        </a>
+                    </div>
+                    <div class="error_alerts_bank"></div>
+                    <button ng-click="banksPost(myBanks)">
+                        קשר חשבון בנק
+                    </button>
+                </fieldset>
+
+            </form>
+        </div>
+
+       <h1>{{error}}</h1>
+
+    </div>
+
+</div>

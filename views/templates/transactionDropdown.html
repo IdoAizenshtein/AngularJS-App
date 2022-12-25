@@ -1,0 +1,14 @@
+
+<div class="transition-dropdown-cnt" >
+    <div class="selected"  data-ng-click="hideDropdown()">{{selectedTransaction.trans_type_name}}</div>
+    <ul class="transactions-dropdownlist">
+        <li data-ng-repeat="t in $parent.appData.transactionTypes" data-ng-click="selectTransaction(t)">
+            <div class="content_company">
+                <strong>{{t.trans_type_name}}</strong>
+            </div>
+        </li>
+    </ul>
+    <button data-ng-click="$parent.showAddTransTypeDialog(selectedTransaction)">
+        סוג פעולה חדש
+    </button>
+</div>

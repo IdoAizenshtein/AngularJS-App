@@ -1,0 +1,79 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+שיוך חשבון לחברה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.accTranferLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" data-ng-model="filterAccUsers" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+        </div>
+        <form novalidate ng-submit="setTransfers(true)" name="formAccUser">
+            <div class="formAccUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+שם חברה
+                    </div>
+                    <div>
+                        שם מלא
+                    </div>
+                    <div>
+מייל
+                    </div>
+                    <div>
+ח.פ.
+                    </div>
+                    <div>
+רואה חשבון
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.accTranferList | filter:filterAccUsers">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setUserAccListTransfer"
+                                   name="uuidAcc"
+                                   value="{{a.COMPANY_ID}}" required/>
+                        </div>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.USER_NAME}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.MAIL}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.COMPANY_HP}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.ACC_NAME}}
+                            &nbsp;
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUser.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

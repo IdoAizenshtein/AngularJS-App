@@ -1,0 +1,141 @@
+<form name="form" class="css-form" novalidate ng-submit="update(user, form)" autocomplete="off">
+    <div class="wrapInputForm">
+        <label>
+            שם מלא:
+        </label>
+        <div class="inputForm"
+             data-ng-class="{'errorInput': (form.$submitted || form.uName.$touched) && form.uName.$invalid, 'sucInput': (form.$submitted || form.uName.$touched) && form.uName.$valid }">
+            <input id="uName__" name="uName__" style="display: none;" value="" type="text" autocomplete="off">
+            <input type="text"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   ng-model="user.name" name="uName" required="" autocomplete="off" ng-pattern="/\s/"/>
+            <i>
+                <img class="defIcon" src="image/username_icon.png" alt="">
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form.$submitted || form.uName.$touched" class="alertsMessages">
+            <div ng-show="form.uName.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="form.uName.$error.pattern">
+                יש לרשום שם פרטי ושם משפחה
+            </div>
+        </div>
+    </div>
+    <div class="wrapInputForm">
+        <label>
+            טלפון נייד:
+        </label>
+        <div class="inputForm"
+             data-ng-class="{'errorInput': form.$submitted || form.uTel.$touched || form.uTel.$invalid, 'sucInput': (form.$submitted || form.uTel.$touched) && form.uTel.$valid }">
+            <input id="uTel__" name="uTel__" style="display: none;" value="" type="tel" autocomplete="off">
+            <input ng-model-options="{ updateOn: 'blur'}"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   type="tel" ng-model="user.tel" autocomplete="off" name="uTel"
+                   required="" ng-minlength="9" ng-maxlength="10"
+                   ensure-unique/>
+            <i>
+                <img class="defIcon" src="image/phone_icon.png" alt="">
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form.$submitted || form.uTel.$touched || form.uTel.$invalid" class="alertsMessages">
+            <div ng-show="form.uTel.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="form.uTel.$error.minlength || form.uTel.$error.maxlength || form.uTel.$error.integer">
+                המספר שהזנת אינו חוקי
+            </div>
+            <!--<div ng-show="!appData.isPelephone && !form.uTel.$error.required" class="alertPelephone">-->
+            <!--לתשומת לבך! המספר אינו שייך לרשת פלאפון , ההטבה ניתנת ללקוחות פלאפון בלבד.‎-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="wrapInputForm">
+        <label>
+            כתובת דוא”ל:
+        </label>
+
+        <div class="inputForm"
+             ng-class="{'errorInput': (form.$submitted || form.uEmail.$touched) && form.uEmail.$invalid, 'sucInput': (form.$submitted || form.uEmail.$touched) && form.uEmail.$valid }">
+            <input id="uEmail__" name="uEmail__" style="display: none;" value="" type="email" autocomplete="off">
+            <input ng-model-options="{ updateOn: 'blur'}" type="email" ng-model="user.email"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   autocomplete="off" name="uEmail"
+                   required="" class="mailLtr"
+                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/" user-checks/>
+            <i>
+                <img class="defIcon" src="image/email_icon.png" alt="">
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form.$submitted || form.uEmail.$touched" class="alertsMessages">
+      <span ng-show="form.uEmail.$error.required">
+        מידע זה הינו מידע חובה
+      </span>
+            <span ng-show="form.uEmail.$error.pattern">
+        כתובת המייל שהזנת אינה תקינה
+      </span>
+            <span ng-show="form.uEmail.$error.unique && !form.uEmail.$error.required">
+מייל זה קיים במערכת
+      </span>
+        </div>
+
+    </div>
+    <div class="wrapInputForm">
+        <label>
+            בחירת סיסמה:
+        </label>
+
+        <div class="inputForm"
+             data-ng-class="{'errorInput': (form.$submitted || form.uPass.$touched) && form.uPass.$invalid, 'sucInput': (form.$submitted || form.uPass.$touched) && form.uPass.$valid }">
+            <input id="uPass__" name="uPass__" style="display: none;" value="" type="password" autocomplete="off">
+            <input type="password"
+                   readonly
+                   placeholder="8-12 תווים ולפחות ספרה אחת"
+                   onfocus="this.removeAttribute('readonly');"
+                   ng-model="user.password" autocomplete="off" name="uPass" required=""
+                   ng-pattern="/^(?=.*[a-zA-Z])(?=.*[0-9]).{8,12}$/"/>
+            <i>
+                <img class="defIcon" src="image/password_icon.png" alt="">
+                <img class="errorIcon" src="image/error_icon.png" alt="">
+                <img class="sucIcon" src="image/succses_icon.png" alt="">
+            </i>
+        </div>
+        <div ng-show="form.$submitted || form.uPass.$touched" class="alertsMessages">
+            <div ng-show="form.uPass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="form.uPass.$error.pattern">
+                8-12 תווים, לפחות ספרה אחת
+            </div>
+        </div>
+    </div>
+    <div class="groupButtonChecks">
+        <input type="submit" value="המשך"/>
+        <div class="checksAppr">
+            <div ng-show="form.$submitted || form.userAgree.$touched" class="alertsAppr" style="font-size: 15px;">
+                <div ng-show="!user.agree">
+                    על מנת להמשיך עלייך להסכים לתנאי השימוש
+                </div>
+            </div>
+            <input id="checkbox1" type="checkbox" ng-model="user.agree" ng-class="{'redInput': !user.agree}"
+                   name="userAgree"
+                   required=""/>
+            <label for="checkbox1" class="checkbox_label">
+                בלחיצה על כפתור “המשך”, אני מסכים
+                <a href="javascript:void(0)" ng-click="openTerms('1')">לתנאי השימוש</a>
+                &nbsp;
+                <a  href="javascript:void(0)" ng-click="openTerms('2')">ומדיניות הפרטיות שלנו</a>
+            </label>
+        </div>
+    </div>
+    <!--<input type="button" ng-click="reset(form)" value="Reset"/>-->
+</form>

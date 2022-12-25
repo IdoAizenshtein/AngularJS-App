@@ -1,0 +1,261 @@
+<div>
+    <div ng-if="!appData.selectedCompany" class="alertNotSelectCompany">
+        אנא בחר חברה
+    </div>
+
+    <div ng-show="appData.selectedCompany">
+        <div ng-if="!loaderCompanyGetusers" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="wrapTableSettUsers" ng-if="appData.companyGetusersSett.length > 0">
+            <div class="headerTableSettUsers">
+                <div ng-click="sort_by('USER_NAME');">
+                    שם משתמש
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('FIRST_NAME');">
+                    שם פרטי
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('LAST_NAME');">
+                    שם משפחה
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('CELL');">
+                    טלפון
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('MAIL');">
+                    דוא״ל
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('DATE_LAST_LOGIN_DATE');">
+                    תאריך כניסה אחרון
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('LOGIN_COUNT');">
+                    מספר כניסות WEB
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('APP_LOGIN_COUNT');">
+                    מספר כניסות אפליקציה
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div ng-click="sort_by('JOB_TITLE_ID');">
+                    שם תפקיד
+                    <i class="glyphicon glyphicon-sort"></i>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+            <ul vs-repeat="80" scroll-fill="{{scrollSetUsers}}">
+                <li class="row_contacts_user"
+                    ng-repeat="a in appData.companyGetusersSett | filter:$parent.searchSettUsers | orderBy : predicate :reverse"
+                    ng-init="a.disabledEditRow = true">
+                    <form novalidate name="a.settUserForm" novalidate ng-submit="editRowSettUsersUpdate(a)">
+                        <div>
+                            <div ng-click="openNameUser(a.USER_ID)" class="linkBlue" ng-if="a.disabledEditRow"
+                                 style="line-height: 40px;">
+                                {{a.USER_NAME}}
+                            </div>
+                            <input ng-class="{'errorInput': (a.settUserForm.$submitted || a.settUserForm.USER_NAME.$touched) && a.settUserForm.USER_NAME.$invalid }"
+                                   type="text" required ng-model="a.USER_NAME" name="USER_NAME"
+                                   ng-if="!a.disabledEditRow">
+                            <div style="line-height: 15px; color: purple;" ng-if="a.IND_BILLING_PAY > 0">
+                                משתמש משלם
+                            </div>
+                        </div>
+                        <div>
+                            <input ng-class="{'errorInput': (a.settUserForm.$submitted || a.settUserForm.FIRST_NAME.$touched) && a.settUserForm.FIRST_NAME.$invalid }"
+                                   type="text" required ng-model="a.FIRST_NAME" name="FIRST_NAME"
+                                   ng-disabled="a.disabledEditRow">
+
+                        </div>
+                        <div>
+                            <input ng-class="{'errorInput': (a.settUserForm.$submitted || a.settUserForm.LAST_NAME.$touched) && a.settUserForm.LAST_NAME.$invalid }"
+                                   type="text" required ng-model="a.LAST_NAME" name="LAST_NAME"
+                                   ng-disabled="a.disabledEditRow">
+
+                        </div>
+                        <div>
+                            <input ng-class="{'errorInput': (a.settUserForm.$submitted || a.settUserForm.CELL.$touched) && a.settUserForm.CELL.$invalid }"
+                                   type="tel" ng-minlength="9" ng-maxlength="10" ensure-unique required
+                                   ng-model="a.CELL" name="CELL" ng-disabled="a.disabledEditRow">
+
+                        </div>
+                        <div>
+                            <a class="email_user_val" href="mailto:{{a.MAIL}}"
+                               ng-if="a.disabledEditRow && a.MAIL !== ' '" style="line-height: 40px;display: block;">{{a.MAIL}}</a>
+                            <input ng-class="{'errorInput': (a.settUserForm.$submitted || a.settUserForm.MAIL.$touched) && a.settUserForm.MAIL.$invalid }"
+                                   type="email" ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/" required
+                                   ng-model="a.MAIL" name="MAIL" ng-if="!a.disabledEditRow">
+
+                            <p ng-if="(a.MAIL == null  ||  a.MAIL == ' ') && a.disabledEditRow"
+                               style="line-height: 40px;">
+                                &nbsp;
+                            </p>
+                            <div style="line-height: 15px; color: purple;" ng-if="a.LAST_MAIL_DATE !== null">
+                                {{a.LAST_MAIL_DATE}}
+                            </div>
+                        </div>
+                        <div>
+                            <p ng-if="a.LAST_LOGIN_DATE !== null">{{a.LAST_LOGIN_DATE}}</p>
+
+                            <p ng-if="a.LAST_LOGIN_DATE == null">
+                                &nbsp;
+                            </p>
+                        </div>
+                        <div>
+                            <p ng-if="a.LOGIN_COUNT !== null">{{a.LOGIN_COUNT}}</p>
+
+                            <p ng-if="a.LOGIN_COUNT == null">
+                                &nbsp;
+                            </p>
+                        </div>
+                        <div>
+                            <p ng-if="a.APP_LOGIN_COUNT !== null">{{a.APP_LOGIN_COUNT}}</p>
+                            <p ng-if="a.APP_LOGIN_COUNT == null">
+                                &nbsp;
+                            </p>
+                        </div>
+                        <div>
+                            <p ng-if="a.JOB_TITLE_ID !== null || !a.disabledEditRow">
+                                <select data-ng-model="a.JOB_TITLE_ID" ng-disabled="a.disabledEditRow">
+                                    <option value="23fb1412-206c-6f29-e053-640aa8c0db1b">
+                                        מנהל חשבונות פנימי
+                                    </option>
+                                    <option value="68e32502-3104-4ff8-bb2f-6afd8aea892e">
+                                        בעל החברה
+                                    </option>
+                                    <option value="f438b479-81cb-4be5-8152-38e1eb838af9">
+                                        רואה חשבון
+                                    </option>
+                                    <option value="6e5291cd-0aab-4a11-a3ad-9991da5c0d24">
+                                        מנהל חשבונות
+                                    </option>
+                                    <option value="e3280343-d30a-1d33-e040-a8c0e10a2b20">
+                                        עובד ביזיבוקס
+                                    </option>
+                                    <option value="e3280343-d30c-1d33-e040-a8c0e10a2b20">
+                                        יועץ מס
+                                    </option>
+                                    <option value="e3280343-d30d-1d33-e040-a8c0e10a2b20">
+                                        יועץ עסקי
+                                    </option>
+                                    <option value="e3280343-d30e-1d33-e040-a8c0e10a2b20">
+                                        אחר
+                                    </option>
+                                </select>
+                            </p>
+                            <p ng-if="a.JOB_TITLE_ID == null && a.disabledEditRow">&nbsp;</p>
+                        </div>
+                        <div>
+                            <button type="button" title="הפוך למשתמש ראשי" class="fa fa-user-circle-o"
+                                    ng-click="set_default_user_id(a.USER_ID)"></button>
+                            <button type="submit" title="עריכה" class="fi-pencil"></button>
+                            <button type="button" ng-click="changePasswordToDefault(a.USER_ID)"
+                                    class="fa fa-user-secret" title="איפוס סיסמה"></button>
+                            <button type="button" ng-click="openSettingsTeam(a.USER_NAME,a.USER_ID)" class="fa fa-plus"
+                                    title="הרשאות"></button>
+                            <button type="button" ng-click="userDelete(a.USER_ID)" class="fa fa-trash"
+                                    title="מחיקה"></button>
+                            <button class="cancelEditSeeUsers" type="button" ng-click="a.disabledEditRow = true"
+                                    ng-if="!a.disabledEditRow">
+                                בטל
+                            </button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <ul class="addTeams listAddUsersSett">
+            <li class="row_contacts_user_form" ng-if="addPersonToTeamForm">
+                <form name="addPersonTeam" ng-submit="addPersonToTeam(addPersonTeam)">
+                    <div class="data_pro_name">
+                        <span>+</span>
+                        <strong>
+                            <label>שם מלא</label>
+
+                            <div class="inputForm"
+                                 ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uName.$touched) && addPersonTeam.uName.$invalid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uName.$touched) && addPersonTeam.uName.$valid }">
+                                <input type="text" ng-model="addPersonDetails.inuser_name" name="uName"
+                                       required=""
+                                       ng-pattern="/\s/"/>
+                            </div>
+                            <div ng-show="addPersonTeam.$submitted || addPersonTeam.uName.$touched"
+                                 class="alertsMessages">
+                                <div ng-show="addPersonTeam.uName.$error.required">
+                                    מידע זה הינו מידע חובה
+                                </div>
+                                <div ng-show="addPersonTeam.uName.$error.pattern">
+                                    יש לרשום שם פרטי ושם משפחה
+                                </div>
+                            </div>
+                        </strong>
+                    </div>
+                    <div class="phone_user">
+                        <label>טלפון</label>
+
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uTel.$touched) && !addPersonTeam.uTel.$valid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uTel.$touched) && addPersonTeam.uTel.$valid }">
+                            <input ng-model-options="{ updateOn: 'blur'}" type="tel"
+                                   ng-model="addPersonDetails.inuser_cell" name="uTel"
+                                   required="" ng-minlength="9" ng-maxlength="10"
+                                   ensure-unique/>
+                        </div>
+                        <div ng-show="addPersonTeam.$submitted || addPersonTeam.uTel.$touched || addPersonTeam.uTel.$invalid"
+                             class="alertsMessages">
+                            <div ng-show="addPersonTeam.uTel.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="addPersonTeam.uTel.$error.minlength || addPersonTeam.uTel.$error.maxlength || addPersonTeam.uTel.$error.integer">
+                                המספר שהזנת אינו חוקי
+                            </div>
+                        </div>
+                    </div>
+                    <div class="email_user">
+                        <label>דוא"ל</label>
+
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uEmail.$touched) && addPersonTeam.uEmail.$invalid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uEmail.$touched) && addPersonTeam.uEmail.$valid }">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   type="email"
+                                   ng-model="addPersonDetails.inuser_username"
+                                   name="uEmail"
+                                   required=""
+                                   class="mailLtr"
+                                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"
+                                   user-checks-acc/>
+                        </div>
+                        <div ng-show="addPersonTeam.$submitted || addPersonTeam.uEmail.$touched" class="alertsMessages">
+                            <div ng-show="addPersonTeam.uEmail.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="addPersonTeam.uEmail.$error.pattern">
+                                כתובת המייל שהזנת אינה תקינה
+                            </div>
+                            <div ng-show="addPersonTeam.uEmail.$error.unique && !addPersonTeam.uEmail.$error.required">
+                                מייל זה קיים במערכת
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button_user">
+                        <i data-ng-click="closeAddPerson(addPersonTeam)" title="מחיקת הוספה"></i>
+                        <button type="submit" ng-disabled="!addPersonTeam.$valid">
+                            הוסף
+                        </button>
+                    </div>
+                </form>
+            </li>
+<!--            <li class="addTeamPersons" ng-if="!addPersonToTeamForm">-->
+<!--                <span ng-click="addPerson()">-->
+<!--                    הוספת חבר צוות +-->
+<!--                </span>-->
+<!--            </li>-->
+        </ul>
+
+    </div>
+
+
+</div>

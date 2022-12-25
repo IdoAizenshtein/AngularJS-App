@@ -1,0 +1,15 @@
+<div class="dropdown-container" ng-class="{ show: listVisible }">
+    <div class="dropdown-display" ng-click="show();" ng-class="{ clicked: listVisible }">
+        <span ng-if="!isPlaceholder">{{display}}</span>
+        <span class="placeholder" ng-if="isPlaceholder">{{placeholder}}</span>
+    </div>
+    <div class="dropdown-list">
+        <div class="scrollDesign" style="overflow: auto;max-height: 120px;border-bottom: solid 1px #dddddd;">
+            <div ng-repeat="item in list" ng-click="select(item)" ng-class="{selected: isSelected(item)}">
+                <span ng-class="{'redColor': item.STATUS == 123}">{{item.NEXT_CYCLE_DATE}}</span>
+                <span ng-if="type && item.SUM_CYCLE_TOTAL" style="padding-right: 7px;" ng-class="{'redColor': item.STATUS !== 0}">{{$parent.$parent.$parent.getTotal(item.SUM_CYCLE_TOTAL)}} {{item.CURRENCY_ID_NAME}}</span>
+                <i class="fa fa-check"></i>
+            </div>
+        </div>
+    </div>
+</div>

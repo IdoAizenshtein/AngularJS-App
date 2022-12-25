@@ -1,0 +1,265 @@
+<div ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            רשימת מקבלי קודי זיהוי
+
+            <div ng-click="addTokenPopInside()">
+                הוסף קוד זיהוי
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div style="    font: 14px/16px esterregular;
+    margin: -10px 18px 13px 0px;">
+            ב-SMS: לפני לחיצה על 'הפעל' יש לוודא זמינות הנייד אליו נשלח הקוד. לאחר לחיצה יש כ-5 דקות להזנת הקוד.
+            <br>
+            בהודעה קולית: כדי להגדיר אפשרות זאת בביזיבוקס לראשונה יש לפתוח אלינו קריאת שירות.
+            <br>
+            באפליקציית פועלים Pass: לפני לחיצה על 'הפעל' יש לחכות שהקוד יתחלף למספר חדש.
+        </div>
+        <div class="tablePopTokensAll">
+            <div class="headerTab">
+                <div>
+                    שם מקבל/ת הקוד
+                </div>
+                <div>
+                    מס' טל' נייד
+                </div>
+                <div>
+                    תאריך הפעלה אחרון
+                </div>
+                <div>
+                    סטטוס
+                </div>
+                <div>
+                    שלח SMS/הודעה
+                    <br/>
+                    לנייד מדי יום
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+            <div class="bodyTab" vs-repeat="39">
+                <div class="trTab" ng-repeat="a in appData.get_OtpToken">
+                    <div>
+                        {{a.OTP_NICKNAME}} &nbsp;
+                    </div>
+                    <div>
+                        0{{a.OTP_CELL.toString().slice(3, a.OTP_CELL.toString().length)}} &nbsp;
+                    </div>
+                    <div>
+                        {{a.OTP_DATE_START}} &nbsp;
+                    </div>
+                    <div>
+                        {{(a.ERRORDESC && a.ERRORDESC.indexOf("otp code wasn't provided due timeout: 5 minute passed") !== -1 && a.STATUS === 2) ? 'לא התקבל קוד' : accoConversions.getStatus(a.STATUS)}}
+                        &nbsp;
+                        <small ng-if="a.STATUS !== 0 && a.WRNG_PSWRD_TRIAL_COUNT !== null">
+                               <span ng-if="a.WRNG_PSWRD_TRIAL_COUNT == 1">
+היום בוצע ניסיון טעינה אחד
+                               </span>
+                            <span ng-if="a.WRNG_PSWRD_TRIAL_COUNT > 1 && a.STATUS == 2">
+                            היום בוצעו {{a.WRNG_PSWRD_TRIAL_COUNT}} ניסיונות טעינה לביזיבוקס
+                            </span>
+                        </small>
+                    </div>
+                    <div>
+                        <input type="checkbox" ng-model="a.IND_AUTO_OTP_RUN" ng-true-value="1" ng-false-value="0"
+                               disabled>
+                    </div>
+                    <div>
+                        <button ng-click="addTokenPopInside(a)">
+                            עדכון פרטים
+                        </button>
+                        <button ng-click="runOtpFromPopUpInside(a.TOKEN)">
+                            הפעל
+                        </button>
+                        <button ng-click="token_run_manual(a.TOKEN)">
+                            השלמת צ'קים
+                        </button>
+                        <i class="fa fa-trash"
+                           ng-if="a !== undefined"
+                           style="cursor: pointer"
+                           ng-click="removeTokenPopInside(a)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="alertPassTries">
+            <i class="fi-alert"></i>
+            לחיצה על 'הפעל' מהווה ניסיון כניסה לאתר הבנק. 3 ניסיונות כושלים ברצף בביזיבוקס ו/או באתר הבנק יגרמו לחסימה.
+            נא להימנע מכך.
+            <br>
+            שימו לב: יש להתנתק מאתר הבנק לפני הפעלת טעינה.
+        </div>
+    </div>
+
+    <div class="removeTokenPopInside"
+         ng-if="appData.removeTokenPopInside">
+        <img src="image/close_popup.png" class="close_popup" ng-click="appData.removeTokenPopInside = false;">
+        <div class="mainEdit">
+            <h1 class="alertTitles">
+                האם אתה בטוח שאתה רוצה לבצע פעולה זאת?
+            </h1>
+            <div class="btnSubm">
+                <button ng-click="updateTokenOTP999()">כן</button>
+                <button ng-click="appData.removeTokenPopInside = false;">לא</button>
+            </div>
+        </div>
+    </div>
+    <div class="add-content" ng-if="appData.showAddTokenPopInside">
+        <img src="image/close_popup.png" class="close_popup" ng-click="appData.showAddTokenPopInside = false;">
+        <div class="headerFormUserAcc">
+            <span ng-if="!appData.editTokenInsidePop">
+הוספת פרטי משתמש חדש
+            </span>
+            <span ng-if="appData.editTokenInsidePop">
+עריכת פרטי משתמש קיים
+            </span>
+        </div>
+
+        <div class="mainEdit">
+            <div>
+                <div class="label">
+                    שם מקבל הקוד
+                    <i class="fa fa-question-circle" tooltips
+                       title="בחרו כינוי שיעזור לזהות את החשבונות המקושרים לקוד זיהוי"></i>
+                </div>
+                <div class="input">
+                    <input type="text" ng-model="appData.tokenOTPPopInside.otp_nickname">
+                </div>
+            </div>
+            <div>
+                <div class="label">
+                    <div style="font: 16px/16px esterregular;">
+                        הנייד המקבל את הקוד
+                    </div>
+                    <small style="font: 14px/14px esterregular;display: block;">
+                        (מוגדר על ידי הבנק)
+                    </small>
+                </div>
+                <div class="input"
+                     ng-class="{'redError': (validCell.cell.$touched) && validCell.cell.$error.required}">
+                    <form name="validCell">
+                        <input type="text"
+                               valid-cell
+                               required
+                               name="cell"
+                               autocomplete="off"
+                               readonly
+                               onfocus="this.removeAttribute('readonly');"
+                               ng-model="appData.tokenOTPPopInside.otp_cell" class="otp_cell">
+                    </form>
+                </div>
+            </div>
+            <div>
+                <div class="label" style="text-decoration: underline;">
+                    פרטי הכניסה לבנק:
+                </div>
+            </div>
+            <div>
+                <div class="label">
+                    שם משתמש
+                </div>
+                <div class="input">
+                    <input type="text" ng-model="appData.tokenOTPPopInside.user_name"
+                           placeholder="{{appData.editTokenInsidePop? 'אם אין שינוי, השאירו ריק':''}}">
+                </div>
+            </div>
+            <div>
+                <div class="label">
+                    סיסמה
+                </div>
+                <div class="input">
+                    <input id="uPass__"
+                           name="uPass__"
+                           style="display: none;"
+                           value=""
+                           type="password"
+                           autocomplete="off">
+                    <input type="{{(showPass) ? 'text' : 'password'}}"
+                           name="uPass"
+                           readonly
+                           placeholder="{{appData.editTokenInsidePop? 'אם אין שינוי, השאירו ריק':''}}"
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off"
+                           ng-model="appData.tokenOTPPopInside.password">
+                </div>
+            </div>
+            <div class="ind_auto_otp_run" ng-init="showPass = false">
+                <div>
+                    <input type="checkbox" id="showPass" ng-model="showPass">
+                </div>
+                <div>
+                    <label for="showPass">
+                        הצג סיסמה
+                    </label>
+                </div>
+            </div>
+
+            <div class="ind_auto_otp_run">
+                <div>
+                    <input type="checkbox" id="ind_auto_otp_run" ng-model="appData.tokenOTPPopInside.ind_auto_otp_run"
+                           ng-true-value="1"
+                           ng-false-value="0">
+                </div>
+                <div>
+                    <label for="ind_auto_otp_run">
+                        שלח SMS/הודעה לנייד מדי יום
+                    </label>
+                    <i class="fa fa-question-circle" tooltips
+                       title="ביזיבוקס תפעיל מדי בוקר שליחת SMS/הודעה קולית, מהבנק אל הטלפון הנייד שמוגדר באתר הבנק. את הקוד יש לשלוח למס' ביזיבוקס 0723912773. הקוד יישלח אוטומטית מניידים עם מערכת הפעלה אנדרואיד בהם פועלת אפליקציית ביזיבוקס לשליחת הודעות."></i>
+                </div>
+            </div>
+
+            <div class="btnSubm">
+                <div>
+                    <button ng-click="updateTokenOTP()" ng-disabled="
+                    (appData.editTokenInsidePop && (!appData.tokenOTPPopInside.otp_nickname.length || !appData.tokenOTPPopInside.otp_cell.length))
+||
+                    (!appData.editTokenInsidePop && (!appData.tokenOTPPopInside.otp_nickname.length || !appData.tokenOTPPopInside.otp_cell.length || !appData.tokenOTPPopInside.user_name.length || !appData.tokenOTPPopInside.password.length))">
+                        שמור
+                    </button>
+                </div>
+                <div>
+                    <span ng-click="appData.showAddTokenPopInside = false;">
+                        בטל
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-content" ng-if="appData.show_token_run_manual_PopInside" style="    height: 280px;
+    margin-top: -140px;">
+        <img src="image/close_popup.png" class="close_popup"
+             ng-click="appData.show_token_run_manual_PopInside = false;">
+        <div class="headerFormUserAcc">
+            השלמת צ'קים
+        </div>
+
+        <div class="mainEdit">
+            <div class="label" style="
+    font: 20px/28px esterregular;
+    text-align: center;
+">
+                אפשרות זאת נועדה להשלמת תמונות צ'קים, שהועלו לאתר בנק פועלים באיחור ולכן לא נטענו לביזיבוקס.
+                טעינת תמונות צ'קים חסרות עשויה לארוך זמן רב, כך שמומלץ להפעילה בסוף היום, כשאף אחד מהעובדים לא נכנס לאתר
+                הבנק.
+            </div>
+            <div class="btnSubm">
+                <div>
+                    <button ng-click="token_run_manual_run()">
+                        הפעל
+                    </button>
+                </div>
+                <div>
+                    <span ng-click="appData.show_token_run_manual_PopInside = false;">
+                        בטל
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

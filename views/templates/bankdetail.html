@@ -1,0 +1,101 @@
+<div>
+    <div class="popup-header">
+        <h2>
+            פירוט העברות בנקאיות
+            <ul class="exports cardsExports">
+                <li class="excel" exports-excel-pop-transfer tooltips-tazrim title="ייצוא לExcel">
+                    <i></i>
+                </li>
+                <li class="print" exports-print-pop-transfer tooltips-tazrim title="הדפסה">
+                    <i></i>
+                </li>
+            </ul>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="tab">
+            <h2>
+                פרטי העברה
+            </h2>
+            <div class="row">
+                <label ng-if="appData.bankdetail.IND_HOVA == 0">
+                    מבצע ההעברה
+                </label>
+                <label ng-if="appData.bankdetail.IND_HOVA == 1">
+                    שם המוטב
+                </label>
+                <p>
+                    {{appData.bankdetail.NAMEPAYERTRANSFER}}
+                </p>
+            </div>
+            <div class="row">
+                <label>
+בנק
+                </label>
+                <p>
+                    {{appData.bankdetail.BANKTRANSFERNUMBER}} - {{accoConversions.getBankName(appData.bankdetail.BANKTRANSFERNUMBER)}}
+                </p>
+            </div>
+            <div class="row">
+                <label>
+סניף
+                </label>
+                <p>
+                    {{appData.bankdetail.BRANCHTRANSFERNUMBER}}
+                </p>
+            </div>
+            <div class="row">
+                <label>
+חשבון
+                </label>
+                <p>
+                    {{appData.bankdetail.ACCOUNTTRANSFERNUMBER}}
+                </p>
+            </div>
+        </div>
+        <div class="tab">
+            <h2>
+פרטים נוספים
+            </h2>
+            <div class="row">
+                <label>
+                    תאריך ביצוע
+                </label>
+                <p>
+                    {{appData.bankdetail.DEPOSITETRANSFERDATE}}
+                </p>
+            </div>
+            <div class="row" ng-if="appData.bankdetailAll.length > 1">
+                <label>
+                    סכום
+                </label>
+                <p style="direction: ltr;">
+                    {{appData.bankdetail.TRANSFERTOTAL}}
+                </p>
+            </div>
+            <div class="row">
+                <label>
+מהות ההעברה
+                </label>
+                <div class="scrollDesign" ng-bind-html="appData.bankdetail.DETAILSTRANSFER" ng-if="checkIfIsHtml(appData.bankdetail.DETAILSTRANSFER)" style="max-height: 210px;overflow: auto;text-align: left;direction: rtl;padding-left: 10px;"></div>
+                <p ng-bind="appData.bankdetail.DETAILSTRANSFER" ng-if="!checkIfIsHtml(appData.bankdetail.DETAILSTRANSFER)"></p>
+            </div>
+
+        </div>
+    </div>
+    <div style="position: absolute;
+    left: 3px;
+    top: 68px;
+    overflow: hidden;
+    z-index: 9;" ng-if="appData.bankdetailAll.length > 1">
+        <div style="margin: 0; float: right; width: 21.72px; height: 21px;">
+            <button style="margin: 0;" ng-if="appData.bankdetailIndex > 0" ng-click="moveDetail('prev')"
+                    class="fa fa-caret-right"></button>
+        </div>
+        <div style="margin: 0; float: right; width: 21.72px;height: 21px;">
+            <button style="margin: 0;" ng-if="(appData.bankdetailIndex + 1) < appData.bankdetailAll.length"
+                    ng-click="moveDetail('next')"
+                    class="fa fa-caret-left"></button>
+        </div>
+    </div>
+</div>

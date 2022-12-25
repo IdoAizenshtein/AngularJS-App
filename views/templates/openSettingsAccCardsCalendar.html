@@ -1,0 +1,31 @@
+<div ng-controller="mainAccountantsCardsCtrl">
+    <div class="popup-header">
+        <h2>
+            הגדרות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div>
+            בשדה תאריך ראשי בפקודות היומן יוצג:
+        </div>
+        <div>
+            <input type="radio" ng-model="$parent.appData.openSettingsAccCardsCalendar" id="date" value="1">
+            <label for="date">
+                תאריך עסקה
+            </label>
+            <input type="radio" ng-model="$parent.appData.openSettingsAccCardsCalendar" id="cycle" value="2">
+            <label for="cycle">
+                תאריך חיוב
+            </label>
+        </div>
+
+        <div class="buttonGr">
+            <button ng-click="sendSettingsAccCardsCardsCalendar()">
+אשר
+            </button>
+            <button ng-click="hidePopup()">
+                בטל
+            </button>
+        </div>
+    </div>
+</div>

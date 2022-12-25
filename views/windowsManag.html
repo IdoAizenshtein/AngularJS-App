@@ -1,0 +1,171 @@
+<div class="windowsManagAccTdWrap" ng-init="initPage()">
+    <div class="title">
+        <p>
+            דו״ח חלונות
+        </p>
+
+        <div>
+
+        </div>
+        <input type="text" ng-model="searchMatch"
+               placeholder="חיפוש"
+               class="searchTyping" ng-model-options="{ debounce: {'default': 500 }}"
+               ng-show="appData.qa_itrot_list.length > 0 || searchMatch.length > 0"/>
+    </div>
+    <div class="windowsReportTable">
+        <div ng-if="loaderWindows" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <table>
+            <thead ng-if="itemsAll.length > 0">
+            <tr>
+                <th ng-click="sort_by('DATE_CREATED');">
+                    ת. יצירה
+                </th>
+                <th ng-click="sort_by('COMPANY_NAME');">
+                    שם חברה
+                </th>
+                <th ng-click="sort_by('ACCOUNT_NICKNAME');">
+                    חשבון
+                </th>
+                <th ng-click="sort_by('DELTA_MIN_TRANS_DATE');">
+                    בעיה מתאריך
+                </th>
+                <th ng-click="sort_by('ACCOUNT_OLD_BALANCE');">
+                    י. ישנה
+                </th>
+                <th ng-click="sort_by('DELTA_MAX_TRANS_DATE');">
+                    בעיה עד תאריך
+                </th>
+                <th ng-click="sort_by('ACCOUNT_CALC_BALANCE');">
+                    י. מחושבת
+                </th>
+                <th ng-click="sort_by('ACCOUNT_NEW_BALANCE');">
+                    י. חדשה
+                </th>
+                <th ng-click="sort_by('IND_FIXED');">
+                    סטטוס
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody scroll-fill="220">
+            <div class="titleNotFilter" ng-show="itemsAll.length == 0">
+                לא נמצאה התאמה
+            </div>
+            <tr ng-repeat="a in itemsAll = (appData.qa_itrot_list | filter:searchMatch) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit | orderBy : predicate :reverse"
+                ng-class="{'greenRow': a.IND_FIXED == 2 || a.IND_FIXED == 3, 'redRow': a.IND_FIXED == 1}">
+                <td>
+                    <div ng-if="a.DATE_CREATED !== null">
+                        {{a.DATE_CREATED}}
+                    </div>
+                    <div ng-if="a.DATE_CREATED == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.COMPANY_NAME !== null">
+                        {{a.COMPANY_NAME}}
+                    </div>
+                    <div ng-if="a.COMPANY_NAME == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.ACCOUNT_NICKNAME !== null">
+                        <span ng-click="openMoreMangWindows(a)">
+                                                    {{a.ACCOUNT_NICKNAME}}
+                        </span>
+                    </div>
+                    <div ng-if="a.ACCOUNT_NICKNAME == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.DELTA_MIN_TRANS_DATE !== null">
+                        {{a.DELTA_MIN_TRANS_DATE}}
+                    </div>
+                    <div ng-if="a.DELTA_MIN_TRANS_DATE == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.ACCOUNT_OLD_BALANCE !== null">
+                        {{a.ACCOUNT_OLD_BALANCE}}
+                    </div>
+                    <div ng-if="a.ACCOUNT_OLD_BALANCE == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.DELTA_MAX_TRANS_DATE !== null">
+                        {{a.DELTA_MAX_TRANS_DATE}}
+                    </div>
+                    <div ng-if="a.DELTA_MAX_TRANS_DATE == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.ACCOUNT_CALC_BALANCE !== null">
+                        {{roundNum(a.ACCOUNT_CALC_BALANCE)}}
+                    </div>
+                    <div ng-if="a.ACCOUNT_CALC_BALANCE == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.ACCOUNT_NEW_BALANCE !== null">
+                        {{roundNum(a.ACCOUNT_NEW_BALANCE)}}
+                    </div>
+                    <div ng-if="a.ACCOUNT_NEW_BALANCE == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="a.IND_FIXED !== null">
+                        <span ng-click="editRow(a)">
+                                                    {{accoConversions.getStatusNameWindowManag(a.IND_FIXED)}}
+                        </span>
+                    </div>
+                    <div ng-if="a.IND_FIXED == null">
+                        &nbsp;
+                    </div>
+                </td>
+                <td>
+                    <button ng-click="openPeulot(a)">
+                        פעולות
+                    </button>
+                    <i ng-click="openBug(a)" ng-if="appData.adminSoft" class="fa fa-bug" title="פתיחת באג" tooltips></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="rowsSort typingPage" ng-show="appData.qa_itrot_list.length > 0 && itemsAll.length > 0">
+        <div class="selectRows">
+            הצג
+            <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+            </select>
+            שורות
+        </div>
+        <div class="sumRows">
+            סה״כ שורות שנמצאו
+            {{itemsAll.length}}
+            מתוך
+            {{appData.qa_itrot_list.length}}
+        </div>
+        <div class="pagRows" ng-show="itemsAll.length > 0 && itemsAll.length > entryLimit">
+            <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                        items-per-page="entryLimit" total-items="itemsAll.length" ng-model="currentPage"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                        last-text="עמ׳ אחרון"></pagination>
+        </div>
+    </div>
+
+</div>

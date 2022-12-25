@@ -1,0 +1,93 @@
+<div ng-controller="regularOperationsCtrl" ng-init="init()">
+    <div class="popup-header">
+        <h2>{{title}}</h2>
+    </div>
+    <div class="popup-content">
+        <label for="select_bank_label" class="select_bank_label">{{labelTitle}}</label>
+        <select class="selectBank bank{{selectedPost.val}}" ng-model="selectedPost"
+                ng-options="f.name  for f in selectedForm"
+                id="select_bank_label">
+        </select>
+        <h1 class="loader-banks" ng-show="alertError" data-ng-class="{'redError': errorRed}">
+            {{error}}
+        </h1>
+        <div class="content_bank" ng-show="selectedPost.val !== 'null'">
+            <form class="formsBank" autocomplete="off" name="formReg" novalidate ng-submit="addPost(formReg)">
+                <div data-ng-hide="appData.popupType == 0" class="select_bank_label">
+                    שייך לחשבון:
+                </div>
+                <select class="selectAcc" data-ng-model="selectedAccount" data-ng-hide="appData.popupType == 0"
+                        data-ng-options="a.company_account_id as a.company_account_nickname for a in appData.listAcc"></select>
+                <fieldset>
+                    <h3 ng-style="{'background-color':selectedPost.color, 'color':'white'}">פרטי הכניסה
+                        ל{{titleInside}}
+                    </h3>
+                    <div class="capslockAlert">
+                        {{capslockAlert}}
+                    </div>
+                    <div ng-repeat="label in selectedPost.inputs track by $index" class="wrapInputForm">
+                        <ng-form name="sfIn">
+                            <label ng-if='(label.val == "bank_auto" && selectedPost.val == "22") || (label.val == "bank_user_name" && selectedPost.val == "25") || (label.val == "bank_auto" && selectedPost.val == "82") || (label.val == "bank_auto" && selectedPost.val == "23")'
+                                   tooltips-tazrim title="{{label.placeholders}}">
+                                {{ label.name }}
+                            </label>
+                            <label ng-if='(selectedPost.val !== "22" && selectedPost.val !== "25"  && selectedPost.val !== "23"  && selectedPost.val !== "82") || (label.val !== "bank_auto" && selectedPost.val == "22") || (label.val !== "bank_auto" && selectedPost.val == "82") || (label.val !== "bank_auto" && selectedPost.val == "23") || (label.val !== "bank_user_name" && selectedPost.val == "25")'>
+                                {{ label.name }}
+                            </label>
+                            <div class="inputForm"
+                                 data-ng-class="{'errorInput': (formReg.$submitted || sfIn.nameBankVal.$touched) && sfIn.nameBankVal.$invalid, 'sucInput': (formReg.$submitted || sfIn.nameBankVal.$touched) && sfIn.nameBankVal.$valid }">
+                                <input id="nameBankVal__"
+                                       name="nameBankVal__"
+                                       style="display: none;"
+                                       value=""
+                                       autocomplete="off"
+                                       type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}">
+
+                                <input autocomplete="off" type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}"
+                                       ng-model="label.data"
+                                       placeholder="{{label.placeholders}}"
+                                       name="nameBankVal"
+                                       required
+                                       readonly
+                                       onfocus="this.removeAttribute('readonly');"
+                                       id="{{label.val}}"
+                                       only-not-hebrew
+                                       validation-banks capslock/>
+                                <i>
+                                    <img class="errorIcon" src="image/error_icon.png" alt="">
+                                    <img class="sucIcon" src="image/succses_icon.png" alt="">
+                                </i>
+                            </div>
+                            <div ng-show="formReg.$submitted || sfIn.nameBankVal.$touched" class="alertsMessages">
+                                <div ng-show="sfIn.nameBankVal.$error.required">
+                                    מידע זה הינו מידע חובה
+                                </div>
+                                <div ng-show="!sfIn.nameBankVal.$error.valid && sfIn.nameBankVal.$error.onlyNotHebrew">
+                                    אין להקליד אותיות עבריות
+                                </div>
+                                <div ng-show="!sfIn.nameBankVal.$error.required && sfIn.nameBankVal.$error.valid">
+                                    {{bank_pass}}
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+                    <div class="showPassCheck" data-ng-show="selectedPost.val !== '999'">
+                        <input type="checkbox" ng-model="showPassword" id="showPass">
+                        <label for="showPass">
+                            הצג סיסמא
+                        </label>
+                    </div>
+                    <button ng-disabled="!formReg.$valid">
+                        קשר חשבון בנק
+                    </button>
+                </fieldset>
+            </form>
+            <div class="alertMiniKey" ng-if="selectedPost.val == '999'">
+                לקוחות פועלים בעסקים - יש צורך ב״אישור לצפייה בלבד״ עבור ה״מיני-קי״ של ביזיבוקס.
+                אנא צרו קשר עם התמיכה - 03-5610382
+            </div>
+        </div>
+    </div>
+</div>
+
+

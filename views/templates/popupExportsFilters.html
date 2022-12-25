@@ -1,0 +1,31 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+ייצוא נתונים במצב סינון
+        </h2>
+    </div>
+    <div class="popup-content">
+        <ul>
+            <li>
+                <input type="radio" data-ng-model="appData.radioFilterExPop" value="0" id="0">
+                <label for="0">
+                    ייצא תוצאות מסוננות
+                </label>
+            </li>
+            <li>
+                <input type="radio" data-ng-model="appData.radioFilterExPop" value="1" id="1">
+                <label for="1">
+                    התעלם מהסינון וייצא הכל
+                </label>
+            </li>
+        </ul>
+        <div class="buttonPopUpCompany">
+            <button ng-click="export()">
+                ייצא
+            </button>
+            <button ng-click="cancelEx()">
+                בטל
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+<div ng-controller="windowsManagCtrl">
+    <div class="popup-header">
+        <h2>
+            הוספת משימה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="wrapPop">
+            <div class="trTask">
+                <p class="widthFix">
+                    משימה ל:
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.taskUserId"
+                            ng-options="a.USER_ID as a.NAME for a in appData.usersWork"
+                            ng-change="changeUserWork()"></select>
+                </div>
+                <p class="paddRight">
+                    סוג משימה:
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.tasks_type"
+                            ng-options="a.QA_TASK_TYPE_ID as a.QA_TASK_TYPE_DESC for a in appData.usersWork_tasks_type"></select>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    נושא
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.usersWorkVal.taskTitle" ng-class="{'redError': !appData.usersWorkVal.taskTitle.length}">
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    תיאור
+                </p>
+
+                <div>
+                    <textarea ng-model="appData.usersWorkVal.taskDesc" ng-class="{'redError': !appData.usersWorkVal.taskDesc.length}"></textarea>
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    קישור למסמך
+                </p>
+
+                <div>
+                    <input type="text" ng-model="appData.usersWorkVal.driveLink" class="link">
+                </div>
+            </div>
+            <div class="trTask">
+                <p class="widthFix">
+                    עדיפות
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.priority"
+                            ng-options="a.QA_TASK_PRIORTY_ID as a.QA_TASK_PRIORTY_DESC for a in appData.usersWork_priority"></select>
+                </div>
+
+                <p class="paddRight">
+                    סדר עדיפות
+                </p>
+                <div>
+                    <input type="text" ng-model="appData.usersWorkVal.order_num" class="link order_num" number-only19>
+                </div>
+            </div>
+            <div class="buttonGr">
+                <button ng-click="qa_task_add()" ng-disabled="!appData.usersWorkVal.taskTitle.length || !appData.usersWorkVal.taskDesc.length">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()">
+ביטול
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

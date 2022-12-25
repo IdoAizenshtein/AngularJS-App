@@ -1,0 +1,259 @@
+<div ng-if="!showPopPassword" class="showPopPasswordForm">
+    <form name="showPopPasswordForm" novalidate ng-submit="checkpopPasswordCompaiesTab(showPopPasswordForm)">
+        <p>
+            אנא הקלד סיסמה:
+        </p>
+
+        <div class="inputsPass"
+             ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+            <input style="display:none" type="password" autocomplete="off">
+            <input pass-tab-spider autocomplete="off" type="password"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   ng-model="popPasswordCompaiesTab" name="pass" required="">
+        </div>
+        <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+            <div ng-show="showPopPasswordForm.pass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="showPopPasswordForm.pass.$error.valid">
+                הסיסמה אינה נכונה
+            </div>
+        </div>
+        <button type="submit">
+            אישור
+        </button>
+    </form>
+</div>
+
+<div ng-if="showPopPassword">
+
+    <div ng-if="!loaderManageWithdrawals" class="loader_table" scroll-fill="200">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <div class="funds-totals" ng-init="init()" data-ng-class="{'openMoreNavEx': openMoreNav}">
+
+        <div class="spiderListSearch">
+            <div class="wrapSelect">
+                <label>
+                    סוג דו״ח
+                </label>
+                <select ng-model="appData.valDD"
+                        ng-options="item.REPORT_NUM as item.REPORT_NAME for item in appData.getReportsTypes"
+                        ng-change="getReportsTypesNum(appData.valDD)">
+                </select>
+            </div>
+            <div class="refrashCheck">
+                <input type="checkbox" ng-model="$parent.refrashCheck" ng-change="refrashPage()">
+                <p ng-click="$parent.refrashCheck = !$parent.refrashCheck;refrashPage();">
+                    רענן כל
+                </p>
+                <input type="text" ng-model="refrashMinutes" ng-change="$parent.refrashCheck = true;refrashPage()">
+                <p ng-click="$parent.refrashCheck = !$parent.refrashCheck;refrashPage();">
+שניות
+                </p>
+            </div>
+            <input ng-model-options="{ debounce: {'default': 500 }}"
+                   ng-model="freeSearch" placeholder="חיפוש"
+                   ng-show="appData.getReportsTypesNum.length > 0 || freeSearch.length > 0">
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <div>
+                <div class="tableManageWithdrawals">
+                    <div class="col-md-12" ng-show="filtered.length > 0">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <th>
+                                <a ng-click="sort_by('COMPANY_NAME');">
+                                    שם חברה
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('NAME');">
+                                    שם בנק
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('STATUS');">
+                                    סטטוס
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('dateAndMin');">
+                                    תאריך
+                                    משיכה
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('WORK_SPIDER_ID');">
+                                    ספיידר
+                                    אחרון
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('ERRORDESC');">
+
+                                    הערות
+                                    משיכה
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('RUN_COUNT');">
+                                    כשלונות
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('IND_SELF_MANAGED');">
+                                סוג
+                                לקוח
+
+                                </a>
+                            </th>
+                            <th><a ng-click="sort_by('IND_RUN');">
+
+                                מוכן
+                                לריצה
+
+                                </a>
+                            </th>
+                            <th>
+                                <a ng-click="sort_by('PRIORITY');">
+                                    דחיפות
+                                </a>
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                            </thead>
+                            <tbody scroll-fill="{{scrollHeightTable}}">
+                            <tr ng-repeat="a in filtered = (appData.getReportsTypesNum | filter:freeSearch | orderBy : predicate :reverse) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                                <td>
+                                    <div ng-if="a.COMPANY_NAME !== null">
+                                        {{a.COMPANY_NAME}}
+                                    </div>
+                                    <div ng-if="a.COMPANY_NAME == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.NAME !== null">
+                                        {{a.NAME}}
+                                    </div>
+                                    <div ng-if="a.NAME == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.STATUS !== null">
+                                        {{accoConversions.getStatustokensalerts(a.STATUS)}}
+                                        &nbsp;
+                                    </div>
+                                    <div ng-if="a.STATUS == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.EXTRACTDATE !== null">
+                                        {{a.EXTRACTDATE}}
+                                    </div>
+                                    <div ng-if="a.EXTRACTDATE == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.WORK_SPIDER_ID !== null">
+                                        {{a.WORK_SPIDER_ID}}
+                                    </div>
+                                    <div ng-if="a.WORK_SPIDER_ID == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.ERRORDESC !== null">
+                                        {{a.ERRORDESC}}
+                                    </div>
+                                    <div ng-if="a.ERRORDESC == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.RUN_COUNT !== null">
+                                        {{a.RUN_COUNT}}
+                                    </div>
+                                    <div ng-if="a.RUN_COUNT == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_SELF_MANAGED !== null">
+                                        {{accoConversions.indSelfMan(a.IND_SELF_MANAGED)}} &nbsp;
+                                    </div>
+                                    <div ng-if="a.IND_SELF_MANAGED == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.IND_RUN !== null">
+                                        <span ng-click="openMoreData(a)">
+                                             {{a.IND_RUN}}
+                                        </span>
+                                    </div>
+                                    <div ng-if="a.IND_RUN == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-if="a.PRIORITY !== null">
+                                        {{a.PRIORITY}}
+                                    </div>
+                                    <div ng-if="a.PRIORITY == null">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td>
+                                    <div ng-init="a.disabledClick = false;">
+                                        <button ng-click="showRunType(a.TOKEN, a.TOKEN_TYPE);" ng-disabled="a.disabledClick || ifDisabled(a)">
+                                            הפעל
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="titleNotFilter" ng-show="filtered.length == 0">
+                        לא נמצאה התאמה
+                    </div>
+                </div>
+            </div>
+            <div class="rowsSort" data-ng-show="appData.getReportsTypesNum.length > 0 && filtered.length > 0">
+                <div class="selectRows">
+                    הצג
+                    <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                        <option>20</option>
+                        <option>50</option>
+                        <option>100</option>
+                        <option>150</option>
+                    </select>
+                    שורות
+                </div>
+                <div class="sumRows">
+                    סה״כ שורות שנמצאו
+                    {{filtered.length}}
+                    מתוך
+                    {{appData.getReportsTypesNum.length}}
+                </div>
+                <div class="pagRows" ng-show="filtered.length > 0 && filtered.length > entryLimit">
+                    <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                                items-per-page="entryLimit" total-items="filtered.length" ng-model="currentPage"
+                                class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;"
+                                first-text="עמ׳ ראשון"
+                                last-text="עמ׳ אחרון"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

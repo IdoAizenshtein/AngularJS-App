@@ -1,0 +1,45 @@
+<div class="alert_ex" ng-if="appData.permissionAlert"  ng-class="{'helpView': appData.helpSignUp == true}">
+    <p ng-if="appData.permissionAlertKs">
+        הפרטים המוצגים הם להדגמה בלבד,
+        <span ng-if="appData.defMonth.ind_accountants !== 0 || appData.usersBanksProgress.length == 0">
+        על מנת להציג את נתוני עסקך האמתיים יש
+      <strong ng-click="$parent.$state.go('settings.accounts')">להגדיר את פרטי חשבון</strong>
+        הבנק שלך.
+        </span>
+           <span ng-if="appData.defMonth.ind_accountants == 0 && appData.usersBanksProgress.length > 0">
+               עד שייטען חשבונך
+           </span>
+    </p>
+    <p ng-if="appData.permissionAlertHa">
+        הפרטים המוצגים הם להדגמה בלבד. להצגת נתוני הנהלת החשבונות האמיתיים של עסקך, <strong
+            onclick="window.open('http://bizibox.biz/contact', '_blank')">צור קשר עם נציגנו </strong>
+    </p>
+    <p ng-if="appData.statusPassAlert" class="statusPassAlert">
+        אין אפשרות למשוך את הנתונים מח-ן
+        {{appData.statusPassWrong.token_name}},
+        יתכן כי הסיסמה שהזנת שגויה או שתוקפה פג
+        <button ng-click="$parent.updateAccountPasswordsLine(appData.statusPassWrong)">
+            עדכון סיסמה
+        </button>
+
+        <i class="closestatusPassAlert" ng-click="$parent.closeAlertPass()"></i>
+    </p>
+</div>
+<div  data-ng-class="{'helpView': appData.helpSignUp == true}" ng-show="((appData.selectedCompany) && (appData.defMonth.ind_accountants == 0) && (appData.selectedCompany.days_left_till_expire || appData.selectedCompany.days_left_till_expire == 0) && appData.selectedCompany.days_left_till_expire !== -1)"
+     class="alert_permi">
+    <p>
+        נותרו לך עוד <strong> {{appData.selectedCompany.days_left_till_expire}} ימים לסיום תקופת הניסיון. </strong>
+        בכדי להמשיך ולהשתמש בביזיבוקס
+        <span ng-show="appData.selectedCompany.days_left_till_expire !== 0"> לאחר תקופת הניסיון בדוק את</span>
+        <strong ng-show="appData.selectedCompany.days_left_till_expire !== 0" class="strongs"
+                ng-click="getUrlPay(appData.companySource)">
+            הגדר אמצעי תשלום
+        </strong>
+        <strong class="strongs" ng-show="appData.selectedCompany.days_left_till_expire == 0"
+                ng-click="getUrlPay(appData.companySource)">לחץ למעבר לרכישה </strong>
+        <span ng-show="appData.selectedCompany.days_left_till_expire !== 0"> שאנו מציעים .</span>
+    </p>
+
+    <div class="bg_mask" ng-show="appData.selectedCompany.days_left_till_expire == 0"
+         ng-style="{'z-index':(appData.selectedCompany.days_left_till_expire < 1) ? '5' : '3' }"></div>
+</div>

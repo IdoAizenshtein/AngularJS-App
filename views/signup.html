@@ -1,0 +1,204 @@
+<div class="wrapper_page_login" ng-init="init()">
+    <div class="clsHeader bg_login">
+        <div class="clsLogo">
+            <div class="clsAlign">
+                <div class="logoPage"></div>
+                <h1>הרשמה</h1>
+            </div>
+        </div>
+
+        <div class="clsHeaderBG bg_login clsAlign">
+            <h2 style="display: none;">
+                ניהול פיננסי לעסק שלך הכולל ניהול תזרים מזומנים והתאמות בנקים בצורה אוטומטית
+            </h2>
+            <h2>קבל את התמונה המלאה על מצב העסק שלך ב-4 צעדים פשוטים</h2>
+            <div id="progress_bar">
+                <div class="{{progressStep}}"></div>
+            </div>
+            <div class="title_progress">
+                <strong ng-class="{'active': $state.current.name == 'signup.step1'}">פרטים אישיים</strong>
+                <strong ng-class="{'active': $state.current.name == 'signup.step2'}"> פרטי העסק</strong>
+                <strong ng-class="{'active': $state.current.name == 'signup.step3'}">קישור חשבון הבנק</strong>
+                <strong>הגדרת פעולות קבועות</strong>
+            </div>
+        </div>
+    </div>
+    <div ng-show="alertError" class="loaderSignData">
+        <div class="bg"></div>
+        <div class="loaderSignDataContent">
+            <img src="image/bizibox-animated-logo.gif" alt="Loading...">
+
+            <p>
+                {{error}}
+                <a ng-if="srcLinkMobile" ng-href="{{srcLink}}" style="display: block; color: #1387a9;">לחץ כאן להורדת
+                    האפליקציה</a>
+            </p>
+        </div>
+    </div>
+    <div class="clsAlign contentPageLogin">
+        <div class="mainSteps">
+            <div ng-show="!loaderSign" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <h1>
+                {{titleSignUp}}
+                <small>
+                    {{smallTitleSignUp}}
+                </small>
+            </h1>
+            <div ui-view="lazyLoadView" class="clearfix"></div>
+            <div class="info_about_login">
+                ההרשמה הינה <b>להתנסות חינם </b> וללא התחייבות עבור כלל החשבונות בכלל הבנקים.
+                <br>ניתן לבטל את ההרשמה בכל עת. ניתקלת בבעיה? חייג <a href="tel:03-5610382" title="tel">03-5610382</a>
+                ונשמח לעזור.
+            </div>
+            <!--<div ng-if="appData.showInputAg" class="nameAg">-->
+            <!--<i ng-click="openNameAg = !openNameAg" title="שם איש המכירות"></i>-->
+            <!--<div ng-if="openNameAg">-->
+            <!--<input style="display:none" type="text" autocomplete="off">-->
+            <!--<input data-ng-model="appData.agentName" type="text" placeholder="שם איש המכירות">-->
+            <!--</div>-->
+            <!--</div>-->
+        </div>
+        <aside class="sideLogin customer_stories">
+            <div class="slider_customer_stories" ng-if="stepSide" oc-lazy-load="['scripts/lib/jquery.cycle2.js']">
+                <div class="cycle-slideshow" my-slideshow>
+                    <div class="content">
+                        <strong>את כל הפגישות שלי מול הלקוחות אני מקיים רק עם bizibox , אני מציג להם בצורה מאד פשוטה
+                            וחוויתית את תמונת מצב העסק שלהם . התוכנה הפכה אותי למקצועי יותר וחוסכת לי המון זמן.</strong>
+
+                        <div class="names_title">
+                            <small>תומר פרי</small>
+                            <small class="title_person">מנהל חשבונות</small>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <strong>bizibox הביאה לשינויים רבים בעסק שלי, ממצב של התנהלות בפתקים וניירות, הצלחנו להתארגן
+                            וליצור סדר שהביא אותנו ליעילות כלכלית משמעותית</strong>
+
+                        <div class="names_title">
+                            <small>יעל צח</small>
+                            <small class="title_person">זכיינית חנות מאניה</small>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <strong>bizibox היא תוכנת ניהול העסק היחידה שעונה על כל הדרישות שלי. מקום אחד בו אני רואה את כל
+                            נתוני הכספים שלי בכל זמן ובכל מקום! אפילו מהסמארטפון - מבחינתי זמינות הנתונים המידית זה הדבר
+                            הכי חשוב bizibox מספקת לי את זה בצורה מושלמת</strong>
+
+                        <div class="names_title">
+                            <small>דורון פז</small>
+                            <small class="title_person"> D.P net</small>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <strong>מאז ש- bizibox נכנסה לחיינו קרה דבר מדהים בעסק - הכל בשליטה וללא הפתעות, בנוסף התוכנה
+                            ידידותית ונוחה לתפעול. מומלץ בחום</strong>
+
+                        <div class="names_title">
+                            <small>עופר זוסמן</small>
+                            <small class="title_person">"בעברית" קידום אתרים</small>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <strong>לא רק ש- bizibox חוסכת לי זמן יקר כל יום, היא גם נותנת לי תמונה עתידית על מצב התזרים שלי
+                            ומאפשרת לי להתנהל מול הספקים בצורה נכונה יותר. ללא ספק מהפך!</strong>
+
+                        <div class="names_title">
+                            <small>אבי שמואל</small>
+                            <small class="title_person">בעל מספרה</small>
+                        </div>
+                    </div>
+                </div>
+                <div id="no-template-pager" class="cycle-pager external">
+                    <div>
+                        <img src="image/Tomer.png" alt=""/>
+                    </div>
+                    <div>
+                        <img src="image/yael.png" alt=""/>
+                    </div>
+                    <div>
+                        <img src="image/doron.png" alt=""/>
+                    </div>
+                    <div>
+                        <img src="image/ofer.png" alt=""/>
+                    </div>
+                    <div>
+                        <img src="image/avi.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+            <div class="textSide1" ng-if="!stepSide">
+                bizibox הוא מוצר ישראלי חדשני המתממשק לנתוני כל הבנקים במדינת ישראל, ברמת האבטחה הגבוהה והמחמירה ביותר
+                בדומה לאמצעי האבטחה הנהוגים בבנקים ומלווה בחברת האבטחה מהמובילות בישראל
+            </div>
+            <div class="securities" data-ng-class="{'textSide2': !stepSide}">
+                <strong>מאובטח בסטנדרטים בנקאיים. המערכת היא לצפייה בלבד ואין אפשרות לבצע פעולות כספיות דרכה.</strong>
+                <ul>
+                    <li>
+                        <img src="image/ssl3.png" alt=""/>
+                    </li>
+                    <li>
+                        <img src="image/ssl2.png" alt=""/>
+                    </li>
+                    <li>
+                        <img src="image/ssl1.png" alt=""/>
+                    </li>
+                </ul>
+            </div>
+            <figure class="textSide3" ng-if="!stepSide">
+                <h3>"אחד הנושאים החשובים שעמדו לנגד עיניי, בתכנון ופיתוח המוצר
+                    bizibox היה אבטחת המידע. השקעתי את כל המשאבים הדרושים על מנת ליצור מוצר מאובטח לחלוטין. <br>אני שמח
+                    שעמדתי בציפיות שלי ושל החברה."
+                </h3>
+
+                <div class="wrap_secure_q">
+                    <img src="image/eyal.jpg" alt="אייל חזות - סמנכ״ל">
+                    <figcaption>אייל חזות, מייסד וסמנכ”ל פיתוח</figcaption>
+                </div>
+            </figure>
+            <ul class="info_login" ng-if="stepSide">
+                <li>תזרים מזומנים עדכני מוצג בכל רגע, ללא מאמץ</li>
+                <li>הצגת כל הנתונים הכספיים של העסק מכל חשבונות הבנק וכל כרטיסי האשראי</li>
+                <li>ביצוע התאמות בנק אוטומטיות</li>
+            </ul>
+        </aside>
+    </div>
+    <div class="clsFooter wrap_footer">
+        <div class="clsAlign">
+            <div class="clsFooterLogo">
+                <img src="image/footer_logo.png" alt="bizibox - ניהול עיסקי">
+                <br>© כל הזכויות שמורות, איי-פקט בע"מ 2015
+                <div class="clsCredits">
+                    עיצוב ומיתוג:
+                    <a href="http://www.riko.co.il" title="עיצוב אתרים" target="_blank">Nadav Rikover</a>
+                    &nbsp;|&nbsp; תיכנות:
+                    <a href="http://bizibox.biz/" title="בניית אתרים" target="_blank">Ifact</a>
+                </div>
+            </div>
+            <div class="clsContactDetails">
+                <h3>יצירת קשר</h3>
+                iFact בע"מ, גרשון ש"ץ 16, תל-אביב, 65434
+                <br>טלפון: 03-5610382, פקס: 03-6844889
+                <br>
+                <a href="mailto:info@bizibox.biz" title="mail">info@bizibox.biz</a>
+            </div>
+
+            <div class="clsSocialMenu">
+                <h3>הצטרפו אלינו</h3>
+
+                <div class="clsIcon clsIconFacebook" onclick="window.open('https://www.facebook.com/Bizibox');">
+                    Facebook
+                </div>
+                <div class="clsIcon clsIconTwitter" onclick="window.open('https://twitter.com/bizibox_biz');">
+                    Twitter
+                </div>
+                <div class="clsIcon clsIconLinkedin"
+                     onclick="window.open('https://www.linkedin.com/company/bizibox?trk=tabs_biz_home');">
+                    LinkedIn
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<iframe src="" id="dbclick" width="1" height="1" frameborder="0" style="display:none"></iframe>

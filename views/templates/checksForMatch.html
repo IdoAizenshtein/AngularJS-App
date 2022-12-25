@@ -1,0 +1,101 @@
+<div ng-init="init()" ng-controller="checksAnalysisCtrl">
+    <div class="popup-header">
+        <h2>
+            התאמת שיק
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="rowThis">
+            <table>
+                <tr>
+                    <td>
+                        {{appData.checksForMatch.due_date}}
+                    </td>
+                    <td class="sum">
+                        ₪ {{roundFixed(appData.checksForMatch.total)}}
+                    </td>
+                    <td class="bank{{loadIdBank(appData.checksForMatch.company_account_id)}}">
+                        <i>
+                            &nbsp;
+                        </i>
+                        {{loadNickNameBank(appData.checksForMatch.company_account_id)}}
+                    </td>
+                    <td>
+                        {{appData.checksForMatch.payment_desc}}
+                    </td>
+                    <td data-ng-if="appData.checksForMatch.source_program_id && appData.checksForMatch.source_program_id !== null">
+                        {{accoConversions.getSourceProgramId(appData.checksForMatch.source_program_id)}}
+                    </td>
+                    <td data-ng-if="!appData.checksForMatch.source_program_id || appData.checksForMatch.source_program_id == null">
+                        הוקלד ידנית
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="wrapGroup">
+            <div class="headerCheckPop">
+                <p>
+                    התאם שיק נבחר לפי
+                </p>
+                <select ng-model="appData.tabStatusPopStatus" ng-change="openChecksListPop(appData.tabStatusPopStatus)"
+                        ng-options="item.status_id as accoConversions.statusInchequesSum(item.status_id) for item in appData.companyGetinchequesSumSelect"></select>
+            </div>
+
+            <div class="formCheckPopWrap">
+                <div ng-if="checkIfNone(appData.companyGetinchequesPerutPop)" class="alertsNot">
+אין שקים להתאמה
+                </div>
+                <form name="formPopAcc" ng-if="!checkIfNone(appData.companyGetinchequesPerutPop)" novalidate ng-submit="setChecksPop(formPopAcc)" class="wrap-popupAcc">
+                    <div class="formCheckPop">
+                        <table>
+                            <tr data-ng-repeat="a in appData.companyGetinchequesPerutPop"
+                                data-ng-class="{'selectThis': $parent.appData.checksPopMatchRadio == a.ifact_cheque_payment_id}"
+                                ng-if="a.source_program_id == null || a.source_program_id == 8881">
+                                <td>
+                                    <input type="radio"
+                                           ng-model="$parent.appData.checksPopMatchRadio"
+                                           name="uuidChecks"
+                                           value="{{a.ifact_cheque_payment_id}}" required/>
+                                </td>
+                                <td>
+                                    {{a.due_date}}
+                                </td>
+                                <td class="sum">
+                                    ₪ {{roundFixed(a.total)}}
+                                </td>
+                                <td class="bank{{loadIdBank(a.company_account_id)}}">
+                                    <i>
+                                        &nbsp;
+                                    </i>
+                                    {{loadNickNameBank(a.company_account_id)}}
+                                </td>
+                                <td>
+                                    {{a.payment_desc}}
+                                </td>
+                                <td>
+                                    הוקלד ידנית
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                    <p ng-if="formPopAcc.$invalid" class="erroeAl">
+                        אנא בחר את הבנק הרצוי
+                    </p>
+
+                    <div class="buttonsCards">
+                        <button type="submit" ng-disabled="formPopAcc.$invalid">
+                            אישור
+                        </button>
+                        <strong data-ng-click="hidePopup()">
+                            ביטול
+                        </strong>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>

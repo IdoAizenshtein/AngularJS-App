@@ -1,0 +1,92 @@
+<div>
+    <div class="popup-header">
+        <h2>
+            פתיחת קריאת שירות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form autocomplete="off" name="supportForm" novalidate ng-submit="sendSupportService(supportForm)">
+            <div class="wrapPop">
+                <div class="trTask"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$invalid}">
+                    <p class="widthFix">
+                        נושא
+                    </p>
+                    <div>
+                        <input type="text" ng-model="appData.usersWorkVal.taskTitle" required autocomplete="off"
+                               name="taskTitle"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$invalid}">
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="trTask"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$invalid}">
+                    <p class="widthFix">
+                        תיאור
+                    </p>
+                    <div>
+                    <textarea ng-model="appData.usersWorkVal.taskDesc" required autocomplete="off" name="taskDesc"
+                              ng-class="{'redError': (supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$invalid}"></textarea>
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="trTask"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.uEmail.$touched) && supportForm.uEmail.$invalid}">
+
+                    <p class="widthFix">
+                        מייל לחזרה
+                    </p>
+                    <div>
+                        <input style="display:none" type="email" autocomplete="off">
+                        <input name="uEmail" class="usersWorkValMail"
+                               required type="email" ng-model="appData.usersWorkVal.mail"
+                               readonly
+                               onfocus="this.removeAttribute('readonly');"
+                               autocomplete="off"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.uEmail.$touched) && (supportForm.uEmail.$error.required || supportForm.uEmail.$error.pattern)}"
+                               ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                    </div>
+                    <div class="alertBottomInput"
+                         ng-show="(supportForm.$submitted || supportForm.uEmail.$touched) && (supportForm.uEmail.$error.required || supportForm.uEmail.$error.pattern)">
+                        <div ng-show="supportForm.uEmail.$error.required">
+                            מידע זה הינו מידע חובה
+                        </div>
+                        <div ng-show="supportForm.uEmail.$error.pattern">
+                            כתובת המייל אינה תקינה
+                        </div>
+                    </div>
+                </div>
+                <div class="trTask">
+                    <p class="widthFix">
+                        שם פותח הקריאה
+                    </p>
+                    <div>
+                        <input type="text" ng-model="appData.usersWorkVal.Task_open_name" required autocomplete="off"
+                               name="Task_open_name"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.Task_open_name.$touched) && supportForm.Task_open_name.$invalid}">
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.Task_open_name.$touched) && supportForm.Task_open_name.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="buttonGr">
+                    <button type="submit" ng-disabled="!supportForm.$valid || appData.usersWorkVal.sent">
+                    אישור
+                    </button>
+                    <button ng-click="hidePopup()" type="button">
+                        ביטול
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+

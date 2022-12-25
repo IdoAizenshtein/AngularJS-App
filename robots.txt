@@ -1,0 +1,7 @@
+# robots.txt for https://secure.bizibox.biz/
+
+User-agent: *
+Disallow: /
+
+
+

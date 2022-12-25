@@ -1,0 +1,54 @@
+<img src="image/newLogo.png" class="newLogo">
+<img src="image/oldLogo.png" class="oldLogo">
+<div class="dataPop">
+<div class="contentPop">
+    <!--<img src="image/closePopInd_show_agreement.png" class="closePopInd_show_agreement" ng-click="update_new_ui(3)">-->
+
+    <div class="titlePop">
+        ברוכים הבאים לגרסה החדשה של
+
+        <img src="image/logoSmallNew.png">
+    </div>
+
+    <div class="descPop">
+        <p>
+            <strong style="font-family: esterebold;">
+                התחדשנו!
+            </strong>
+            היא חכמה וידידותית במיוחד - ועכשיו היא כולה שלכם!
+        </p>
+        <p>
+            אנחנו כאן עבורכם לכל שאלה.
+        </p>
+        <p>
+            את האפליקציה הסלולרית החדשה ניתן להוריד בחנויות האפליקציות
+        </p>
+    </div>
+
+    <button ng-click="update_new_ui(2)">
+        <img src="image/btn_ind_show_agreement1.png">
+    </button>
+</div>
+</div>
+
+
+<script>
+	$(function () {
+		setTimeout(function () {
+			$(".newLogo").show().animate({
+				top: '90px'
+			}, "slow", function () {
+				$(".oldLogo").hide();
+				$(".dataPop").animate({
+					opacity: '1'
+				}, "slow");
+				$(".newLogo").animate({
+					left: '-600px'
+				}, "slow");
+                $(".contentPop").show().animate({
+					left: '-1px'
+				}, "slow");
+			});
+		}, 1500);
+	})
+</script>

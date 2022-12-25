@@ -1,0 +1,24 @@
+﻿<div data-ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            הזנת סיסמה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="mailer">
+            <form autocomplete="off">
+                <fieldset>
+                    <label>הזן קוד SMS</label>
+                    <input id="passPoalim__" name="passPoalim__" style="display: none;" value="" type="text" autocomplete="off">
+                    <input type="text" ng-model="appData.passPoalim"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" name="passPoalim"/>
+                </fieldset>
+                <button ng-disabled="!appData.passPoalim.length" ng-click="token_updateotp()">
+שלח
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

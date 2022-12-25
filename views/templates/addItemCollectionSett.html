@@ -1,0 +1,53 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+הוספת פריט
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.itemCollectetionsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+
+        <div class="searchUserAcc">
+            <input type="text" ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+        </div>
+
+        <div class="formAccUsers">
+            <div class="headerFormUserAcc">
+                <div>
+                    מספר
+                </div>
+                <div>
+                    שם פריט
+                </div>
+                <div>
+                    סכום
+                </div>
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+            <ul vs-repeat="30">
+                <li ng-repeat="a in appData.itemCollectetions | filter:filterAccUser">
+                    <div>
+                        {{a.ITEM_ID}}
+                    </div>
+                    <div>
+                        {{a.ITEM_DESC}}
+                    </div>
+                    <div>
+                        {{a.ITEM_PRICE_BEFORE_VAT}}
+                    </div>
+                    <div>
+                        <button ng-click="addItemColl(a)">
+                            בחר
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

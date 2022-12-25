@@ -1,0 +1,27 @@
+<div class="wrap-account-settings form groupWrapSett">
+    <h2>
+מספר גרסה
+        :
+        {{appData.numVersionCurrent}}
+    </h2>
+
+    <button class="button" ng-click="reloadVersion()">
+רענן
+    </button>
+</div>
+<div class="wrap-account-settings form groupWrapSett">
+    <h2>
+        Api אסימון
+
+   <span ng-if="appData.tokenAsimon !== null">
+       : {{appData.tokenAsimon}}
+   </span>
+    </h2>
+
+    <button class="button" ng-click="setAsimon()" ng-if="appData.tokenAsimon == null">
+        צור אסימון
+    </button>
+    <button class="button" ng-click="changeAsimon()" ng-if="appData.tokenAsimon !== null">
+        החלף אסימון
+    </button>
+</div>

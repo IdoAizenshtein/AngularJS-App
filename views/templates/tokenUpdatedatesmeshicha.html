@@ -1,0 +1,31 @@
+<div ng-init="init()" ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            משיכה לפי ימים
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form novalidate name="updatedatesmeshicha" ng-submit="token_updatedatesmeshicha()">
+            <div class="itemLabel">
+                <label for="id1">
+                    ימים למשיכת עו"ש
+                </label>
+                <input type="text" name="inaccount_days" required date-picker-days id="id1" readonly="readonly"
+                       ng-model="appData.tokenUpdatedatesmeshicha.inaccount_days"
+                       ng-class="{'red': (updatedatesmeshicha.$submitted || updatedatesmeshicha.inaccount_days.$touched) && updatedatesmeshicha.inaccount_days.$invalid}">
+            </div>
+            <div class="itemLabel">
+                <input type="checkbox" name="incheckpic_days" id="id2"
+                       ng-model="appData.tokenUpdatedatesmeshicha.incheckpic_days">
+                <label for="id2">
+משיכת צ׳קים
+                </label>
+            </div>
+            <div class="buttonAppro">
+                <button type="submit" ng-disabled="updatedatesmeshicha.$invalid">
+                    אישור
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

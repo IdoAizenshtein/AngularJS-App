@@ -1,0 +1,188 @@
+<nav class="scroll_mehuad" ng-if="appData.tazrimMeuhad.length > 0">
+    <a class="bb-nav-prev"><span class="icon arrow-right"></span></a>
+    <a class="bb-nav-next"><span class="icon arrow-left"></span></a>
+</nav>
+<div class="notDataInCompany"
+     ng-show="(appData.tazrimMeuhad && appData.tazrimMeuhad.length == 0) || (appData.selectedCompany && appData.selectedCompany.accounts && appData.selectedCompany.accounts.bank_account_list == null)">
+    אין נתונים להצגה
+</div>
+<div ng-show="!loaderTazrimMeuhad" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="tazrimMeuhad" nav-slider-meuhad data="appData.tazrimMeuhad.length" ng-show="appData.tazrimMeuhad.length"
+     scroll-fill="{{scrollHeightMehuad}}">
+    <ul id="sortable" class="clearfix" sortable-drag init-onload=true data="appData.tazrimMeuhad"
+        ng-if="appData.selectedCompany.accounts">
+        <li class="ui-state-default ui-state-disabled firstChild">
+            <div class="date_rows">
+                <div class="title_date_rows" class="absoluteFixedHead" style="top: {{appData.pixelsScrolled}}px" ng-class="{'borders': appData.pixelsScrolled !== 0}">תאריך</div>
+                <div class="rows_content_all_date">
+                    <div style="height: 32px; width: auto"></div>
+                    <div ng-repeat="v in appData.tazrimMeuhad"> {{v.day_id }}</div>
+                </div>
+            </div>
+        </li>
+        <ul class="scrollRightBottom">
+            <li class="allBanks ui-state-default" ng-class="{'showElem': appData.counterCompanyExists > 1}">
+                <div class="absoluteFixedHead" style="top: {{appData.pixelsScrolled}}px"
+                     ng-style="{'border-top':(appData.pixelsScrolled==0) ? 'none' : '1px solid #c6c6c6'}">
+                    <div class="title_col">
+                        <div class="hand_move"></div>
+                        <h1>כל הבנקים</h1>
+                        <p>יתרת פתיחה
+                            <span> {{ round2Fixed(appData.selectedCompany.accounts.total_opening_balance)}} </span>₪
+                        </p>
+                        <p>מסגרת אשראי
+                            <span> {{round2Fixed(appData.selectedCompany.accounts.total_credit_facility)}} </span>₪
+                        </p>
+                    </div>
+                    <div class="rows_banks title_col_row">
+                        <div class="total_hacnasot">הכנסה</div>
+                        <div class="total_hozaot">הוצאה</div>
+                        <div class="total_itra">יתרה</div>
+                        <div class="hariga">יתרה לשימוש</div>
+                    </div>
+                </div>
+                <div style="height: 152px; width: auto"></div>
+                <div class="rows_content_all_banks" ng-repeat="a in appData.tazrimMeuhad">
+                    <div ng-repeat="b in a.rows" class="rows_banks" ng-if="b.company_account_id == null">
+                        <div class="total_hacnasot">
+                            <p ng-class="{'link':loadTooltipsShow(a.rows) && (b.total_hacnasot.content !== 0.0)}">
+                                {{round2Fixed(b.total_hacnasot.content) }}</p>
+                                 <span class="peoulot"
+                                       ng-if="loadTooltipsShow(a.rows) && (b.total_hacnasot.content !== 0.0)">
+                                     <div>
+                                         <table class="content_tooltip">
+                                             <tr ng-repeat="d in loadTooltips(a.rows)">
+                                                 <td>
+                                                     <div tooltip="{{d.trans_name}}" tooltips-elipsis> {{d.trans_name}}</div>
+                                                 </td>
+                                                 <td ng-if="d.hachnasa">
+                                                     <div> {{round2Fixed(d.hachnasa)}}</div>
+                                                 </td>
+                                                 <td ng-if="d.hozaa">
+                                                     <div> {{round2Fixed(d.hozaa)}}</div>
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                     </div>
+                            </span>
+                        </div>
+                        <div class="total_hozaot">
+                            <p ng-class="{'link':loadTooltipsShowHozaot(a.rows) && (b.total_hozaot.content !== 0.0)}">
+                                {{round2Fixed( b.total_hozaot.content)}}</p>
+                                   <span class="peoulot"
+                                         ng-if="loadTooltipsShowHozaot(a.rows) && (b.total_hozaot.content !== 0.0)">
+                                       <div>
+                                           <table class="content_tooltip">
+                                               <tr data-ng-repeat="d in loadTooltipsHozaot(a.rows)">
+                                                   <td>
+                                                       <div tooltip="{{d.trans_name}}" tooltips-elipsis> {{d.trans_name}}</div>
+                                                   </td>
+                                                   <td ng-if="d.hachnasa">
+                                                       <div> {{round2Fixed(d.hachnasa)}}</div>
+                                                   </td>
+                                                   <td ng-if="d.hozaa">
+                                                       <div> {{round2Fixed(d.hozaa)}}</div>
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                       </div>
+
+                            </span>
+                        </div>
+                        <div class="total_itra">
+                            {{round2Fixed(b.total_itra)}}
+                        </div>
+                        <div class="hariga"
+                             data-ng-class="{'green_number': b.hariga > 0, 'red_number': b.hariga < 0 }">
+                            {{round2Fixed(b.hariga)}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="ui-state-default" ng-repeat="v in appData.selectedCompany.accounts.bank_account_list" ng-if="v.isExists">
+                <div class="absoluteFixedHead" style="top: {{appData.pixelsScrolled}}px"
+                     ng-style="{'border-top':(appData.pixelsScrolled==0) ? 'none' : '1px solid #c6c6c6'}">
+                    <div class="title_col">
+                        <div class="hand_move"></div>
+                        <h1>
+                            <div class="data{{v.bank_id}}"></div>
+                            {{ v.company_account_nickname }}
+                        </h1>
+                        <p>יתרת פתיחה <span>   {{ round2Fixed(v.opening_balance)  }} </span>₪ </p>
+                        <p>מסגרת אשראי <span> {{ round2Fixed(v.credit_facility) }}</span>₪ </p>
+                    </div>
+                    <div class="rows_banks title_col_row">
+                        <div class="total_hacnasot">הכנסה</div>
+                        <div class="total_hozaot">הוצאה</div>
+                        <div class="total_itra">יתרה</div>
+                        <div class="hariga">יתרה לשימוש</div>
+                    </div>
+                </div>
+                <div style="height: 152px; width: auto"></div>
+                <div class="rows_content_all_banks" ng-repeat="a in appData.tazrimMeuhad">
+                    <div ng-repeat="b in a.rows" ng-if="v.company_account_id == b.company_account_id"
+                         class="rows_banks">
+                        <div class="total_hacnasot">
+                            <p ng-class="{'link': b.total_hacnasot.peoulot !== null && b.total_hacnasot.peoulot.length !== 0 && (b.total_hacnasot.content !== 0.0)}">
+                                {{round2Fixed( b.total_hacnasot.content) }}</p>
+                                <span class="peoulot"
+                                  ng-if="b.total_hacnasot.peoulot !== null && b.total_hacnasot.peoulot.length !== 0 && (b.total_hacnasot.content !== 0.0)">
+                                  <div>
+                                      <table class="content_tooltip">
+                                          <tr data-ng-repeat="d in b.total_hacnasot.peoulot">
+                                              <td>
+                                                  <div tooltip="{{d.trans_name}}" tooltips-elipsis> {{d.trans_name}}</div>
+                                              </td>
+                                              <td ng-if="d.hachnasa">
+                                                  <div> {{round2Fixed(d.hachnasa)}}</div>
+                                              </td>
+                                              <td ng-if="d.hozaa">
+                                                  <div> {{round2Fixed(d.hozaa)}}</div>
+                                              </td>
+                                          </tr>
+                                      </table>
+                                  </div>
+                            </span>
+                        </div>
+                        <div class="total_hozaot">
+                            <p ng-class="{'link': b.total_hozaot.peoulot !== null && b.total_hozaot.peoulot.length !== 0 && (b.total_hozaot.content !== 0.0)}">
+                                {{round2Fixed( b.total_hozaot.content )}}
+                            </p>
+                         <span class="peoulot"
+                               ng-if="b.total_hozaot.peoulot !== null && b.total_hozaot.peoulot.length !== 0 && (b.total_hozaot.content !== 0.0)">
+                            <div>
+                                <table class="content_tooltip">
+                                    <tr data-ng-repeat="d in b.total_hozaot.peoulot">
+                                        <td>
+                                            <div tooltip="{{d.trans_name}}" tooltips-elipsis> {{d.trans_name}}</div>
+                                        </td>
+                                        <td ng-if="d.hachnasa">
+                                            <div> {{round2Fixed(d.hachnasa)}}</div>
+                                        </td>
+                                        <td ng-if="d.hozaa">
+                                            <div> {{round2Fixed(d.hozaa)}}</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </span>
+                        </div>
+                        <div class="total_itra">
+                            {{round2Fixed(b.total_itra)}}
+                        </div>
+                        <div class="hariga"
+                             data-ng-class="{'green_number': b.hariga > 0, 'red_number': b.hariga < 0 }">
+                            {{round2Fixed(b.hariga)}}
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </ul>
+</div>
+<div id="popUpTooltip">
+    <i class="fa fa-times-circle" id="closePopTooltip"></i>
+    <div></div>
+</div>

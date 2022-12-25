@@ -1,0 +1,51 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            {{appData.titleDtlsPay}}
+
+            <ul class="exports">
+                <li class="mail" tooltips-tazrim ng-click="sendMailerPays()" title="שליחה במייל">
+                    <i></i>
+                </li>
+                <li class="excel" exports-excel-pop-dtl-pays tooltips-tazrim title="ייצוא לExcel">
+                    <i></i>
+                </li>
+            </ul>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.loaderPopSett" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="wrapPop" ng-show="!appData.loaderPopSett && appData.billing_payment_get_items_dtls.length > 0">
+            <table>
+                <thead>
+                <tr>
+                    <th>
+                  חברה
+                    </th>
+                    <th>
+                      פריט
+                    </th>
+                    <th>
+                     סכום ללא מע״מ
+                    </th>
+                </tr>
+                </thead>
+                <tbody vs-repeat="30">
+                <tr ng-repeat="a in appData.billing_payment_get_items_dtls">
+                    <td>
+                        {{a.COMPANY_NAME}}
+                    </td>
+                    <td>
+                        {{a.DESCRIPTION}}
+                    </td>
+                    <td>
+                        {{a.DISCOUNT}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div data-ng-controller="updateAccountPopupCtrl" data-ng-init="init()">
+
+    <div class="popup-header">
+        <h2>
+עדכון פרטים
+        </h2>
+    </div>
+
+    <div class="popup-content">
+        <h1 class="loader-banks" ng-show="alertError">
+            {{error}}
+        </h1>
+        <div class="update_bank">
+            <form autocomplete="off">
+                <fieldset>
+                    <h3 ng-style="{'background-color':selectedPost.color, 'color':'white'}">
+פרטי הכניסה
+                        ל{{nameTitle()}}
+                    </h3>
+                    <div ng-repeat="(i, label) in selectedPost.inputs track by $index">
+                        <label>
+                            {{ label.name }}
+                        </label>
+                        <div class="input">
+                            <input style="display:none" type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}" autocomplete="off">
+                            <input type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}"
+                                   readonly
+                                   ng-style="{ 'border-color' : (appData.errorProgressBank) ? '#ec3c66' : '#e7e9eb' }"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   autocomplete="off" ng-model="label.data" placeholder="אם אין שינוי, השאירו ריק" name="{{label.val}}" />
+                        </div>
+                        <div class="form-control" ng-show="label.val == 'bank_pass'">
+                            <input type="checkbox" data-ng-model="showPassword" id="show_pass" name="show_pass">
+                            <label for="show_pass">
+                                הצג סיסמא
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <!--<div ng-if="selectedPost.val === '157' || selectedPost.val === '158'" class="alertdismar">-->
+                        <!--<p>-->
+                            <!--נא להשאיר ריק אם קיים קוד התקנה (אם בעדכון האחרון של פרט זה הוזן קוד התקנה תקין)-->
+                        <!--</p>-->
+                        <!--<p ng-if="selectedPost.val === '158'">-->
+                            <!--בהזנת סיסמה: יש לחכות שיתחלף למספר חדש ורק אז לעדכן-->
+                        <!--</p>-->
+                        <!--<p ng-if="selectedPost.val === '157'">-->
+                            <!--בהזנת סיסמה: יש לחכות שיתחלף למספר חדש ורק אז לעדכן-->
+                        <!--</p>-->
+                    <!--</div>-->
+
+
+                    <div class="error_alerts_bank" ng-if="appData.errorProgressBank">
+                        {{appData.errorProgressBank}}
+                    </div>
+                    <button ng-click="update()">
+                        עדכן
+                    </button>
+                    <p style="
+    font: 15px/18px esterregular;
+    color: #576066;
+    vertical-align: middle;
+    margin: 6px 20px 0px 0px;
+">
+                        <img style="vertical-align: middle;cursor: pointer;" src="image/alertIconMatch.png" tooltips
+                             title="3 ניסיונות כניסה עם פרטים שגויים ייגרמו לחסימת חשבון. אנא ודאו שהפרטים המוזנים מאפשרים כניסה לאתר הבנק">
+                        המנעו מחסימה
+                    </p>
+                    <p style="
+        font: 12px/18px esterregular;
+    color: #576066;
+    vertical-align: middle;
+    margin: 7px 2px 0px 1px;
+">
+                        <i class="fa fa-exclamation-triangle" style="color: #fccd00;"></i>
+                        שימו לב, יש להתנתק מאתר הבנק לפני ביצוע משיכת נתונים
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="wrapProgress" ng-if="appData.progressBankData">
+        <i></i>
+        <h2 ng-if="!appData.showSucUpdPass">
+            מאמת נתונים, אנא המתן/י
+        </h2>
+        <h2 ng-if="appData.showSucUpdPass">
+            ההתחברות הצליחה
+        </h2>
+        <div class="meter" ng-if="!appData.showSucUpdPass">
+            <span></span>
+        </div>
+    </div>
+
+</div>

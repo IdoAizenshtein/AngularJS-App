@@ -1,0 +1,76 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+בחר כרטיס
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.billingAccountsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" ng-model="filtersInput" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש לפי שם, מייל">
+        </div>
+
+        <form novalidate ng-submit="company_update_billing_account()" name="formAccUsers">
+            <div class="formAccUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+שם
+                    </div>
+                    <div>
+                        מייל
+                    </div>
+                    <div>
+נוצר ע״י
+                    </div>
+                    <div>
+סטטוס כרטיס
+                    </div>
+                    <div>
+                        נוצר בתאריך
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listBillingAccounts | filter:filtersInput">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setIdBilling"
+                                   name="uuidAcc"
+                                   value="{{a}}" required/>
+                        </div>
+                        <div>
+                            {{a.BILLING_ACCOUNT_NAME}}
+                        </div>
+                        <div>
+                            <a href="mailto:{{a.BILLING_ACCOUNT_EMAIL}}">{{a.BILLING_ACCOUNT_EMAIL}}</a>&nbsp;
+                        </div>
+                        <div>
+                            {{a.CREATED_BY}}
+                        </div>
+                        <div>
+                            {{a.STATUS}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.DATE_CREATED}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsers.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

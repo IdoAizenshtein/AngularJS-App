@@ -1,0 +1,211 @@
+<div ng-show="loaderTasks" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="mainPageAccHeaderTask" ng-init="init()" data-ng-class="{'openMoreNavEx': openMoreNav}">
+    <div class="rightHeadSort">
+        <div ng-click="filterType('all');" ng-class="{'active': typesActive == 'all'}">
+            <div class="title_sum">
+                <p>
+                    סה״כ משימות
+                </p>
+            </div>
+            <div class="sum-data" ng-show="appData.tasksView">
+                {{appData.tasksView.length}}
+            </div>
+            <div ng-show="!appData.tasksView" class="sum-data">
+                -
+            </div>
+        </div>
+
+        <div ng-class="{'active': typesActive == a.QA_TASK_PRIORTY_ID}" ng-repeat="a in appData.usersWork_priority"
+             ng-click="filterType(a.QA_TASK_PRIORTY_ID);" ng-show="listTitles[$index] > 0">
+            <div class="title_sum">
+                <p>
+                    סה״כ
+                    {{a.QA_TASK_PRIORTY_DESC}}
+                </p>
+            </div>
+            <div data-ng-class="{'sum-data-red': a.QA_TASK_PRIORTY_ID == 3, 'sum-data': a.QA_TASK_PRIORTY_ID !== 3}"
+                 data-ng-show="listTitles">
+                {{listTitles[$index]}}
+            </div>
+            <div ng-show="!listTitles" class="sum-data">
+                -
+            </div>
+        </div>
+    </div>
+    <div class="leftHeadSort">
+        <div>
+            <select ng-model="appData.tasksObj.usersWork_states"
+                    ng-change="get_qa_tasks()"
+                    ng-options="a.QA_TASK_STATE_ID as a.QA_TASK_STATE_DESC for a in appData.usersWork_states"></select>
+            <select ng-model="appData.tasksObj.usersWork_tasks_type"
+                    ng-change="get_qa_tasks()"
+                    ng-options="a.QA_TASK_TYPE_ID as a.QA_TASK_TYPE_DESC for a in appData.usersWork_tasks_type"></select>
+            <select ng-model="appData.tasksObj.usersWork"
+                    ng-options="a.USER_ID as a.NAME for a in appData.usersWork"
+                    ng-change="get_qa_tasks()"></select>
+            <i class="fa fa-plus-square" ng-click="openBug()"></i>
+        </div>
+        <div>
+            <ul class="exports" data-ng-show="appData.tasksView.length > 0">
+                <li class="excel" exports-excel-tasks tooltips-tazrim="" title="ייצוא לExcel">
+                    <i></i>
+                </li>
+                <li class="mail" tooltips-tazrim="" ng-click="sendMailer()" title="שליחה במייל">
+                    <i></i>
+                </li>
+                <li class="print" tooltips-tazrim="" exports-print-tasks title="הדפסה">
+                    <i></i>
+                </li>
+            </ul>
+            <input type="text" ng-model="typesSFilters" placeholder="חיפוש">
+            <button class="searchMore" ng-click="qa_task_by_serach_popup()">חיפוש מתקדם</button>
+        </div>
+    </div>
+</div>
+<div>
+    <div>
+        <div>
+            <div class="tableMainAccTask">
+                <div class="col-md-12" ng-show="filtered.length > 0">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <tr ng-class="{'rowMiss': appData.tasksObj.usersWork_states !== 2}">
+                            <th>
+                                &nbsp;
+                            </th>
+                            <th>
+                                תאריך יצירה
+                            </th>
+                            <th>
+                                קטגוריה
+                            </th>
+                            <th>
+                                נושא
+                            </th>
+                            <th>
+                                תאור
+                            </th>
+                            <th>
+                                חברה
+                            </th>
+                            <th>
+                                סטטוס
+                            </th>
+                            <th ng-if="appData.tasksObj.usersWork_states == 2">
+                                תאריך סגירה
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody scroll-fill="{{scrollHeightTable}}">
+                        <tr ng-repeat="a in filtered = (appData.tasksViewArr  | filter:typesSFilters) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+                            ng-class="{'greenBg': a.STATE_TYPE == 3, 'rowMiss': appData.tasksObj.usersWork_states !== 2, 'redBg':a.STATE_TYPE !== 3 && a.PRIORTY == 3 }">
+                            <td>
+                                <div ng-if="a.DRIVE_LINK == null">&nbsp;</div>
+                                <a class="fa fa-paperclip" ng-if="a.DRIVE_LINK !== null" href="{{a.DRIVE_LINK}}"
+                                   target="_blank"></a>
+                            </td>
+                            <td>
+                                {{a.DATE_CREATED}}
+                                <div ng-if="a.DATE_CREATED == null">&nbsp;</div>
+                                <br>
+                                <small>
+                                    {{a.TASK_NUMBER}} - {{a.DATE_CREATED_HOUR}}
+                                </small>
+                            </td>
+                            <td>
+                                {{a.TASK_CATEGORY_NAME}}
+                                <div ng-if="a.TASK_CATEGORY_ID == null">&nbsp;</div>
+                            </td>
+                            <td>
+                                {{a.TASK_TITLE}}
+                                <div ng-if="a.TASK_TITLE == null">&nbsp;</div>
+                                <br>
+                                <small>
+                                    {{a.TASK_OPENER_NAME}}
+                                </small>
+                            </td>
+                            <td class="DESC_COUNT">
+                                <div ng-if="a.DESC_COUNT !== null">
+                                    <p class="border-right">
+                                        <i class="cloack fa fa-history" ng-click="get_qa_tasks_hist(a.TASK_ID)">
+                                            &nbsp;
+                                            <strong ng-if="a.DESC_COUNT !== 0">{{a.DESC_COUNT}}</strong>
+                                        </i>
+                                    </p>
+                                    <p>
+                                        {{a.DESC_USER}}
+                                        <br>
+                                        {{a.DESC_DATE_LAST_MODIFIED}}
+                                    </p>
+                                </div>
+                                <div>
+                                    <div ng-if="a.TASK_DESC == null">&nbsp;</div>
+                                    {{a.TASK_DESC}}
+                                </div>
+                            </td>
+                            <td>
+                                <div ng-if="a.COMPANY_NAME == null">&nbsp;</div>
+                                {{a.COMPANY_NAME}}
+                            </td>
+                            <td>
+                                <div ng-if="a.STATE_TYPE == null">&nbsp;</div>
+                                <div ng-if="a.STATE_TYPE !== null">{{nameStates(a.STATE_TYPE)}}</div>
+                            </td>
+                            <td ng-if="appData.tasksObj.usersWork_states == 2">
+                                <div ng-if="a.CLOSE_DATE == null">&nbsp;</div>
+                                {{a.CLOSE_DATE}}
+                            </td>
+                            <td>
+                                <div class="buttonsLastEx">
+                                    <div ng-click="popUpEdit(a)">
+                                        <i class="fi-page-export"></i>
+                                        עריכה
+                                    </div>
+                                    <div ng-click="closeRowTask(a)">
+                                        <i class="fi-x"></i>
+                                        סגירה
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="titleNotFilter"
+                     ng-show="appData.tasksViewArr && !appData.tasksViewArr.length && !filtered.length">
+                    לא נמצאו משימות
+                </div>
+            </div>
+        </div>
+        <div class="rowsSort" data-ng-show="filtered.length > 0">
+            <div class="selectRows">
+                הצג
+                <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                    <option>150</option>
+                </select>
+                שורות
+            </div>
+            <div class="sumRows">
+                סה״כ שורות שנמצאו
+                {{filtered.length}}
+                מתוך
+                {{appData.tasksView.length}}
+            </div>
+            <div class="pagRows" ng-show="filtered.length > 0 && filtered.length > entryLimit">
+                <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                            items-per-page="entryLimit" total-items="appData.tasksViewArr.length" ng-model="currentPage"
+                            class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                            last-text="עמ׳ אחרון"></pagination>
+
+            </div>
+        </div>
+    </div>
+</div>

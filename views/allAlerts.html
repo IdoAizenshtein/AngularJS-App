@@ -1,0 +1,76 @@
+<div data-ng-controller="alertsCtrl">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <h2 class="headAlertsAllMess">
+            התראות
+        </h2>
+        <img src="image/close_popup.png" class="closeAllAlrets" data-ng-click="closeAlerts()" alt="חזור" title="חזור" tooltips-mess>
+        <div class="wrapMessAutoAll" scroll-fill="200">
+
+            <ul>
+                <li data-ng-repeat="a in appData.messAll">
+                    <div class="icon-mess type{{a.html_message_type}}"></div>
+                    <div class="mess" ng-if="a.html_message_type == 1">
+                        {{a.message_text}}
+                    </div>
+                    <div class="mess" ng-if="a.html_message_type == 2">
+                        לחשבון
+                        <b>{{a.account_nickname}}</b>
+                        קיימות
+                        {{a.count_peulot_today}}
+                <span data-ng-click="getPeulotToday(a.company_account_id, a.date_value)">
+                    פעולות על תנאי מהיום
+                </span>,
+                        יתרתך נכון ל
+                        {{a.time_peulot_today}}
+                        לאחר פעולות אלה היא
+                        <i>
+                            ₪ {{getTotal(a.itra_peulot_today)}}
+                        </i>,
+
+    <span data-ng-click="spiderBanks(a.company_account_id)">
+ לחץ לעדכון יתרה נוכחית
+    </span>.
+                    </div>
+                    <div class="mess" ng-if="a.html_message_type == 3">
+                        הסיסמא
+                        <b>{{a.account_nickname}}</b>
+                        אינה תקינה,
+                                        <span data-ng-click="updatePasswordPopUpMess(a.token, a.cheque_no)">
+                                            לחץ לעדכון סיסמא
+                                        </span>
+                    </div>
+                    <div class="mess" ng-if="a.html_message_type == 4">
+                        נכון לשעה
+                        {{a.time_peulot_today}}
+                        לא נמצאו פעולות על תנאי מהיום לחשבון
+                        <b>{{a.account_nickname}}</b>,
+                <span data-ng-click="spiderBanks(a.company_account_id)">
+                     לחץ לעדכון יתרה נוכחית
+                </span>.
+                    </div>
+                    <div class="mess" ng-if="a.html_message_type == 5">
+                        <b>{{a.account_nickname}}</b>
+                        לא עודכן מ
+                        {{a.date_value}},
+                                        <span data-ng-click="updatePasswordPopUpMess(a.token, a.cheque_no)">
+אנא הזן את ה<i ng-if="a.cheque_no == 158">סיסמה</i><i ng-if="a.cheque_no == 157">סיסמה</i> למערכת</span>
+                    </div>
+                    <div class="mess" ng-if="a.html_message_type !== 1 && a.html_message_type !== 2 && a.html_message_type !== 3 && a.html_message_type !== 4 && a.html_message_type !== 5">
+                        {{a.message_text}}
+                    </div>
+                    <div class="reads"
+                         data-ng-class="{'read': a.ind_read == 1, 'unread': a.ind_read == 0 }"
+                         data-ng-click="readMess(a.message_id)">
+                        <i title="סמן כנקרא" tooltips-mess ng-if="a.ind_read == 0"></i>
+                        <i title="סמן כלא נקרא" tooltips-mess ng-if="a.ind_read == 1"></i>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</div>

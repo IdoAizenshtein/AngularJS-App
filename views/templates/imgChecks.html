@@ -1,0 +1,9 @@
+﻿<div ng-controller="mainCtrl" class="imgCheck">
+    <img ng-src="data:image/png;base64,{{appData.iconCheckAll}}" class="img-check"/>
+
+    <div class="next_pic" ng-click="nextImg()" ng-hide="!appData.next_pic"></div>
+    <div class="prev_pic" ng-click="prevImg()" ng-hide="!appData.prev_pic"></div>
+    <button print-all-checks class="printImgCheck">
+        <img src="image/print_taz.png">
+    </button>
+</div>

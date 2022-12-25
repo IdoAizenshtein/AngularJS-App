@@ -1,0 +1,56 @@
+<div class="bgHelpAcc" ng-if="Showhelp">&nbsp;
+
+</div>
+<i ng-if="Showhelp" class="closeBack closeHelpAcc companyCloseHelp fa fa-times" ng-click="$parent.Showhelp = false;">
+    <span>
+        סגור עזרה
+    </span>
+</i>
+
+<div class="funds-header companyListHeader clearfix" ng-init="init()">
+    <div class="head_reports_right">
+        רשימת חברות
+    </div>
+    <div class="head_reports_left">
+        <button class="excelEx" title="ייצוא לExcel" tooltips-tazrim exports-excel-companys>
+            <i></i>
+        </button>
+                        <span class="input_customer_search"
+                              ng-show="$state.current.name == 'mainAccountants.companys.cube'">
+                            <input type="text" name="filter_companys" data-ng-model="searchText"
+                                   ng-model-options="{ debounce: {'default': 500 }}"
+                                   placeholder="חיפוש חברה - (לדוגמה: חברה, איש קשר, מייל, סוג תוכנה, סוג דיווח, מנהלת חשבונות)">
+                             <div class="helpsCompany" ng-if="Showhelp">
+                                 <i class="fi-arrow-up"></i>
+                                 חיפוש חברה על ידי כל אמצעי זיהוי
+                             </div>
+                        </span>
+        <span class="posRel">
+                    <select ng-show="$state.current.name == 'mainAccountants.companys.cube'" class="sortCompanys"
+                            ng-model="selectCompanyTypeSort" ng-change="sortCompanys()"
+                            ng-options="a.type as a.val for a in selectCompanySort"></select>
+                <div class="helpsCompany" ng-if="Showhelp">
+                    <i class="fi-arrow-up"></i>
+                    ניתן לבחור את סדר הופעתן - לפי סדר א-ב / תאריך הקלדה וכו'…
+                </div>
+
+        </span>
+
+        <button class="add_company_list" ng-click="addCompanyOpen()">הוספת חברה</button>
+        <div class="buttons_href companyLinksSref clearfix">
+            <a tooltips-tazrim title="קוביות" ui-sref="mainAccountants.companys.cube" ui-sref-active="active"
+               class="icon-cube"></a>
+            <a tooltips-tazrim title="טבלה" ui-sref="mainAccountants.companys.table" ui-sref-active="active"
+               class="icon-table"></a>
+            <div class="helpsCompany" ng-if="Showhelp">
+                <i class="fi-arrow-up"></i>
+                ניתן לשנות את תצוגת הופעתן קוביות / טבלה
+            </div>
+        </div>
+    </div>
+</div>
+<div ng-show="!loaderListCompanys" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+
+<div ui-view="lazyLoadView" scroll-fill="132" class="scrollDesign"></div>

@@ -1,0 +1,176 @@
+<div class="funds-table cardsTable" style="margin: 20px; border: 1px solid #d4d4d4; border-radius: 3px;">
+    <div ng-hide="filteredDataLoader" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <div class="funds-table-header funds-table-row rowBase">
+        <div>
+            תאריך
+        </div>
+        <div>
+            ח-ן
+        </div>
+        <div>
+            מס׳ כרטיס
+        </div>
+        <div>
+            כינוי כרטיס
+        </div>
+        <div>
+            עסקאות רגילות
+        </div>
+        <div>
+            עסקאות בתשלומים
+        </div>
+        <div>
+            סה"כ לחיוב
+        </div>
+        <!--<div>
+            צפי לתזרים
+        </div>
+        <div>
+            שינוי
+        </div>-->
+    </div>
+    <div scroll-fill="{{scrollHeightFundsTable}}" class="wrapTables">
+        <div ng-repeat="t in filteredData" class="rowNew">
+            <div ng-if="!t.monthSum" class="funds-table-row rowBase clearfix" ng-hide="searchText.length > 0"
+                 ng-class="{'active': (t.aaa) }" ng-click="t.aaa = !t.aaa; peulotRadio = 'false';"
+                 ng-style="{'background':(t.aaa) ? '#f0f0f0 ' : '#fff' }">
+                <div class="noWrap">
+                    <div>
+                        {{t.trans_date}}
+                    </div>
+                </div>
+                <div class="noWrap">
+                    <div>
+                        <i class="{{t.bank_id}}"></i>
+                        {{getAccountNum(t.company_account_id)[0]}}
+                    </div>
+                </div>
+                <div class="noWrap" ng-style="{visibility:(t.CREDIT_CARD_NO!==null && t.CREDIT_CARD_NO!==false)?'visible':'hidden'}">
+                    <div>{{t.CREDIT_CARD_NO.toString()}}</div>
+                </div>
+                <div class="noWrap" ng-style="{visibility:(t.tooltip)?'visible':'hidden'}">
+                    <div>
+                        {{t.tooltip}}
+                    </div>
+                </div>
+                <div>
+                    <div ng-bind-html="getTotalAgora(t.total_regular, t.currency_id)" class="dirLtr">
+                        &nbsp;
+                    </div>
+                </div>
+                <div>
+                    <div ng-bind-html="getTotalAgora(t.total_payments, t.currency_id)" class="dirLtr">
+                        &nbsp;
+                    </div>
+                </div>
+                <div>
+                    <div style="text-decoration: underline;color: #198aab;" ng-bind-html="getTotalAgora(t.trans_total, t.currency_id)"
+                         class="dirLtr">
+                        &nbsp;
+                    </div>
+                </div>
+                <!--<div>
+                    <div class="editableContent" ng-if="t.zefiletazrim > 0">
+                        <input type="text" data-ng-model="t.zefiletazrim" ng-disabled="!t.zefiChange">
+                        <i data-ng-click="zefiChange(t)" class="icon_editable" ng-init="t.zefiChange=false" data-ng-show="t.ind_zefi == 1"></i>
+                    </div>
+                </div>
+                <div>
+                    <div ng-if="t.zefiletazrim > 0">
+                        {{getPercent(t.trans_total,t.zefiletazrim)}}<span>%</span>
+                    </div>
+                </div>-->
+            </div>
+            <div ng-if="!t.monthSum" data-ng-repeat="peoulot in t.peulot_tab"
+                 ng-show="t.aaa || peulotRadio == 'true' || searchText.length > 0" class="sublineRow">
+                <div class="funds-table-header funds-table-row subline rowsInside"
+                     ng-hide="(peoulot.peoulot | filter:searchText).length == 0">
+                    <div>
+                        תאריך
+                    </div>
+
+                    <div>
+                        תאור
+                    </div>
+                    <div>
+                        סכום עסקה
+                    </div>
+                    <div>
+                        סכום
+                    </div>
+                    <div>
+                        פרטים נוספים
+                    </div>
+                </div>
+
+                <div data-ng-repeat="p in peoulot.peoulot" class="funds-table-row clearfix subline rowsInside"
+                     ng-if="p.searchObj">
+                    <div>
+                        <div>
+                            {{p.original_date}}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            {{p.trans_name}}
+                        </div>
+                    </div>
+                    <div>
+                        <div ng-bind-html="getTotalAgora(p.original_total, p.iska_currency_id)" class="dirLtr">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div>
+                        <div ng-bind-html="getTotalAgora(p.hozaa, t.currency_id)" class="dirLtr">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div ng-if="(p.asmachta !== 'תשלום 0 מתוך 0') && (p.asmachta !== 'none')">
+                        <div>
+                            {{p.asmachta}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="t.monthSum" class="funds-table-row month-sum">
+
+                <div>{{accoConversions.getDateMonth(t.trans_date.toString().split('/')[1]) + ' ' +
+                    t.trans_date.toString().split('/')[2]}} - סה"כ
+                </div>
+                <div class="transaction-income sum-plus greenTotal"
+                     ng-style="{visibility:(searchText.length > 0)?'visible':'hidden'}">
+                    <div ng-bind-html="getTotalAgora(t.sumN, t.currency_id)" class="dirLtr">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="transaction-income sum-plus greenTotal">&nbsp;</div>
+                <div class="transaction-income sum-minus"
+                     ng-style="{visibility:(searchText.length > 0)?'hidden':'visible'}">
+                    <div ng-bind-html="getTotalAgora(t.sum, t.currency_id)" class="dirLtr">
+                        &nbsp;
+                    </div>
+                </div>
+                <!--<div class="transaction-income sum-plus" ng-if="t.zefi > 0" ng-hide="searchText.length > 0"><span>&#8362;</span>{{getTotal(t.zefi)}}</div>
+                <div class="transaction-income sum-plus" ng-if="t.zefi > 0" ng-hide="searchText.length > 0">{{getPercent(t.sum, t.zefi)}}<span>%</span></div>-->
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

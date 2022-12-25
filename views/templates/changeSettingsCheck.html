@@ -1,0 +1,49 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            מעבר להתאמה מואצת - שים לב!
+        </h2>
+    </div>
+    <div class="popup-content">
+        <p>
+            במעבר להתאמה מואצת, bizibox מבצעת התאמות פחות רגישות לפעולות נגררות (שטרם הופקדו/נפרעו).
+        </p>
+        <p>
+            באין התאמה, הנתונים ימחקו מהנגררות ולא ישפיעו על התזרים העתידי.
+        </p>
+<br>
+        <p>
+            אנא בחר ימים למחיקה:
+        </p>
+
+        <div class="inputSettHamlazza">
+            <div>
+                <span>
+פעולות נגררות  מסוג שיקים ימחקו לאחר
+                </span>
+                <input type="text" ng-model="appData.setDaysHamlazza.chequeValidnumofdays" number-only placeholder="מס׳ ימים">
+            </div>
+            <div>
+                <span>
+פעולות נגררות מסוג העברה בנקאית ימחקו לאחר
+                </span>
+                <input type="text" ng-model="appData.setDaysHamlazza.wireValidnumofdays" number-only placeholder="מס׳ ימים">
+            </div>
+            <div>
+                <span>
+פעולות נגררות  מסוג צפי ימחקו לאחר
+                </span>
+                <input type="text" ng-model="appData.setDaysHamlazza.otherValidnumofdays" number-only placeholder="מס׳ ימים">
+            </div>
+        </div>
+
+        <div class="buttonGr">
+            <button ng-click="sethamlazaPop()" ng-disabled="appData.setDaysHamlazza.chequeValidnumofdays == '' || appData.setDaysHamlazza.wireValidnumofdays == '' || appData.setDaysHamlazza.otherValidnumofdays == ''">
+                שמור והחלף למואצת
+            </button>
+            <button ng-click="cancelSetHamlazza()">
+                בטל
+            </button>
+        </div>
+    </div>
+</div>

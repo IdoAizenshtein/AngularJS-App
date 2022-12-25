@@ -1,0 +1,43 @@
+<div>
+    <div class="popup-header">
+        <h2>
+פתיחת קריאת שירות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="rowsTfs">
+            <label>
+                כותרת:
+            </label>
+            <input type="text" ng-model="tfsObj.title" ng-class="{'redErr': !tfsObj.title.length}">
+        </div>
+        <div class="rowsTfs">
+            <label class="top">
+                תיאור:
+            </label>
+            <textarea ng-model="tfsObj.reproSteps"></textarea>
+        </div>
+        <div>
+            <div class="uploadFiles">
+                <div class="fileUpload btn btn-primary">
+                    <label>
+                        העלאת קובץ:
+                    </label>
+                    <input type="file" id="uploadBtn" class="upload" file-upload/>
+                </div>
+                <input id="uploadFile" placeholder="בחר קובץ" ng-model="tfsObj.valTextFileName" disabled="disabled"/>
+            </div>
+        </div>
+        <div class="rowsTfs">
+            <label>
+                צירוף קישור:
+            </label>
+            <input type="text" ng-model="tfsObj.hyperlink">
+        </div>
+        <div class="btnSender">
+            <button ng-click="sendToTfs()" ng-disabled="!tfsObj.title.length">
+                שליחה
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div ng-controller="windowsManagCtrl">
+    <div class="popup-header">
+        <h2>
+{{appData.editIndFixedNameCompany}}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="rowEditManagWin">
+            <label>
+                סטטוס:
+            </label>
+            <select ng-model="appData.selectIndFixedId">
+                <option value="0">
+                    חדש
+                </option>
+                <option value="1">
+                    בבדיקה
+                </option>
+                <option value="2">
+                    תוקן
+                </option>
+                <option value="3">
+                    לא נמצאה בעיה
+                </option>
+            </select>
+            <input type="text" ng-model="appData.selectIndFixedNumbers" placeholder="ימים לטעינה" number-only>
+        </div>
+        <div class="rowEditManagWin">
+            <label>
+                הערות:
+            </label>
+            <textarea ng-model="appData.editIndescription"></textarea>
+        </div>
+        <div class="rowEditManagWinButton">
+            <button ng-click="update_qa_itrot()">
+                שמור
+            </button>
+            <button ng-click="hidePopup()">
+                ביטול
+            </button>
+        </div>
+    </div>
+</div>

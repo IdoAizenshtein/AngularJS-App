@@ -1,0 +1,122 @@
+﻿<div ng-init="init()" ng-controller="overviewAccCtrl">
+    <div class="popup-header">
+        <h2 ng-if="appData.objPopUp.types == 'outLoans'" ng-show="appData.objPopUp.types == 'outLoans'">{{appData.objPopUp.loan_name}} </h2>
+        <h2 ng-if="appData.objPopUp.types == 'outDeposits'" ng-show="appData.objPopUp.types == 'outDeposits'">{{appData.objPopUp.type_name}} </h2>
+        <h2 ng-if="appData.objPopUp.types == 'inCheques'" ng-show="appData.objPopUp.types == 'inCheques'">{{appData.objPopUp.description}} </h2>
+        <h2 ng-if="appData.objPopUp.types == 'outCheques'" ng-show="appData.objPopUp.types == 'outCheques'">{{appData.objPopUp.description}} </h2>
+    </div>
+
+    <div class="popup-content">
+        <table ng-if="appData.objPopUp.types == 'outLoans'" ng-show="appData.objPopUp.types == 'outLoans'">
+            <tr>
+                <td>
+                    <div>חשבון </div>
+                </td>
+                <td>
+                    <div>{{ getNickname(appData.objPopUp.company_account_id)}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td><div>ריבית</div></td>
+                <td><div>{{appData.objPopUp.loan_interest}}% </div></td>
+            </tr>
+            <tr>
+                <td><div>תשלומים לסיום</div></td>
+                <td><div>{{appData.objPopUp.payments_number_left}}</div></td>
+            </tr>
+            <tr>
+                <td><div>סכום מקור</div></td>
+                <td><div>&#8362;{{getTotal(appData.objPopUp.loan_original_total)}} </div></td>
+            </tr>
+            <tr>
+                <td><div>יתרת הלוואה</div></td>
+                <td><div>&#8362;{{getTotal(appData.objPopUp.loan_total_left)}} </div></td>
+            </tr>
+            <tr>
+                <td><div>תאריך התחלה</div></td>
+                <td><div>{{appData.objPopUp.loan_date}}</div></td>
+            </tr>
+            <tr>
+                <td><div>תאריך סיום</div></td>
+                <td><div>{{appData.objPopUp.loan_finish}}</div></td>
+            </tr>
+        </table>
+        <table ng-if="appData.objPopUp.types == 'outDeposits'" ng-show="appData.objPopUp.types == 'outDeposits'">
+            <tr>
+                <td>
+                    <div>חשבון </div>
+                </td>
+                <td>
+                    <div>{{ getNickname(appData.objPopUp.company_account_id)}}</div>
+                </td>
+            </tr>
+            <tr>
+                <td><div> תאריך הפקדה</div></td>
+                <td><div>{{appData.objPopUp.deposit_date}}</div></td>
+            </tr>
+            <tr>
+                <td><div>סכום הפקדון</div></td>
+                <td><div>&#8362;{{getTotal(appData.objPopUp.deposit_total)}} </div></td>
+            </tr>
+            <tr>
+                <td><div>תאריך יציאה קרוב </div></td>
+                <td><div>{{appData.objPopUp.deposit_exist_station}} </div></td>
+            </tr>
+            <tr>
+                <td><div> תאריך פרעון</div></td>
+                <td><div>{{appData.objPopUp.due_date}} </div></td>
+            </tr>
+        </table>
+        <table ng-if="appData.objPopUp.types == 'inCheques'" ng-show="appData.objPopUp.types == 'inCheques'">
+            <tr>
+                <td><div> תאריך </div></td>
+                <td><div>{{appData.objPopUp.due_date}}</div></td>
+            </tr>
+            <tr>
+                <td><div> סה”כ</div></td>
+                <td><div>&#8362;{{getTotal(appData.objPopUp.total)}} </div></td>
+            </tr>
+            <tr>
+                <td><div> ח-ן  </div></td>
+                <td><div>{{ getNickname(appData.objPopUp.company_account_id)}} </div></td>
+            </tr>
+            <tr>
+                <td><div>אסמכתא </div></td>
+                <td><div>{{appData.objPopUp.cheque_no}} </div></td>
+            </tr>
+            <tr>
+                <td><div>תאור </div></td>
+                <td><div>{{appData.objPopUp.description}} </div></td>
+            </tr>
+
+        </table>
+        <table ng-if="appData.objPopUp.types == 'outCheques'" ng-show="appData.objPopUp.types == 'outCheques'">
+            <tr>
+                <td><div> תאריך </div></td>
+                <td><div>{{appData.objPopUp.due_date}}</div></td>
+            </tr>
+            <tr>
+                <td><div> סה”כ</div></td>
+                <td><div>&#8362;{{getTotal(appData.objPopUp.total)}} </div></td>
+            </tr>
+            <tr>
+                <td><div> ח-ן  </div></td>
+                <td><div>{{ getNickname(appData.objPopUp.company_account_id)}} </div></td>
+            </tr>
+            <tr>
+                <td><div>אסמכתא </div></td>
+                <td><div>{{appData.objPopUp.cheque_no}} </div></td>
+            </tr>
+            <tr>
+                <td><div>תאור </div></td>
+                <td><div>{{appData.objPopUp.description}} </div></td>
+            </tr>
+        </table>
+        <button ng-if="appData.objPopUp.types == 'outDeposits'" ng-click="deleteoutDeposits();hidePopup();">
+            מחיקת פיקדון
+        </button>
+        <button ng-if="appData.objPopUp.types == 'outLoans'" ng-click="deleteoutLoans(); hidePopup();">
+            מחיקת הלוואה
+        </button>
+    </div>
+</div>

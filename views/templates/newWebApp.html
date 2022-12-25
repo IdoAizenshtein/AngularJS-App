@@ -1,0 +1,65 @@
+<img src="image/newLogo.png" class="newLogo">
+<img src="image/oldLogo.png" class="oldLogo">
+<div class="dataPop">
+    <div class="contentPop">
+        <img src="image/closePopInd_show_agreement.png" class="closePopInd_show_agreement" ng-click="hidePopup()">
+
+        <img src="image/goToNewWebAppLogo.png" style="    margin-top: 10px;">
+
+        <div class="titlePop" style="margin-top: 0px;">
+            התזרים שלנו עבר לגירסה חדשה ומשופרת
+        </div>
+
+        <div class="descPop" style="margin-bottom: 10px;margin-top: 10px;">
+            <p>
+                על מנת לראות את התזרים יש ללחוץ על הכפתור ולהיכנס לממשק החדש
+            </p>
+            <p>
+                עם אותו שם המשתמש והסיסמה שלכם
+            </p>
+            <p style="margin-top: 10px;">
+                הנהלת החשבונות וניהול הכספים נשארו כאן ללא שינוי וזמינים כרגיל
+            </p>
+        </div>
+
+        <button ng-click="goToNewWebApp()">
+            <img src="image/goToNewWebApp.png">
+        </button>
+
+        <div style="
+    overflow: hidden;
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-left: 10px;
+">
+            <img src="image/goToNewWebAppTip.png" style="
+    float: right;
+">
+            <p style="color: #022258;font: 17px/35px esterregular;">
+                התזרים יפתח בלשונית נוספת חדשה. על מנת לבצע יצוא יש לחזור ללשונית הקודמת וליצא כרגיל
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+	$(function () {
+		setTimeout(function () {
+			$(".newLogo").show().animate({
+				top: '90px'
+			}, 300, function () {
+				$(".oldLogo").hide();
+				$(".dataPop").animate({
+					opacity: '1'
+				}, 300);
+				$(".newLogo").animate({
+					left: '-600px'
+				}, 300);
+				$(".contentPop").show().animate({
+					left: '-1px'
+				}, 300);
+			});
+		}, 500);
+	})
+</script>

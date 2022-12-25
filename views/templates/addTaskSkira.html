@@ -1,0 +1,48 @@
+<div ng-controller="overviewAccCtrl">
+    <div class="popup-header">
+        <h2>
+            הוספת משימה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="addTask" novalidate ng-submit="messageCreate(addTask)">
+            <div class="wrapInputForm">
+                <label>
+                    תוכן המשימה
+                </label>
+
+                <div class="textForm"
+                     data-ng-class="{'errorInput': (addTask.$submitted || addTask.message_add.$touched) && addTask.message_add.$invalid, 'sucInput': (addTask.$submitted || addTask.message_add.$touched) && addTask.message_add.$valid }">
+                    <textarea name="message_add" id="message_add" ng-model="appData.addTaskSkira.message_add"
+                              required=""></textarea>
+                </div>
+                <div ng-show="addTask.$submitted || addTask.message_add.$touched" class="alertsMessages">
+                    <div ng-show="addTask.message_add.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    תזמון לתאריך
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addTask.$submitted || addTask.date.$touched) && addTask.date.$invalid, 'sucInput': (addTask.$submitted || addTask.date.$touched) && addTask.date.$valid }">
+                    <input type="text" name="date" ng-model="appData.addTaskSkira.day_id" date-picker-set-date readonly="readonly">
+                </div>
+                <div ng-show="addTask.$submitted || addTask.date.$touched" class="alertsMessages">
+                    <div ng-show="addTask.date.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+
+            <div class="addSubmit">
+                <input type="submit" value="הוספה" ng-disabled="addTask.$invalid"/>
+            </div>
+            <input type="hidden" ng-click="resetCompany(addTask)" id="resetCompany" value="Reset">
+        </form>
+    </div>
+</div>
+

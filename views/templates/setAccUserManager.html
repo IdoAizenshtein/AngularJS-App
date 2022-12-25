@@ -1,0 +1,89 @@
+<div ng-controller="mainCtrl">
+    <div class="popup-header">
+        <h2>
+            בחר רואה חשבון לצפייה בנתונים
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listUserAccountantsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש לפי שם, מייל">
+        </div>
+        <form novalidate ng-submit="userCopypriv()" name="formAccUsers">
+            <div class="formAccUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+                        שם רואה חשבון
+                    </div>
+                    <div>
+                        מייל
+                    </div>
+                    <div>
+                        תפקיד
+                    </div>
+                    <div>
+                        נוצר ע"י
+                    </div>
+                    <div>
+                        נוצר בתאריך
+                    </div>
+                    <div>
+                     משרד
+                    </div>
+                    <div>
+                      שם בחשבונית
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listUserAccountants | filterListUserAcc:filterAccUser">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setUserNameAccList"
+                                   name="uuidAcc"
+                                   value="{{a}}" required/>
+                        </div>
+                        <div>
+                            {{a.first_name}} {{a.last_name}}
+                        </div>
+                        <div>
+                            <a href="mailto:{{a.mail}}">{{a.mail}}</a>&nbsp;
+                        </div>
+                        <div>
+                            {{a.job_title_name}}
+                        </div>
+                        <div ng-if="a.father_name !== null">
+                            {{a.father_name}}
+                        </div>
+                        <div ng-if="a.father_name == null">
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.date_created}}&nbsp;
+                        </div>
+                        <div>
+                            {{a.accountant_office_name}}&nbsp;
+                        </div>
+                        <div>
+                            {{a.billing_account_name}}&nbsp;
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsers.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+

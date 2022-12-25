@@ -1,0 +1,339 @@
+<nav class="main_nav" data-ng-class="{'close_side': appData.mainNavClosed}" ng-style="{ 'top' : topSampleNav }">
+    <ul scroll-fill="{{topSampleNavScroll}}" class="menu" menu>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            ng-class="{'topNavLink': appData.defMonth.ind_accountants == 1}" tooltip-menu tooltip="ראשי">
+            <a target="_self" class="inline_links skiraNavIcon" ui-sref="mainAccountants.main" ui-sref-active="actives">
+                <div>
+                    ראשי
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && !$state.includes('mainAccountants')" tooltip-menu
+            tooltip="סקירה כללית" class="topNavLink" ng-click="clickMenuLinkMain($element)">
+            <a class="link skiraNavIcon" target="_self" ui-sref="overviewAcc.statistics"
+               ng-class="{'actives': $state.includes('overviewAcc')}">
+                <div>
+                    סקירה כללית
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')" tooltip-menu
+            tooltip="ניהול חברות">
+            <a target="_self" class="inline_links companyNavIcon" ui-sref="mainAccountants.companys.cube"
+               ui-sref-active="actives">
+                <div>
+                    ניהול חברות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')" tooltip-menu
+            tooltip="ייצוא דפי בנק">
+            <a target="_self" class="inline_links exportsIcon" ui-sref="mainAccountants.exportHashv"
+               ui-sref-active="actives">
+                <div>
+                    ייצוא דפי בנק
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')" tooltip-menu
+            tooltip="ייצוא כ.אשראי">
+            <a target="_self" class="inline_links cardsIcon" ui-sref="mainAccountants.mainAccountantsCards"
+               ui-sref-active="actives">
+                <div>
+                    ייצוא כ.אשראי
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')" tooltip-menu
+            tooltip="דו״חות">
+            <a target="_self" class="inline_links reportsNavIcon" ui-sref="mainAccountants.reports.main"
+               ui-sref-active="actives">
+                <div>
+                    דו״חות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')" tooltip-menu
+            tooltip="ניהול צוות">
+            <a target="_self" class="inline_links teamIcon" ui-sref="mainAccountants.managementTeam"
+               ui-sref-active="actives">
+                <div>
+                    ניהול צוות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="ניהול ספיידרים">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.spiderList"
+               ui-sref-active="actives">
+                <i class="fa fa-server"></i>
+                <div>
+                    ניהול ספיידרים
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="ניהול משיכות">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.manageWithdrawals"
+               ui-sref-active="actives">
+                <i class="fa fa-paper-plane-o"></i>
+                <div>
+                    ניהול משיכות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="QA">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.bankDataManagement.view"
+               ui-sref-active="actives">
+                <i class="fa fa-check-circle"></i>
+                <div>
+                    QA
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="דו״ח חלונות">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.windowsManag"
+               ui-sref-active="actives">
+                <i class="fi-social-windows"></i>
+                <div>
+                    דו״ח חלונות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="ק.שירות">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.taskManager"
+               ui-sref-active="actives">
+                <i class="fa fa-list-ol"></i>
+                <div>
+                    ק.שירות
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="ניהול רואי חשבון">
+            <a target="_self" class="inline_links linkWithIcon"
+               href="javascript:void(0)"
+               ng-click="goToManagerAcc()"
+               ng-class="{'actives': ($state.current.name == 'mainAccountants.managerAcc.companyDetails' || $state.current.name == 'mainAccountants.managerAcc.office')}">
+                <i class="fa fa-briefcase"></i>
+                <div>
+                    ניהול רואי חשבון
+                </div>
+            </a>
+        </li>
+        <li ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && $state.includes('mainAccountants')"
+            tooltip-menu tooltip="ניהול רואי חשבון">
+            <a target="_self" class="inline_links linkWithIcon" ui-sref="mainAccountants.billing"
+               ui-sref-active="actives">
+                <i class="fa fa-credit-card"></i>
+                <div>
+                    בילינג
+                </div>
+            </a>
+        </li>
+
+        <li ng-if="appData.defMonth.ind_accountants == 0" tooltip-menu tooltip="סקירה כללית"
+            data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd <= 5, 'topNavLink': appData.defMonth.ind_accountants == 0}">
+            <a class="link skiraNavIcon" target="_self" ui-sref="general.funds" ui-sref-active="actives">
+                <div>
+                    סקירה כללית
+                </div>
+            </a>
+        </li>
+        <li ng-show="appData.defMonth.ind_accountants == 0 || (appData.defMonth.ind_accountants == 1 && !$state.includes('mainAccountants'))"
+            tooltip-menu tooltip="תזרים מזומנים"
+            ng-class="{'helpViewReg': appData.helpSignUp == true && (appData.helpSignUpInd > 5 && appData.helpSignUpInd < 10), 'helpViewTaz': appData.helpSignUp == true && (appData.helpSignUpInd > 11 && appData.helpSignUpInd < 16)}">
+            <a target="_self" href="javascript:void(0)" class="unclick_nav tazrimNavIcon"
+               ng-click="openPopUpNewWebApp()"
+               ng-class="{'actives': $state.current.name == 'tazrim' || $state.includes('tazrimMeuhad') || $state.includes('bankMatch')|| $state.includes('regularOp')}">
+                <div>
+                    תזרים מזומנים
+                </div>
+            </a>
+            <!--<ul class="nav_inline"-->
+            <!--ng-style="{'display': ($state.current.name == 'tazrim' || $state.includes('tazrimMeuhad') || $state.includes('bankMatch')|| $state.includes('regularOp')) ? 'block' : 'none'}">-->
+            <!--<li>-->
+            <!--<a target="_self" class="inline_links meforat" ui-sref="tazrim" ui-sref-active="actives">-->
+            <!--<div>-->
+            <!--תזרים יומי - מפורט-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a target="_self" class="inline_links" ui-sref="tazrimMeuhad" ui-sref-active="actives">-->
+            <!--<div>-->
+            <!--תזרים יומי - מאוחד-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a target="_self" class="inline_links" ui-sref="bankMatch.set" ui-sref-active="actives">-->
+            <!--<div>-->
+            <!--התאמות בנקים-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<a target="_self" class="inline_links" ui-sref="regularOp.cube" ui-sref-active="actives">-->
+            <!--<div>-->
+            <!--פעולות קבועות-->
+            <!--</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--</ul>-->
+        </li>
+        <li ng-show="appData.defMonth.ind_accountants == 0 || (appData.defMonth.ind_accountants == 1 && !$state.includes('mainAccountants'))"
+            tooltip-menu tooltip="ניהול כספים">
+            <a class="unclick_nav ksafimNavIcon" href="javascript:void(0)"
+               ng-class="{'actives': $state.current.name == 'checksAnalysis' || $state.includes('fundManagement')}">
+                <div>
+                    ניהול כספים
+                </div>
+            </a>
+            <ul class="nav_inline"
+                ng-style="{'display': ($state.current.name == 'checksAnalysis' || $state.includes('fundManagement')) ? 'block' : 'none'}">
+                <li>
+                    <a title="" target="_self" class="inline_links bank_accou"
+                       ui-sref="fundManagement.bankAccounts.table" ui-sref-active="actives">
+                        <div>
+                            ניתוח חשבונות בנק
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a title="" target="_self" class="inline_links credit_card" ui-sref="fundManagement.cards.table"
+                       ui-sref-active="actives">
+                        <div>
+                            ניתוח כרטיסי אשראי
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a title="" target="_self" class="inline_links getway_pay" ui-sref="fundManagement.slika.table"
+                       ui-sref-active="actives">
+                        <div>
+                            ניתוח סליקת אשראי
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a title="" target="_self" class="inline_links" ui-sref="checksAnalysis" ui-sref-active="actives">
+                        <div>
+                            ניתוח שקים
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-show="appData.defMonth.ind_accountants == 0 || (appData.defMonth.ind_accountants == 1 && !$state.includes('mainAccountants'))"
+            tooltip-menu tooltip="הנהלת חשבונות">
+            <a class="unclick_nav analysisNavIcon" href="javascript:void(0)"
+               ng-class="{'actives': $state.current.name == 'analysis' || $state.current.name == 'report'  || $state.current.name == 'trialBalance'}">
+                <div>
+                    הנהלת חשבונות
+                </div>
+            </a>
+            <ul class="nav_inline"
+                ng-style="{'display': ($state.current.name == 'analysis' || $state.current.name == 'report'  || $state.current.name == 'trialBalance') ? 'block' : 'none'}">
+                <li>
+                    <a target="_self" class="inline_links analysis_acc" ui-sref="analysis" ui-sref-active="actives">
+                        <div>
+                            ניתוח הנה”ח
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a target="_self" class="inline_links" ui-sref="report" ui-sref-active="actives">
+                        <div>
+                            רווח והפסד
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a target="_self" class="inline_links" ui-sref="trialBalance" ui-sref-active="actives">
+                        <div>
+                            מאזן בוחן
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li id="openPopWalkme" ng-if="appData.showPopWalkme"
+            ng-class="{'mainNavClosedPopWalkMe': appData.mainNavClosed}">
+            <div ng-click="gotoPopWalkthrus()">
+                <img src="image/initialTraining.png">
+                <strong>
+                    הדרכה ראשונית
+                </strong>
+                <i>{{appData.walkTaskUnCompleted}}</i>
+            </div>
+        </li>
+        <li id="openPopWalkmeToggle"
+            ng-class="{'mainNavClosedPopWalkMe': appData.mainNavClosed}">
+            <!--<div ng-click="openMenuSideWalkMe()" ng-if="appData.showPopWalkmeLoad">-->
+            <!--<img src="image/helpIconWm.png">-->
+            <!--<strong>-->
+            <!--עזרה-->
+            <!--</strong>-->
+            <!--</div>-->
+            <div ng-click="openSupportService()" ng-if="appData.defMonth.ind_accountants == 0" class="support-service">
+                <span class="fa fa-life-ring"></span>
+                <strong>
+                    פתיחת קריאת שירות
+                </strong>
+            </div>
+        </li>
+        <!--<li class="settingsSmall" tooltip-menu tooltip="הגדרות">-->
+        <!--<a target="_self" ui-sref="settings.accounts" title=""></a>-->
+        <!--</li>-->
+        <li tooltip-menu tooltip="פ.יומן ספקים ולקוחות">
+            <a target="_self" class="linkOcr"
+               href="javascript:void(0)"
+               ng-class="{'actives': ($state.current.name == 'mainAccountants.ocrLandingPageSupplier')}"
+               ng-click="goToOcr('supplier')">
+                <div>
+                    פ.יומן ספקים ולקוחות
+                </div>
+                <img
+                        ng-if="appData.defMonth.outind_ocr !== 1 && appData.defMonth.outind_ocr !== 3"
+
+                        class="diamond"
+                        src="image/diamond.png" style="
+    position: absolute;
+    left: 5px;
+    top: 7px;
+">
+            </a>
+        </li>
+
+
+        <li tooltip-menu tooltip="פ.יומן בנק ואשראי">
+            <a target="_self" class="linkOcr"
+               href="javascript:void(0)"
+               ng-class="{'actives': ($state.current.name == 'mainAccountants.ocrLandingPageBank')}"
+               ng-click="goToOcr('bank')">
+                <div>
+                    פ.יומן בנק ואשראי
+                </div>
+                <img src="image/soon.png" style="
+    position: absolute;
+    left: 5px;
+    top: 7px;
+">
+            </a>
+        </li>
+
+
+        <li class="open_nav_side"
+            data-ng-class="{'helpView': appData.helpSignUp == true && (appData.helpSignUpInd == 10 || appData.helpSignUpInd == 11)}">
+            <a class="open_side_settings" target="_self" ui-sref="settings.accounts" title="" ui-sref-active="actives">הגדרות</a>
+            <div class="open_side" ng-click="appData.mainNavClosed = !appData.mainNavClosed"></div>
+        </li>
+    </ul>
+    <div class="open_side_menu" ng-if="appData.mainNavClosed" ng-click="appData.mainNavClosed = !appData.mainNavClosed">
+        <span></span>
+    </div>
+</nav>

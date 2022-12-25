@@ -1,0 +1,542 @@
+<!--<div class="reports_data_profile">-->
+<!--<i ng-if="loaderSkiraAccTitle" class="loader_table">-->
+<!--<img src="image/loader.gif" alt="Loading...">-->
+<!--</i>-->
+<!--<strong>מסמכים</strong>-->
+<!--<ul>-->
+<!--<li class="sum_inv_icon">-->
+<!--<div ng-if="appData.detailsCompany.sum_inv_cur_mon > 0">-->
+<!--<i class="icon_v"></i>-->
+
+<!--<p>הוקלדו החודש</p>-->
+<!--</div>-->
+<!--<div ng-if="appData.detailsCompany.sum_inv_cur_mon <= 0">-->
+<!--<i class="icon_x"></i>-->
+
+<!--<div style="width: 90px;height: 21px;">&nbsp</div>-->
+<!--<button style="display: none;">-->
+<!--הזנת מסמכים-->
+<!--</button>-->
+<!--</div>-->
+<!--</li>-->
+<!--<li class="last_inv_date">-->
+<!--<i>-->
+<!--{{dateConv(appData.detailsCompany.last_inv_date)}}-->
+<!--</i>-->
+
+<!--<p>הזנה אחרונה</p>-->
+<!--</li>-->
+<!--<li class="sum_inv_cur_mon">-->
+<!--<i>-->
+<!--{{appData.detailsCompany.sum_inv_cur_mon}}-->
+<!--</i>-->
+
+<!--<p> החודש</p>-->
+<!--</li>-->
+<!--<li class="sum_inv_avg">-->
+<!--<i>{{appData.detailsCompany.sum_inv_avg}}</i>-->
+
+<!--<p> ממוצע</p>-->
+<!--</li>-->
+<!--</ul>-->
+<!--<div class="wrap_graph_profile">-->
+<!--<div chart-small-profile chart-data-profile="appData.chartSmallProfile"></div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="exportTabSkira" ng-if="appData.compExpGetList.data">
+    <i ng-if="loaderSkiraAccExports" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </i>
+
+    <h2 class="titlePage">
+        ייצוא דפי בנק
+
+        <button data-ng-click="export()">
+            ייצוא כל הדפים
+        </button>
+    </h2>
+    <div class="exportTableSkira">
+
+        <table>
+            <thead>
+            <tr>
+                <th>
+                    &nbsp;
+                </th>
+                <th>
+                    שם חשבון
+                </th>
+                <th>
+                    עדכון אחרון מהבנק
+                </th>
+                <th>
+                    כרטיס הנה"ח
+                </th>
+
+                <th>
+                    ייצוא אחרון
+                </th>
+
+                <th>
+                    סטטוס
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="acc in appData.compExpGetList.data" ng-if="acc.last_export_date !== null">
+                <td>
+                    <input type="checkbox" ng-model="acc.ind_blacklist"
+                           ng-change="blacklist(acc)">
+                </td>
+                <td>
+                    <div>
+                        {{accoConversions.getBankName(acc.bank_id)}} {{ acc.bank_account_id }}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        {{ acc.balance_last_updated_date }}
+                        <i ng-if="acc.status !== null">|</i>
+
+                                        <span ng-if="acc.status !== null"
+                                              ng-class="{'underline' : acc.status == 2 || acc.status == 4 || acc.status == 3 || acc.status == 157 || acc.status == 158 }"
+                                              ng-click="updateAccountPassword(acc, 'data')">
+                                             {{accoConversions.getStatus(acc.status)}}
+                                        </span>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                                        <span ng-if="acc.izu_cust_id !== null">
+                                           {{acc.izu_cust_id}}
+                                        </span>
+                        &nbsp;
+                    </div>
+                </td>
+
+                <td>
+                    <div>
+                        {{ acc.last_export_date }}
+
+                        |
+
+                        {{ acc.user_name }}
+
+                        <i data-ng-click="editAlerts(acc, appData.compExpGetList.company_id)"
+                           data-ng-class="{'editDescActive' :acc.explaind_desc !== null,'editDesc' :acc.explaind_desc == null}"></i>
+                    </div>
+                </td>
+                <td>
+                    <div ng-style="{'color': acc.last_export_status == 0 || acc.last_export_status == 8 ? '#62b03f' : '#ec3c66'}">
+                        {{ accoConversions.getStatusCompanyEx(acc.last_export_status) }}
+                    </div>
+                </td>
+                <td>
+                    <button ng-if="acc.last_export_status == 1"
+                            ng-click="resetExports(acc.company_account_id)" class="redButton">
+                        הורד שוב
+                    </button>
+                    <button ng-if="acc.last_export_status == 3 || acc.last_export_status == 7"
+                            ng-click="popUpApply(acc)" class="redButton">
+                        בדוק יתרות
+                    </button>
+                    <div ng-if="acc.last_export_status !== 1 && acc.last_export_status !== 3 && acc.last_export_status !== 7">
+                        &nbsp;
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-repeat="acc in appData.compExpGetList.data" ng-if="acc.last_export_date == null">
+                <td>
+                    &nbsp;
+                </td>
+                <td colspan="3">
+                    <div>
+                        {{ acc.account_nickname }}
+                    </div>
+                </td>
+                <td>
+                    <i data-ng-click="editAlerts(acc, appData.compExpGetList.company_id)"
+                       data-ng-class="{'editDescActive' :acc.explaind_desc !== null,'editDesc' :acc.explaind_desc == null}"></i>
+                </td>
+                <td>
+                    <div> עדיין לא בוצע ייצוא ראשוני
+
+
+                    </div>
+                </td>
+                <td>
+                    <button ng-click="popUpApply(acc)">
+                        לחץ לביצוע
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<h2 class="titlePage">
+    יתרת בנקים
+</h2>
+<div class="top-graph">
+    <div ng-if="appData.selectedCompany && appData.selectedCompany.accounts.bank_account_list == null"
+         class="notAccBank_account_list">
+        לא נמצאו חשבונות
+    </div>
+
+    <!--<ul class="navTopGraph" id="navTopGraphBanks"-->
+    <!--ng-if="appData.selectedCompany.accounts.bank_account_list !== null" nav-slider-banks>-->
+    <!--<li data-ng-click="updateSelection(0, false);"-->
+    <!--ng-show="appData.selectedCompany.accounts.bank_account_list.length > 1">-->
+    <!--<div class="titlesBanksAllclass">-->
+    <!--<p class="titlesBanksAll floatnone">-->
+    <!--כל הבנקים-->
+    <!--<img src="image/info_icon.png" tooltips-white title="סה”כ יתרת כל הבנקים המעודכנים במערכת.">-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--<div class="sumtitlesBanksAll" ng-class="{'selected':shownGraphIndex == 0, 'redNum': a.balance_use < 0}">-->
+    <!--<span tooltips-white class="hariga_icon" ng-show="a.balance_use < 0" title="חריגה"></span>-->
+    <!--<span>-->
+    <!--<span>&#8362;</span>{{getTotal(appData.selectedCompany.accounts.total_opening_balance)}}-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--<li data-ng-repeat="a in appData.selectedCompany.accounts.bank_account_list"-->
+    <!--data-ng-click="updateSelection($index + 1, false);">-->
+    <!--<div class="titlesBanksAllclass">-->
+    <!--&lt;!&ndash;<p class="titlesBanksAll" ng-style="{'color': colorsBanks[$index]}">&ndash;&gt;-->
+    <!--<p class="titlesBanksAll">-->
+    <!--<i class="bank{{a.bank_id}}"></i>-->
+    <!--{{getShoetName(a.company_account_nickname)}}-->
+    <!--</p>-->
+    <!--&lt;!&ndash;<span ng-click="$parent.$state.go('tazrim')">&ndash;&gt;-->
+    <!--&lt;!&ndash;{{getDateEqualToday(a.balance_last_update_date)}}&ndash;&gt;-->
+    <!--&lt;!&ndash;</span>&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="sumtitlesBanksAll"-->
+    <!--data-ng-class="{'selected':(shownGraphIndex == $index + 1) ||  (appData.selectedCompany.accounts.bank_account_list.length == 1 && $index == 0)}">-->
+    <!--<span tooltips-tazrim class="hariga_icon" ng-show="a.balance_use < 0" title="חריגה"></span>-->
+    <!--<span ng-class="{'redNum': a.balance_use < 0}">-->
+    <!--<span>&#8362;</span>{{getTotal(a.opening_balance)}}-->
+    <!--</span>-->
+    <!--</div>-->
+    <!--</li>-->
+    <!--</ul>-->
+
+    <div class="navBanksSlider">
+        <i class="fa fa-caret-right" id="rightNavClick"></i>
+        <i class="fa fa-caret-left" id="leftNavClick"></i>
+    </div>
+    <ul class="navTopGraph" id="navTopGraphBanks"
+        ng-if="appData.selectedCompany.accounts.bank_account_list !== null" nav-slider-banks>
+        <li data-ng-click="updateSelection(0, false);"
+            ng-show="appData.selectedCompany.accounts.bank_account_list.length > 1">
+            <div class="titlesBanksAllclass">
+                <p class="titlesBanksAll floatnone">
+                    כל הבנקים
+                    <img src="image/info_icon.png" tooltips-white title="סה”כ יתרת כל הבנקים המעודכנים במערכת.">
+                </p>
+            </div>
+            <div class="sumtitlesBanksAll"
+                 ng-class="{'selected':shownGraphIndex == 0, 'redNum': a.balance_use < 0}">
+                <span tooltips-white class="hariga_icon" ng-show="a.balance_use < 0" title="חריגה"></span>
+                    <!--<span ng-if="!appData.selectedCompany.tazrim.length">-->
+                       <!-- - -->
+                    <!--</span>-->
+                      <!--<span ng-if="appData.selectedCompany.tazrim.length && appData.selectedCompany.tazrim && appData.selectedCompany.tazrim[0].rows[0].total_itra">-->
+                        <!--&lt;!&ndash;<span>&#8362;</span>&ndash;&gt;-->
+                          <!--{{getTotal(appData.selectedCompany.tazrim[0].rows[0].total_itra)}}-->
+                    <!--</span>-->
+                    <span ng-if="!appData.selectedCompany.accounts.total_opening_balance">
+                       -
+                    </span>
+                    <span>
+                        {{getTotal(appData.selectedCompany.accounts.total_opening_balance)}}
+                    </span>
+            </div>
+        </li>
+        <li ng-repeat="a in appData.selectedCompany.accounts.bank_account_list" class="typeLi{{a.type}}">
+            <div class="titlesBanksAllclass" ng-click="updateSelection($index + 1, false);"
+                 ng-if="a.type!==4">
+                <!--<p class="titlesBanksAll" ng-style="{'color': colorsBanks[$index]}">-->
+                <p class="titlesBanksAll" tooltips-white-banks tooltip="{{a}}"
+                   ng-class="{'selected':($parent.shownGraphIndex == $index + 1) ||  (appData.selectedCompany.accounts.bank_account_list.length == 1 && $index == 0)}">
+                    <i class="bank{{a.bank_id}}"></i>
+                    {{a.company_account_nickname}}
+                </p>
+                <img src="image/alert_icon.png" tooltips-white title="חשבון לא מעודכן להיום" ng-if="a.type==1"
+                     class="alertUpdate">
+                <img src="image/alert_icon.png" tooltips-white title="{{accoConversions.getStatus(a.status)}}"
+                     ng-if="a.type==2||a.type==3" class="alertUpdate">
+
+                <!--<span ng-click="$parent.$state.go('tazrim')">-->
+                <!--{{getDateEqualToday(a.balance_last_update_date)}}-->
+                <!--</span>-->
+            </div>
+            <div class="sumtitlesBanksAll" ng-click="updateSelection($index + 1, false);" ng-if="a.type!==4"
+                 tooltips-white-banks tooltip="{{a}}"
+                 ng-class="{'selected':(shownGraphIndex == $index + 1) ||  (appData.selectedCompany.accounts.bank_account_list.length == 1 && $index == 0)}">
+                    <span tooltips-tazrim class="hariga_icon" ng-show="a.balance_use < 0"
+                          title="חריגה"></span>
+                    <span ng-class="{'redNum': a.balance_use < 0}">
+                        <!--<span>&#8362;</span>-->
+                        {{getTotal(a.opening_balance)}}
+                    </span>
+            </div>
+
+            <div class="titlesBanksAllclass" ng-if="a.type==4" ng-click="updateSelection($index + 1, false);">
+                <!--<p class="titlesBanksAll" ng-style="{'color': colorsBanks[$index]}">-->
+                <p class="titlesBanksAll" tooltips-white-banks tooltip="{{a}}"
+                   ng-class="{'selected':(shownGraphIndex == $index + 1) ||  (appData.selectedCompany.accounts.bank_account_list.length == 1 && $index == 0)}">
+                    <i class="bank{{a.bank_id}}"></i>
+                    {{a.company_account_nickname}}
+                </p>
+                <img src="image/alert_icon.png" tooltips-white title="{{accoConversions.getStatus(a.status)}}"
+                     class="alertUpdate">
+            </div>
+            <div class="sumtitlesBanksAll" ng-if="a.type==4"
+                 ng-click="updatePasswordPopUpMess(a.token, {BankNumber: a.bank_id})" tooltips-white-banks
+                 tooltip="{{a}}"
+                 ng-class="{'selected':(shownGraphIndex == $index + 1) ||  (appData.selectedCompany.accounts.bank_account_list.length == 1 && $index == 0)}">
+                    <span ng-if="a.type==4" class="passWrongLink">
+                        סיסמא שגויה
+                    </span>
+            </div>
+        </li>
+    </ul>
+
+    <div class="navTopGraph"
+         ng-if="appData.selectedCompany.accounts.bank_account_list !== null && !appData.hideGraph && appData.adminSoft">
+        <div ng-click="nextAndPrevGraph('next')"
+             ng-class="{'fa fa-spinner rights': $parent.spinnerNext, 'fa fa-caret-right': !$parent.spinnerNext}"
+             ng-if="chartData" title="הבא">
+        </div>
+        <div chart-draw-new chart-data="chartData"
+             style="width:100%;height:243px;direction: ltr;background: transparent;"></div>
+        <div ng-click="nextAndPrevGraph('prev')"
+             ng-if="chartData && showPrevButton"
+             ng-class="{'fa fa-spinner lefts': $parent.spinnerPrev, 'fa fa-caret-left': !$parent.spinnerPrev}"
+             title="הקודם"></div>
+    </div>
+    <div class="navTopGraph"
+         ng-if="appData.selectedCompany.accounts.bank_account_list == null || appData.hideGraph && appData.adminSoft">
+        <h2 class="alertNotDataGraph">
+            לא ניתן להציג נתונים לחשבונות לא מעודכנים
+        </h2>
+    </div>
+    <i ng-if="(loaderSkiraKsafimGraph && appData.selectedCompany.accounts.bank_account_list !== null) && appData.adminSoft"
+       class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </i>
+
+
+    <!--<div class="navTopGraph" ng-if="appData.selectedCompany.accounts.bank_account_list !== null">-->
+
+    <!--&lt;!&ndash;<div ng-click="nextAndPrevGraph('next')" ng-class="{'fa fa-spinner rights': spinnerNext, 'fa fa-caret-right': !spinnerNext}" ng-if="chartData" title="הבא"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<div chart-draw chart-data="chartData" style="width:100%; height:234px;"></div>&ndash;&gt;&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<div chart-draw-new chart-data="chartData"&ndash;&gt;-->
+    <!--&lt;!&ndash;style="width:100%;height:243px;direction: ltr;background: transparent;"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;<div ng-click="nextAndPrevGraph('prev')"&ndash;&gt;-->
+    <!--&lt;!&ndash;ng-if="chartData && showPrevButton"&ndash;&gt;-->
+    <!--&lt;!&ndash;ng-class="{'fa fa-spinner lefts': spinnerPrev, 'fa fa-caret-left': !spinnerPrev}" title="הקודם"></div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<i ng-if="loaderSkiraKsafimGraph || appData.selectedCompany.accounts.bank_account_list == null" class="loader_table">-->
+    <!--<img src="image/loader.gif" alt="Loading...">-->
+    <!--</i>-->
+    <!--</div>-->
+
+    <div class="pies-header clearfix" ng-if="appData.selectedCompany.accounts.bank_account_list !== null">
+        <div>
+            ניתוח כספי לתקופת {{ datePeriod }}
+        </div>
+        <div class="buttons_groups"
+             data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 2}">
+            <div class="button_group">
+                <button data-ng-click="pieInd = 0;getWithdrawals(pieInd);" class="ind-type"
+                        data-ng-class="{'active': pieInd == 0}">תשלום
+                </button>
+                <button data-ng-click="pieInd = 1;getWithdrawals(pieInd);" class="ind-type"
+                        data-ng-class="{'active': pieInd == 1}">סוגי פעולה
+                </button>
+            </div>
+            <div dropdown>
+                <button class="dropdown-toggle" ng-click="buttonActive = !buttonActive"
+                        ng-class="{'buttonActive' : buttonActive == false}">
+                    לפי תאריך
+                </button>
+                <div class="dropdown-content">
+                    <form class="filter-form" autocomplete="off">
+                        <div class="form-control">
+                            <input type="radio" data-ng-model="appData.dateFilter.type" value="0" id="dateFilter1"
+                                   ng-change="disabledDates();">
+                            <label for="dateFilter1">
+חודש
+                            </label>
+                            <select ng-model="dateFilter.byMonth"
+                                    ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                    ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                            <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years"
+                                    ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                        </div>
+                        <div class="form-control">
+                            <input type="radio" data-ng-model="appData.dateFilter.type" value="1" id="dateFilter2"
+                                   ng-change="disabledDates();">
+                            <label for="dateFilter2">
+                                לפי שנה
+                            </label>
+                            <select data-ng-model="dateFilter.byOnlyYear" data-ng-options="y for y in years"
+                                    ng-change="appData.dateFilter.type = '1';disabledDates();"></select>
+                        </div>
+                        <div class="form-control">
+                            <input type="radio" data-ng-model="appData.dateFilter.type" value="2" id="dateFilter3"
+                                   ng-change="disabledDates();">
+                            <label for="dateFilter3">
+                                בין חודשים
+                            </label>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                    data-ng-model="dateFilter.fromMonth"
+                                    data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                    ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                    data-ng-model="dateFilter.fromYear" data-ng-options="y for y in years"
+                                    ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <div>
+                                עד
+                            </div>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                    data-ng-model="dateFilter.toMonth"
+                                    data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                    ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                    data-ng-model="dateFilter.toYear" data-ng-options="y for y in years"
+                                    ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                        </div>
+                        <div class="form-control">
+                            <button data-ng-click="getWithdrawals(pieInd)" class="dropdown-close button"
+                                    ng-disabled="appData.redErrorFilterType !== false">
+                                עדכון
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-pies"
+         ng-if="appData.selectedCompany.withdrawals && appData.selectedCompany.accounts.bank_account_list !== null">
+        <!--<i ng-if="loaderSkiraKsafimGraphPay" class="loader_table">-->
+        <!--<img src="image/loader.gif" alt="Loading...">-->
+        <!--</i>-->
+        <div ng-if="appData.selectedCompany.accounts.bank_account_list !== null">
+            <div pie-draw pie-data="appData.selectedCompany.withdrawals.negative"></div>
+            <div class="legend">
+                <div>
+                    משיכות
+                </div>
+                <div>
+                    <span>&#8362;</span>
+                    {{getTotal(appData.selectedCompany.withdrawals[0].sum)}}</div>
+            </div>
+        </div>
+
+        <div ng-if="appData.selectedCompany.accounts.bank_account_list !== null">
+            <div pie-draw pie-data="appData.selectedCompany.withdrawals.positive"></div>
+            <div class="legend">
+                <div>
+
+                    הפקדות
+                </div>
+                <div><span>&#8362;</span>{{getTotal(appData.selectedCompany.withdrawals[1].sum)}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mini-pies" ng-if="appData.selectedCompany.accounts.bank_account_list !== null">
+        <i ng-if="loaderSkiraKsafimGraphPay  || appData.selectedCompany.accounts.bank_account_list == null"
+           class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </i>
+        <div>
+            <div data-ng-repeat="p in appData.selectedCompany.withdrawals[0].children"
+                 class="pieCube"
+                 ng-click="goToBankAccountsTable(p.type, 1)">
+                <div pie-draw pie-data="p" class="pieToLoad"></div>
+                <div>
+                    <div class="nameMiniGraph">{{p.name}}</div>
+                    <div data-ng-style="{'color':p.colors[$index]}"><span>&#8362;</span>{{getTotal(p.sum, true)}}</div>
+                </div>
+                <div class="lineGraphMini">
+                    <div class="mini-pies-barchart">
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[0].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+
+                            <span ng-if="p.tooltipYears[0].y"><i>{{accoConversions.getParseComma(p.tooltipYears[0].y)}}</i></span>
+
+                        </div>
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[1].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+                            <span ng-if="p.tooltipYears[1].y"><i>{{accoConversions.getParseComma(p.tooltipYears[1].y)}}</i></span>
+
+                        </div>
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[2].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+                            <span ng-if="p.tooltipYears[2].y"><i>{{accoConversions.getParseComma(p.tooltipYears[2].y)}}</i></span>
+                        </div>
+                    </div>
+                    <div class="mini-pies-barchart-x" data-ng-show="p.tooltipYears.length > 0">
+                        <div>{{accoConversions.getParseInt(('' + p.tooltipYears[0].x).substring(4,6)) + '/' + ('' +
+                            p.tooltipYears[0].x).substring(2,4)}}
+                        </div>
+                        <div>{{accoConversions.getParseInt(('' + p.tooltipYears[1].x).substring(4,6)) + '/' + ('' +
+                            p.tooltipYears[1].x).substring(2,4)}}
+                        </div>
+                        <div>{{accoConversions.getParseInt(('' + p.tooltipYears[2].x).substring(4,6)) + '/' + ('' +
+                            p.tooltipYears[2].x).substring(2,4)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div data-ng-repeat="p in appData.selectedCompany.withdrawals[1].children"
+                 class="pieCube"
+                 ng-click="goToBankAccountsTable(p.type, 0)">
+                <div pie-draw pie-data="p" class="pieToLoad"></div>
+                <div>
+                    <div class="nameMiniGraph">{{p.name}}</div>
+                    <div data-ng-style="{'color':p.colors[$index]}"><span>&#8362;</span>{{getTotal(p.sum, true)}}</div>
+                </div>
+                <div data-ng-show="appData.dateFilter.type == '0' " class="lineGraphMini">
+                    <div class="mini-pies-barchart">
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[0].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+                            <span ng-if="p.tooltipYears[0].y"><i>{{accoConversions.getParseComma(p.tooltipYears[0].y)}}</i></span>
+                        </div>
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[1].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+                            <span ng-if="p.tooltipYears[1].y"><i>{{accoConversions.getParseComma(p.tooltipYears[1].y)}}</i></span>
+                        </div>
+                        <div data-ng-style="{'background-color':p.colors[$index], 'height': 100*p.tooltipYears[2].y/(p.tooltipYears[0].y + p.tooltipYears[1].y+ p.tooltipYears[2].y) + '%'}">
+                            <span ng-if="p.tooltipYears[2].y"><i>{{accoConversions.getParseComma(p.tooltipYears[2].y)}}</i></span>
+                        </div>
+                    </div>
+                    <div class="mini-pies-barchart-x">
+                        <div>{{accoConversions.getParseInt((p.tooltipYears[0].x).toString().substring(4,6)) + '/' + (''
+                            + p.tooltipYears[0].x).substring(2,4)}}
+                        </div>
+                        <div>{{accoConversions.getParseInt((p.tooltipYears[1].x).toString().substring(4,6)) + '/' + (''
+                            + p.tooltipYears[1].x).substring(2,4)}}
+                        </div>
+                        <div>{{accoConversions.getParseInt((p.tooltipYears[2].x).toString().substring(4,6)) + '/' + (''
+                            + p.tooltipYears[2].x).substring(2,4)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

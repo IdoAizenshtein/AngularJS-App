@@ -1,0 +1,34 @@
+<div ng-controller="mainAccountantsCtrl">
+    <div class="popup-header">
+        <h2>
+            הערות פנימיות לבדיקה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="tables">
+
+        <table>
+            <tr>
+                <th colspan="2">הערה</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="text" data-ng-model="appData.editAlertsHash.acc.explain_desc"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button  data-ng-click="sendApprHash()">
+                        אשר
+                    </button>
+                       <span data-ng-click="sendCheckHash()">
+                  שלח לבדיקה
+              </span>
+                </td>
+            </tr>
+        </table>
+        </div>
+
+    </div>
+</div>
+

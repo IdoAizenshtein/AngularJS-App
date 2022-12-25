@@ -1,0 +1,22 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+            הצגת התראה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <h2>
+            החשבון/כ.א. אינו מוצג עוד באתר הבנק, או שפרטי הכניסה הנוכחיים אינם מאפשרים את הצגתו. האם להמשיך להציג את
+            ההתראה?
+        </h2>
+
+        <div class="buttonGr">
+            <button ng-click="hidePopup()">
+                המשך להציג
+            </button>
+            <button ng-click="update_account_blklist_ws()">
+                הסתר את ההתראה
+            </button>
+        </div>
+    </div>
+</div>

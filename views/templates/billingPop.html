@@ -1,0 +1,395 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הוספת כרטיס אשראי
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="detailsPaymentFormPop" class="css-form" novalidate
+              ng-submit="billing_account_set_gen_data(appData.billingAccountNow, detailsPaymentFormPop, true)"
+              autocomplete="off">
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$valid }">
+                    <label>
+                        שם מלא
+                    </label>
+                    <input id="uName__" name="uName__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.BILLING_ACCOUNT_NAME" name="uName" required=""
+                           autocomplete="off"
+                           ng-pattern="/\s/"/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uName.$touched) && detailsPaymentFormPop.uName.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.uName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.uName.$error.pattern">
+                        יש לרשום שם פרטי ושם משפחה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$valid }">
+                    <label>
+                        שם העסק
+                    </label>
+                    <input id="cName__" name="cName__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.BILLING_ACCOUNT_COMPANY_NAME" name="cName"
+                           required="" autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cName.$touched) && detailsPaymentFormPop.cName.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$valid }">
+                    <label>
+                        ח.פ. / ת.ז.
+                    </label>
+                    <input id="uHp__" name="uHp__" style="display: none;" value="" type="text" autocomplete="off">
+                    <input ng-model-options="{ updateOn: 'blur'}"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                           type="text" ng-model="appData.billingAccountNow.BILLING_ACCOUNT_HP"
+                           autocomplete="off" name="uHp"
+                           maxlength="9"
+                           minlength="8"
+                           required="" legal-tz/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uHp.$touched) && detailsPaymentFormPop.uHp.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.uHp.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.uHp.$error.integer">
+                        מספר לא חוקי
+                    </div>
+                    <span ng-show="detailsPaymentFormPop.uHp.$error.unique">
+ח.פ. זה קיים במערכת
+      </span>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$valid }">
+                    <label>
+                        כתובת
+                    </label>
+                    <input id="cAddress__" name="cAddress__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           ng-required="false"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.BILLING_ACCOUNT_ADDRESS" name="cAddress"
+                           autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cAddress.$touched) && detailsPaymentFormPop.cAddress.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cAddress.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cCity.$touched) && detailsPaymentFormPop.cCity.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cCity.$touched) && detailsPaymentFormPop.cCity.$valid }">
+                    <label>
+                        עיר
+                    </label>
+                    <input id="cCity__" name="cCity__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.BILLING_ACCOUNT_CITY" name="cCity" required=""
+                           autocomplete="off"
+                           replace-and/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cCity.$touched) && detailsPaymentFormPop.cCity.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cCity.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uTel.$touched) && detailsPaymentFormPop.uTel.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uTel.$touched) && detailsPaymentFormPop.uTel.$valid }">
+                    <label>
+                        טלפון
+                    </label>
+                    <input id="uTel__" name="uTel__" style="display: none;" value="" type="tel" autocomplete="off">
+                    <input ng-model-options="{ updateOn: 'blur'}"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                           type="tel" ng-model="appData.billingAccountNow.BILLING_ACCOUNT_PHONE"
+                           autocomplete="off" name="uTel"
+                           required="" ng-minlength="9" ng-maxlength="10"
+                           ensure-unique/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uTel.$touched) && detailsPaymentFormPop.uTel.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.uTel.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.uTel.$error.minlength || detailsPaymentFormPop.uTel.$error.maxlength || detailsPaymentFormPop.uTel.$error.integer">
+                        המספר שהזנת אינו חוקי
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     ng-class="{'errorInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uEmail.$touched) && detailsPaymentFormPop.uEmail.$invalid, 'sucInput': (detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uEmail.$touched) && detailsPaymentFormPop.uEmail.$valid }">
+                    <label>
+                        כתובת דוא”ל
+                    </label>
+                    <input id="uEmail__" name="uEmail__" style="display: none;" value="" type="email"
+                           autocomplete="off">
+                    <input ng-model-options="{ updateOn: 'blur'}" type="email"
+                           ng-model="appData.billingAccountNow.BILLING_ACCOUNT_EMAIL"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" name="uEmail"
+                           required="" class="ltrSide"
+                           ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.uEmail.$touched) && detailsPaymentFormPop.uEmail.$invalid"
+                     class="alertsMessages">
+      <span ng-show="detailsPaymentFormPop.uEmail.$error.required">
+        מידע זה הינו מידע חובה
+      </span>
+                    <span ng-show="detailsPaymentFormPop.uEmail.$error.pattern">
+        כתובת המייל שהזנת אינה תקינה
+      </span>
+                </div>
+            </div>
+            <div class="wrapInputForm checkBoxGr">
+                <div class="inputForm">
+                    <label for="uCheck">
+                        פטור ממע"מ
+                    </label>
+                    <div id="IND_LELO_MAAM" style="padding: 0px;">
+                        <input id="uCheck" type="checkbox" ng-model="appData.billingAccountNow.IND_LELO_MAAM"
+                               readonly
+                               autocomplete="off" name="uCheck" ng-true-value="1" ng-false-value="0"/>
+                    </div>
+                </div>
+                <div class="inputForm" ng-if="appData.adminSoft && appData.typeChangeCard">
+                    <label for="uCheckTransfer">
+                        תשלום בשיק/העברה בנקאית
+                    </label>
+                    <div style="padding: 0px;">
+                        <input id="uCheckTransfer"
+                               type="checkbox"
+                               ng-model="appData.billingAccountNow.checkTransfer"
+                               readonly
+                               autocomplete="off"
+                               name="uCheckTransfer"/>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="wrapInputForm" ng-if="appData.adminSoft">-->
+            <!--<div class="inputForm" id="asimonCreate">-->
+            <!--<label>-->
+            <!--אסימון-->
+            <!--</label>-->
+            <!--<input id="lowProfileCode__" name="lowProfileCode__" style="display: none;" value="" type="text"-->
+            <!--autocomplete="off">-->
+            <!--<input type="text"-->
+            <!--readonly-->
+            <!--onfocus="this.removeAttribute('readonly');"-->
+            <!--ng-model="appData.billingAccountNow.lowProfileCode" name="lowProfileCode"-->
+            <!--autocomplete="off"/>-->
+            <!--<i ng-click="appData.cardCom_cardNumber = ''; appData.cardCom_tokenExpireDate = '';appData.openEditlowProfileCode = true;">-->
+            <!--צור אסימון-->
+            <!--</i>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="input-label" style="direction: ltr; text-align: left;" ng-if="appData.adminSoft && !appData.billingAccountNow.checkTransfer">
+                <small class="text-muted">{{appData.billingAccountNow.cardType}}</small>
+            </div>
+            <div class="wrapInputForm" ng-if="appData.adminSoft && !appData.billingAccountNow.checkTransfer">
+                <div class="inputForm" oc-lazy-load="['scripts/lib/jquery.payment.min.js']">
+                    <label>
+                        מס׳ כרטיס
+                    </label>
+                    <input id="cardNumber__" name="cardNumber__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input id="cc-number"
+                           ng-class="{'has-error': detailsPaymentFormPop.cardNumber.$invalid && detailsPaymentFormPop.cardNumber.$touched}"
+                           type="tel"
+                           autocomplete="off"
+                           placeholder="•••• •••• •••• ••••"
+                           autocapitalize="off"
+                           ng-model-options="{ debounce: {'default': 0 }}"
+                           autocorrect="off"
+                           validation-cards
+                           ng-required='appData.billingAccountNow.cardCom_tokenExpireDate.length'
+                           readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.cardCom_cardNumber"
+                           name="cardNumber"/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.cardNumber.$touched) && detailsPaymentFormPop.cardNumber.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.cardNumber.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.cardNumber.$error.valid">
+                        המספר שהזנת אינו חוקי
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm" ng-if="appData.adminSoft && !appData.billingAccountNow.checkTransfer">
+                <div class="inputForm">
+                    <label>
+                        תוקף
+                    </label>
+                    <input id="tokenExpireDate__" name="tokenExpireDate__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input number-only
+                           ng-class="{'has-error': detailsPaymentFormPop.tokenExpireDate.$invalid && detailsPaymentFormPop.tokenExpireDate.$touched}"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           name="tokenExpireDate"
+                           id="cc-exp"
+                           type="tel"
+                           ng-required='appData.billingAccountNow.cardCom_cardNumber.length'
+                           autocomplete="off"
+                           autocapitalize="off"
+                           autocorrect="off"
+                           placeholder="•• / ••"
+                           validation-cards
+                           ng-model="appData.billingAccountNow.cardCom_tokenExpireDate"/>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.tokenExpireDate.$touched) && detailsPaymentFormPop.tokenExpireDate.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.tokenExpireDate.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="detailsPaymentFormPop.tokenExpireDate.$error.valid">
+                        התוקף אינו תקין
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm" ng-if="appData.adminSoft && appData.typeChangeCard">
+                <div class="inputForm" id="pickerDateInput">
+                    <label>
+                        ת.קרוב
+                    </label>
+                    <input id="nextBillingDate__" name="nextBillingDate__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           readonly="readonly"
+                           ng-required='appData.billingAccountNow.cardCom_cardNumber.length'
+                           date-picker-set-date-pop
+                           ng-model="appData.billingAccountNow.nextBillingDate" name="nextBillingDate"
+                           autocomplete="off"/>
+                    <i ng-click="appData.billingAccountNow.nextBillingDate = null;">
+                        נקה
+                    </i>
+                </div>
+                <div ng-show="(detailsPaymentFormPop.$submitted || detailsPaymentFormPop.nextBillingDate.$touched) && detailsPaymentFormPop.nextBillingDate.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPop.nextBillingDate.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm" ng-if="appData.adminSoft && appData.typeChangeCard">
+                <div class="inputForm">
+                    <label>
+                        מספר לקוח
+                    </label>
+                    <input id="numberOfCustomer__" name="numberOfCustomer__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           number-only
+                           readonly="readonly"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.numberOfCustomer" name="numberOfCustomer"
+                           autocomplete="off"/>
+                </div>
+            </div>
+            <div class="wrapInputForm" ng-if="appData.adminSoft && !appData.billingAccountNow.checkTransfer">
+                <div class="inputForm">
+                    <label>
+                        ת.ז.
+                    </label>
+                    <input id="cardholderidentitynumber__" name="cardholderidentitynumber__" style="display: none;"
+                           value="" type="text"
+                           autocomplete="off">
+                    <input type="text"
+                           number-only
+                           readonly="readonly"
+                           onfocus="this.removeAttribute('readonly');"
+                           ng-model="appData.billingAccountNow.cardholderidentitynumber" name="cardholderidentitynumber"
+                           autocomplete="off"
+                           maxlength="9"
+                           minlength="8"
+                    />
+                </div>
+            </div>
+            <div class="groupButtonChecks">
+                <button type="button" ng-click="hidePopup()">
+                    בטל
+                </button>
+                <button type="submit"
+                        ng-disabled="!detailsPaymentFormPop.$valid">
+                    המשך לתשלום
+                </button>
+            </div>
+        </form>
+        <!--<div ng-if="appData.openEditlowProfileCode" id="openEditlowProfileCode">-->
+        <!--<img src="image/close_popup.png" class="close_popup" ng-click="appData.openEditlowProfileCode = false">-->
+        <!--<div class="wrapInputForm">-->
+        <!--<div class="inputForm">-->
+        <!--<label>-->
+        <!--CardNumber-->
+        <!--</label>-->
+        <!--<input id="cardNumber__" name="cardNumber__" style="display: none;" value="" type="text"-->
+        <!--autocomplete="off">-->
+        <!--<input type="text"-->
+        <!--readonly number-only-->
+        <!--onfocus="this.removeAttribute('readonly');"-->
+        <!--ng-model="appData.cardCom_cardNumber" name="cardNumber"-->
+        <!--autocomplete="off"/>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="wrapInputForm">-->
+        <!--<div class="inputForm">-->
+        <!--<label>-->
+        <!--TokenExpireDate-->
+        <!--</label>-->
+        <!--<input id="tokenExpireDate__" name="tokenExpireDate__" style="display: none;" value="" type="text"-->
+        <!--autocomplete="off">-->
+        <!--<input type="text" number-only-->
+        <!--readonly-->
+        <!--onfocus="this.removeAttribute('readonly');"-->
+        <!--ng-model="appData.cardCom_tokenExpireDate" name="tokenExpireDate" autocomplete="off"/>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<button ng-click="getToken()" ng-disabled="!appData.cardCom_cardNumber || !appData.cardCom_tokenExpireDate">-->
+        <!--צור אסימון-->
+        <!--</button>-->
+        <!--</div>-->
+    </div>
+</div>

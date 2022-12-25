@@ -1,0 +1,37 @@
+<div ng-controller="taskManagerCtrl">
+    <div class="popup-header">
+        <h2>
+            היסטוריית משימה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="wrapPop">
+            <div class="textarea">
+                <p>
+                    הוסף הערה
+                </p>
+                <textarea ng-model="textareaComment"></textarea>
+                <div class="btn">
+                    <button ng-click="updatePopTaskComment(textareaComment); textareaComment = '';">
+                        שלח
+                    </button>
+                </div>
+            </div>
+            <div class="listHistory">
+                <ul>
+                    <li ng-repeat="a in appData.tasks_hist">
+                        <div>
+                            {{a.USER_NAME}} |
+                            {{a.DATE_CREATED}}
+                        </div>
+                        <div>
+                            {{a.TASK_DESC}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+

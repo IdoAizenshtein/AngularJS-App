@@ -1,0 +1,418 @@
+<div ng-init="init()">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+
+    <div class="page-content wrap-header-top" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="headerAnalisis headerRevah">
+            <div data-ng-show="appData.revahHefsed.data.length > 0" class="funds-totals reportTotal">
+                <div>
+                    <div class="title_sum">
+                        <p>
+                            סה״כ
+                            <span data-ng-if="appData.revahHefsed.summary.sum >= 0">
+                                רווח
+                            </span>
+                            <span data-ng-if="appData.revahHefsed.summary.sum < 0">
+                                הפסד
+                            </span>
+                            לדו״ח
+                        </p>
+                    </div>
+                    <div class="sum-data gray"><span>&#8362;</span>
+                        {{roundFixed(appData.revahHefsed.summary.sum)}}
+                    </div>
+                </div>
+                <div ng-if="appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal !== null">
+                    <div class="title_sum">
+                        <p>
+                            אחוז מהמחזור
+                        </p>
+                    </div>
+                    <div class="sum-data blue">
+{{appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal}}<span>%</span>
+                    </div>
+                </div>
+                <div ng-if="appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal !== null && appData.revahHefsed.data[appData.revahHefsed.data.length - 1].smallData[0].hacnasotCurrPrcVal !== null">
+                    <div class="title_sum">
+                        <p>
+                            שינוי מתקופה קודמת
+                        </p>
+                    </div>
+                    <div class="sum-data" ng-class="{'red': (appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal) -
+                        (appData.revahHefsed.data[appData.revahHefsed.data.length -
+                        1].smallData[0].hacnasotCurrPrcVal) < 0, 'green': (appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal) -
+                        (appData.revahHefsed.data[appData.revahHefsed.data.length -
+                        1].smallData[0].hacnasotCurrPrcVal) > 0, 'gray': (appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal) -
+                        (appData.revahHefsed.data[appData.revahHefsed.data.length -
+                        1].smallData[0].hacnasotCurrPrcVal) == 0}">
+                        {{(appData.revahHefsed.data[appData.revahHefsed.data.length - 2].data[0].hacnasotCurrPrcVal) -
+                        (appData.revahHefsed.data[appData.revahHefsed.data.length -
+                        1].smallData[0].hacnasotCurrPrcVal)}}<span>%</span>
+                    </div>
+                </div>
+                <div>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+                </div>
+                <div>
+                    <div class="title_sum">
+                        <p>
+                            <span data-ng-if="appData.revahHefsed.summary.prevNum >= 0">
+                                רווח
+                            </span>
+                            <span data-ng-if="appData.revahHefsed.summary.prevNum < 0">
+                                הפסד
+                            </span>
+                            אשתקד
+                        </p>
+                    </div>
+                    <div class="sum-data"><span>&#8362;</span>
+                        {{roundFixed(appData.revahHefsed.summary.prevNum)}}
+                    </div>
+                </div>
+                <div ng-if="appData.revahHefsed.data[appData.revahHefsed.data.length - 1].smallData[0].hacnasotCurrPrcVal !== null">
+                    <div class="title_sum">
+                        <p>
+                            אחוז מהמחזור אשתקד
+                        </p>
+                    </div>
+                    <div class="sum-data">
+                        {{appData.revahHefsed.data[appData.revahHefsed.data.length -
+                        1].smallData[0].hacnasotCurrPrcVal}}<span>%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div data-ng-show="appData.revahHefsed.data.length > 0" class="radioGroupChangePre2">
+                <span>השווה לתקופה קודמת</span>
+                <input id="valueRadioPrev1" ng-change="setGraph(selectRevahSet)" type="radio"
+                       ng-model="appData.valueRadioPrev"
+                       value="yes">
+                <label for="valueRadioPrev1">
+                    כן
+                </label>
+                <input id="valueRadioPrev2" ng-change="setGraph(selectRevahSet)" type="radio"
+                       ng-model="appData.valueRadioPrev"
+                       value="no">
+                <label for="valueRadioPrev2">
+                    לא
+                </label>
+            </div>
+            <div data-ng-show="appData.revahHefsed.data.length > 0" class="radioGroupChangePre">
+                <input id="radio1" type="radio" ng-model="appData.valueRadio" value="radio1">
+                <label for="radio1">
+                    ללא אחוזים
+                </label>
+                <input id="radio2" type="radio" ng-model="appData.valueRadio" value="radio2">
+                <label for="radio2">
+                    אחוז משנה קודמת
+                </label>
+                <input id="radio3" type="radio" ng-model="appData.valueRadio" value="radio3">
+                <label for="radio3">
+                    אחוז מההכנסות
+                </label>
+            </div>
+
+            <div class="funds-action-bar clearfix">
+                <div dropdown class="dropdownLeft">
+                    <button class="dropdown-toggle">
+                        תאריך נבחר:
+                        {{appData.datesSelectReport}}
+                    </button>
+                    <div class="dropdown-content">
+                        <form class="filter-form" autocomplete="off">
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypes" value="0"
+                                       ng-change="disabledDates();"
+                                       id="dateFilter0">
+                                <label for="dateFilter0" style="width: 300px;">
+                                    לפי שנה נוכחית
+                                </label>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypes" value="1" id="dateFilter1"
+                                       ng-change="disabledDates();">
+                                <label for="dateFilter1">
+                                    לפי שנה
+                                </label>
+                                <select data-ng-model="appData.dateFilters.byOnlyYear"
+                                        data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypes = '1';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypes" value="2" id="dateFilter2"
+                                       ng-change="disabledDates();">
+                                <label for="dateFilter2">
+                                    בין חודשים
+                                </label>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                        data-ng-model="appData.dateFilters.fromMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypes = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                        data-ng-model="appData.dateFilters.fromYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypes = '2';disabledDates();"></select>
+
+                                <div>
+                                    עד
+                                </div>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                        data-ng-model="appData.dateFilters.toMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypes = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                        data-ng-model="appData.dateFilters.toYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypes = '2';disabledDates();"></select>
+                            </div>
+                            <div class="form-control inputsGroup">
+                                <label>
+                                    הגדרת מלאי
+                                </label>
+
+                                <div>
+                                    <div>
+                                        <input number-only placeholder="מלאי פתיחה לדו''ח" type="text"
+                                               ng-model="stockEnterance">
+                                        <input number-only placeholder="מלאי סגירה לדו''ח" type="text"
+                                               ng-model="stockExit">
+                                    </div>
+                                    <div>
+                                        <input number-only placeholder="מלאי פתיחה קודם" type="text"
+                                               ng-model="stockEnterancePrev">
+                                        <input number-only placeholder="מלאי סגירה קודם" type="text"
+                                               ng-model="stockExitPrev">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <button data-ng-click="loadPage();" class="dropdown-close button"
+                                        ng-disabled="appData.redErrorFilterType !== false">
+                                    עדכון
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <ul class="exports revahExports" ng-show="appData.revahHefsed.data.length > 0">
+                <li class="excel" ng-click="exportPrintsAll('excel')" tooltips-tazrim="" title="ייצוא לExcel">
+                    <i></i>
+                </li>
+                <li class="mail" ng-click="exportPrintsAll('mail')" tooltips-tazrim title="שליחה במייל">
+                    <i></i>
+                </li>
+                <li class="print" ng-click="exportPrintsAll('print')" tooltips-tazrim title="הדפסה">
+                    <i></i>
+                </li>
+            </ul>
+        </div>
+
+        <div scroll-fill="{{scrollHeightReport}}" style="padding-left: 5px;" class="scrollDesign">
+            <div ng-show="!loaderReport" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <div class="titleReports" ng-if="appData.revahHefsed.data.length == 0">
+                אין נתונים
+            </div>
+            <div class="reportRevah" ng-if="appData.revahHefsed.data.length > 0">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            תאור
+                        </th>
+                        <th>
+                            סה״כ
+                        </th>
+                        <th ng-repeat="a in appData.revahHefsed.dates">
+                            {{accoConversions.getDayMonthNum(a)}}
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    <tr class="row1" ng-class-odd="'odd'" ng-class-even="'even'"
+                        ng-repeat-start="val in appData.revahHefsed.data"
+                        ng-if="appData.valueRadioPrev == 'yes' && $odd || $even">
+
+                        <td ng-click="val.open2 = !val.open2;" tooltips-elipsis tooltip="{{val.title}}">
+                            <img ng-if="val.rowsAsList.length > 0 && (appData.valueRadioPrev == 'yes' || (appData.valueRadioPrev == 'no' && !val.rowZero))"
+                                 src="image/{{imgSet(val.open2)}}.png"/>
+                            {{val.title}}
+                        <span ng-if="$odd">
+                            אשתקד
+                        </span>
+                        </td>
+
+                        <td ng-repeat="a in val.data"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio2' || appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row1', $index,'thisYear', val.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(a.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div class="{{a.colorType}}" tooltips-mess title="מול שנה שעברה"
+                                 ng-if="appData.valueRadio == 'radio2'">
+                              <span ng-if="a.numChange !== null">
+                                   {{a.numChange}}%
+                              </span>
+                                 <span ng-if="a.numChange == null">
+                                  0%
+                              </span>
+                            </div>
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                              <span ng-if="a.hacnasotCurrPrcVal !== null">
+                                   {{a.hacnasotCurrPrcVal}}%
+                                </span>
+                                <span ng-if="a.hacnasotCurrPrcVal == null">
+                                  0%
+                              </span>
+                            </div>
+                        </td>
+
+                        <td ng-repeat="a in val.smallData"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row1', $index,'prevYear', val.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(a.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                               <span ng-if="a.hacnasotCurrPrcVal !== null">
+                                   {{a.hacnasotCurrPrcVal}}%
+                                </span>
+                                 <span ng-if="a.hacnasotCurrPrcVal == null">
+                                   0%
+                                 </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr ng-if="(appData.valueRadioPrev == 'yes' && val.open2) || (appData.valueRadioPrev == 'no' && val.open2 && !val.rowZero && !a.rowZero)"
+                        ng-repeat-start="a in val.rowsAsList" class="level2">
+                        <td data-ng-click="a.open3 = !a.open3;" tooltips-elipsis tooltip="{{a.title}}">
+                            <i ng-if="a.rowsAsList.length == 0"></i>
+                            <img ng-if="a.rowsAsList.length > 0" src="image/{{imgSet(val.open2 && a.open3)}}.png"/>
+                            {{a.title}}
+                        </td>
+                        <td ng-repeat="b in a.data"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio2' || appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row2', $index,'thisYear', val.id, a.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(b.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div class="{{a.colorType}}" tooltips-mess title="מול שנה שעברה"
+                                 ng-if="appData.valueRadio == 'radio2'">
+                              <span ng-if="b.numChange !== null">
+                                   {{b.numChange}}%
+                              </span>
+                                 <span ng-if="b.numChange == null">
+                                  0&
+                              </span>
+                            </div>
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                              <span ng-if="b.hacnasotCurrPrcVal !== null">
+                                   {{b.hacnasotCurrPrcVal}}%
+                              </span>
+                                 <span ng-if="b.hacnasotCurrPrcVal == null">
+                                  0%
+                              </span>
+                            </div>
+                        </td>
+                        <td ng-repeat="b in a.smallData"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row2',$index,'prevYear',val.id, a.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(b.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                               <span ng-if="b.hacnasotCurrPrcVal !== null">
+                                   {{b.hacnasotCurrPrcVal}}%
+                                </span>
+                                 <span ng-if="b.hacnasotCurrPrcVal == null">
+                                   0%
+                                 </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-if="(appData.valueRadioPrev == 'yes' && val.open2 && a.open3) || (appData.valueRadioPrev == 'no' && val.open2 && a.open3 && !b.rowZero)"
+                        ng-repeat-end ng-repeat="b in a.rowsAsList" class="level3">
+                        <td tooltips-elipsis tooltip="{{b.title}}">
+                            <i></i>
+                            {{b.title}}
+                        </td>
+                        <td ng-repeat="c in b.data"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio2' || appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row3', $index,'thisYear', val.id, b.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(c.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div class="{{a.colorType}}" tooltips-mess title="מול שנה שעברה"
+                                 ng-if="appData.valueRadio == 'radio2'">
+                              <span ng-if="c.numChange !== null">
+                                   {{c.numChange}}%
+                              </span>
+                                 <span ng-if="c.numChange == null">
+                                  0%
+                              </span>
+                            </div>
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                              <span ng-if="c.hacnasotCurrPrcVal !== null">
+                                   {{c.hacnasotCurrPrcVal}}%
+                              </span>
+                                 <span ng-if="c.hacnasotCurrPrcVal == null">
+                                  0%
+                              </span>
+                            </div>
+                        </td>
+                        <td ng-repeat="c in b.smallData"
+                            ng-class="{'sum': $index == 0, 'valueRadioOpen': appData.valueRadio == 'radio3'}">
+                            <div ng-click="goToAnalisis('row3', $index,'prevYear', val.id, b.id)"
+                                 ng-class="{'notClick': val.id == 2}">
+                                {{roundFixed(c.sum)}}
+                            </div>
+                            <i></i>
+
+                            <div ng-if="appData.valueRadio == 'radio3'" tooltips-mess title="אחוז מסך ההכנסות">
+                               <span ng-if="c.hacnasotCurrPrcVal !== null">
+                                   {{c.hacnasotCurrPrcVal}}%
+                                </span>
+                                 <span ng-if="c.hacnasotCurrPrcVal == null">
+                                   0%
+                                 </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end ng-if="$odd">
+                        <td>
+                            &nbsp;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="graphRevah" ng-if="appData.revahHefsed.data.length > 0">
+                <div class="bgSelectGraph">
+                    <select name="select" ng-change="setGraph(selectRevahSet)" ng-model="selectRevahSet"
+                            ng-options="item.val as item.name for item in appData.selectRevah"></select>
+                </div>
+                <div class="chartGraph" chart-draw chart-data="chartData"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

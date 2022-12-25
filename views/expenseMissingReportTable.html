@@ -1,0 +1,109 @@
+<div class="reportsAccTdWrap">
+    <div class="title">
+        <p>
+            פעולות שכיחות שלא הופיעו
+        </p>
+
+        <div>
+            <label>
+                בחודש
+            </label>
+            <select name="month_nav" data-ng-model="$parent.monthexpens" ng-change="expenseMissingReport()">
+                <option value="01">ינואר</option>
+                <option value="02">פברואר</option>
+                <option value="03">מרץ</option>
+                <option value="04">אפריל</option>
+                <option value="05">מאי</option>
+                <option value="06">יוני</option>
+                <option value="07">יולי</option>
+                <option value="08">אוגוסט</option>
+                <option value="09">ספטמבר</option>
+                <option value="10">אוקטובר</option>
+                <option value="11">נובמבר</option>
+                <option value="12">דצמבר</option>
+            </select>
+            <label>
+                שנה
+            </label>
+            <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.yearexpens"
+                   ng-change="expenseMissingReport()">
+        </div>
+
+        <ul class="exports tableExports" ng-show="expenseMissingReportTable && expenseMissingReportTable.length > 0">
+            <li class="excel"  exports-excel-exp-missing-report-table tooltips-tazrim title="ייצוא לExcel">
+                <i></i>
+            </li>
+            <li class="mail" ng-click="sendMailerMiss()" tooltips-tazrim title="שליחה במייל">
+                <i></i>
+            </li>
+            <li class="print" exports-print-exp-missing-report-table  tooltips-tazrim title="הדפסה">
+                <i></i>
+            </li>
+        </ul>
+        <input type="text" ng-model="$parent.searchMatchNotShow"
+               placeholder="חיפוש"
+               ng-change="filterExpenseMissingReport()"
+               class="searchTyping" ng-model-options="{ debounce: {'default': 500 }}"
+               ng-show="appData.expenseMissingReportTable.length > 0 || searchMatchNotShow.length > 0"/>
+
+    </div>
+    <div class="expenseMissingReportTable">
+        <div ng-if="!loaderexpenseMissing" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+
+        <table>
+            <thead data-ng-if="appData.expenseMissingReportTable.length">
+            <tr>
+                <th ng-click="sort_by('companyName');">
+                    לקוח
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by('transTypeCatName');">
+                    כרטיס
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by('date');">
+                    חודש הזנה אחרונה
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by('sum');">
+                    סכום קבוע
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody scroll-fill="220" vs-repeat="30" ng-class="{'heightHead': appData.expenseMissingReportTable.length == 0}">
+            <tr ng-if="appData.expenseMissingReportTable.length" ng-repeat="a in appData.expenseMissingReportTable | orderBy : predicate :reverse">
+                <td>
+                                <span data-ng-click="goToLink(a.companyId, 'listCompany')">
+                                       {{a.companyName}}
+                                </span>
+                </td>
+                <td>
+                                 <span data-ng-click="goToAnalisis(a.transTypeCatId, a.target_supplier_type_id, a.companyId, yearexpens)">
+                                       {{a.transTypeCatName}}
+                                </span>
+                </td>
+                <td>
+                    {{accoConversions.getYearMont(a.date)}}
+                </td>
+                <td>
+                    {{roundNum(a.sum)}}
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            <tr ng-if="!appData.expenseMissingReportTable.length">
+                <td colspan="5" class="notTableData">
+                    אין נתונים
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

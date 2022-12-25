@@ -1,0 +1,354 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+
+<div>
+    <div ng-if="!appData.selectedCompany" class="alertNotSelectCompany">
+        אנא בחר חברה
+    </div>
+
+    <div class="wrapSettingsCompanies" ng-if="appData.selectedCompany">
+        <form name="settingsCompaniesForm" novalidate ng-submit="update_company(settingsCompaniesForm)">
+            <div ng-if="!loaderCompaniessSett" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <div class="wrapTableColmn clearfix">
+                <div class="sideColman">
+                    <div>
+                        <h2>
+                            פרטי חברה
+                        </h2>
+
+                        <div class="clearfix">
+                            <div>
+                                שם חברה
+                            </div>
+                            <div>
+                                <input type="text" required name="COMPANY_NAME"
+                                       ng-model="appData.dataCompanyDet.COMPANY_NAME"
+                                       ng-disabled="appData.editCompaniesTab">
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                מספר ח.פ
+                            </div>
+                            <div>
+                                {{appData.dataCompanyDet.COMPANY_HP}}
+                            </div>
+                        </div>
+
+                        <div class="clearfix">
+                            <div>
+                                סוג לקוח
+                            </div>
+                            <div>
+                                <div ng-if="appData.dataCompanyDet.IND_SELF_MANAGED == null">&nbsp;</div>
+                                <select ng-if="appData.dataCompanyDet.IND_SELF_MANAGED !== null"
+                                        ng-model="appData.dataCompanyDet.IND_SELF_MANAGED"
+                                        ng-disabled="appData.editCompaniesTab">
+                                    <option value="0">
+                                        לקוח רגיל מרואה חשבון
+                                    </option>
+                                    <option value="1">
+                                        לקוח רגיל
+                                    </option>
+                                    <option value="2">
+                                        רואה חשבון
+                                    </option>
+                                    <option value="3">
+                                        חברה ראשית רואה חשבון
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                סוג התאמה
+                            </div>
+                            <div>
+              <span ng-if="appData.dataCompanyDet.BANK_MATCH_TYPE !== null">
+                {{accoConversions.getStatusMatchType(appData.dataCompanyDet.BANK_MATCH_TYPE)}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.BANK_MATCH_TYPE == null">
+                    &nbsp;
+                </span>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                תאריך תפוגה
+                            </div>
+                            <div data-ng-class="{'editCompaniesTab': appData.editCompaniesTab}">
+                <span ng-if="appData.dataCompanyDet.EXPIRATION_DATE == null && appData.editCompaniesTab" class="notDatePic">
+                    &nbsp;
+                </span>
+                                <p class="notDateLink" ng-click="appData.dataCompanyDet.EXPIRATION_DATE_PIC = 'null';"
+                                   ng-show="!appData.editCompaniesTab">
+                                    ללא תאריך תפוגה
+                                </p>
+                                <div class="inputDatePic">
+                                    <input required
+                                           ng-show="appData.dataCompanyDet.EXPIRATION_DATE !== null || !appData.editCompaniesTab"
+                                           type="text"
+                                           name="EXPIRATION_DATE"
+                                           ng-model="appData.dataCompanyDet.EXPIRATION_DATE_PIC"
+                                           ng-disabled="appData.editCompaniesTab"
+                                           date-picker-set-date-ex readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>
+                            נתוני חיוב
+                        </h2>
+
+                        <div class="clearfix">
+                            <div>
+                                תשלום אחרון
+
+                            </div>
+                            <div>
+               <span ng-if="appData.dataCompanyDet.LAST_PAYMENT_DATE !== null">
+                   {{appData.dataCompanyDet.LAST_PAYMENT_DATE}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.LAST_PAYMENT_DATE == null">
+                    &nbsp;
+                </span>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                תאריך חיוב הבא
+                            </div>
+                            <div data-ng-class="{'editCompaniesTab': appData.editCompaniesTab}">
+                                <!--<span ng-if="appData.dataCompanyDet.NEXT_PAYMENT_DATE == null" class="notDatePic">-->
+                                <!--&nbsp;-->
+                                <!--</span>-->
+                                <input type="text"
+                                       name="NEXT_PAYMENT_DATE"
+                                       ng-model="appData.dataCompanyDet.NEXT_PAYMENT_DATE"
+                                       ng-disabled="appData.editCompaniesTab"
+                                       date-picker-set-date readonly="readonly">
+
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                סטטוס תשלום אחרון
+                            </div>
+                            <div>
+               <span ng-if="appData.dataCompanyDet.LAST_PAYMENT_STATUS !== null">
+                {{appData.dataCompanyDet.LAST_PAYMENT_STATUS}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.LAST_PAYMENT_STATUS == null">
+                    &nbsp;
+                </span>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                כרטיס משלם
+                            </div>
+                            <div>
+               <span ng-if="appData.dataCompanyDet.BILLING_ACCOUNT_NAME !== null">
+                {{appData.dataCompanyDet.BILLING_ACCOUNT_NAME}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.BILLING_ACCOUNT_NAME == null">
+                    &nbsp;
+                </span>
+                                <i ng-click="openEditCardPays()" class="openEditCardPays fa fa-pencil-square-o"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sideColman">
+                    <div>
+                        <h2>
+                            בעלי תפקידים
+                        </h2>
+
+                        <div class="clearfix">
+                            <div>
+                                רואה חשבון
+                            </div>
+                            <div style="overflow: initial;float: left;">
+                                <input type="text"
+                                       ng-required="false"
+                                       ng-model="appData.dataCompanyDet.valueRoh"
+                                       placeholder="בחירת רואה חשבון..."
+                                       uib-typeahead="item as item.fullName for item in appData.comapniesAccUsersAll | filter:{fullName:$viewValue}"
+                                       typeahead-template-url="customTemplate.html"
+                                       class="form-control inputTypeHead"
+                                       ng-disabled="appData.editCompaniesTab"
+                                       typeahead-show-hint="true"
+                                       typeahead-min-length="0">
+
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                מוכרן
+                            </div>
+                            <div>
+                                <div ng-if="appData.dataCompanyDet.MEVAZEA_MEHIRA == null">&nbsp;</div>
+                                <select ng-if="appData.dataCompanyDet.MEVAZEA_MEHIRA !== null"
+                                        ng-model="appData.dataCompanyDet.MEVAZEA_MEHIRA" ng-disabled="appData.editCompaniesTab"
+                                        ng-options="item.USER_ID as item.NAME for item in appData.user_get_bizibox_users"></select>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div>
+                                הסדר מעמ
+                            </div>
+                            <div>
+                                <div ng-if="appData.dataCompanyDet.ESDER_MAAM == null">&nbsp;</div>
+                                <select ng-if="appData.dataCompanyDet.ESDER_MAAM !== null"
+                                        ng-model="appData.dataCompanyDet.ESDER_MAAM" ng-disabled="appData.editCompaniesTab">
+                                    <option value="444">
+                                        דו חודשי
+                                    </option>
+                                    <option value="555">
+                                        חודשי
+                                    </option>
+                                    <option value="777">
+                                        עוסק פטור
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h2>
+                            נתוני תוכנה
+                        </h2>
+
+                        <div>
+                            <div>
+                                סוג תוכנה
+                            </div>
+                            <div>
+                                <select  name="software" id="source_program_id" ng-disabled="appData.editCompaniesTab" ng-options="item.PROGRAM_ID as item.PROGRAM_NAME for item in appData.get_source_programs" ng-model="appData.dataCompanyDet.SOURCE_PROGRAM_ID"></select>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                מזהה אקספורטר
+                            </div>
+                            <div>
+              <span ng-if="appData.dataCompanyDet.TN_LAST_EXPORTER_ID !== null">
+                {{appData.dataCompanyDet.TN_LAST_EXPORTER_ID}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.TN_LAST_EXPORTER_ID == null">
+                    &nbsp;
+                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                משיכה אחרונה של תוכנת ניהול
+                            </div>
+                            <div>
+              <span ng-if="appData.dataCompanyDet.TN_LAST_UPDATE_DATE !== null">
+                {{appData.dataCompanyDet.TN_LAST_UPDATE_DATE}}
+                </span>
+                                <span ng-if="appData.dataCompanyDet.TN_LAST_UPDATE_DATE == null">
+                    &nbsp;
+                </span>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                תאריך יצירת חברה
+                            </div>
+                            <div>
+                                {{appData.dataCompanyDet.DATE_CREATED}}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                מזהה חברה
+                            </div>
+                            <div>
+                                {{appData.dataCompanyDet.COMPANY_ID}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="buttonsCompaniesTab">
+                        <button type="submit" ng-if="appData.editCompaniesTab == false">
+                            שמירה
+                        </button>
+                        <button type="button" ng-if="appData.editCompaniesTab == false" ng-click="loadCompanyDet()">
+                            ביטול
+                        </button>
+                        <button type="button" ng-click="editCompaniesTabClick();" ng-if="appData.editCompaniesTab == true">
+                            עריכה
+                        </button>
+                        <button type="button" ng-click="deleteCompaniesTab()">
+                            מחיקה
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="addItemComSett">
+            <h2 ng-click="openItem()">
+                +
+                סכום לחיוב
+
+                <span ng-if="appData.dataCompanyDet.BILLING_AMOUNT !== null">
+                    {{getTotal(appData.dataCompanyDet.BILLING_AMOUNT)}}
+                    ₪
+                </span>
+            </h2>
+
+            <div class="tableSettItemColl" ng-show="appData.collections.length">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            פריט
+                        </th>
+                        <th>
+                            כמות
+                        </th>
+                        <th>
+                            הנחה לפריט
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="a in appData.collections" ng-init="a.editabled=false">
+                        <td>{{a.ITEM_DESC}}</td>
+                        <td><input type="text" ng-model="a.AMOUNT" ng-disabled="!a.editabled" number-only></td>
+                        <td><input type="text" ng-model="a.DISCOUNT" ng-disabled="!a.editabled" number-only></td>
+                        <td>
+                            <span ng-show="a.editabled==false" ng-click="a.editabled=true">ערוך</span>
+                            <span ng-show="a.editabled==true" ng-click="saveEditItem(a);a.editabled=false;">שמור</span>
+                            <span ng-show="a.editabled==true" ng-click="a.editabled=false; openItem()">בטל</span>
+                            <span ng-show="a.editabled==false"
+                                  ng-click="deleteEditItem(a);a.editabled=false;">מחק</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="appData.collections && appData.collections.length == 0">
+                לא נמצאו פריטים
+            </div>
+            <h2 ng-click="addItem()" ng-show="appData.collections">
+                +
+
+                הוסף פריט
+            </h2>
+        </div>
+    </div>
+</div>

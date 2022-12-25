@@ -1,0 +1,67 @@
+<div ng-controller="regularOpCtrl">
+    <div class="popup-header">
+        <h2>
+            <div ng-if="appData.bankLoadPeulotByskPopTable.ind_hova == false">
+                {{getNameKey('7b94ad34-2bc1-4f4a-b905-a9f582a06179')}}
+            </div>
+            <div ng-if="appData.bankLoadPeulotByskPopTable.ind_hova == true">
+                {{getNameKey('f605bc82-2921-4548-b09b-937c7baa1c2a')}}
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <h2 ng-if="appData.bankLoadPeulotByskPopTable.dataTable.length == 0">
+            לא נמצאו נתונים
+        </h2>
+        <div class="table_data">
+            <div class="head_table" ng-if="appData.bankLoadPeulotByskPopTable.dataTable.length > 0">
+                <div></div>
+                <input type="search" class="searchTable" placeholder="חיפוש..."
+                       ng-model="appData.bankLoadPeulotByskPopTable.searchText">
+                <button class="deleteall" ng-click="deleteAllRowFromTablePop(appData.bankLoadPeulotByskPopTable)">
+                    <span>הסר מקבוצה זו</span>
+                </button>
+            </div>
+            <div class="table" ng-if="appData.bankLoadPeulotByskPopTable.dataTable.length > 0">
+                <table>
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" class="checkall"
+                                   data-ng-model="appData.bankLoadPeulotByskPopTable.checks"></th>
+                        <th><span
+                                ng-click="appData.bankLoadPeulotByskPopTable.predicate = 'trans_date'; appData.bankLoadPeulotByskPopTable.reverse=!appData.bankLoadPeulotByskPopTable.reverse">תאריך</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.bankLoadPeulotByskPopTable.predicate = 'total'; appData.bankLoadPeulotByskPopTable.reverse=!appData.bankLoadPeulotByskPopTable.reverse">סכום</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.bankLoadPeulotByskPopTable.predicate = 'trans_desc'; appData.bankLoadPeulotByskPopTable.reverse=!appData.bankLoadPeulotByskPopTable.reverse">סוג</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.bankLoadPeulotByskPopTable.predicate = 'frequency'; appData.bankLoadPeulotByskPopTable.reverse=!appData.bankLoadPeulotByskPopTable.reverse">תדירות</span>
+                        </th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="b in appData.bankLoadPeulotByskPopTable.dataTable | filter:appData.bankLoadPeulotByskPopTable.searchText | orderBy:appData.bankLoadPeulotByskPopTable.predicate:appData.bankLoadPeulotByskPopTable.reverse"
+                        ng-class="{'bgGray': b.checks || appData.bankLoadPeulotByskPopTable.checks}">
+                        <td><input type="checkbox" class="checkbox"
+                                   ng-checked="appData.bankLoadPeulotByskPopTable.checks"
+                                   ng-model="b.checks"></td>
+                        <td>{{b.trans_date}}</td>
+                        <td class="total_average">{{b.total}}</td>
+                        <td>{{b.trans_desc}}</td>
+                        <td>{{accoConversions.getFrequency(appData.bankLoadPeulotByskPopTable.frequency)}}</td>
+                        <td><a href="javascript:void(0);" class="delete_single"
+                               ng-click="deleteRowFromTablePop(appData.bankLoadPeulotByskPopTable.dataTable, appData.bankLoadPeulotByskPopTable.dataTable.length, appData.bankLoadPeulotByskPopTable.searchkey_id, b.bank_trans_id)">הסרה
+                            מהרשימה
+                        </a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

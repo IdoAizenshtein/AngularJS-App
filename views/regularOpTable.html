@@ -1,0 +1,127 @@
+<div class="tableAccBankReportsManagement tableRegularOp">
+    <table ng-show="appData.peulotKvuot.length > 0 || appData.transkvuotHtmlGetlist.length">
+        <thead>
+        <tr>
+            <th ng-click="sort_by('trans_name', 'searchkey')" class="pointers">
+                שם הפעולה
+            <i ng-if="predicate == 'trans_name'" ng-class="{'fa fa-angle-down':reverse, 'fa fa-angle-up':!reverse }"></i>
+            </th>
+            <th ng-click="sort_by('ind_expense', 'ind_hova')" class="pointers">
+                סוג פעולה
+                <i ng-if="predicate == 'ind_expense'" ng-class="{'fa fa-angle-down':reverse, 'fa fa-angle-up':!reverse }"></i>
+            </th>
+            <th ng-click="sort_by('next_total', 'avg_total')" class="pointers">
+                סכום
+                <i ng-if="predicate == 'next_total'" ng-class="{'fa fa-angle-down':reverse, 'fa fa-angle-up':!reverse }"></i>
+            </th>
+            <th ng-click="sort_by('payment_type_id', '')" class="pointers">
+                אמצעי תשלום
+                <i ng-if="predicate == 'payment_type_id'" ng-class="{'fa fa-angle-down':reverse, 'fa fa-angle-up':!reverse }"></i>
+            </th>
+            <th ng-click="sort_by('trans_frequency_id', 'frequency')" class="pointers">
+                תדירות
+                <i ng-if="predicate == 'trans_frequency_id'" ng-class="{'fa fa-angle-down':reverse, 'fa fa-angle-up':!reverse }"></i>
+            </th>
+            <th>
+                סוג עדכון
+            </th>
+            <th>
+                פעולות
+            </th>
+        </tr>
+        </thead>
+        <tbody scroll-fill="{{$parent.scrollHeightTable}}">
+        <tr ng-repeat="a in appData.peulotKvuot | filter:appData.searchTablePeulot | orderBy : predicate1 :reverse"
+            ng-class="{'active': a.dataTable}">
+            <td>
+                <input type="text"
+                       ng-model="a.searchkey"
+                       class="searchkey"
+                       ng-disabled="!a.searchkeyEdit"
+                       size="{{a.searchkey.length}}"
+                       ng-class="{'red': a.searchkey.length == 0}">
+                <i class="fa fa-pencil" ng-if="!a.searchkeyEdit" ng-click="a.searchkeyEdit=true;"></i>
+                <i class="fa fa-floppy-o" ng-if="a.searchkeyEdit && a.searchkey.length"
+                   ng-click="a.searchkeyEdit=false;"></i>
+            </td>
+            <td>
+                <div ng-if="a.ind_hova == false">
+                    הכנסה
+                </div>
+                <div ng-if="a.ind_hova == true">
+                    הוצאה
+                </div>
+            </td>
+            <td>
+                <div class="avg_total" ng-class="{'red': a.ind_hova == true}">
+                    <div ng-show="!a.showInput">
+                        {{getTotalComma(a.avg_total)}}
+                    </div>
+                    <input type="text" number-only ng-model="a.avg_total" ng-show="a.showInput" class="focusTotal">
+                </div>
+                <i class="fa fa-pencil" ng-if="!a.showInput" ng-click="a.showInput=true;"></i>
+                <i class="fa fa-floppy-o" ng-if="a.showInput && a.avg_total.length" ng-click="a.showInput=false;"></i>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                {{accoConversions.getFrequency(a.frequency)}}
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <i class="fa fa-align-justify" ng-click="bankLoadPeulotByskPop(a)">פ.אחרונות</i>
+                <button data-ng-click="setAppr(a)" ng-disabled="!a.avg_total || !a.searchkey">אשר פעולה</button>
+                <i ng-click="bankLoadDismissbysk(a.searchkey_id, $index)" style="float: none"
+                   class="fa fa-times">מחיקה</i>
+            </td>
+        </tr>
+        <tr ng-repeat="a in appData.transkvuotHtmlGetlist | filter:appData.searchTablePeulot | orderBy : predicate :reverse"
+            ng-class="{'active': a.dataTable}">
+            <td>
+                <p>{{a.trans_name}}</p>
+            </td>
+            <td>
+                <div ng-if="a.ind_expense == 0">
+                    הכנסה
+                </div>
+                <div ng-if="a.ind_expense == 1">
+                    הוצאה
+                </div>
+            </td>
+            <td>
+                <div class="avg_total" ng-class="{'red': a.ind_expense == 1}">
+                    <div>
+                        {{getTotalComma(a.next_total)}}
+                    </div>
+                </div>
+            </td>
+            <td>
+                {{accoConversions.getTypePayment(a.payment_type_id)}}
+            </td>
+            <td>
+                {{accoConversions.getFrequency(a.trans_frequency_id)}}
+            </td>
+            <td>
+                <strong class="frequency">
+                       <span ng-if="a.auto_update_type == 1">
+                                                    ממוצע
+                        </span>
+                    {{accoConversions.getFrequencyAndUpdate(a.trans_frequency_id, a.auto_update_type)}}
+                </strong>
+            </td>
+            <td>
+                <i class="fa fa-align-justify" ng-click="transkvuaGetpeulotPop(a)">פ.אחרונות</i>
+                <i class="fa fa-pencil" ng-click="loadEditPeula(a)" style="float: none">עריכה</i>
+                <i ng-click="bankLoadDismissbysk2(a.trans_id, $index)" style="float: none"
+                   ng-if="a.target_type_id == 11" class="fa fa-times">מחיקה</i>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="titleNotFilter" ng-show="appData.peulotKvuot.length == 0 && appData.transkvuotHtmlGetlist.length == 0">
+        לא נמצאה התאמה
+    </div>
+</div>

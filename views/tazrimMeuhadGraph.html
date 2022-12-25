@@ -1,0 +1,8 @@
+<div ng-show="!loaderTazrimMeuhad" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div chart-draw-scroll chart-data-src="chartDataSrc" scroll-fill="200" style="margin: 25px 32px 0px 23px;"></div>
+<div class="notDataInCompany" style="display: none"
+     ng-show="appData.tazrimMeuhad.length == 0 || appData.selectedCompany.accounts.bank_account_list == null">
+    אין נתונים בחברה שנבחרה
+</div>

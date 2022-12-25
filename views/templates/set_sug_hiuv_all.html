@@ -1,0 +1,44 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            החלף סוג חיוב גורף לכל המשרד
+        </h2>
+    </div>
+    <div class="popup-content">
+        <button ng-click="appData.set_sug_hiuv_de.SUG_HIUV=1; appData.set_sug_hiuv_de.click = true;"
+                class="set_sug_hiuv_ws">
+            לפי חברה
+        </button>
+        <button ng-click="appData.set_sug_hiuv_de.SUG_HIUV=2; appData.set_sug_hiuv_de.click = true;"
+                class="set_sug_hiuv_ws">
+            לפי שורה
+        </button>
+    </div>
+    <form class="showPopPasswordForm add-content" ng-if="appData.set_sug_hiuv_de.click" name="showPopPasswordForm"
+          novalidate ng-submit="set_sug_hiuv_ws()">
+        <p>
+            אנא הקלד סיסמה:
+        </p>
+
+        <div class="inputsPass"
+             ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+            <input style="display:none" type="password" autocomplete="off">
+            <input pass-tab-companies
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   autocomplete="off" type="password" ng-model="popPasswordCompaiesTab" name="pass" required="">
+        </div>
+        <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+            <div ng-show="showPopPasswordForm.pass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="showPopPasswordForm.pass.$error.valid">
+                הסיסמה אינה נכונה
+            </div>
+        </div>
+        <button type="submit" ng-disabled="!showPopPasswordForm.$valid">
+            אישור
+        </button>
+    </form>
+</div>
+

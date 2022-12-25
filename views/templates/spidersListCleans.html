@@ -1,0 +1,41 @@
+<div ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+ניקוי חשבונות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listAllClearLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="formAccUsers">
+            <div class="headerFormUserAcc">
+                <div>
+שם מחשב
+                </div>
+                <div>
+מזהה ספיידר
+                </div>
+                <div>
+&nbsp;
+                </div>
+            </div>
+            <ul vs-repeat="30">
+                <li ng-repeat="a in appData.spidersLists">
+                    <div>
+                        {{a.SPIDER_NAME}}
+                        &nbsp;
+                    </div>
+                    <div>
+                        {{a.SPIDER_ID}}
+                        &nbsp;
+                    </div>
+                    <div>
+                      <i class="fa fa-trash" ng-click="cleanSpidersService(a.SPIDER_ID)"></i>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+

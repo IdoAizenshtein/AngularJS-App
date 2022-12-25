@@ -1,0 +1,79 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+איחוד חשבונות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.accConsolidationLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+
+        <div class="searchUserAcc wrapDivAndInput">
+            <input type="text" data-ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+            <div>
+                בחר בחשבון הממשיך
+            </div>
+        </div>
+        <form novalidate ng-submit="setAccConsolidation(true)" name="formAccUsers">
+            <div class="formAccUsers accConsolidation">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+                        שם חשבון
+                    </div>
+                    <div>
+בנק
+                    </div>
+                    <div>
+סניף
+                    </div>
+                    <div>
+חשבון
+                    </div>
+                    <div>
+                        עדכון אחרון
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.accConsolidation | filter:filterAccUser">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setAccListConsolidation"
+                                   name="uuidAcc"
+                                   value="{{a.company_account_id}}" required/>
+                        </div>
+                        <div>
+                            {{a.kinuy}}
+                        </div>
+                        <div>
+                            {{accoConversions.getBankName(a.bank_id)}}
+                        </div>
+                        <div>
+                            {{a.bank_snif_id}}
+                        </div>
+                        <div>
+                            {{a.bank_account_id}}
+                        </div>
+                        <div>
+                            {{a.lastUpdateDate}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsers.$invalid || !appData.accConsolidation.length">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

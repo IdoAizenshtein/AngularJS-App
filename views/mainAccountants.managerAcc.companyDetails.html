@@ -1,0 +1,340 @@
+<div class="leftSideAccManager">
+    <button class="openRowEditableBtn" ng-click="popupOpenServiceCall()" title="פתיחת קריאת שירות">+</button>
+    <div class="general-alerts scrollDesign" scroll-fill="115">
+        <ul>
+            <li ng-repeat="m in appData.get_accountant_timeline" class="alertsIc link {{m.TASK_COLOR}}"
+                ng-click="goToTaskManager(m.TASK_ID)">
+                <div class="trans_date">
+                    {{accoConversions.getDayMonth(m.DATE_CREATED)}}
+                </div>
+                <div>
+                    <div class="account_nickname">
+                        {{m.COMPANY_NAME}}
+                    </div>
+                </div>
+                <div>
+                    <strong ng-if="m.TASK_DESC !== null">
+                        {{m.TASK_DESC}},
+                    </strong>
+                    {{m.TASK_TITLE}}
+                </div>
+                <div class="borderBottomMess">
+                    <div>
+                        <strong ng-if="m.STATUS_DESC !== null">
+                            {{m.STATUS_DESC}},
+                        </strong>
+
+                        {{getTypeBug(m.STATE_TYPE)}}
+                    </div>
+                </div>
+            </li>
+            <li ng-repeat="b in appData.selectedCompany.messages" class="messFilterAccDate"
+                ng-show="$state.current.name == 'general.funds'">
+                <div class="trans_date">
+                    {{accoConversions.getDayMonth(b.dataTitle)}}
+                </div>
+                <div ng-repeat="c in b" class="wrapMessBank">
+                    <div class="account_nickname">{{c.dataTitle}}</div>
+                    <div ng-repeat="d in c" class="wrapMessOne">
+                        <div class="trans_name">{{d.trans_name}}</div>
+                        <div ng-class="{'red': d.ind_hova == 1}" class="total">
+                            ₪ {{getTotalRound(d.total)}}
+                        </div>
+                        <div ng-if="d.ind_conditional == 1" class="ind_conditional">| על תנאי |</div>
+                        <div ng-if="checkPictureLink(d.picture_link)" class="checksLink fa fa-picture-o"
+                             ng-style="{'color': d.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}"
+                             ng-click="openCheckImg(d.picture_link, d.company_account_id, d.trans_id)">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="alertNotData" ng-show="appData.selectedCompany.messages.length == 0">
+                <h3>אין התראות</h3>
+            </li>
+        </ul>
+        <i ng-if="loaderLastPeulot" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </i>
+    </div>
+</div>
+<div class="mainCenterManager scrollDesign" scroll-fill="115">
+    <div class="bodyManagerSides">
+        <div>
+            <div class="headRightMana">
+                <div class="nameH1">
+                    {{appData.get_accountant_det.ACC_NAME}}
+                </div>
+                <h3>
+                    {{appData.get_accountant_det.MAIL}}
+                </h3>
+            </div>
+            <h2>
+                פרטי קשר
+            </h2>
+            <div class="tablePhones" ng-init="openRowEditable = false;">
+                <table class="fixed_header">
+                    <thead>
+                    <tr>
+                        <th>
+                            טלפון
+                        </th>
+                        <th>
+                            הערות
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="scrollDesign">
+                    <tr ng-repeat="a in appData.get_accountant_phones" ng-if="a.PHONE_TYPE_ID == 4">
+                        <td>
+                            <input style="display:none" type="email" autocomplete="off">
+                            <input type="email" autocomplete="off"
+                                   ng-model="a.PHONE_NUMBER"
+                                   name="uEmail"
+                                   readonly
+                                   ng-enter="saveRows(a)" ng-blur="saveRows(a)"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                        </td>
+                        <td>
+                            <textarea ng-model="a.PHONE_DESC" style="height: auto;resize: none;" ng-enter="saveRows(a)" ng-blur="saveRows(a)"></textarea>
+                        </td>
+                    </tr>
+                    <!--<tr ng-repeat="a in appData.get_accountant_phones" ng-if="a.PHONE_TYPE_ID == 1">-->
+                        <!--<td>-->
+                            <!--משרד-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                   <!--ng-model="a.PHONE_NUMBER" number-only-asmachta ng-enter="saveRows(a)"-->
+                                   <!--ng-blur="saveRows(a)"-->
+                                   <!--placeholder="NUMBER"/>-->
+                            <!-- - -->
+                            <!--<input type="text" maxlength="3"-->
+                                   <!--ng-model="a.PHONE_PREFIX" number-only-asmachta ng-enter="saveRows(a)"-->
+                                   <!--ng-blur="saveRows(a)"-->
+                                   <!--placeholder="PREFIX"/>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<textarea ng-model="a.PHONE_DESC" style="height: auto;resize: none;" ng-enter="saveRows(a)" ng-blur="saveRows(a)"></textarea>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <tr ng-repeat="a in appData.get_accountant_phones" ng-if="a.PHONE_TYPE_ID == 2">
+                        <td>
+                            <input type="text"
+                                   ng-model="a.PHONE_NUMBER" number-only-asmachta ng-enter="saveRows(a)"
+                                   ng-blur="saveRows(a)"
+                                   placeholder="XXXXXXX"/>
+                            -
+                            <input type="text" maxlength="3"
+                                   ng-model="a.PHONE_PREFIX" number-only-asmachta ng-enter="saveRows(a)"
+                                   ng-blur="saveRows(a)"
+                                   placeholder="XXX"/>
+                        </td>
+                        <td>
+                            <textarea elastic ng-model="a.PHONE_DESC" style="height: auto;resize: none;" ng-enter="saveRows(a)" ng-blur="saveRows(a)"></textarea>
+                        </td>
+                    </tr>
+                    <!--<tr ng-repeat="a in appData.get_accountant_phones" ng-if="a.PHONE_TYPE_ID == 3">-->
+                        <!--<td>-->
+                            <!--פקס-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                   <!--ng-model="a.PHONE_NUMBER" number-only-asmachta ng-enter="saveRows(a)"-->
+                                   <!--ng-blur="saveRows(a)"-->
+                                   <!--placeholder="NUMBER"/>-->
+                            <!-- - -->
+                            <!--<input type="text" maxlength="3"-->
+                                   <!--ng-model="a.PHONE_PREFIX" number-only-asmachta ng-enter="saveRows(a)"-->
+                                   <!--ng-blur="saveRows(a)"-->
+                                   <!--placeholder="PREFIX"/>-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<textarea ng-model="a.PHONE_DESC" style="height: auto;resize: none;" ng-enter="saveRows(a)" ng-blur="saveRows(a)"></textarea>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <tr ng-show="openRowEditable">
+                        <td ng-if="addRowObj.typeInput == 4">
+                            <input style="display:none" type="email" autocomplete="off">
+                            <input type="email" autocomplete="off"
+                                   ng-model="addRowObj.PHONE_NUMBER"
+                                   name="uEmail"
+                                   placeholder="MAIL"
+                                   readonly
+                                   ng-enter="saveRowsNew()"
+                                   ng-blur="saveRowsNew()"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                        </td>
+                        <td ng-if="addRowObj.typeInput == 1 || addRowObj.typeInput == 2 || addRowObj.typeInput == 3">
+                            <input type="text"
+                                   ng-enter="saveRowsNew()" ng-blur="saveRowsNew()"
+                                   ng-model="addRowObj.PHONE_NUMBER" number-only-asmachta
+                                   placeholder="XXXXXXX"/>
+                            -
+                            <input type="text" maxlength="3"
+                                   ng-enter="saveRowsNew()" ng-blur="saveRowsNew()"
+                                   ng-model="addRowObj.PHONE_PREFIX" number-only-asmachta
+                                   placeholder="XXX"/>
+                        </td>
+                        <td>
+                         <textarea elastic ng-model="addRowObj.PHONE_DESC"
+                                   style="min-height: 46px;resize: none;" ng-enter="saveRowsNew()"
+                                   ng-blur="saveRowsNew()"></textarea>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>
+                            <buttonn ng-click="addRowObj.typeInput=2;openRowEditable = true;"
+                                     class="openRowEditableBtn" ng-show="openRowEditable == false">
+                                +
+                            </buttonn>
+                            <buttonn ng-click="addRowObj.typeInput=2;openRowEditable = false;"
+                                     ng-show="openRowEditable == true"
+                                     class="openRowEditableBtn">
+                                -
+                            </buttonn>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
+            <div style="flex: 1; max-height: 38vh;">
+                <div class="tableExporters" style="padding-left: 0;">
+                    <h2>
+                        אקספורטרים
+                    </h2>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                        <th>
+                            &nbsp;
+                        </th>
+                        <th>
+                            שם מחשב
+                        </th>
+                        <th>
+                            גרסה
+                        </th>
+                        <th>
+                            שידור אחרון
+                        </th>
+                        <th>
+                            הערות
+                        </th>
+                        </thead>
+                        <tbody style="overflow: auto;
+    flex: 1;
+    max-height: 30vh;">
+                        <tr ng-repeat="a in appData.get_exporters_details">
+                            <td>
+                                <div style="
+    width: 11px;
+    height: 11px;
+    background: {{a.COMPUTER_STATUS}};
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 0px #333;
+    z-index: 9999;"></div>
+                            </td>
+                            <td><span ng-if="a.EXP_COMPUTER_NAME !== null">{{a.EXP_COMPUTER_NAME}}</span><span
+                                    ng-if="a.EXP_COMPUTER_NAME == null">&nbsp;</span></td>
+                            <td><span ng-if="a.VER_NUM !== null">{{a.VER_NUM}}</span><span
+                                    ng-if="a.VER_NUM == null">&nbsp;</span></td>
+                            <td><span
+                                    ng-if="a.COMPUTER_LAST_REPORT_DATE !== null">{{a.COMPUTER_LAST_REPORT_DATE}}</span><span
+                                    ng-if="a.COMPUTER_LAST_REPORT_DATE == null">&nbsp;</span></td>
+                            <td>
+                                <input type="text"
+                                       ng-model="a.EXP_COMMENT"
+                                       ng-enter="saveRowsExporter(a)"
+                                       ng-blur="saveRowsExporter(a)"
+                                />
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="details_company">
+            <div class="details_company_asimon headRightMana">
+                <div class="leftSideInside">
+                    <strong>
+                        אסימון
+                    </strong>
+                    <p>
+                        {{appData.get_accountant_det.EXPORT_TOKEN_ID}}
+                    </p>
+                    <button class="button" ng-click="setAsimon()"
+                            ng-if="appData.get_accountant_det.EXPORT_TOKEN_ID == null">
+                        צור אסימון
+                    </button>
+                </div>
+                <div style="float: right" ng-if="appData.adminSoft">
+                    <button class="button" ng-click="add_office_privs_password()" style="
+    margin: 0;
+">
+                      חיבור משרד ל-OCR
+                    </button>
+                </div>
+            </div>
+            <h2>
+                חברות
+            </h2>
+            <div class="mainSideManager">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <th>
+                        שם חברה
+                    </th>
+                    <th>
+                        כניסה אחרונה
+                    </th>
+                    <th>
+                        שלב
+                    </th>
+                    <th>
+                        סוג מוצר
+                    </th>
+                    <th>
+                        הערות
+                    </th>
+                    </thead>
+                    <tbody style="overflow: auto; max-height: 64vh;">
+                    <tr ng-repeat="a in appData.get_user_companies_det">
+                        <td><span>{{a.COMPANY_NAME}}</span></td>
+                        <td><span ng-if="a.LAST_LOGIN !== null">{{a.LAST_LOGIN}}</span><span
+                                ng-if="a.LAST_LOGIN == null">&nbsp;</span></td>
+                        <td><span ng-if="a.STEP !== null">{{a.STEP}}</span><span ng-if="a.STEP == null">&nbsp;</span>
+                        </td>
+                        <td><span ng-if="a.STEP !== null">{{a.BIZIBOX_TYPE}}</span><span ng-if="a.STEP == null">&nbsp;</span>
+                        </td>
+                        <td>
+                            <span style="width: 80%;" ng-if="a.DESCRIPTION !== null">{{a.DESCRIPTION}}</span><span style="width: 80%;"
+                                ng-if="a.DESCRIPTION == null">&nbsp;</span>
+
+                            <span style="width: 20%;left: 0;right: inherit;">
+                                                            <img ng-click="goToNewLink(a)"
+                                                                    src="image/goToNewWebAppLogo.png" style="    height: 20px;
+                                                            cursor: pointer;
+    margin-top: -10px;">
+                            </span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!--<div chart-draw chart-data="chartData" style="margin: 20px 0px 20px 20px;height: 250px; "></div>-->
+</div>

@@ -1,0 +1,45 @@
+<div ng-init="init()">
+
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}" scroll-fill="55">
+
+        <h2 class="page-header">
+הכנסות מחזוריות
+        </h2>
+
+        <div class="select-account">
+            <h2 class="page-header">
+                פעולות לחשבון
+            </h2>
+            <select data-ng-options="a.company_account_nickname for a in appData.selectedCompany.accounts.bank_account_list" data-ng-model="selectedCompanyAccount" ng-change="companyAccountChanged()"></select>
+        </div>
+
+
+        <div class="period-income">
+            <div ng-repeat="a in selectedCompanyAccount.fixedActions">
+
+            </div>
+            <div ng-repeat="a in selectedCompanyAccount.fixedActionsHTML" class="periodical-actionHTML" data-ng-show="a.ind_expense == 0">
+                <div cube-html action="a" on-show-table="showActionHtmlTable(element, action)"></div>
+            </div>
+        </div>
+
+        <h2 class="page-header">
+הוצאות מחזוריות
+        </h2>
+
+        <div class="period-expenses">
+            <div ng-repeat="a in selectedCompanyAccount.fixedActions">
+
+            </div>
+            <div ng-repeat="a in selectedCompanyAccount.fixedActionsHTML" class="periodical-actionHTML" data-ng-show="a.ind_expense == 1">
+                <div cube-html action="a"></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

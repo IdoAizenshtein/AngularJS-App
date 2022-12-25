@@ -1,0 +1,177 @@
+<div data-ng-init="init()">
+    <div class="bgHelpAcc" ng-if="Showhelp">&nbsp;
+
+    </div>
+    <i ng-if="Showhelp" class="closeBack closeHelpAcc companyCloseHelp fa fa-times" ng-click="$parent.Showhelp = false;">
+    <span>
+        סגור עזרה
+    </span>
+    </i>
+
+    <div class="funds-header">
+        <h2 class="page-header" style="display: inline-block;">
+            ניהול צוות
+        </h2>
+
+        <div class="funds-action-bar clearfix">
+            <input type="text" data-ng-model="search" placeholder="חיפוש חברה, שם, טלפון, מייל"
+                   ng-model-options="{ debounce: {'default': 500 }}">
+        </div>
+    </div>
+    <div>
+        <div ng-if="loaderAccTeam" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+
+        <div class="helpplusTeam" ng-if="Showhelp">
+            <i class="fi-arrow-left"></i>
+            חיפוש חברה על ידי כל אמצעי זיהוי
+        </div>
+        <ul class="teamList scrollDesign" vs-repeat="80" scroll-fill="235">
+            <li class="row_contacts_user" ng-repeat="a in appData.teamCompany | filter:search">
+                <div class="data_pro_name"><span>{{a.user_tmp_password}}</span><strong>
+                    {{a.workplace_company_name}}
+                </strong>
+
+                    <p>{{accoConversions.getTypeJobTitle(a.job_title)}}</p>
+                </div>
+                <div class="phone_user">
+                    <label for="phone_user_val">טלפון</label>
+                    <input type="text" disabled="" class="phone_user_val" data-ng-model="a.ipaddress">
+                </div>
+                <div class="email_user">
+                    <label for="email_user_val">דוא"ל</label>
+                    <a class="email_user_val" href="mailto:{{a.mail}}">{{a.mail}}</a>
+                </div>
+
+                <i title="עדכון הרשאות" class="openSettingsTeam" ng-click="openSettingsTeam(a.user_id, a.workplace_company_name)">
+                </i>
+            </li>
+        </ul>
+        <ul class="addTeams">
+            <li class="row_contacts_user_form" ng-if="addPersonToTeamForm">
+                <form  name="addPersonTeam" ng-submit="addPersonToTeam(addPersonTeam)">
+                    <div class="data_pro_name">
+                        <span>+</span>
+                        <strong>
+                            <div class="inputForm"
+                                 data-ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uName.$touched) && addPersonTeam.uName.$invalid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uName.$touched) && addPersonTeam.uName.$valid }">
+                                <input type="text" ng-model="addPersonDetails.fullName" name="uName"
+                                       placeholder="שם מלא" required=""
+                                       ng-pattern="/\s/"/>
+                            </div>
+                            <div ng-show="addPersonTeam.$submitted || addPersonTeam.uName.$touched"
+                                 class="alertsMessages">
+                                <div ng-show="addPersonTeam.uName.$error.required">
+                                    מידע זה הינו מידע חובה
+                                </div>
+                                <div ng-show="addPersonTeam.uName.$error.pattern">
+                                    יש לרשום שם פרטי ושם משפחה
+                                </div>
+                            </div>
+                        </strong>
+
+                        <div class="selectRoh">
+                            <select name="titleJob" ng-options="item.val as item.name for item in titleJobs"
+                                    ng-model="addPersonDetails.titleJob">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="phone_user">
+                        <label>טלפון</label>
+
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uTel.$touched) && !addPersonTeam.uTel.$valid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uTel.$touched) && addPersonTeam.uTel.$valid }">
+                            <input ng-model-options="{ updateOn: 'blur'}" type="tel"
+                                   ng-model="addPersonDetails.phoneNum" name="uTel"
+                                   required="" ng-minlength="9" ng-maxlength="10"
+                                   ensure-unique/>
+                        </div>
+                        <div ng-show="addPersonTeam.$submitted || addPersonTeam.uTel.$touched || addPersonTeam.uTel.$invalid"
+                             class="alertsMessages">
+                            <div ng-show="addPersonTeam.uTel.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="addPersonTeam.uTel.$error.minlength || addPersonTeam.uTel.$error.maxlength || addPersonTeam.uTel.$error.integer">
+                                המספר שהזנת אינו חוקי
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="email_user">
+                        <label>דוא"ל</label>
+
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (addPersonTeam.$submitted || addPersonTeam.uEmail.$touched) && addPersonTeam.uEmail.$invalid, 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uEmail.$touched) && addPersonTeam.uEmail.$valid }">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   type="email"
+                                   ng-model="addPersonDetails.mail"
+                                   name="uEmail"
+                                   required=""
+                                   class="mailLtr"
+                                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"
+                                   user-checks-acc/>
+                        </div>
+                        <div ng-show="addPersonTeam.$submitted || addPersonTeam.uEmail.$touched" class="alertsMessages">
+                            <div ng-show="addPersonTeam.uEmail.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="addPersonTeam.uEmail.$error.pattern">
+                                כתובת המייל שהזנת אינה תקינה
+                            </div>
+                            <div ng-show="addPersonTeam.uEmail.$error.unique && !addPersonTeam.uEmail.$error.required">
+                                מייל זה קיים במערכת
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tz_user" ng-if="appData.adminSoft">
+                        <label>ח.פ/ת.ז</label>
+
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': ((addPersonTeam.$submitted || addPersonTeam.uHp.$touched) && addPersonTeam.uHp.$invalid), 'sucInput': (addPersonTeam.$submitted || addPersonTeam.uHp.$touched) && addPersonTeam.uHp.$valid }">
+                            <input id="uHp__" name="uHp__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-model="addPersonDetails.ipaddress"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   autocomplete="off" name="uHp"
+                                   required="" legal-tz/>
+                        </div>
+                        <div ng-show="(addPersonTeam.$submitted || addPersonTeam.uHp.$touched) && addPersonTeam.uHp.$invalid"
+                             class="alertsMessages">
+                            <div ng-show="addPersonTeam.uHp.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="addPersonTeam.uHp.$error.integer">
+                                מספר לא חוקי
+                            </div>
+                            <span ng-show="addPersonTeam.uHp.$error.unique">
+ח.פ. זה קיים במערכת
+      </span>
+                        </div>
+                    </div>
+
+                    <div class="button_user">
+                        <i data-ng-click="closeAddPerson(addPersonTeam)" title="מחיקת הוספה"></i>
+                        <button type="submit" ng-disabled="!addPersonTeam.$valid">
+                            הוסף
+                        </button>
+                    </div>
+                </form>
+            </li>
+            <div class="helpplusaddTeam" ng-if="Showhelp">
+                <i class="fi-arrow-down"></i>
+                להוספת חבר צוות נוסף
+            </div>
+            <li class="addTeamPersons" ng-if="!addPersonToTeamForm">
+                <span ng-click="addPerson()">
+                    הוספת חבר צוות +
+                </span>
+            </li>
+        </ul>
+
+    </div>
+</div>

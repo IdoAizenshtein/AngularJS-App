@@ -1,0 +1,217 @@
+<div ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הוספת תשלום בשיק
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="detailsPaymentFormPopCheck" class="css-form" novalidate
+              ng-submit="billing_account_set_cheque(appData.billingAccountCheckNow, detailsPaymentFormPopCheck)"
+              autocomplete="off">
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberCheck.$touched) && detailsPaymentFormPopCheck.uNumberCheck.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberCheck.$touched) && detailsPaymentFormPopCheck.uNumberCheck.$valid }">
+                    <label>
+                        מספר שיק
+                    </label>
+                    <input id=uNumberCheck__" name="uNumberCheck__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');"
+                           class="ltrSide"
+                           type="text"
+                           ng-model="appData.billingAccountCheckNow.cheque_ChequeNumber"
+                           autocomplete="off"
+                           name="uNumberCheck"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberCheck.$touched) && detailsPaymentFormPopCheck.uNumberCheck.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uNumberCheck.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBank.$touched) && detailsPaymentFormPopCheck.uNumberBank.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBank.$touched) && detailsPaymentFormPopCheck.uNumberBank.$valid }">
+                    <label>
+                        מספר בנק
+                    </label>
+                    <input id="uNumberBank__" name="uNumberBank__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                           type="tel" ng-model="appData.billingAccountCheckNow.Cheque_BankNumber"
+                           autocomplete="off" name="uNumberBank"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBank.$touched) && detailsPaymentFormPopCheck.uNumberBank.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uNumberBank.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBranch.$touched) && detailsPaymentFormPopCheck.uNumberBranch.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBranch.$touched) && detailsPaymentFormPopCheck.uNumberBranch.$valid }">
+                    <label>
+                        מספר סניף
+                    </label>
+                    <input id="uNumberBranch__" name="uNumberBranch__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                           type="text" ng-model="appData.billingAccountCheckNow.Cheque_SnifNumber"
+                           autocomplete="off" name="uNumberBranch"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberBranch.$touched) && detailsPaymentFormPopCheck.uNumberBranch.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uNumberBranch.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberAcc.$touched) && detailsPaymentFormPopCheck.uNumberAcc.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberAcc.$touched) && detailsPaymentFormPopCheck.uNumberAcc.$valid }">
+                    <label>
+                        מספר חשבון
+                    </label>
+                    <input id="uNumberAcc__" name="uNumberAcc__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           number-only
+                           onfocus="this.removeAttribute('readonly');"
+                           class="ltrSide"
+                           type="text"
+                           ng-model="appData.billingAccountCheckNow.Cheque_AccountNumber"
+                           autocomplete="off"
+                           name="uNumberAcc"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uNumberAcc.$touched) && detailsPaymentFormPopCheck.uNumberAcc.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uNumberAcc.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDatePayment.$touched) && detailsPaymentFormPopCheck.uDatePayment.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDatePayment.$touched) && detailsPaymentFormPopCheck.uDatePayment.$valid }">
+                    <label>
+                        תאריך פרעון
+                    </label>
+                    <input id="uDatePayment__" name="uDatePayment__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           date-picker-set-date-pop
+                           onfocus="this.removeAttribute('readonly');"
+                           type="text"
+                           class="dpInput"
+                           ng-model="appData.billingAccountCheckNow.Cheque_DateCheque"
+                           autocomplete="off"
+                           name="uDatePayment"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDatePayment.$touched) && detailsPaymentFormPopCheck.uDatePayment.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uDatePayment.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uSumCheck.$touched) && detailsPaymentFormPopCheck.uSumCheck.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uSumCheck.$touched) && detailsPaymentFormPopCheck.uSumCheck.$valid }">
+                    <label>
+                        סכום השיק
+                    </label>
+                    <input id="uSumCheck__" name="uSumCheck__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input ng-disabled="!editSum"
+                           number-only
+                           type="text"
+                           ng-model="appData.billingAccountCheckNow.Cheque_Sum"
+                           autocomplete="off"
+                           name="uSumCheck"
+                           required=""/>
+                    <div class="toggleEditCheckSum">
+                        <div>
+                            <p>
+עריכה:
+                            </p>
+                            <label class="toggle">
+                                <input type="checkbox" ng-model="editSum">
+                                <div class="track">
+                                    <div class="handle"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uSumCheck.$touched) && detailsPaymentFormPopCheck.uSumCheck.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uSumCheck.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDateUntil.$touched) && detailsPaymentFormPopCheck.uDateUntil.$invalid, 'sucInput': (detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDateUntil.$touched) && detailsPaymentFormPopCheck.uDateUntil.$valid }">
+                    <label>
+                        שולם עד תאריך
+                    </label>
+                    <input id="uDateUntil__" name="uDateUntil__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <input readonly
+                           class="dpInput"
+                           date-picker-set-date-pop-set-month
+                           onfocus="this.removeAttribute('readonly');"
+                           type="text"
+                           ng-model="appData.billingAccountCheckNow.date_payed_until"
+                           autocomplete="off"
+                           name="uDateUntil"
+                           required=""/>
+                </div>
+                <div ng-show="(detailsPaymentFormPopCheck.$submitted || detailsPaymentFormPopCheck.uDateUntil.$touched) && detailsPaymentFormPopCheck.uDateUntil.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="detailsPaymentFormPopCheck.uDateUntil.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <div class="inputForm">
+                    <label style="vertical-align: top;">
+                        הערות
+                    </label>
+                    <input id="cComments__" name="cComments__" style="display: none;" value="" type="text"
+                           autocomplete="off">
+                    <textarea readonly
+                              onfocus="this.removeAttribute('readonly');"
+                              ng-model="appData.billingAccountCheckNow.description"
+                              name="cComments"
+                              autocomplete="off">
+                  </textarea>
+                </div>
+            </div>
+            <div class="groupButtonChecks">
+                <button type="button" ng-click="hidePopup()">
+                    בטל
+                </button>
+                <button type="submit"
+                        ng-disabled="!detailsPaymentFormPopCheck.$valid">
+                    המשך לתשלום
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

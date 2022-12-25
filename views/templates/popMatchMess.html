@@ -1,0 +1,356 @@
+<div class="contentPop1" ng-if="appData.contentPopMatch == 'contentPop1'">
+    <div class="bgContent1">
+        <img src="image/popMatchImg.png">
+    </div>
+    <h2>
+<span ng-if="appData.messMatchPass.nigrarot.length == 1">
+קיימת בחשבונך
+    <i>
+        פעולה
+    </i>
+</span>
+        <span ng-if="appData.messMatchPass.nigrarot.length > 1">
+קיימות בחשבונותך
+    <i>{{appData.messMatchPass.nigrarot.length}} פעולות</i>
+</span>
+        שטרם הופקדו/נפרעו להתאמה
+    </h2>
+    <p>
+        תזרים המזומנים הוא הברומטר של העסק שלך!
+        <br>
+        על מנת שנוכל לתת לך את תמונת המצב העדכנית בכל רגע נתון, בכדי שתוכל לדעת,
+        <br>
+        אם ומתי, צפויה חריגה עתידית בחשבונך - יש לשייך את הפעולות הנגררות לסיווגם הנכון.
+    </p>
+    <button ng-click="appData.classPop = 'popMatchMess contentPopWrap2'; appData.contentPopMatch = 'contentPop2';  appData.contentPopMatchInside = 'matchPeulaPop';">
+        המשך להתאמת פעולות
+        <i class="fa fa-long-arrow-left"></i>
+    </button>
+</div>
+<div class="contentPop2" ng-if="appData.contentPopMatch == 'contentPop2'">
+    <h1>
+        התאמת פעולות שטרם הופקדו/נפרעו
+
+        -
+        <span class="titlesBanksAll">
+        <i class="bank{{appData.messMatchPassPeulot[appData.contentPopMatchIndex].task_count}}"></i>
+</span>
+        {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].trans_type_name}}
+    </h1>
+    <div class="cardCube">
+        <div class="rightPopCardMatch">
+            <div class="cubeClass">
+                <strong>
+                    פעולה שטרם נפרעה מהתזרים
+                </strong>
+                <div class="cubeWrap">
+                    <div class="headerCube">
+                        <div class="titleHeadCube"
+                             tooltip="{{appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetName}}"
+                             tooltips-elipsis>
+                            {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetName}}
+                        </div>
+
+                        <i class="fa fa-refresh"
+                           ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].target_type_id == 11"></i>
+                    </div>
+                    <div class="contentCube">
+                        <p ng-class="{'red': appData.messMatchPassPeulot[appData.contentPopMatchIndex].ind_expence == 1}"
+                           tooltip="₪ {{getTotalComma(appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetTotal)}}"
+                           tooltips-elipsis
+                           ng-style="{'font-size': (getTotalComma(appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetTotal).length > 6) ? '21px':'32px'  }">
+                            ₪ {{getTotalComma(appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetTotal)}}
+                        </p>
+                        <table>
+                            <tr>
+                                <th>
+                                    תאריך
+                                </th>
+                                <td>
+                                    {{parseDateSpace(appData.messMatchPassPeulot[appData.contentPopMatchIndex].target_original_date)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    סוג
+                                </th>
+                                <td>
+                                    {{accoConversions.getTypePayment(appData.messMatchPassPeulot[appData.contentPopMatchIndex].target_payment_type_id)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    אסמכתא
+                                </th>
+                                <td>
+                                    {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetAsmachta}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <small ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].description !== null">
+                    <b>
+                        *הערה:
+                    </b>
+                    {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].description}}
+                </small>
+                <small ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].description == null">
+                    &nbsp;
+                </small>
+                <div class="btnsGr">
+                    <button class="memoryPeulaPop" ng-click="memoryPeulaPop()">
+                        <i class="fa fa-bell"></i>
+                        דחה למחר
+                    </button>
+                    <button class="deletePeulaPop" ng-click="deletePeulaPop()">
+                        <i class="fa fa-trash"></i>
+                        מחיקת פעולה
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="splitArr">
+            <img src="image/splitArr.png">
+        </div>
+        <div class="leftPopCardMatch" ng-if="appData.contentPopMatchInside == 'matchPeulaPop'">
+            <div class="cubeClass leftSide">
+                <strong class="leftTitle">
+                    פעולה מומלצת מהבנק
+                </strong>
+
+                <div class="cubeWrap"
+                     ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData.length">
+                    <div class="headerCube">
+                        {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].trans_desc}}
+                    </div>
+                    <div class="contentCube">
+                        <img src="image/leftArrNav.png" class="leftArrNav"
+                             ng-click="appData.contentPopMatchInsideIndex=appData.contentPopMatchInsideIndex+1;"
+                             ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData.length > appData.contentPopMatchInsideIndex+1">
+                        <img src="image/rightArrNav.png" class="rightArrNav"
+                             ng-click="appData.contentPopMatchInsideIndex=appData.contentPopMatchInsideIndex-1;"
+                             ng-if="appData.contentPopMatchInsideIndex > 0">
+
+                        <p ng-class="{'red':appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].ind_hova == 1}"
+                           ng-style="{'font-size': (getTotalComma(appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].total).length > 6) ? '21px':'32px'  }">
+                            ₪
+                            {{getTotalComma(appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].total)}}
+                        </p>
+                        <table>
+                            <tr>
+                                <th>
+                                    תאריך
+                                </th>
+                                <td>
+                                    {{parseDateSpace(appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].trans_date)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    סוג
+                                </th>
+                                <td>
+                                    {{accoConversions.getTypePayment(appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].searchkey_payment_type_id)}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    אסמכתא
+                                </th>
+                                <td>
+                                    {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].asmachta}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="speedometerPrcWrap"
+                     ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData.length">
+                    <div class="speedometerPrc">
+                        <img src="image/matchPrc.png">
+                        <img src="image/speedometer.png"
+                             ng-class="{'beet2040': appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc > 20 && appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc <= 40, 'beet4060':appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc > 40 && appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc <= 60, 'beet6080':appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc > 60 && appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc <= 80, 'beet80100': appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc > 80}"
+                             class="speedometer"
+                             style="transform:rotate({{-127+(1.8*appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc)}}deg) scale(1, 1); -ms-transform:rotate({{-127+(1.8*appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc)}}deg) scale(1, 1);-webkit-transform:rotate({{-127+(1.8*appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc)}}deg) scale(1, 1);-o-transform:rotate({{-127+(1.8*appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc)}}deg) scale(1, 1);">
+                    </div>
+                    <p>
+                        <i ng-style="{'color': (appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc > 50) ? '#62b03f':'#ec3c66'  }">
+                            {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData[appData.contentPopMatchInsideIndex].match_prc}}%
+                        </i>
+
+                        סיכוי התאמה
+                    </p>
+                </div>
+
+                <h3 ng-if="!appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData.length">
+                    לא נמצאו פעולות מומלצות
+                </h3>
+                <div class="btnsGr">
+                    <button class="matchPeulaPop" ng-click="matchPeulaMumletzetPopSend()"
+                            ng-if="appData.messMatchPassPeulot[appData.contentPopMatchIndex].innerData.length">
+                        התאם לפעולה זו
+                    </button>
+                    <strong ng-click="matchPeulaPop()">
+                        חיפוש פעולות מתקדם...
+                    </strong>
+                </div>
+            </div>
+        </div>
+        <div class="leftPopCardMatch" ng-if="appData.contentPopMatchInside == 'matchPeulaListPop'">
+            <div ng-show="appData.loaderPopMatchTableInside" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <h2>
+                חיפוש והתאמה לפעולות קיימות מהבנק:
+            </h2>
+            <div class="inputSearchMatch">
+                <input type="text" ng-model="filterTableMatch" placeholder="הקלד את שם הפעולה להתאמה...">
+                <i class="fa fa-search"></i>
+            </div>
+            <div class="tableMatchPop">
+                <div class="headerMatchPopTable">
+                    <div>
+                        תאריך
+                    </div>
+                    <div>
+                        ח-ן
+                    </div>
+                    <div>
+                        תאור
+                    </div>
+                    <div>
+                        אסמכתא
+                    </div>
+                    <div>
+                        סכום
+                    </div>
+                </div>
+                <div class="bodyMatchPopTable" vs-repeat>
+                    <div class="rowMatchPopTable"
+                         ng-repeat="a in appData.tableMatchForCubePop | filter:filterTableMatch"
+                         ng-click="setTableListMatchPop(a, $event)" ng-class="{'active': a.active}">
+                        <div>
+                            <i class="fa fa-star-half-o" ng-if="a.IND_HATHAMA_HELKIT == 1"></i>
+
+                            {{a.TRANS_DATE}}
+                        </div>
+                        <div>
+                            {{a.BANK_ACCOUNT_ID}}
+                        </div>
+                        <div tooltips-elipsis tooltip="{{a.TRANS_DESC}}">
+                            {{a.TRANS_DESC}}
+                        </div>
+                        <div>
+                            {{a.ASMACHTA}}
+                        </div>
+                        <div ng-class="{'red': a.IND_HOVA == 1}">
+                            {{getTotalComma(a.TOTAL)}}
+
+                            <i class="fa fa-picture-o bodyMatchPopTablecheckIcon"
+                               ng-if="a.PICTURE_LINK && checkPictureLink(a.PICTURE_LINK)"
+                               ng-click="$event.stopPropagation();openCheckImgMain(a.PICTURE_LINK, a.COMPANY_ACCOUNT_ID, a.TRANS_ID)"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btnsGr">
+                <button class="matchPeulaPopSend" ng-click="matchPeulaPopSend()"
+                        ng-disabled="appData.numberRowsPopMatchSelected === 0">
+                    התאם לפעולה זו
+                </button>
+                <strong ng-click="closeMatchPeulaPop()">
+                    סגור חיפוש מתקדם...
+                </strong>
+            </div>
+        </div>
+    </div>
+    <div class="navPopNextPrevPeulot">
+        <div>
+            <button ng-if="appData.contentPopMatchIndex > 0" ng-click="navPeulaMatchPop('prev')">
+                <i class="fa fa-angle-right"></i>
+                חזור לפעולה קודמת
+            </button>
+            <span ng-if="appData.contentPopMatchIndex == 0">
+                   &nbsp;
+            </span>
+        </div>
+        <div>
+            <div class="meterProgress">
+                <span ng-style="{'width': (100/appData.messMatchPass.nigrarot.length) * appData.contentPopMatchNumber + '%'}"></span>
+            </div>
+            <p>
+                {{appData.contentPopMatchNumber}}
+                מתוך
+                {{appData.messMatchPass.nigrarot.length}}
+
+                פעולות הותאמו
+            </p>
+        </div>
+        <div>
+            <span ng-if="appData.contentPopMatchIndex+1 == appData.messMatchPass.nigrarot.length">
+                   &nbsp;
+            </span>
+            <button ng-if="appData.contentPopMatchIndex+1 < appData.messMatchPassPeulot.length"
+                    ng-click="navPeulaMatchPop('next')">
+                דלג להתאמה הבאה
+                <i class="fa fa-angle-left"></i>
+            </button>
+        </div>
+    </div>
+    <div class="bgPopMatch" ng-if="appData.contentPopMatchInsidePop"></div>
+    <div class="popupInsidePopMatchPeulot" ng-if="appData.contentPopMatchInsidePop">
+        <h2 ng-if="appData.contentPopMatchInsidePop == 'deletePeulaPop'">
+            האם אתה בטוח שברצונך למחוק את הפעולה
+            <strong>
+                {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetName}}?
+            </strong>
+        </h2>
+        <div class="btnPrevNext" ng-if="appData.contentPopMatchInsidePop == 'deletePeulaPop'">
+            <button class="backMatchPop" ng-click="appData.contentPopMatchInsidePop = false;">
+                <i class="fi-arrow-right"></i>
+                ביטול
+            </button>
+            <button class="deletePeulaPopSend" ng-click="deletePeulaPopSend()">
+                מחיקה
+            </button>
+        </div>
+
+        <h2 ng-if="appData.contentPopMatchInsidePop == 'memoryPeulaPop'">
+            האם אתה בטוח שברצונך לדחות למחר את הפעולה
+            <strong>
+                {{appData.messMatchPassPeulot[appData.contentPopMatchIndex].targetName}}?
+            </strong>
+        </h2>
+        <div class="btnPrevNext" ng-if="appData.contentPopMatchInsidePop == 'memoryPeulaPop'">
+            <button class="backMatchPop" ng-click="appData.contentPopMatchInsidePop = false;">
+                <i class="fi-arrow-right"></i>
+                ביטול
+            </button>
+            <button class="matchPeulaPopSend" ng-click="memoryPeulaPopSend()">
+                דחה למחר
+            </button>
+        </div>
+    </div>
+</div>
+
+<div ng-if="appData.imgPopIsShow" class="imgPopIsShow">
+    <i ng-click="appData.imgPopIsShow = false; appData.imgPopIsShowType == 0;" class="mega-octicon octicon-x closeimgPopIsShow"></i>
+    <div ng-if="appData.imgPopIsShowType == 1" class="imgPopIsShowTypeText">
+        תמונת הצ'ק לא הופיעה באתר הבנק
+    </div>
+    <div ng-if="appData.imgPopIsShowType == 2" class="imgPopIsShowTypeText">
+        תמונת הצ'ק לא הופיעה באתר הבנק
+    </div>
+    <div ng-if="appData.imgPopIsShowType == 3" class="imgCheck">
+        <img ng-src="data:image/png;base64,{{appData.iconCheckAll}}" class="img-check"/>
+
+        <div class="next_pic" ng-click="nextImg()" ng-hide="!appData.next_pic"></div>
+        <div class="prev_pic" ng-click="prevImg()" ng-hide="!appData.prev_pic"></div>
+        <button print-all-checks class="printImgCheck">
+            <img src="image/print_taz.png">
+        </button>
+    </div>
+</div>

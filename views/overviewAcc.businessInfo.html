@@ -1,0 +1,196 @@
+<div class="titlePage">פרטים כלליים
+    <div ng-show="((appData.selectedCompany) && (appData.selectedCompany.days_left_till_expire || appData.selectedCompany.days_left_till_expire == 0) && appData.selectedCompany.days_left_till_expire !== -1)"
+         class="alertLinkTrialPay">
+        נותרו עוד <strong> {{appData.selectedCompany.days_left_till_expire}} ימים לסיום תקופת הניסיון. </strong>
+        <strong class="strongs"
+                ng-click="getUrlPay(appData.companySource)">לחץ למעבר לרכישה </strong>
+    </div>
+</div>
+
+<div class="contactsUsers adminDe">
+    <i ng-if="$parent.loaderLoadDetailsCompany" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </i>
+
+    <div class="right_adminDe">
+
+        <label for="MAIN_CONTACT_NAME">
+            שם איש קשר
+        </label>
+        <input type="text"
+               id="MAIN_CONTACT_NAME"
+               placeholder="-"
+               ng-disabled="$parent.editInputs"
+               data-ng-model="appData.dataCompanyInfo.MAIN_CONTACT_NAME">
+
+        <label for="mail">
+            דואר אלקטרוני
+        </label>
+        <input type="text"
+               id="mail"
+               placeholder="-"
+               ng-disabled="$parent.editInputs"
+               ng-model="appData.dataCompanyInfo.CONTACT_MAIL">
+
+        <label for="phone_number">
+            טלפון
+        </label>
+        <input type="text" id="phone_number"
+               ng-model="appData.dataCompanyInfo.CONTACT_PHONE"
+               placeholder="-"
+               ng-disabled="$parent.editInputs">
+    </div>
+    <div class="left_adminDe">
+
+        <label for="source_program_id">
+            תוכנת ניהול
+        </label>
+        <select id="source_program_id" ng-disabled="true"
+                ng-options="item.PROGRAM_ID as item.PROGRAM_NAME for item in appData.get_source_programs"
+                ng-model="appData.dataCompanyInfo.SOURCE_PROGRAM_ID"></select>
+
+        <label for="IND_MEETING" ng-if="appData.adminSoft"> תאום פגישה</label>
+        <select id="IND_MEETING"
+                ng-style="{'color': appData.dataCompanyInfo.IND_MEETING == 1 ? '#62b03f' : '#ec3c66'}"
+                ng-if="appData.adminSoft"
+                ng-disabled="true"
+                ng-model="appData.dataCompanyInfo.IND_MEETING">
+            <option value="1">מאושר לתיאום</option>
+            <option value="0">לא מאושר</option>
+        </select>
+
+        <label for="MEETING_DATE" ng-if="appData.adminSoft">
+            תאריך פגישה
+        </label>
+        <input type="text"
+               id="MEETING_DATE"
+               date-picker-tazrim
+               calendar="$parent.editInputs"
+               ng-if="appData.adminSoft"
+               ng-model="appData.dataCompanyInfo.MEETING_DATE"
+               placeholder="-"
+               ng-disabled="$parent.editInputs">
+    </div>
+    <div class="buttonsEditSend">
+        <button ng-click="$parent.editInputs = false" ng-show="$parent.editInputs !== false">
+            עריכה
+        </button>
+        <button ng-show="$parent.editInputs == false" ng-click="$parent.editInputs = true;loadCompanysForThis();">
+            ביטול
+        </button>
+        <button ng-click="setAllDeatProfile()" ng-show="$parent.editInputs == false">
+            אישור
+        </button>
+    </div>
+</div>
+
+
+<div class="contactsUsers adminDe" ng-if="appData.adminSoft">
+    <div class="right_adminDe">
+        <label>
+            פ.לא מותאמות
+        </label>
+        <p>
+{{appData.dataCompanyDet.LOMUTAMOT_COUNTER}}
+        </p>
+        <label>
+            פ.נגררות
+        </label>
+        <p>
+            {{appData.dataCompanyDet.NIGRAROT_COUNTER}}
+        </p>
+        <label>
+            ה.בנקים ידנית אחרונה
+        </label>
+        <p>
+            {{appData.dataCompanyDet.LAST_MEUNAL_MATCH}}
+        </p>
+        <label>
+            הזנת שיקים אחרונה
+        </label>
+        <p>
+            {{appData.dataCompanyDet.LAST_CHECKS_INSERT}}
+        </p>
+        <label>
+            משיכה אחרונה מת.ניהול
+        </label>
+        <p>
+            {{appData.dataCompanyDet.TN_LAST_UPDATE_DATE}}
+        </p>
+        <label>
+            סיסמאות שגויות
+        </label>
+        <p>
+            {{appData.dataCompanyDet.WORNG_PASSWORD}}
+        </p>
+        <label>
+            תאריך הקמת חברה
+        </label>
+        <p>
+            {{appData.dataCompanyDet.DATE_CREATED}}
+        </p>
+        <label>
+            תאריך סיום ח.ניסיון
+        </label>
+        <p>
+            {{appData.dataCompanyDet.EXPIRATION_DATE}}
+        </p>
+        <label>
+            סוג התאמה
+        </label>
+        <p>
+            {{appData.dataCompanyDet.BANK_MATCH_TYPE}}
+        </p>
+    </div>
+
+    <div class="left_adminDe">
+        <label>
+            משתמש ראשי
+        </label>
+        <p>
+            {{appData.dataCompanyDet.CONTACT_NAME}}
+        </p>
+        <label>
+            כניסה אחרונה מחשב
+        </label>
+        <p>
+            {{appData.dataCompanyDet.LAST_LOGIN_DATE}}
+        </p>
+        <label>
+            כניסה אחרונה אפליקציה
+        </label>
+        <p>
+            {{appData.dataCompanyDet.APP_LOGIN_COUNT}}
+        </p>
+        <label>
+            כניסות החודש
+        </label>
+        <p>
+            {{appData.dataCompanyDet.ENTRENCE_THIS_MONTH}}
+        </p>
+        <label>
+            כניסות חודש שעבר
+        </label>
+        <p>
+            {{appData.dataCompanyDet.ENTRENCE_LAST_MONTH}}
+        </p>
+        <label>
+מקבל הודעות פוש
+        </label>
+        <p>
+            {{pushAlert(appData.dataCompanyDet.IND_SEND_PUSH)}}
+        </p>
+        <label>
+            מייל יומי אחרון
+        </label>
+        <p>
+            {{appData.dataCompanyDet.LAST_DAY_MAIL}}
+        </p>
+        <label>
+            מייל חודשי אחרון
+        </label>
+        <p>
+            {{appData.dataCompanyDet.LAST_MONTH_MAIL}}
+        </p>
+    </div>
+</div>

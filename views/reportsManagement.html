@@ -1,0 +1,68 @@
+<div class="tableAccBankReportsManagement">
+    <div class="headTableAccBankReportsManagement">
+        <h1>
+            דו״ח
+            {{nameReports}}
+        </h1>
+        <ul class="exports tableExports" ng-show="itemsAll.length > 0">
+            <li class="excel" exports-excel-qa tooltips-tazrim title="ייצוא לExcel">
+                <i></i>
+            </li>
+            <li class="print" exports-print-qa tooltips-tazrim title="הדפסה">
+                <i></i>
+            </li>
+        </ul>
+        <input type="text" ng-model="search"
+               placeholder="חיפוש"
+               class="form-control"
+               ng-model-options="{ debounce: {'default': 500 }}"
+               data-ng-show="itemsAll.length > 0 || search.length > 0"/>
+
+    </div>
+
+    <table ng-show="itemsAll.length > 0">
+        <thead>
+        <tr ng-repeat="a in title">
+            <th ng-repeat="(name, val) in a" ng-click="sort_by(name)" style="width: {{widthTdTh}}%">
+                {{val}}
+                <i class="glyphicon glyphicon-sort"></i>
+            </th>
+        </tr>
+        </thead>
+        <tbody scroll-fill="{{scrollHeightTable}}">
+        <tr ng-repeat="a in itemsAll = (items | filter:search) | orderBy : predicate :reverse  | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+            <td ng-repeat="(name, val) in a" style="width: {{widthTdTh}}%" ng-if="name.indexOf('DateSort') === -1">
+                {{val}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="titleNotFilter" ng-show="itemsAll.length == 0">
+        לא נמצאה התאמה
+    </div>
+</div>
+
+
+<div class="rowsSort reportManagementSort" data-ng-show="itemsAll.length > 0">
+    <div class="selectRows">
+        הצג
+        <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+            <option>150</option>
+        </select>
+        שורות
+    </div>
+    <div class="sumRows">
+        סה״כ שורות שנמצאו
+        {{itemsAll.length}}
+        מתוך
+        {{items.length}}
+    </div>
+    <div class="pagRows" ng-show="itemsAll.length > 0 && itemsAll.length > entryLimit">
+        <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)" items-per-page="entryLimit"
+                    total-items="itemsAll.length" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;"
+                    next-text="&rsaquo;" first-text="עמ׳ ראשון" last-text="עמ׳ אחרון"></pagination>
+    </div>
+</div>

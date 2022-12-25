@@ -1,0 +1,320 @@
+<div ng-init="init()" ng-controller="checksAnalysisCtrl">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed, 'bg-dark': !appData.showCheckAllNull}">
+        <div ng-show="appData.showCheckAllNull" class="not_data_match">
+            לא נמצאו חשבונות
+        </div>
+        <div class="headerAnalisis" ng-show="!appData.showCheckAllNull">
+            <ul class="tabs_links">
+                <li>
+                    <div ng-click="tab = 'incomeChecks'; tabStatus = -1; loadPage();"
+                         ng-class="{'active': tab == 'incomeChecks'}">
+                        שיקים נכנסים
+                    </div>
+                </li>
+                <li>
+                    <div ng-click="tab = 'expenseChecks'; tabStatus = -1; loadPage();"
+                         ng-class="{'active': tab == 'expenseChecks'}">
+                        שיקים יוצאים
+                    </div>
+                </li>
+            </ul>
+            <div class="funds-action-bar headerCheckTop clearfix">
+                <ul class="exports">
+                    <li class="excel" exports-excel-checks="">
+                        <span>ייצוא לExcel</span>
+                        <i></i>
+                    </li>
+                    <li class="mail" ng-click="sendMailer()">
+                        <span>שליחה במייל</span>
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-checks="">
+                        <span>הדפסה</span>
+                        <i></i>
+                    </li>
+                </ul>
+                <input type="text" class="searchTable" placeholder="חפש סכום, תיאור, מספר שיק"
+                       ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-model="query">
+
+                <select ng-model="appData.selectedBankChecks" ng-change="loadPage()"
+                        ng-options="item as item.company_account_nickname for item in appData.banksListChecks"
+                        class="bank{{appData.selectedBankChecks.bank_id}}"></select>
+
+                <div class="filters">
+                    <div dropdown>
+                        <div class="dropdown-toggle">
+                            לפי תאריך
+                            {{appData.datesChecksSort}}
+                        </div>
+                        <div class="dropdown-content">
+                            <form class="filter-form">
+                                <div class="form-control">
+                                    <input type="radio" data-ng-model="appData.dateFilterTypesChecks" value="00"
+                                           id="dateFilter0" ng-change="disabledDates();">
+                                    <label for="dateFilter0" style="width: 300px;">
+                                        לפי כל השיקים
+                                    </label>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype0" type="radio"
+                                           data-ng-model="appData.dateFilterTypesChecks"
+                                           value="0" ng-change="disabledDates();">
+                                    <label for="dateFiltertype0">
+                                        חודש
+                                    </label>
+                                    <select ng-model="dateFilter.byMonth"
+                                            ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesChecks = '0';disabledDates();"></select>
+                                    <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesChecks = '0';disabledDates();"></select>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype1" type="radio"
+                                           data-ng-model="appData.dateFilterTypesChecks"
+                                           value="1" ng-change="disabledDates();">
+                                    <label for="dateFiltertype1">
+                                        בין תאריכים
+                                    </label>
+
+                                    <div class="datepicker_inputs">
+                                        <div class="datepicker_wrap">
+                                            <input date-picker-tazrim-add type="text" readonly="readonly"
+                                                   ng-model="datesPicker.fromDatePicker"
+                                                   name="fromDatePicker"
+                                                   ng-class="{'redErrors': appData.redErrorFilterType == '1'}"
+                                                   ng-change="appData.dateFilterTypesChecks = '1';disabledDates();">
+                                        </div>
+                                        <div class="between_line">-</div>
+                                        <div class="datepicker_wrap">
+                                            <input date-picker-tazrim-add type="text" readonly="readonly"
+                                                   ng-model="datesPicker.toDatePicker"
+                                                   name="toDatePicker"
+                                                   ng-class="{'redErrors': appData.redErrorFilterType == '1'}"
+                                                   ng-change="appData.dateFilterTypesChecks = '1';disabledDates();">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype2" type="radio"
+                                           data-ng-model="appData.dateFilterTypesChecks"
+                                           value="2" ng-change="disabledDates();">
+                                    <label for="dateFiltertype2">
+                                        בין חודשים
+                                    </label>
+                                    <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                            data-ng-model="dateFilter.fromMonth"
+                                            data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesChecks = '2';disabledDates();"></select>
+                                    <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                            data-ng-model="dateFilter.fromYear"
+                                            data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesChecks = '2';disabledDates();"></select>
+
+                                    <div class="label_between">
+                                        עד
+                                    </div>
+                                    <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                            data-ng-model="dateFilter.toMonth"
+                                            data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesChecks = '2';disabledDates();"></select>
+                                    <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                            data-ng-model="dateFilter.toYear" data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesChecks = '2';disabledDates();"></select>
+                                </div>
+                                <div class="form-control">
+                                    <button ng-click="loadPage()" class="dropdown-close button"
+                                            ng-disabled="appData.redErrorFilterType !== false">
+                                        עדכון
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 55px;padding-bottom: 20px;">
+            <div ng-show="!loaderChecks" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+
+            <div ng-if="!appData.showCheckAllNull && checkIfNone(appData.companyGetinchequesPerutPop)" class="alertsNot">
+                אין שקים להתאמה
+            </div>
+            <div ng-if="!appData.showCheckAllNull && !checkIfNone(appData.companyGetinchequesPerutPop)" class="tablesChecks">
+                <ul class="navChecks" ng-class="{'redColor': tab == 'expenseChecks'}">
+                    <li data-ng-repeat="a in appData.companyGetinchequesSum" ng-if="a.status_id && a.status_id == -1"
+                        tooltips-check title="{{a.text_for_tooltip}}"
+                        data-ng-click="openChecksList(a.status_id)" ng-class="{'active': tabStatus == a.status_id}">
+                        <div>
+                            {{a.cheque_status_desc}}
+                            <span>
+                          ({{a.cheques_count}})
+                        </span>
+                        </div>
+                        <div>
+                            ₪ {{roundFixed(a.total)}}
+                        </div>
+                    </li>
+                    <li data-ng-repeat="a in appData.companyGetinchequesSum" ng-if="a.status_id && a.status_id !== -1"
+                        tooltips-check title="{{a.text_for_tooltip}}"
+                        data-ng-click="openChecksList(a.status_id)" ng-class="{'active': tabStatus == a.status_id}">
+                        <div>
+                            {{a.cheque_status_desc}}
+                            <span>
+                                ({{a.cheques_count}})
+                             </span>
+                        </div>
+                        <div>
+                            ₪ {{roundFixed(a.total)}}
+                        </div>
+                    </li>
+                </ul>
+                <div class="tableChecksRow">
+                    <div class="headCheck">
+                        <div ng-class="{'active': clsHref == 'dates', 'activeRevers': clsHref == 'dates' && reverse}"
+                             ng-click="reverse=!reverse;order('dates', reverse)">
+                            תאריך פרעון
+                        </div>
+                        <div ng-class="{'active': clsHref == 'total', 'activeRevers': clsHref == 'total' && reverse}"
+                             ng-click="reverse=!reverse;order('total', reverse)">
+                            סכום
+                        </div>
+                        <div ng-class="{'active': clsHref == 'company_account_id', 'activeRevers': clsHref == 'company_account_id' && reverse}"
+                             ng-click="reverse=!reverse;order('company_account_id', reverse)">
+                            ח-ן
+                        </div>
+                        <div ng-class="{'active': clsHref == 'payment_desc', 'activeRevers': clsHref == 'payment_desc' && reverse}"
+                             ng-click="reverse=!reverse;order('payment_desc', reverse)">
+                            תיאור
+                        </div>
+                        <div ng-class="{'active': clsHref == 'cheque_no', 'activeRevers': clsHref == 'cheque_no' && reverse}"
+                             ng-click="reverse=!reverse;order('cheque_no', reverse)">
+                            מספר שיק
+                        </div>
+                        <div ng-class="{'active': clsHref == 'hariga_message', 'activeRevers': clsHref == 'hariga_message' && reverse}"
+                             ng-click="reverse=!reverse;order('hariga_message', reverse)">
+                            הערות
+                        </div>
+                        <div>
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div ng-if="appData.showTooltip" class="tooltipCloack">
+                        <h4>
+                            היסטוריה פעולות
+                        </h4>
+                        <div class="contentTooltip">
+                            <ul>
+                                <li>
+                                    <strong>
+                                        נקלט
+                                        <span ng-if="appData.dataTool.source_program_id">
+
+                                                                                    מ{{accoConversions.getSourceProgramId(appData.dataTool.source_program_id)}}
+                                        </span>
+                                        <span ng-if="!appData.dataTool.source_program_id">
+                                        ידנית
+                                        </span>
+                                    </strong>
+                                    <p>
+                                        {{appData.dataTool.date_created}}
+                                    </p>
+                                </li>
+                                <li ng-if="appData.dataTool.bank_hafkada_date">
+                                    <strong>
+                                        הופקד בבנק ב:
+                                    </strong>
+                                    <p>
+                                        {{appData.dataTool.bank_hafkada_date}}
+                                    </p>
+                                </li>
+                                <li ng-if="appData.dataTool.tn_mevutal_date">
+                                    <strong>
+                                        בוטל
+                                    </strong>
+                                    <p>
+                                        {{appData.dataTool.tn_mevutal_date}}
+                                    </p>
+                                </li>
+                                <li ng-if="appData.dataTool.haavara_date">
+                                    <strong>
+                                        הועבר
+                                    </strong>
+                                    <p>
+                                        {{appData.dataTool.haavara_date}}
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="tableBodyChecks" scroll-fill="{{scrollChecksAnalysis}}" vs-repeat="35">
+                        <div class="rowCheck"
+                             ng-repeat="a in appData.companyGetinchequesPerut | filterSearchChecks:query">
+                            <div>
+                                {{a.due_date}}
+                                <i class="cloack" position-tooltip data="a">&nbsp;</i>
+                            </div>
+                            <div class="sum" ng-class="{'redColor': tab == 'expenseChecks'}">
+                                ₪ {{roundFixed(a.total)}} &nbsp;
+                            </div>
+                            <div class="bank{{loadIdBank(a.company_account_id)}}">
+                                <i>
+                                    &nbsp;
+                                </i>
+                                {{loadNickNameBank(a.company_account_id)}}
+                                &nbsp;
+                            </div>
+                            <div tooltips-elipsis tooltip="{{a.payment_desc}}">
+                                {{a.payment_desc}}
+                                &nbsp;
+                            </div>
+                            <div>
+                                {{a.cheque_no}}
+                                &nbsp;
+                            </div>
+                            <div class="hariga_message">
+                                <span ng-if="a.hariga_message">
+                                     {{a.hariga_message}}
+                                </span>
+                                &nbsp;
+                                <small ng-if="a.delete_al_yadei">
+                                    <small ng-if="a.delete_al_yadei == 'deleted by system'">
+                                        נמחק על ידי המערכת
+                                    </small>
+                                    <small ng-if="a.delete_al_yadei !== 'deleted by system'">
+                                        נמחק על ידי
+                                        {{a.delete_al_yadei}}
+                                    </small>
+
+
+                                    ב {{a.delete_date}}
+                                </small>
+                            </div>
+                            <div>
+                            <span ng-click="openCheckMatch(a)" class="matchIcons"
+                                  data-ng-if="tab !== 'expenseChecks' && !a.bank_hafkada_date && a.source_program_id && a.source_program_id !== null && a.source_program_id !== 8881">
+                התאמה
+                            </span>
+                                <span class="emptyMatch"
+                                      ng-if="a.bank_hafkada_date || tab == 'expenseChecks' || !a.source_program_id || a.source_program_id == null || a.source_program_id == 8881">
+                                    &nbsp;
+                                </span>
+                                <span class="deleteIcon" data-ng-click="deleteRow(a.ifact_cheque_payment_id)"
+                                      ng-show="a.status_id !== 9">
+                                                         מחק
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

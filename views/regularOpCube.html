@@ -1,0 +1,434 @@
+<div class="wrap-ul-peulot">
+    <div class="wrap-peulot">
+        <ul class="clearfix">
+            <li data-ng-repeat="a in appData.peulotKvuot" ng-if="a.ind_hova == false" class="incoming"
+                data-ng-class="{'active': a.dataTable, 'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 7 && $index == 0}">
+                <img class="remove_list" src="image/delete_match_peulot.png" title="מחק פעולה"
+                     data-ng-click="bankLoadDismissbysk(a.searchkey_id, $index)">
+                <input type="text" data-ng-model="a.searchkey" class="searchkey"
+                       ng-class="{'red': a.searchkey.length == 0}">
+                <div class="content">
+                    <div class="frequency"> ממוצע
+                        {{accoConversions.getFrequency(a.frequency)}}
+                    </div>
+                    <div class="avg_total" ng-class="{'red': a.avg_total.length == 0}">
+                        <div ng-click="a.showInput = true;" auto-focus ng-show="!a.showInput"
+                             ng-style="{'font-size': a.avg_total.toString().length > 6 ? '26px' : '32px'}">
+                            {{getTotalComma(a.avg_total)}}
+                        </div>
+                        <input type="text" number-only ng-model="a.avg_total" ng-show="a.showInput"
+                               ng-blur="a.showInput = false" class="focusTotal">
+                    </div>
+                    <button data-ng-click="setAppr(a)">אשר פעולה</button>
+                    <div class="toggle_table" data-ng-click="bankLoadPeulotBysk(a)" ng-if="!a.removeOpenRable">
+                        <img class="arrow_open_table" ng-if="a.dataTable" src="image/arrow_open_table.png">
+                    </div>
+                    <div class="table_data" ng-if="a.dataTable">
+                        <h2 ng-if="a.dataTable.length == 0">
+                            לא נמצאו נתונים
+                        </h2>
+
+                        <div class="head_table" ng-if="a.dataTable.length > 0">
+                            <div>{{getNameKey('7b94ad34-2bc1-4f4a-b905-a9f582a06179')}}</div>
+                            <input type="search" class="searchTable" placeholder="חיפוש..."
+                                   ng-model="a.searchText">
+                            <button class="deleteall" ng-click="deleteAllRowFromTable(a)">
+                                <span>הסר מקבוצה זו</span>
+                            </button>
+                        </div>
+                        <div class="table" ng-if="a.dataTable.length > 0">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" data-ng-model="a.checks"></th>
+                                    <th><span ng-click="a.predicate = 'trans_date'; a.reverse=!a.reverse">תאריך</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'total'; a.reverse=!a.reverse">סכום</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'trans_desc'; a.reverse=!a.reverse">סוג</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'frequency'; a.reverse=!a.reverse">תדירות</span>
+                                    </th><th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="b in a.dataTable | filter:a.searchText | orderBy:a.predicate:a.reverse"
+                                    data-ng-class="{'bgGray': b.checks || a.checks}">
+                                    <td><input type="checkbox" class="checkbox" ng-checked="a.checks"
+                                               ng-model="b.checks"></td>
+                                    <td>{{b.trans_date}}</td>
+                                    <td class="total_average">{{b.total}}</td>
+                                    <td>{{b.trans_desc}}</td>
+                                    <td>{{accoConversions.getFrequency(a.frequency)}}</td>
+                                    <td><a href="javascript:void(0);" class="delete_single"
+                                           ng-click="deleteRowFromTable(a.dataTable, a.dataTable.length, a.searchkey_id, b.bank_trans_id)">הסרה
+                                        מהרשימה</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-ng-repeat="a in appData.transkvuotHtmlGetlist" ng-if="a.ind_expense == 0" class="liBar in"
+                data-ng-class="{'active': a.dataTable, 'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 9 && $index == 0}">
+                <img class="remove_list" src="image/delete_match_peulot.png" title="מחק פעולה"
+                     data-ng-click="bankLoadDismissbysk2(a.trans_id, $index)" ng-if="a.target_type_id == 11">
+                <p>{{a.trans_name}}</p>
+                <div class="content">
+                    <strong class="frequency" ng-if="a.target_type_id !== 17">
+   <span ng-if="a.auto_update_type == 1">
+                                                    ממוצע
+                        </span>
+                        {{accoConversions.getFrequencyAndUpdate(a.trans_frequency_id, a.auto_update_type)}}
+                    </strong>
+                    <strong class="frequency" ng-if="a.target_type_id == 17"
+                            ng-style="{'color': a.slika_type == 6 ? '#ec3c66'}">
+                        {{accoConversions.getSlikaType(a.slika_type)}}
+                    </strong>
+                    <div class="avg_total" ng-class="{'red': a.next_total.length == 0}"
+                         data-ng-click="loadEditPeula(a)">
+                        <div ng-style="{'font-size': a.next_total.toString().length > 6 ? '26px' : '32px'}">
+                            {{getTotalComma(a.next_total)}}
+                        </div>
+                    </div>
+                    <div class="graphPeula">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center"
+                               style="border-collapse: collapse;direction: rtl; border: none;padding: 0px 30px;">
+                            <tbody>
+                            <tr>
+                                <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh1 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh1)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh2 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh2)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh3 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh3)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh1)}}
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh2)}}
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh3)}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="toggle_table" data-ng-click="transkvuaGetpeulot(a)" ng-if="!a.removeOpenRable">
+                        <img class="arrow_open_table" ng-if="a.dataTable" src="image/arrow_open_table.png">
+                    </div>
+                    <div class="table_data" ng-if="a.dataTable">
+                        <h2 ng-if="a.dataTable.length == 0">
+                            לא נמצאו נתונים
+                        </h2>
+                        <div class="head_table" ng-if="a.dataTable.length > 0">
+                            <div>{{getNameKey('7b94ad34-2bc1-4f4a-b905-a9f582a06179')}}</div>
+                            <input type="search"
+                                   class="searchTable"
+                                   placeholder="חיפוש..."
+                                   ng-model="a.searchText">
+                            <button class="deleteall"
+                                    ng-click="deleteAllRowFromTable2(a)"
+                                    ng-if="a.target_type_id == 11">
+                                <span>הסר מקבוצה זו</span>
+                            </button>
+                        </div>
+                        <div class="table" ng-if="a.dataTable.length > 0">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" data-ng-model="a.checks"></th>
+                                    <th><span ng-click="a.predicate = 'trans_date'; a.reverse=!a.reverse">תאריך</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'trans_desc_azonly'; a.reverse=!a.reverse">סוג</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'asmachta'; a.reverse=!a.reverse">אסמכתא</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'bank_total'; a.reverse=!a.reverse">סכום</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'frequency'; a.reverse=!a.reverse">תדירות</span>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="b in a.dataTable | filter:a.searchText | orderBy:a.predicate:a.reverse"
+                                    data-ng-class="{'bgGray': b.checks || a.checks}">
+                                    <td><input type="checkbox" class="checkbox" ng-checked="a.checks"
+                                               ng-model="b.checks"></td>
+                                    <td>{{b.trans_date}}</td>
+                                    <td>{{b.trans_desc_azonly}}</td>
+                                    <td>{{b.asmachta}}</td>
+                                    <td class="total_average">{{b.bank_total}}</td>
+                                    <td>{{accoConversions.getFrequency(b.frequncy)}}</td>
+                                    <td><a href="javascript:void(0);" class="delete_single"
+                                           ng-if="a.target_type_id == 11"
+                                           ng-click="deleteRowFromTable2(a.dataTable, a.dataTable.length, a.trans_id, b.bank_trans_id, b.match_link_id)">הסרה
+                                        מהרשימה</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="add_item" data-ng-click="addPeula('in')"
+                data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 8}">
+                <p>הכנסה חדשה</p>
+
+                <div class="content">
+                    <h3>הוספת הכנסה קבועה</h3>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="titleReg"
+         data-ng-class="{'helpViewColor': appData.helpSignUp == true && (appData.helpSignUpInd > 6 && appData.helpSignUpInd < 10)}">
+        הוצאות מחזוריות
+    </div>
+    <div class="wrap-peulot">
+
+        <ul class="clearfix">
+            <li data-ng-repeat="a in appData.peulotKvuot" ng-if="a.ind_hova == true" class="expenses"
+                data-ng-class="{'active': a.dataTable, 'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 7 && $index == 0}">
+                <img class="remove_list" src="image/delete_match_peulot.png" title="מחק פעולה"
+                     data-ng-click="bankLoadDismissbysk(a.searchkey_id, $index)">
+                <input type="text" data-ng-model="a.searchkey" class="searchkey"
+                       ng-class="{'red': a.searchkey.length == 0}">
+
+                <div class="content">
+                    <div class="frequency"> ממוצע
+                        {{accoConversions.getFrequency(a.frequency)}}
+                    </div>
+                    <div class="avg_total" ng-class="{'red': a.avg_total.length == 0}">
+                        <div ng-click="a.showInput = true;" auto-focus ng-show="!a.showInput"
+                             ng-style="{'font-size': a.avg_total.toString().length > 6 ? '26px' : '32px'}">
+                            {{getTotalComma(a.avg_total)}}
+                        </div>
+                        <input type="text" number-only ng-model="a.avg_total" ng-show="a.showInput"
+                               ng-blur="a.showInput = false" class="focusTotal">
+                    </div>
+                    <button data-ng-click="setAppr(a)">אשר פעולה</button>
+                    <div class="toggle_table" data-ng-click="bankLoadPeulotBysk(a)" ng-if="!a.removeOpenRable">
+                        <img class="arrow_open_table" ng-if="a.dataTable" src="image/arrow_open_table.png">
+                    </div>
+                    <div class="table_data" ng-if="a.dataTable">
+                        <h2 ng-if="a.dataTable.length == 0">
+                            לא נמצאו נתונים
+                        </h2>
+                        <div class="head_table" ng-if="a.dataTable.length > 0">
+                            <div>{{getNameKey('f605bc82-2921-4548-b09b-937c7baa1c2a')}}</div>
+                            <input type="search" class="searchTable" placeholder="חיפוש..."
+                                   ng-model="a.searchText">
+                            <button class="deleteall" ng-click="deleteAllRowFromTable(a)">
+                                <span>הסר מקבוצה זו</span>
+                            </button>
+                        </div>
+                        <div class="table" ng-if="a.dataTable.length > 0">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" data-ng-model="a.checks"></th>
+                                    <th><span
+                                            ng-click="a.predicate = 'trans_date'; a.reverse=!a.reverse">תאריך</span>
+                                    </th>
+                                    <th><span ng-click="a.predicate = 'total'; a.reverse=!a.reverse">סכום</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'trans_desc'; a.reverse=!a.reverse">סוג</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'frequency'; a.reverse=!a.reverse">תדירות</span>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="b in a.dataTable | filter:a.searchText | orderBy:a.predicate:a.reverse"
+                                    data-ng-class="{'bgGray': b.checks || a.checks}">
+                                    <td><input type="checkbox" class="checkbox" ng-checked="a.checks"
+                                               ng-model="b.checks"></td>
+                                    <td>{{b.trans_date}}</td>
+                                    <td class="total_average">{{b.total}}</td>
+                                    <td>{{b.trans_desc}}</td>
+                                    <td>{{accoConversions.getFrequency(a.frequency)}}</td>
+                                    <td><a href="javascript:void(0);" class="delete_single"
+                                           ng-click="deleteRowFromTable(a.dataTable, a.dataTable.length, a.searchkey_id, b.bank_trans_id)">הסרה
+                                        מהרשימה</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li data-ng-repeat="a in appData.transkvuotHtmlGetlist" ng-if="a.ind_expense == 1" class="liBar ex"
+                data-ng-class="{'active': a.dataTable, 'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 9 && $index == 0}">
+                <img class="remove_list" src="image/delete_match_peulot.png" title="מחק פעולה"
+                     data-ng-click="bankLoadDismissbysk2(a.trans_id, $index)" ng-if="a.target_type_id == 11">
+
+                <p>{{a.trans_name}}</p>
+
+                <div class="content">
+                    <strong class="frequency">
+                        <span ng-if="a.auto_update_type == 1">
+                                                    ממוצע
+                        </span>
+                        {{accoConversions.getFrequencyAndUpdate(a.trans_frequency_id, a.auto_update_type)}}
+                    </strong>
+
+                    <div class="avg_total" ng-class="{'red': a.next_total.length == 0}"
+                         data-ng-click="loadEditPeula(a)">
+                        <div ng-style="{'font-size': a.next_total.toString().length > 6 ? '26px' : '32px'}">
+                            {{getTotalComma(a.next_total)}}
+                        </div>
+                    </div>
+                    <div class="graphPeula">
+                        <table cellspacing="0" cellpadding="0" border="0" align="center"
+                               style="border-collapse: collapse;direction: rtl; border: none;padding: 0px 30px;">
+                            <tbody>
+                            <tr>
+                                <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh1 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh1)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh2 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh2)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                                    <div ng-style="{height: 100 * a.memuza_hodesh3 / graphSet(a) + '%'}"
+                                         title="{{getTotalComma(a.memuza_hodesh3)}} ₪" tooltips-reg
+                                         class="barGraph">
+                                        &nbsp;
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="bottom" ng-if="a.hodesh1 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh1)}}
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh2 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh2)}}
+                                    </div>
+                                </td>
+                                <td align="center" valign="bottom" ng-if="a.hodesh3 !== null">
+                                    <div class="dateGraph">
+                                        {{dateShort(a.hodesh3)}}
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="toggle_table" data-ng-click="transkvuaGetpeulot(a)" ng-if="!a.removeOpenRable">
+                        <img class="arrow_open_table" ng-if="a.dataTable" src="image/arrow_open_table.png">
+                    </div>
+                    <div class="table_data" ng-if="a.dataTable">
+                        <h2 ng-if="a.dataTable.length == 0">
+                            לא נמצאו נתונים
+                        </h2>
+
+                        <div class="head_table" ng-if="a.dataTable.length > 0">
+                            <div>{{getNameKey('f605bc82-2921-4548-b09b-937c7baa1c2a')}}</div>
+                            <input type="search" class="searchTable" placeholder="חיפוש..."
+                                   ng-model="a.searchText">
+                            <button class="deleteall" ng-click="deleteAllRowFromTable2(a)"
+                                    ng-if="a.target_type_id == 11">
+                                <span>הסר מקבוצה זו</span>
+                            </button>
+                        </div>
+                        <div class="table" ng-if="a.dataTable.length > 0">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" class="checkall" data-ng-model="a.checks"></th>
+                                    <th><span
+                                            ng-click="a.predicate = 'trans_date'; a.reverse=!a.reverse">תאריך</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'trans_desc_azonly'; a.reverse=!a.reverse">סוג</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'asmachta'; a.reverse=!a.reverse">אסמכתא</span>
+                                    </th>
+                                    <th><span
+                                            ng-click="a.predicate = 'bank_total'; a.reverse=!a.reverse">סכום</span>
+                                    </th>
+
+                                    <th><span
+                                            ng-click="a.predicate = 'frequency'; a.reverse=!a.reverse">תדירות</span>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr data-ng-repeat="b in a.dataTable | filter:a.searchText | orderBy:a.predicate:a.reverse"
+                                    data-ng-class="{'bgGray': b.checks || a.checks}">
+                                    <td><input type="checkbox" class="checkbox" ng-checked="a.checks"
+                                               ng-model="b.checks"></td>
+                                    <td>{{b.trans_date}}</td>
+                                    <td>{{b.trans_desc_azonly}}</td>
+                                    <td>{{b.asmachta}}</td>
+                                    <td class="total_average">{{b.bank_total}}</td>
+                                    <td>{{accoConversions.getFrequency(b.frequncy)}}</td>
+                                    <td><a href="javascript:void(0);" class="delete_single"
+                                           ng-if="a.target_type_id == 11"
+                                           ng-click="deleteRowFromTable2(a.dataTable, a.dataTable.length, a.trans_id, b.bank_trans_id, b.match_link_id)">הסרה
+                                        מהרשימה</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li class="add_item" data-ng-click="addPeula('ex')"
+                data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 8}">
+                <p>הוצאה חדשה</p>
+
+                <div class="content">
+                    <h3>הוספת הוצאה קבועה</h3>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+
+</div>

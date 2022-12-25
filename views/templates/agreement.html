@@ -1,0 +1,1041 @@
+<div>
+    <div class="popup-header">
+        <h2>
+            הסכם שימוש - רואי חשבון
+        </h2>
+    </div>
+    <div class="popup-content" ng-controller="mainCtrl">
+        <style type="text/css">
+            .lst-kix_list_4-1 > li {
+                counter-increment: lst-ctn-kix_list_4-1
+            }
+
+            ol.lst-kix_list_3-1 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-2 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_3-1 > li {
+                counter-increment: lst-ctn-kix_list_3-3;
+            }
+
+            ol.lst-kix_list_3-3 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-4.start {
+                counter-reset: lst-ctn-kix_list_3-4 0
+            }
+
+            ol.lst-kix_list_3-4 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_2-1 > li {
+                counter-increment: lst-ctn-kix_list_2-1
+            }
+
+            ol.lst-kix_list_3-0 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-1 > li {
+                counter-increment: lst-ctn-kix_list_1-1
+            }
+
+            ol.lst-kix_list_2-6.start {
+                counter-reset: lst-ctn-kix_list_2-6 0
+            }
+
+            .lst-kix_list_3-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) ". "
+            }
+
+            ol.lst-kix_list_3-1.start {
+                counter-reset: lst-ctn-kix_list_3-1 0
+            }
+
+            .lst-kix_list_3-1 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) ". ";
+            }
+
+            .lst-kix_list_3-2 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) ". "
+            }
+
+            ol.lst-kix_list_1-8.start {
+                counter-reset: lst-ctn-kix_list_1-8 0
+            }
+
+            .lst-kix_list_4-0 > li {
+                counter-increment: lst-ctn-kix_list_4-0
+            }
+
+            ol.lst-kix_list_2-3.start {
+                counter-reset: lst-ctn-kix_list_2-3 0
+            }
+
+            .lst-kix_list_3-5 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) "." counter(lst-ctn-kix_list_3-4, decimal) "." counter(lst-ctn-kix_list_3-5, decimal) ". "
+            }
+
+            .lst-kix_list_3-4 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) "." counter(lst-ctn-kix_list_3-4, decimal) ". "
+            }
+
+            ol.lst-kix_list_1-5.start {
+                counter-reset: lst-ctn-kix_list_1-5 0
+            }
+
+            .lst-kix_list_3-3 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) ". "
+            }
+
+            ol.lst-kix_list_3-5 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-6 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-7 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-8 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_3-8 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) "." counter(lst-ctn-kix_list_3-4, decimal) "." counter(lst-ctn-kix_list_3-5, decimal) "." counter(lst-ctn-kix_list_3-6, decimal) "." counter(lst-ctn-kix_list_3-7, decimal) "." counter(lst-ctn-kix_list_3-8, decimal) ". "
+            }
+
+            .lst-kix_list_2-0 > li {
+                counter-increment: lst-ctn-kix_list_2-0
+            }
+
+            .lst-kix_list_2-3 > li {
+                counter-increment: lst-ctn-kix_list_2-3
+            }
+
+            .lst-kix_list_3-6 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) "." counter(lst-ctn-kix_list_3-4, decimal) "." counter(lst-ctn-kix_list_3-5, decimal) "." counter(lst-ctn-kix_list_3-6, decimal) ". "
+            }
+
+            .lst-kix_list_4-3 > li {
+                counter-increment: lst-ctn-kix_list_4-3
+            }
+
+            .lst-kix_list_3-7 > li:before {
+                content: "" counter(lst-ctn-kix_list_3-0, decimal) "." counter(lst-ctn-kix_list_3-1, decimal) "." counter(lst-ctn-kix_list_3-2, decimal) "." counter(lst-ctn-kix_list_3-3, decimal) "." counter(lst-ctn-kix_list_3-4, decimal) "." counter(lst-ctn-kix_list_3-5, decimal) "." counter(lst-ctn-kix_list_3-6, decimal) "." counter(lst-ctn-kix_list_3-7, decimal) ". "
+            }
+
+            ol.lst-kix_list_4-5.start {
+                counter-reset: lst-ctn-kix_list_4-5 0
+            }
+
+            .lst-kix_list_1-2 > li {
+                counter-increment: lst-ctn-kix_list_1-2
+            }
+
+            ol.lst-kix_list_3-7.start {
+                counter-reset: lst-ctn-kix_list_3-7 0
+            }
+
+            ol.lst-kix_list_4-2.start {
+                counter-reset: lst-ctn-kix_list_4-2 0
+            }
+
+            .lst-kix_list_3-2 > li {
+                counter-increment: lst-ctn-kix_list_3-2
+            }
+
+            ol.lst-kix_list_2-2 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_2-3 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_2-4 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_2-5 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-4 > li {
+                counter-increment: lst-ctn-kix_list_1-4
+            }
+
+            .lst-kix_list_4-4 > li {
+                counter-increment: lst-ctn-kix_list_4-4
+            }
+
+            ol.lst-kix_list_2-0 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-6.start {
+                counter-reset: lst-ctn-kix_list_1-6 0
+            }
+
+            ol.lst-kix_list_2-1 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_4-8 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) "." counter(lst-ctn-kix_list_4-4, decimal) "." counter(lst-ctn-kix_list_4-5, decimal) "." counter(lst-ctn-kix_list_4-6, decimal) "." counter(lst-ctn-kix_list_4-7, decimal) "." counter(lst-ctn-kix_list_4-8, decimal) ". "
+            }
+
+            .lst-kix_list_4-7 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) "." counter(lst-ctn-kix_list_4-4, decimal) "." counter(lst-ctn-kix_list_4-5, decimal) "." counter(lst-ctn-kix_list_4-6, decimal) "." counter(lst-ctn-kix_list_4-7, decimal) ". "
+            }
+
+            ol.lst-kix_list_4-1.start {
+                counter-reset: lst-ctn-kix_list_4-1 0
+            }
+
+            ol.lst-kix_list_4-8.start {
+                counter-reset: lst-ctn-kix_list_4-8 0
+            }
+
+            ol.lst-kix_list_3-3.start {
+                counter-reset: lst-ctn-kix_list_3-3 0
+            }
+
+            ol.lst-kix_list_2-6 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_2-7 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_2-8 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-0.start {
+                counter-reset: lst-ctn-kix_list_1-0 0
+            }
+
+            .lst-kix_list_3-0 > li {
+                counter-increment: lst-ctn-kix_list_3-0
+            }
+
+            .lst-kix_list_3-3 > li {
+                counter-increment: lst-ctn-kix_list_3-3
+            }
+
+            ol.lst-kix_list_4-0.start {
+                counter-reset: lst-ctn-kix_list_4-0 0
+            }
+
+            .lst-kix_list_3-6 > li {
+                counter-increment: lst-ctn-kix_list_3-6
+            }
+
+            .lst-kix_list_2-5 > li {
+                counter-increment: lst-ctn-kix_list_2-5
+            }
+
+            .lst-kix_list_2-8 > li {
+                counter-increment: lst-ctn-kix_list_2-8
+            }
+
+            ol.lst-kix_list_3-2.start {
+                counter-reset: lst-ctn-kix_list_3-2 0
+            }
+
+            .lst-kix_list_2-2 > li {
+                counter-increment: lst-ctn-kix_list_2-2
+            }
+
+            ol.lst-kix_list_2-4.start {
+                counter-reset: lst-ctn-kix_list_2-4 0
+            }
+
+            ol.lst-kix_list_4-7.start {
+                counter-reset: lst-ctn-kix_list_4-7 0
+            }
+
+            ol.lst-kix_list_1-3 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-4 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_2-6 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) "." counter(lst-ctn-kix_list_2-4, decimal) "." counter(lst-ctn-kix_list_2-5, decimal) "." counter(lst-ctn-kix_list_2-6, decimal) ". "
+            }
+
+            .lst-kix_list_2-7 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) "." counter(lst-ctn-kix_list_2-4, decimal) "." counter(lst-ctn-kix_list_2-5, decimal) "." counter(lst-ctn-kix_list_2-6, decimal) "." counter(lst-ctn-kix_list_2-7, decimal) ". "
+            }
+
+            .lst-kix_list_2-7 > li {
+                counter-increment: lst-ctn-kix_list_2-7
+            }
+
+            .lst-kix_list_3-7 > li {
+                counter-increment: lst-ctn-kix_list_3-7
+            }
+
+            ol.lst-kix_list_1-5 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-6 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-0 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_2-4 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) "." counter(lst-ctn-kix_list_2-4, decimal) ". "
+            }
+
+            .lst-kix_list_2-5 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) "." counter(lst-ctn-kix_list_2-4, decimal) "." counter(lst-ctn-kix_list_2-5, decimal) ". "
+            }
+
+            .lst-kix_list_2-8 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) "." counter(lst-ctn-kix_list_2-4, decimal) "." counter(lst-ctn-kix_list_2-5, decimal) "." counter(lst-ctn-kix_list_2-6, decimal) "." counter(lst-ctn-kix_list_2-7, decimal) "." counter(lst-ctn-kix_list_2-8, decimal) ". "
+            }
+
+            ol.lst-kix_list_1-1 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_1-2 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_4-6.start {
+                counter-reset: lst-ctn-kix_list_4-6 0
+            }
+
+            ol.lst-kix_list_3-0.start {
+                counter-reset: lst-ctn-kix_list_3-0 0
+            }
+
+            ol.lst-kix_list_4-3.start {
+                counter-reset: lst-ctn-kix_list_4-3 0
+            }
+
+            ol.lst-kix_list_1-7 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_4-7 > li {
+                counter-increment: lst-ctn-kix_list_4-7
+            }
+
+            .lst-kix_list_1-7 > li {
+                counter-increment: lst-ctn-kix_list_1-7
+            }
+
+            ol.lst-kix_list_1-8 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_3-8.start {
+                counter-reset: lst-ctn-kix_list_3-8 0
+            }
+
+            ol.lst-kix_list_2-5.start {
+                counter-reset: lst-ctn-kix_list_2-5 0
+            }
+
+            .lst-kix_list_4-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) ". "
+            }
+
+            .lst-kix_list_2-6 > li {
+                counter-increment: lst-ctn-kix_list_2-6
+            }
+
+            .lst-kix_list_3-8 > li {
+                counter-increment: lst-ctn-kix_list_3-8
+            }
+
+            .lst-kix_list_4-1 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) ". "
+            }
+
+            .lst-kix_list_4-6 > li {
+                counter-increment: lst-ctn-kix_list_4-6
+            }
+
+            ol.lst-kix_list_1-7.start {
+                counter-reset: lst-ctn-kix_list_1-7 0
+            }
+
+            .lst-kix_list_4-4 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) "." counter(lst-ctn-kix_list_4-4, decimal) ". "
+            }
+
+            ol.lst-kix_list_2-2.start {
+                counter-reset: lst-ctn-kix_list_2-2 0
+            }
+
+            .lst-kix_list_1-5 > li {
+                counter-increment: lst-ctn-kix_list_1-5
+            }
+
+            .lst-kix_list_4-3 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) ". "
+            }
+
+            .lst-kix_list_4-5 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) "." counter(lst-ctn-kix_list_4-4, decimal) "." counter(lst-ctn-kix_list_4-5, decimal) ". "
+            }
+
+            .lst-kix_list_4-2 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) ". "
+            }
+
+            .lst-kix_list_4-6 > li:before {
+                content: "" counter(lst-ctn-kix_list_4-0, decimal) "." counter(lst-ctn-kix_list_4-1, decimal) "." counter(lst-ctn-kix_list_4-2, decimal) "." counter(lst-ctn-kix_list_4-3, decimal) "." counter(lst-ctn-kix_list_4-4, decimal) "." counter(lst-ctn-kix_list_4-5, decimal) "." counter(lst-ctn-kix_list_4-6, decimal) ". "
+            }
+
+            .lst-kix_list_1-8 > li {
+                counter-increment: lst-ctn-kix_list_1-8
+            }
+
+            ol.lst-kix_list_1-4.start {
+                counter-reset: lst-ctn-kix_list_1-4 0
+            }
+
+            .lst-kix_list_3-5 > li {
+                counter-increment: lst-ctn-kix_list_3-5
+            }
+
+            ol.lst-kix_list_1-1.start {
+                counter-reset: lst-ctn-kix_list_1-1 0
+            }
+
+            ol.lst-kix_list_4-0 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_3-4 > li {
+                counter-increment: lst-ctn-kix_list_3-4
+            }
+
+            ol.lst-kix_list_4-1 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_4-4.start {
+                counter-reset: lst-ctn-kix_list_4-4 0
+            }
+
+            ol.lst-kix_list_4-2 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_4-3 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_2-4 > li {
+                counter-increment: lst-ctn-kix_list_2-4
+            }
+
+            ol.lst-kix_list_3-6.start {
+                counter-reset: lst-ctn-kix_list_3-6 0
+            }
+
+            ol.lst-kix_list_1-3.start {
+                counter-reset: lst-ctn-kix_list_1-3 0
+            }
+
+            ol.lst-kix_list_2-8.start {
+                counter-reset: lst-ctn-kix_list_2-8 0
+            }
+
+            ol.lst-kix_list_1-2.start {
+                counter-reset: lst-ctn-kix_list_1-2 0
+            }
+
+            ol.lst-kix_list_4-8 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) ". "
+            }
+
+            ol.lst-kix_list_4-4 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_4-5 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-1 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) ". "
+            }
+
+            .lst-kix_list_1-2 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) ". "
+            }
+
+            ol.lst-kix_list_2-0.start {
+                counter-reset: lst-ctn-kix_list_2-0 0
+            }
+
+            ol.lst-kix_list_4-6 {
+                list-style-type: none
+            }
+
+            ol.lst-kix_list_4-7 {
+                list-style-type: none
+            }
+
+            .lst-kix_list_1-3 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) ". "
+            }
+
+            .lst-kix_list_1-4 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) "." counter(lst-ctn-kix_list_1-4, decimal) ". "
+            }
+
+            ol.lst-kix_list_3-5.start {
+                counter-reset: lst-ctn-kix_list_3-5 0
+            }
+
+            .lst-kix_list_1-0 > li {
+                counter-increment: lst-ctn-kix_list_1-0
+            }
+
+            .lst-kix_list_4-8 > li {
+                counter-increment: lst-ctn-kix_list_4-8
+            }
+
+            .lst-kix_list_1-6 > li {
+                counter-increment: lst-ctn-kix_list_1-6
+            }
+
+            .lst-kix_list_1-7 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) "." counter(lst-ctn-kix_list_1-4, decimal) "." counter(lst-ctn-kix_list_1-5, decimal) "." counter(lst-ctn-kix_list_1-6, decimal) "." counter(lst-ctn-kix_list_1-7, decimal) ". "
+            }
+
+            ol.lst-kix_list_2-7.start {
+                counter-reset: lst-ctn-kix_list_2-7 0
+            }
+
+            .lst-kix_list_1-3 > li {
+                counter-increment: lst-ctn-kix_list_1-3
+            }
+
+            .lst-kix_list_1-5 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) "." counter(lst-ctn-kix_list_1-4, decimal) "." counter(lst-ctn-kix_list_1-5, decimal) ". "
+            }
+
+            .lst-kix_list_1-6 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) "." counter(lst-ctn-kix_list_1-4, decimal) "." counter(lst-ctn-kix_list_1-5, decimal) "." counter(lst-ctn-kix_list_1-6, decimal) ". "
+            }
+
+            .lst-kix_list_2-0 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) ". "
+            }
+
+            .lst-kix_list_2-1 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) ". "
+            }
+
+            ol.lst-kix_list_2-1.start {
+                counter-reset: lst-ctn-kix_list_2-1 0
+            }
+
+            .lst-kix_list_4-5 > li {
+                counter-increment: lst-ctn-kix_list_4-5
+            }
+
+            .lst-kix_list_1-8 > li:before {
+                content: "" counter(lst-ctn-kix_list_1-0, decimal) "." counter(lst-ctn-kix_list_1-1, decimal) "." counter(lst-ctn-kix_list_1-2, decimal) "." counter(lst-ctn-kix_list_1-3, decimal) "." counter(lst-ctn-kix_list_1-4, decimal) "." counter(lst-ctn-kix_list_1-5, decimal) "." counter(lst-ctn-kix_list_1-6, decimal) "." counter(lst-ctn-kix_list_1-7, decimal) "." counter(lst-ctn-kix_list_1-8, decimal) ". "
+            }
+
+            .lst-kix_list_2-2 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) ". "
+            }
+
+            .lst-kix_list_2-3 > li:before {
+                content: "" counter(lst-ctn-kix_list_2-0, decimal) "." counter(lst-ctn-kix_list_2-1, decimal) "." counter(lst-ctn-kix_list_2-2, decimal) "." counter(lst-ctn-kix_list_2-3, decimal) ". "
+            }
+
+            .lst-kix_list_4-2 > li {
+                counter-increment: lst-ctn-kix_list_4-2
+            }
+
+            ol {
+                margin: 0;
+                padding: 0
+            }
+
+            table td, table th {
+                padding: 0
+            }
+
+            .c7 {
+                margin-left: 18pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify;
+                margin-right: 18pt;
+                height: 10pt
+            }
+
+            .c3 {
+                margin-left: 39.6pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify;
+                margin-right: 36pt;
+                padding-right: 3.6pt
+            }
+
+            .c6 {
+                margin-left: 18pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify;
+                margin-right: 18pt;
+                padding-right: 0pt
+            }
+
+            .c5 {
+                margin-left: 36pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify;
+                margin-right: 36pt
+            }
+
+            .c14 {
+                margin-left: 36pt;
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: right;
+                height: 10pt
+            }
+
+            .c12 {
+                color: #3333ff;
+                font-weight: 400;
+                vertical-align: baseline;
+                font-size: 12pt;
+                font-family: "Arial"
+            }
+
+            .c4 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: left;
+                height: 10pt
+            }
+
+            .c11 {
+                vertical-align: baseline;
+                font-size: 11pt;
+                color: #000000;
+                font-weight: 400
+            }
+
+            .c13 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify;
+                height: 10pt
+            }
+
+            .c18 {
+                vertical-align: baseline;
+                font-size: 12pt;
+                color: #000000;
+                font-weight: 400
+            }
+
+            .c21 {
+                color: #000000;
+                font-weight: 400;
+                vertical-align: baseline;
+                font-size: 12pt;
+            }
+
+            .c9 {
+                vertical-align: baseline;
+                font-size: 15pt;
+                font-weight: 700
+            }
+
+            .c1 {
+                vertical-align: baseline;
+                font-size: 12pt;
+                font-weight: 400
+            }
+
+            .c16 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: right
+            }
+
+            .c0 {
+                vertical-align: baseline;
+                font-size: 12pt;
+                font-weight: 700
+            }
+
+            .c17 {
+                vertical-align: baseline;
+                font-size: 12pt;
+                font-family: "Calibri";
+                font-weight: 700
+            }
+
+            .c19 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: justify
+            }
+
+            .c15 {
+                padding-top: 0pt;
+                padding-bottom: 0pt;
+                line-height: 1.0;
+                text-align: center
+            }
+
+            .c22 {
+                background-color: #ffffff;
+                max-width: 481.9pt;
+                padding: 56.7pt 56.7pt 56.7pt 56.7pt
+            }
+
+            .c25 {
+                margin-left: 36pt;
+                margin-right: 36pt
+            }
+
+            .c26 {
+                color: inherit;
+                text-decoration: inherit
+            }
+
+            .c8 {
+                text-indent: -36pt;
+                height: 10pt
+            }
+
+            .c10 {
+                padding: 0;
+                margin: 0
+            }
+
+            .c23 {
+                margin-left: 18pt;
+                margin-right: 18pt
+            }
+
+            .c20 {
+                text-indent: -36pt
+            }
+
+            .c2 {
+                text-decoration: underline
+            }
+
+            .c24 {
+                color: #000000
+            }
+
+            .contentsRows li {
+                color: #000000;
+                font-size: 10pt;
+            }
+
+            .contentsRows p {
+                margin: 0;
+                color: #000000;
+                font-size: 10pt;
+            }
+
+            .contentsRows h1 {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 24pt;
+                padding-bottom: 6pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows h2 {
+                padding-top: 18pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 18pt;
+                padding-bottom: 4pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows h3 {
+                padding-top: 14pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 14pt;
+                padding-bottom: 4pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows h4 {
+                padding-top: 12pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 12pt;
+                padding-bottom: 2pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows h5 {
+                padding-top: 11pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 11pt;
+                padding-bottom: 2pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows h6 {
+                padding-top: 10pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 10pt;
+                padding-bottom: 2pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows .title {
+                padding-top: 24pt;
+                color: #000000;
+                font-weight: 700;
+                font-size: 36pt;
+                padding-bottom: 6pt;
+                line-height: 1.0;
+                page-break-after: avoid;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+            .contentsRows .subtitle {
+                padding-top: 18pt;
+                color: #666666;
+                font-size: 24pt;
+                padding-bottom: 4pt;
+                font-family: "Georgia";
+                line-height: 1.0;
+                page-break-after: avoid;
+                font-style: italic;
+                orphans: 2;
+                widows: 2;
+                text-align: left
+            }
+
+
+        </style>
+        <div class="scrollDesign contentsRows" scroll-agree>
+            <div class="insideText">
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <p class="c5 c20" dir="rtl"><span
+                    class="c0">הואיל </span><span
+                    class="c1">ובבעלות החברה תוכנת מחשב בעלת ממשק אינטרנטי בתחום הניהול, הבקרה והתכנון העסקי, המאפשרת ניהול מידע עסקי (להלן: "</span><span
+                    class="c0">התוכנה</span><span class="c1">");</span></p>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <p class="c5 c20" dir="rtl"><span
+                    class="c0">והואיל </span><span
+                    class="c1">ורו"ח מצהיר, כי ביום חתימת הסכם זה יש בידו, והוא מתחייב כי כל עוד הסכם זה בתוקף יהיה בידו, רישיון בר תוקף שניתן לפי חוק רואי חשבון, תשט"ו-1955;</span>
+            </p>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <p class="c5 c20" dir="rtl"><span
+                    class="c0">והואיל </span><span
+                    class="c1">ורו"ח עוסק במתן שירותי ראיית חשבון ללקוחות, שהינם יחידים, בגירים תושבי ו/או אזרחי ישראל ו/או תאגידים הרשומים בישראל, על פי הסמכה כדין מהלקוחות הללו, ועל פי מידע, נתונים והרשאות שהם מסרו ו/או ימסרו לו מדעת, הכל לפי הנחיותיו ושיקול דעתו המקצועי והבלעדי של רו"ח (להלן: "</span><span
+                    class="c0">הלקוחות"</span><span class="c1">);</span></p>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <p class="c5 c20" dir="rtl"><span class="c0">והואיל</span><span class="c1"> ורו"ח מעוניין להזמין מהחברה רישיון שימוש אישי בתוכנה, כמפורט בהסכם זה להלן;</span>
+            </p>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <p class="c15" dir="rtl"><span class="c0 c2">אי לכך הוסכם, הוצהר והותנה בין הצדדים כדלקמן:</span></p>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0 start" start="1">
+                <li class="c6" dir="rtl"><span class="c0 c2">מבוא ופרשנות</span></li>
+            </ol>
+            <ol class="c10 lst-kix_list_3-1 start" start="1">
+                <li class="c3" dir="rtl"><span class="c1">המבוא להסכם זה מהווה חלק בלתי נפרד ממנו.</span></li>
+                <li class="c3" dir="rtl"><span class="c1">כותרות הסעיפים בהסכם זה נועדו לנוחות בלבד, ואין להתחשב בהן בפרשנות הסכם זה.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">תנאי הסכם זה מנוסחים בלשון זכר לשם הנוחות בלבד, אך מתייחסים לנשים ולגברים כאחד. </span>
+                </li>
+            </ol>
+            <p class="c5 c8" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="2">
+                <li class="c6" dir="rtl"><span class="c0 c2">הצהרות והתחייבויות החברה</span></li>
+            </ol>
+            <p class="c19 c23" dir="rtl"><span class="c1">בכפוף לכל דין, לנכונות הצהרות רו"ח בהסכם זה ולקיום כל התחייבויותיו על פיו (לרבות תשלום דמי השימוש החודשיים כהגדרתם בהסכם זה להלן), מתחייבת החברה להתקין את התוכנה במשרדו של רו"ח ולהעניק לו רישיון שימוש אישי בתוכנה, אשר אינו ניתן להעברה לאדם ו/או לגוף אחר כלשהו, וזאת למטרת ניהול נתוני רו"ח ו/או נתוני לקוחותיו (להלן בהתאמה: "</span><span
+                    class="c0">רישיון השימוש</span><span class="c1">" ו"</span><span class="c0">הנתונים</span><span
+                    class="c1">"). מובהר, כי החברה עוסקת במתן שירותים בתחום התוכנה, ואינה נותנת, ואין בכוונתה לתת, שירותי ראיית חשבון. &nbsp;</span>
+            </p>
+            <p class="c13" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="3">
+                <li class="c6" dir="rtl"><span class="c0 c2">שימוש בתוכנה</span></li>
+            </ol>
+            <p class="c19" dir="rtl"><span class="c1">&nbsp; &nbsp; &nbsp; &nbsp;השימוש בתוכנה יהיה כמפורט להלן:</span>
+            </p>
+            <ol class="c10 lst-kix_list_3-1" start="4">
+                <li class="c3" dir="rtl"><span class="c1">מטעמי אבטחת מידע יידרש שימוש בשם משתמש וסיסמה אישיים של רו"ח, ורו"ח ינקוט בכל האמצעים הנחוצים לשמירת סודיותם ולאי חשיפתם לצד ג' כלשהו. &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">נדרש חיבור רצוף לרשת האינטרנט.</span></li>
+                <li class="c3" dir="rtl"><span class="c1">לשם ליקוט, יבוא וקריאה אוטומטית של הנתונים, לרבות אלו המנוהלים על ידי בנקים בישראל ו/או מנפיקי כרטיס חיוב בישראל ו/או כל צד ג' אחר (להלן בהתאמה: "</span><span
+                        class="c0">ההרשאות</span><span class="c1">" ו"</span><span class="c0">מוסדות פיננסים</span><span
+                        class="c1">"), יש להזין את כל ההרשאות הנדרשות לכך בתוכנה. &nbsp;רו"ח מצהיר, כי הנו רשאי (וכי יהיה רשאי לאורך כל תקופת הסכם זה) להשתמש בתוכנה, להזין את ההרשאות ו/או למסור לחברה את המידע הנדרש לשם השימוש בתוכנה, לבצע קריאה אוטומטית של הנתונים, לרבות אלו המנוהלים על ידי מוסדות פיננסים, להשתמש בתוצרי השימוש של התוכנה (להלן: "</span><span
+                        class="c0">תוצרי השימוש</span><span class="c1">") ולשמור אותם ו/או לאפשר לחברה לשמור אותם והכל על פי הסכמה מפורשת, שקיבל כדין מכל לקוח, עבורו יעשה שימוש בתוכנה. &nbsp;רו"ח מתחייב, כי יחדל להשתמש בתוכנה עבור כל לקוח, שחדל להיות לקוח שלו, מכל סיבה שהיא, ו/או עבור כל לקוח שביטל את הסכמתו לגבי המשך השימוש בתוכנה, ורו"ח ימסור הודעה לחברה בקשר לכך. &nbsp;רו"ח ישמור אצלו תיעוד לגבי הסכמת כל לקוח לגבי השימוש בתוכנה, כאמור לעיל, והחברה תהיה רשאית לבקש מרו"ח ולקבל ממנו העתק של תיעוד הסכמת הלקוח.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח מסכים לכך שהמידע הנמסר במהלך ו/או במסגרת שימושו בתוכנה יישמר על ידי החברה כדי לאפשר לו את השימוש בתוכנה וקבלת שירות מהחברה, לרבות שיפור השירות, קבלת הצעות לשירותים נוספים, בירור או טיפול בכל עניין הנוגע להסכם זה, ניתוח, מחקר ובקרה בקשר לתוכנה ו/או לשירותי החברה וכיו"ב. &nbsp;מידע רגיש (כגון הרשאות ו/או תוצרי השירות) יישמר באופן מוצפן. &nbsp;רו"ח מסכים לכך שהחברה רשאית להסתייע בשירותי צד ג' בנוגע למידע כאמור, לרבות כדי לאסוף ו/או ולנתח מידע סטטיסטי או מצרפי בקשר עם שימוש רו"ח בתוכנה ו/או בשירותי החברה ו/או נוהגיו ו/או פעילותו בתוכנה, ובכלל זה הצלחות ליקוט, יבוא וקריאת הנתונים וכיו"ב ו/או כדי לברר כל טענה ו/או דרישה של רו"ח מהחברה. &nbsp;החברה רשאית למחוק את המידע כאמור, ובכלל זה במקרה שתתקבל הודעה מרו"ח, כי סיים ליתן שירות ללקוח מסוים (בכלל או באמצעות התוכנה) ו/או במקרה של ביטול ו/או השהיית רישיון השימוש של רו"ח ו/או בכל מקרה של ביטול הסכם זה. &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">השירותים בתוכנה ניתנים לרו"ח "כמות שהם"("as is"), ורו"ח מאשר שבדק את התוכנה, ומצא אותה מתאימה לצרכיו ולמטרותיו. להסרת ספק, תוצרי השימוש אינם מהווים ייעוץ משפטי, כספי, פיננסי, חשבונאי, מיסוי, ייעוץ בהשקעות ו/או כל ייעוץ אחר, ואין בהם משום הצעה, שידול ו/או ייעוץ לביצוע כל עסקה, פעולה ו/או קבלת החלטה כלשהי. &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">השימוש בתוכנה מתבסס על זמינות, עדכניות, דיוק, נכונות, אמינות ושלמות הנתונים, כפי שהוזנו במקור, וכפי שהם זמינים במועד קריאתם ולגישה מלאה לכל הנתונים, ועל כן תלוי בגורמים שאינם בשליטת החברה. &nbsp;תוצרי השימוש מופקים בהסתמך על הנתונים, כפי שהם (as is), על פי זמינותם (as available) ונכון למועד בו יובאו, לוקטו ונקראו, ואין בהם כדי לרפא כל טעות שנפלה במקור ו/או להציג נתונים שלא היו זמינים במועד בו לוקטו ו/או להתייחס לכל שינוי שחל בנתונים לאחר מכן. &nbsp;החברה אינה בודקת ואינה אחראית לדיוק, נכונות, אמינות, שלמות ו/או חוקיות הנתונים. &nbsp;על רו"ח חלה החובה לבדוק אם הנתונים ו/או תוצרי השימוש הנם מעודכנים, מדויקים, נכונים, אמינים ושלמים, ובכלל זה על ידי השוואה למקורות מידע נוספים ו/או בכל דרך מקובלת אחרת. ידוע ומוסכם על רו"ח, כי כל החלטה ו/או פעולה שלו ו/או של מי מטעמו, בין אם הן מתבססות על שימוש בתוכנה ו/או על תוצרי השימוש, הנן באחריותו הבלעדית והמלאה של רו"ח, ורו"ח ו/או הלקוחות לא יהיו רשאים להעלות כל טענה, דרישה ו/או תביעה כנגד החברה ו/או מי מטעמה בקשר לכך.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">יתכן ומעת לעת לא יתאפשר זמנית השימוש בתוכנה בשל תקלה, עדכון, תחזוקה, תיקון ו/או כל פעולה אחרת, שהחברה, לפי שיקול דעתה הבלעדי, תנקוט. החברה שומרת לעצמה את הזכות לתקן, להרחיב, לשפר, לעדכן, לשדרג, לאבטח, להוסיף תכונות חדשות, להסיר, ו/או לערוך כל התאמה ו/או שינוי אחר בתוכנה ו/או בכל חלק ממנה, וזאת בלא צורך להודיע על כך לרו"ח מראש. &nbsp;מבלי לגרוע מכלליות האמור, רשאית החברה לשנות את מבנה התוכנה, עיצובה והיקף זמינות שירותים ותכנים בה וכן לקבוע אילו תכנים ומידע יוצגו בה, משך הזמן בו יוצגו, מיקומם וכל עניין אחר הקשור בהם, ובכלל זה להסיר כל תוכן לפי שיקול דעתה הבלעדי של החברה. &nbsp;שינויים מסוג זה עלולים להיות כרוכים בתקלות או לעורר בתחילה אי נוחות, אולם לרו"ח לא תהיה כל טענה, דרישה ו/או תביעה כלפי החברה בגין שינויים כאמור ו/או בגין תקלות שיתרחשו אגב ביצועם, והחברה תפעל לתיקון תקלות כאמור, ככל שיהיו, בכפוף לקבלת הודעת קריאה מרו"ח בסמוך למועד שבו גילה את התקלה, ובכפוף לשיתוף פעולה מרו"ח, ככל שיידרש, בקשר לתיקון התקלה. &nbsp;החברה תהיה רשאית לבקש מרו"ח לבצע עדכוני תוכנה, והאחריות לבירור ולביצוע עדכוני התוכנה תהיה על רו"ח. &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">ידוע לרו"ח, כי כל מערכת ממוחשבת, לרבות כזו המבוססת על תוכנה, חומרה, רשתות תקשורת ורשת האינטרנט, סובלת לעתים מתקלות וחשופה לסיכונים. החברה פועלת להבטיח את תקינות השימוש בתוכנה, אולם אינה מתחייבת שיהיה ללא תקלות או הפרעות או נקי מפגמים או הגבלות אחרות. ככל שתתגלה תקלה, הנובעת מהתוכנה עצמה, תפעל החברה לתקנה, בכפוף לקבלת הודעת קריאה מרו"ח בסמוך למועד שבו גילה את התקלה, ובכפוף לשיתוף פעולה של רו"ח, ככל שיידרש, בקשר לתיקון התקלה. &nbsp;החברה תהיה רשאית לטפל בתקלה ו/או לסייע ולתת שירות לרו"ח באמצעות מוקד שירות לקוחות, שתפעיל לפי שיקול דעתה הבלעדי ובשעות ייעודיות שיוגדרו לכך. &nbsp;מבלי לגרוע מכלליות האמור מובהר, כי החברה אינה אחראית, ולא תתקן תקלות בקשר לתוכנה, הנובעות ממחשב רו"ח ו/או מאתר אינטרנט ו/או תוכנות אחרות שבשימוש רו"ח ו/או מאמצעים טכנולוגיים ו/או אחרים שבשימוש רו"ח, לרבות עקב וירוס, תולעת, סוס טרויאני או כל רכיב פוגעני אחר ו/או רכיב העלול להפריע לעבודת התוכנה, ורו"ח יהיה אחראי באופן בלעדי לבטיחות מערכות המחשב שלו. </span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">החברה לא תהיה אחראית, ורו"ח מסכים, כי החברה תהיה פטורה מכל אחריות לכל הוצאה, הפסד, נזק, ישיר ו/או עקיף, הפסד הכנסה או עסקים, רווח מנוע, פגיעה במוניטין וכיו"ב, שנגרם ו/או ייגרם לרו"ח, ללקוחות ו/או לכל צד ג' אחר בקשר עם ו/או כתוצאה משימוש בתוכנה ו/או בתוצרי השימוש ו/או בקשר עם הסכם זה, לרבות אך מבלי לגרוע מכלליות האמור נזק עקב טעות ו/או תקלה (לרבות בזמינות הנתונים אצל מוסדות פיננסים ו/או כל צד ג' אחר), תפעול שגוי של התוכנה, הפסקה זמנית במתן שירותים בקווי תקשורת, שיבושים ותקלות אחרים בקווי תקשורת, שיבושים בפעולת אתר/י צד ג' (לרבות מוסדות פיננסים), זמינות ו/או זמני תגובה של המערכות הממוחשבות של רו"ח ו/או של צדדי ג' (לרבות מוסדות פיננסים) ו/או שיבושים במידע ו/או בנתונים ו/או בקבלתם ו/או באובדנם כתוצאה מתקלות אחרות שאינן בשליטת החברה, ובכלל זה תקלה בליקוט ו/או בהצגת הנתונים בשל שינוי באופן הצגת ו/או בזמינות נתונים אצל מוסד פיננסי כלשהו (למשל בעקבות שינוי באתר אינטרנט ו/או בתצוגת מסך אצל מוסד פיננסי, העשוי להשפיע על תוצרי השימוש). &nbsp;החברה מצהירה, כי לא תוכל לספק את רישיון השימוש ללא הגבלת האחריות כאמור לעיל. &nbsp;בכל מקרה, שלטענת רו"ח, נגרם לו ו/או למי מטעמו נזק בקשר לתוכנה ו/או לתוצרי השימוש ו/או להסכם זה, ימסור רו"ח מיד הודעה בכתב לחברה בליווי כל המידע ו/או החומר הרלבנטיים, וישתף פעולה עם החברה בקשר לכך.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">מבלי לגרוע מכלליות האמור, ככל שעל אף הסכמת הצדדים בהסכם זה לגבי הגבלת אחריות החברה, יקבע בפסק דין חלוט על ידי ערכאה שיפוטית מוסמכת, כי החברה אחראית כלפי רו"ח ו/או מי מטעמו ו/או כל צד ג' אחר בגין נזק ישיר, שנגרם עקב הפרה יסודית של הסכם זה על ידי החברה, ו/או מכל סיבה אחרת, אזי אחריות החברה לפי הסכם זה תהיה מוגבלת ולא תעלה בכל מקרה על גובה התמורה, ששילם רו"ח בפועל לחברה, כדמי שימוש חודשיים בתוכנה עבור חודש התקשרות אחד בלבד, וזאת על אף האמור בחוק החוזים (תרופות בשל הפרת חוזה), התשל"א-1970 ו/או בכל דין אחר. &nbsp;מבלי לגרוע מכלליות האמור, החברה לא תישא באחריות לנזקים נוספים, עקיפים ו/או תוצאתיים כלשהם, ובכלל זה אובדן הכנסה, אובדן רווחים וכיו"ב, תהא אשר תהא עילת התביעה או סיבת הנזק. &nbsp;מובהר, כי בכל מקום בהסכם זה בו מפורטת הגבלת אחריות החברה תהיה הכוונה גם להגבלת אחריותם של עובדיה, מנהליה והפועלים מכוחה או בשמה.</span>
+                </li>
+            </ol>
+            <p class="c14"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="4">
+                <li class="c6" dir="rtl"><span class="c0 c2">הצהרות והתחייבויות רו"ח</span></li>
+            </ol>
+            <p class="c19 c23" dir="rtl"><span class="c1">רו"ח מצהיר ומתחייב כלפי החברה כדלקמן:</span></p>
+            <ol class="c10 lst-kix_list_3-1" start="14">
+                <li class="c3" dir="rtl"><span class="c0 c2">דמי שימוש חודשיים</span><span class="c1">: רו"ח מתחייב לשלם לחברה עבור רישיון השימוש תשלום חודשי של 30 ₪ (שלושים שקלים חדשים) או 50 ₪ (חמישים שקלים חדשים), בתוספת מע"מ כדין, עבור כל לקוח של רו"ח עבורו יעשה רו"ח שימוש בתוכנה, לפי מספר הלקוחות ולפי סוג השירותים הנכללים ברישיון השימוש לגבי כל לקוח (להלן: "</span><span
+                        class="c0">דמי השימוש החודשיים</span><span class="c1">"). &nbsp;דמי השימוש החודשיים ישולמו על ידי רו"ח מראש, בתחילת כל חודש קלנדרי, עבור השימוש בתוכנה באותו חודש, וזאת עד לסיום ההתקשרות בין הצדדים (או לגבי לקוח מסוים עד למועד בו סיים רו"ח את השימוש בתוכנה ביחס אליו, בין משום שחדל להיות לקוח של רו"ח ובין משום שביטל את הסכמתו לשימוש רו"ח בתוכנה ובין מכל סיבה אחרת). &nbsp;למרות האמור, אם וככל שלקוח של רו"ח יהפוך ללקוח של החברה, וישלם לחברה בפועל תמורה חודשית עבור שימוש בתוכנה, וכל עוד לקוח כאמור משלם תמורה חודשית לחברה, והנו לקוח של רו"ח, יזוכה רו"ח מדי חודש בסך של 30 ₪ (שלושים שקלים חדשים) או 50 ₪ (חמישים שקלים חדשים) (כאמור לעיל לפי סוג השירות הנכלל ברישיון השימוש), בתוספת מע"מ כדין, עבור אותו לקוח. במקרה שלקוח של רו"ח יהפוך ללקוח של החברה, לא יפגע רו"ח, במישרין ו/או בעקיפין, בהתקשרות הנ"ל, לרבות במקרה בו הלקוח אינו מקיים את התחייבויותיו כלפי רו"ח. &nbsp;מבלי לגרוע מכל סעד ו/או זכות של החברה לפי כל דין ו/או חוזה, במקרה בו רו"ח לא שילם לחברה במועד את מלוא דמי השימוש החודשיים ו/או הפר הסכם זה בכל דרך אחרת, תהיה החברה רשאית להפסיק את מתן השירות ו/או להשהות ו/או לבטל את רישיון השימוש של רו"ח ו/או לסיים את ההתקשרות עם רו"ח לפי הסכם זה באופן מיידי, ללא צורך במתן הודעה כלשהי, ולרו"ח לא תהיה כל טענה, דרישה ו/או תביעה כלפי החברה ו/או מי מטעמה בקשר לכך. &nbsp;מובהר, כי ככל שהחברה תציע בעתיד שירותים נוספים, התמורה בגינם תיגבה על פי הסכמה בכתב בין הצדדים, וזאת בנוסף לדמי השימוש החודשיים. עוד מובהר, כי במקרה של עדכון מחירון החברה לגבי דמי השימוש החודשיים, תימסר לרו"ח הודעה מראש ובכתב. </span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c0 c2">קניין רוחני</span><span class="c1">: מלוא זכויות הקניין הרוחני בתוכנה, לרבות ומבלי להגביל את כלליות האמור שמות מתחם (בין אם רשומים או ניתנים לרישום ובין אם לאו), חוויית שימוש, תוכן (מילולי, חזותי, קולי, או כל שילוב שלהם או חלק מהם וכן עיצובו, עיבודו, עריכתו ודרך הצגתו), טקסט, מידע, גרפיקה, עיצובים, תמונות, צילומים, וידאו/סרטונים, לוגו, סמלים, ממשקים, הודעות וכיו"ב, לרבות מוניטין, זכויות יוצרים, סימני מסחר (בין רשומים ובין אם לאו), שמות מסחר, פטנטים, רעיונות, פיתוחים, קוד מקור, שיטות, תהליכים, טכנולוגיות, וכל זכויות דומות באשר הן, הנם מוגנים לפי כל דין ובבעלות קניינית מלאה ובלעדית של החברה ו/או בשימושה לפי רישיון שימוש שקיבלה, ולרו"ח אין כל זכויות בתוכנה ו/או בכל חלק ממנה, למעט זכות שימוש אישית ומוגבלת על פי רישיון השימוש, שאינו ניתן להעברה לאדם ו/או לגוף כלשהו, ושהינו כפוף לקיום כל התחייבויות רו"ח בהסכם זה, לרבות הסדרת תשלום דמי השימוש החודשיים; כל זכות שלא הוקנתה לרו"ח במפורש על פי הסכם זה, תישמר בידי החברה וצדדים שלישיים שהקנו לה רישיון. &nbsp;רו"ח מתחייב, כי לא ישתמש באמצעי איסוף או חילוץ מידע אוטומטיים כלשהם כדי להעתיק או לעקוב אחר התוכנה, וכי לא ינסה לפענח או לבצע הנדסה לאחור של כל או חלק מהתוכנות המרכיבות או מהוות חלק ממנה. &nbsp;כמו כן, מתחייב רו"ח, כי לא יפעיל אמצעים לעקיפה, נטרול או התגברות על מנגנוני האבטחה בתוכנה, ולא יפגום, יפגע או יפריע בדרך כלשהי לפעילות התקינה של התוכנה. &nbsp;רו"ח לא יעתיק, ישכפל, יפיץ, יפרסם, ישדר, יציג, ישנה, יעבד או יעשה כל שימוש בתוכנה לכל מטרה, שלא הותרה במפורש לפי הסכם זה, ובכלל זה כל שימוש העשוי לפגוע בזכויות הקניין הרוחני של החברה ו/או של צד ג' אחר כלשהו. &nbsp;רו"ח לא ימכור, ישכיר, ישאיל, יעביר כל זכות, ייתן רישיון משנה ו/או ימסור לצד ג' כלשהו כל ו/או חלק מהקניין הרוחני של החברה ו/או מהתוכנה ו/או מרישיון השימוש שלו, בכל דרך או אמצעי שהוא, ללא קבלת הסכמה מפורשת מראש ובכתב מהחברה, ובכפוף לתנאי אותה הסכמה (ככל שתינתן). &nbsp;רו"ח מסכים ומאשר לחברה להשתמש, כפי שתמצא לנכון, בכל משוב, המלצה או רעיון מכל סוג שהוא, שיעביר לחברה, ורו"ח מעניק לחברה רישיון תמידי, הניתן להעברה ולרישוי משנה, גלובלי, בלתי חוזר, משולם במלואו וללא חיוב בתגמולים להשתמש בכל דרך שהיא באלו. </span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח מסכים, כי ככל שהחברה תעמיד לשימושו מחשב, יישאר המחשב בבעלות החברה, ועם סיום ההתקשרות בין רו"ח לבין החברה ו/או על פי בקשת החברה, מתחייב רו"ח להחזיר לחברה לאלתר את המחשב. &nbsp;מובהר, כי לרו"ח לא תהיה כל זכות עכבון לגבי המחשב, והוא מוותר בזאת על כל זכות כאמור, אם בכלל.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח רשאי ומוסמך להתקשר בהסכם זה; אין כל מניעה חוקית, חוזית או אחרת להתקשרותו בהסכם זה, ביצוע התחייבויותיו על פיו ו/או שימושו בתוכנה, והוא איננו נזקק לצורך התקשרותו בהסכם זה ו/או לשם קיום התחייבויותיו על פיו להסכמה כלשהי של צד ג' כלשהו, אשר אינה מצויה ברשותו, וככל שלמרות האמור נדרשת ו/או תידרש הסכמת צד ג' כלשהי בקשר להסכם זה, רו"ח יקבל את כל ההסכמות הנדרשות מראש ובכתב, ולא יעשה כל שימוש בלתי מורשה בתוכנה. &nbsp;כל שימוש בתוכנה על ידי רו"ח יהיה למטרה חוקית בלבד. &nbsp;ידוע ומוסכם על רו"ח, כי אין לעשות בתוכנה כל שימוש המהווה או העלול להוות עבירה ו/או עוולה אזרחית בהתאם להוראות כל דין ו/או כל שימוש הפוגע בזכויות צד ג' כלשהו, ורו"ח מתחייב בזאת לא לעשות בתוכנה כל שימוש כאמור.</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח אחראי על שמירת המידע (לרבות ומבלי להגביל את כלליות האמור שם המשתמש והסיסמה שלו, ההרשאות, הנתונים ו/או תוצרי השימוש) על מחשבו ו/או במכשירו הסלולרי ו/או בטבלט ו/או בכל מכשיר אחר בו יעשה שימוש בתוכנה, ורו"ח מתחייב לנקוט בכל אמצעי הזהירות הנדרשים כדי להבטיח את המידע, את מחשבו ואת כל המכשירים הנ"ל, ובכלל זה ומבלי להגביל את כלליות האמור על ידי שימוש בתוכנת "אנטי וירוס" ונקיטת צעדים למניעת שימוש של צד ג' במחשבו ו/או במכשירים האחרים הנ"ל. &nbsp;רו"ח יידע את החברה באופן מיידי על כל שימוש בלתי מורשה ו/או שימוש לרעה בתוכנה, לרבות בשם המשתמש והסיסמה שלו, וישתף פעולה עם החברה, ככל שיידרש, בקשר לכך. &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">כל עוד רו"ח משתמש בתוכנה, לא יקבל רו"ח, במישרין ו/או בעקיפין, כל שירות דומה מכל מתחרה של החברה, ולא יסייע לשווק כל שירות ו/או מוצר דומה של מתחרה של החברה. </span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח אינו רשאי למסור, להסב, להמחות או להעביר לאחר(ים) את זכויותיו ו/או את התחייבויותיו לפי הסכם זה, כולן או חלקן, שלא בהסכמת החברה בכתב ומראש. </span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">רו"ח יהיה אחראי כלפי החברה ו/או מי מטעמה לכל נזק, הפסד ו/או הוצאה שיגרמו לחברה ו/או מי מטעמה כתוצאה מדרישה ו/או תביעה של צד ג' כלשהו כתוצאה ממעשה ו/או מחדל של רו"ח המהווה הפרה של הסכם זה, ורו"ח ישפה את החברה ו/או מי מטעמה בגין כל נזק ו/או הוצאה שייגרמו לה. &nbsp;בסעיף זה "החברה", לרבות גוף קשור לחברה, אם בכלל, כגון חברת-אם, חברה-בת וחברה-אחות. &nbsp; &nbsp;</span>
+                </li>
+                <li class="c3" dir="rtl"><span class="c1">מבלי לגרוע מכלליות האמור, בכל מקרה בו רו"ח ו/או מי מטעמו יפר הוראה מהוראות הסכם זה, תהיה החברה רשאית (וזאת מבלי לגרוע מכל זכות, סעד ו/או תרופה אחרים העומדים לרשותה על פי הסכם זה ו/או על פי כל דין) להגביל, לחסום, להפסיק ו/או לבטל את רישיון השימוש של רו"ח, על פי שיקול דעת החברה, ובלא צורך במתן הודעה מוקדמת על כך לרו"ח. &nbsp;</span>
+                </li>
+            </ol>
+            <p class="c7" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="5">
+                <li class="c6" dir="rtl"><span class="c0 c2">סודיות</span><span class="c1">- מבלי לגרוע מהתחייבויות הצדדים לפי כל דין ו/או חוזה, כל צד מתחייב, כי ככל שייחשף למידע סודי של הצד השני ו/או של צד ג' אחר כלשהו במסגרת הסכם זה ו/או השימוש בתוכנה (להלן: "</span><span
+                        class="c0">מידע סודי</span><span class="c1">"), אותו צד ישמור עליו בסודיות, ולא יעבירו ו/או יאפשר את חשיפתו לצד ג' כלשהו, ולא יעשה בו שימוש כלשהו, למעט שימוש לשם קיום הוראות הסכם זה ובהיקף הנדרש לכך בלבד ו/או בהתייחס לרו"ח שימוש לשם מתן שירותי ראיית חשבון. &nbsp;חובת הסודיות כאמור לא תחול: (א) במקרה של חובת מסירת מידע ע"פ כל דין (ובלבד שבכפוף לדין, הצד שנדרש לגלות את המידע ייידע את הצד השני מיד עם קבלת דרישת מסירת המידע, ובכל מקרה לפני מסירתו) ו/או (ב) לגבי מידע שהפך להיות נחלת הכלל, שלא בשל מעשה ו/או מחדל של הצד שקיבל המידע. &nbsp;חרף חובת הסודיות, תהיה החברה רשאית להעביר מידע סודי לצד ג' כלשהו בקשר עם בחינת ו/או ביצוע עסקת מכירה, רכישה, מיזוג, ארגון מחדש, העברה של כל ו/או חלק מעסקי ו/או נכסי החברה או שינוי שליטה בחברה, בתנאי שצד ג' מקבל המידע יהיה כפוף לחובת סודיות דומה לזו של החברה ע"פ הסכם זה.</span>
+                </li>
+            </ol>
+            <p class="c7" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="6">
+                <li class="c6" dir="rtl"><span class="c0 c2">היעדר יחסי עובד מעביד</span><span class="c1">-אין כל יחסי עובד-מעביד בין רו"ח לבין החברה, והיחסים ביניהם הינם יחסי לקוח-ספק.</span>
+                </li>
+            </ol>
+            <p class="c5 c8" dir="rtl"><span class="c1 c2"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="7">
+                <li class="c6" dir="rtl"><span class="c0 c2">ביטול ההסכם</span><span class="c1">- כל צד יוכל להביא לביטול הסכם זה על ידי מתן הודעה בכתב 30 יום מראש לצד השני. &nbsp;מובהר, כי סיום הסכם זה מכל סיבה שהיא אין בו כדי לגרוע מחובת רו"ח להסדיר את כל התחייבויותיו הכספיות ו/או האחרות כלפי החברה עד לתום תקופת ההתקשרות ו/או לפטור את רו"ח מהתחייבויותיו בנושא קניין רוחני וסודיות, אשר ימשיכו לחול גם לאחר מכן, ללא כל הגבלת זמן. &nbsp;ידוע לרו"ח, כי לאחר ביטול הסכם זה אין החברה מחויבת לשמור על הנתונים ו/או תוצרי השירות ו/או כל מידע אחר שהועבר אליה במסגרת קיום הסכם זה, וכי לבקשת רו"ח תמחק החברה את המידע כאמור, למעט החלק של המידע הדרוש לה לניהול עסקיה.</span>
+                </li>
+            </ol>
+            <p class="c7" dir="rtl"><span class="c1"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="8">
+                <li class="c6" dir="rtl"><span class="c0 c2">שינוי ההסכם</span><span class="c1">- תנאי הסכם זה ממצים את כל המוסכם בין רו"ח לבין החברה בקשר עם רישיון השימוש בתוכנה, לרבות הגבלת האחריות והתרופות להם זכאי כל צד בגין הפרת תנאי הסכם זה. כל שינוי, תיקון או ויתור בקשר להסכם זה יהיה בתוקף, רק אם נערך בכתב ונחתם ע"י רו"ח והחברה. &nbsp;בכל מקרה שחלילה הוראה מהוראות ההסכם אינה עומדת בהוראות הדין, היא תפורש באופן שתותאם להוראות הדין, ותמשיך להיות בתוקף.</span>
+                </li>
+            </ol>
+            <p class="c14" dir="rtl"><span class="c1 c2"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="9">
+                <li class="c6" dir="rtl"><span class="c0 c2">הדין החל וסמכות שיפוט</span><span class="c1">- על הסכם זה חלים דיני מדינת ישראל. &nbsp;במקרה של מחלוקת ו/או סכסוך בקשר להסכם זה, יפעלו הצדדים כמיטב יכולתם להגיע ביניהם לפתרון מוסכם. &nbsp;לא הצליחו הצדדים ליישב את המחלוקת ו/או הסכסוך כאמור, תהיה לבית המשפט המוסמך בתל-אביב סמכות השיפוט הבלעדית לגבי כל עניין, מחלוקת ו/או סכסוך שיתגלע בין הצדדים שעילתו בהסכם זה ו/או בהפרתו, באופן שתישלל סמכות השיפוט מכל בית משפט ו/או בית דין אחר.</span>
+                </li>
+            </ol>
+            <p class="c14" dir="rtl"><span class="c1 c2"></span></p>
+            <ol class="c10 lst-kix_list_3-0" start="10">
+                <li class="c6" dir="rtl"><span class="c0 c2">הודעות</span><span class="c1">- רו"ח מסכים, שכתובת הדוא"ל ומספר הטלפון הסלולרי, שסיפק לחברה, ישמרו במאגר המידע של החברה, וישמשו אותה למסירת הודעות, ובכלל זה הודעות על פי הסכם זה, מידע על שירותי החברה, העברת חומר פרסומי ושיווקי על מוצרים ו/או שירותים שמספקת החברה ו/או צד ג' כלשהו (ידוע לרו"ח, כי החברה אינה אחראית למוצרי ו/או לשירותי צד ג', וכל התקשרות של רו"ח עם צד ג' הנה על אחריות רו"ח בלבד, וכפופה לבדיקתו העצמאית), סקרים, משובים וכיו"ב. &nbsp;רו"ח יעדכן את החברה בכל שינוי בכתובת הדוא"ל ובמספר הטלפון הסלולרי שלו לשם המשך קבלת ההודעות (לרבות הודעות על פי הסכם זה), או יעדכן את החברה על ידי מסירת הודעה בכתב על אי רצונו להמשיך לקבל הודעות בעלות תוכן פרסומי ושיווקי ו/או סקרים ו/או משובים. &nbsp;הודעה על פי הסכם זה, שנשלחה בדוא"ל לרו"ח, לפי כתובתו כאמור, יראו אותה כנתקבלה בחלוף יום עסקים אחד מהמועד בו נשלחה. &nbsp;</span>
+                </li>
+            </ol>
+            <p class="c19 c23" dir="rtl"><span class="c1">רו"ח יוכל להעביר לחברה הודעות</span><span
+                    class="c18">&nbsp;בכתב</span><span class="c1">&nbsp;ע"פ כתובת החברה המופיעה בכותרת להסכם זה או כל כתובת אחרת עליה תמסור החברה הודעה בכתב לרו"ח.</span>
+            </p>
+            <p class="c4" dir="rtl"><span class="c2 c21"></span></p>
+            </div>
+        </div>
+        <div class="btnBottom">
+            <strong>
+                שים לב, עליך לגלול את ההסכם עד לסופו על מנת לאשרו
+            </strong>
+            <button ng-if="appData.agreeShowAppr" ng-click="apprAgree()">
+                אישור
+            </button>
+
+            <button class="btnSkip" ng-click="skipPopAgree()" ng-if="appData.skipPopAgree < 5">
+                דלג
+            </button>
+        </div>
+    </div>
+</div>

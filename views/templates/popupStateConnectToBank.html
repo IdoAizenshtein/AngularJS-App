@@ -1,0 +1,56 @@
+<div ng-controller="poalimAsakimCtrl">
+    <div class="popup-header">
+        <h2>
+            סטטוס משיכת חשבונות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="textProc" ng-if="appData.spider_logs">
+            {{appData.listExTitlesSpider.BALANCE_LAST_UPDATED_DATE}}
+חשבונות נטענו,
+{{appData.listExTitlesSpider.SPIDER_BEGIN_WORK_DATE}}
+            בתהליך טעינה
+        </div>
+        <div class="wrapProgress" ng-if="!appData.spider_logs">
+            <i></i>
+            <h2>
+                מתחבר...
+            </h2>
+            <div class="meter">
+                <span></span>
+            </div>
+        </div>
+        <div class="logsSpiders" id="logsSpiders" ng-if="appData.spider_logs">
+            <div ng-if="!appData.spider_logs.length" class="notLogsSpiders">
+                מתחבר...
+            </div>
+            <table ng-if="appData.spider_logs.length">
+                <tr ng-repeat="a in appData.spider_logs">
+                    <td>
+                        {{a.EXTRACT_DATE}}
+                    </td>
+                    <td>
+                        {{a.ERRORDESC}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div  ng-if="appData.spider_logs"
+             style="
+     width: 452px;
+    position: absolute;
+    bottom: -30px;
+    left: 6px;
+">
+            <p style="font: 13px/16px esterebold;color: #5a5e61;">
+                לטעינה ממיניקי: נא ודאו שהמיניקי הרצוי מחובר למחשב ודולק, ושהמחשב מחובר לאינטרנט
+            </p>
+            <p style="font: 12px/12px esterregular;color: #5a5e61;">
+                לאחר תחילת טעינה, ניתן לסגור את החלון
+            </p>
+        </div>
+        <div class="loader" ng-if="appData.spider_logs && appData.loaderSpiderStatus">
+            <div id="progressBar"></div>
+        </div>
+    </div>
+</div>

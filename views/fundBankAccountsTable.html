@@ -1,0 +1,323 @@
+<div class="funds-table" style="margin: 20px; border: 1px solid #d4d4d4; border-radius: 3px;"
+     ng-class="(accountFilter.company_account_id !== '')?'addColmn':''">
+
+    <div ng-hide="loader" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+
+    <div class="funds-table-header funds-table-row">
+
+        <div>
+            תאריך
+        </div>
+
+        <div>
+            ח-ן
+        </div>
+
+        <div>
+            סוג תשלום
+        </div>
+        <div>
+            סוג פעולה
+        </div>
+        <div>
+            תיאור
+        </div>
+
+
+        <div>
+            הכנסה
+        </div>
+
+        <div>
+            הוצאה
+        </div>
+
+        <div>
+            אסמכתא
+        </div>
+
+        <div>
+            יתרה
+        </div>
+    </div>
+    <div vs-repeat="31" scroll-fill="{{scrollHeightFundsTable}}" class="wrapScroll">
+        <div ng-repeat="t in appData.filteredTransactions track by $index"
+             ng-class="{'openDd':(t.listPeulot !== false) }">
+            <div ng-if="!t.sumRow" class="funds-table-row clearfix">
+                <div>
+                    <div>
+                        {{t.due_date}}
+                        <div class="tooltip_kvua" data-ng-style="{display:(t.ind_kvua == 1)?'inline-block':'none'}"
+                             title="פעולה מחזורית קבועה" tooltips-tazrim>&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="noWrap">
+                    <div>
+                        <i class="{{t.bank_id}}"></i>
+                        {{t.company_account_nickname}}
+                    </div>
+                </div>
+                <div class="noWrap">
+                    <div>{{$parent.converterPayMentTypes(t.searchkey_cat_id)}} &nbsp;</div>
+                    <i ng-if="t.picture_link && checkPictureLink(t.picture_link)"
+                       ng-click="openCheckImg(t.picture_link, t.company_account_id, t.trans_id)"
+                       class="img_check fa fa-picture-o"
+                       ng-style="{'color': t.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}">
+                    </i>
+                    <i ng-if="t.link_id !== null"
+                       ng-click="get_perut_bankdetail(t.link_id, t.trans_id)"
+                       class="img_check fa fa-exchange"
+                       ng-style="{'color':'#5a5e61'}">
+                    </i>
+                </div>
+                <div>
+                    <div ng-init="t.openListThis = false"
+                         class="bankAccTabPeulotSelect typePeulot editableContentSelect"
+                         ng-class="{'hiddenClass':!t.listPeulot}">
+                        <input type="text" class="typePeula" size="{{t.trans_type_name.length}}"
+                               ng-click="t.openListThis = !t.openListThis;t.trans_type_name = '';openPeulotList(t.trans_id, t.openListThis, $event)"
+                               data-ng-model="t.trans_type_name"
+                               ng-change="t.openListThis = true; openPeulotList(t.trans_id, t.openListThis, $event)"
+                               focus-li
+                               placeholder="בחר סוג פעולה"
+                               ng-disabled="!t.openSearch">
+                        <div ng-if="t.listPeulot" class="dropList left50">
+                            <ul>
+                                <li key-navigation
+                                    ng-repeat="item in appData.transactionTypesReg | typeListFilter:t.trans_type_name"
+                                    tabindex="{{$index}}"
+                                    ng-click="updateTransactionTypeName(t, item)"
+                                    ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                                    <input type="text" data-ng-model="item.trans_type_name"
+                                           data-ng-init="item.edits = false" ng-disabled="!item.edits"
+                                           ng-click="$event.stopPropagation();">
+                                    <i class="fa" ng-if="item.ind_create_default_supplier !== 1"
+                                       ng-class="{'fa-pencil-square-o':!item.edits, 'fa-floppy-o':item.edits}"
+                                       ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');"></i>
+                                    <!--<img src="image/edit_title.png" ng-if="item.ind_create_default_supplier !== 1"-->
+                                    <!--ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+
+                                    <!--<i class="fa fa-trash" ng-if="item.ind_create_default_supplier !== 1"-->
+                                    <!--ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');"></i>-->
+
+                                    <!--<img ng-if="item.ind_create_default_supplier !== 1" src="image/delete_update.png"-->
+                                    <!--ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                                </li>
+
+                                <!---->
+                                <!--<li key-navigation-->
+                                    <!--ng-repeat="item in appData.transactionTypesIN | typeListFilter:t.trans_type_name"-->
+                                    <!--tabindex="{{$index}}"-->
+                                    <!--ng-click="updateTransactionTypeName(t, item)"-->
+                                    <!--ng-if="t.ind_expence == 0 && item.ind_create_default_supplier !== 2">-->
+                                    <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                           <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                           <!--ng-click="$event.stopPropagation();">-->
+                                    <!--<i class="fa" ng-if="item.ind_create_default_supplier !== 1"-->
+                                       <!--ng-class="{'fa-pencil-square-o':!item.edits, 'fa-floppy-o':item.edits}"-->
+                                       <!--ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');"></i>-->
+                                    <!--&lt;!&ndash;<img src="image/edit_title.png" ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+
+                                    <!--&lt;!&ndash;<i class="fa fa-trash" ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                       <!--&lt;!&ndash;ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');"></i>&ndash;&gt;-->
+
+                                    <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1" src="image/delete_update.png"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                                <!--</li>-->
+                                <!--<li key-navigation-->
+                                    <!--ng-repeat="item in appData.transactionTypesEX | typeListFilter:t.trans_type_name"-->
+                                    <!--tabindex="{{$index}}"-->
+                                    <!--ng-click="updateTransactionTypeName(t, item)"-->
+                                    <!--ng-if="t.ind_expence == 1 && item.ind_create_default_supplier !== 2">-->
+                                    <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                           <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                           <!--ng-click="$event.stopPropagation();">-->
+                                    <!--<i class="fa" ng-if="item.ind_create_default_supplier !== 1"-->
+                                       <!--ng-class="{'fa-pencil-square-o':!item.edits, 'fa-floppy-o':item.edits}"-->
+                                       <!--ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');"></i>-->
+                                    <!--&lt;!&ndash;<img src="image/edit_title.png" ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<i class="fa fa-trash" ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                       <!--&lt;!&ndash;ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');"></i>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1" src="image/delete_update.png"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                <!--</li>-->
+                            </ul>
+                            <div ng-click="showAddTransTypeDialog(t)">
+                                הוסף סוג פעולה
+                            </div>
+                        </div>
+                        <i class="icon_editable fa" ng-init="t.openSearch=false"
+                           ng-class="{'fa-pencil-square-o':!t.openSearch, 'fa-floppy-o':t.openSearch}"
+                           ng-click="t.openSearch = !t.openSearch"></i>
+                    </div>
+                    &nbsp;
+                </div>
+                <div>
+                    <div class="editableContent" tooltip="{{t.target_name}}" tooltips-acc-elipsis-hover>
+                        <input type="text" size='{{t.target_name.length + 3}}' ng-model="t.target_name"
+                               contenteditable="{{(t.targetNameChange) ? true : false}}"
+                               ng-disabled="!t.targetNameChange" class="inputWithTool"/>
+                        <i class="icon_editable fa" ng-show="t.ind_bank == 1" ng-init="t.targetNameChange=false"
+                           ng-class="{'fa-pencil-square-o':!t.targetNameChange, 'fa-floppy-o':t.targetNameChange}"
+                           ng-click="targetNameChange(t)"></i>
+                    </div>
+                    <div class="trans_name_tooltip" tooltips-tazrim
+                         ng-style="{display:(t.trans_name)?'inline-block':'none'}"
+                         title="מוגדר בח-ן כ'{{t.trans_name}}'"></div>
+                </div>
+                <div class="dirLtr">
+                    <div class="transaction-income sum-plus"
+                         data-ng-style="{visibility:(t.ind_expence == 0)?'visible':'hidden'}"
+                         ng-bind-html="getTotalAgora(t.next_total, t.currency_id, accountFilter.company_account_id)">
+                    </div>
+                </div>
+                <div class="dirLtr">
+                    <div class="transaction-expense sum-minus"
+                         data-ng-style="{visibility:(t.ind_expence == 1)?'visible':'hidden'}"
+                         ng-bind-html="getTotalAgora(t.next_total, t.currency_id, accountFilter.company_account_id)">
+                    </div>
+                </div>
+                <div class="dirLtr">
+                    <div ng-style="{visibility:(t.asmachta)?'visible':'hidden'}">{{t.asmachta.toString()}} &nbsp;
+                    </div>
+                </div>
+                <div class="dirLtr">
+                    <div ng-show="(accountFilter.company_account_id !== '' && accountFilter.company_account_id !== null) && t.itra == 0 || t.itra !== 0"
+                         ng-bind-html="getTotalAgora(t.itra, t.currency_id, accountFilter.company_account_id)">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+            <div ng-if="t.sumRow" class="funds-table-row month-sum">
+                <div>
+                    {{accoConversions.getDateMonth(t.due_date.toString().split('/')[1]) + ' ' +
+                    t.due_date.toString().split('/')[2]}} - סה"כ
+                </div>
+                <div class="transaction-income sum-plus dirLtr"
+                     ng-bind-html="getTotalAgora(appData.totalsObj[t.due_date.split('/')[1]].totalIncome, '', accountFilter.company_account_id)"></div>
+                <div class="transaction-income sum-minus dirLtr"
+                     ng-bind-html="getTotalAgora(appData.totalsObj[t.due_date.split('/')[1]].totalExpenses, '', accountFilter.company_account_id)"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<table>
+    <thead>
+        <tr class="funds-table-header funds-table-row">
+            <th>
+                <div>
+                    תאריך
+                </div>
+            </th>
+            <th>
+                <div>
+                    ח-ן
+                </div>
+            </th>
+            <th>
+                <div>
+                    סיווג
+                </div>
+            </th>
+            <th>
+                <div>
+                    תיאור
+                </div>
+            </th>
+            <th>
+                <div>
+                    סוג פעולה
+                </div>
+            </th>
+            <th>
+                <div>
+                    הכנסה
+                </div>
+            </th>
+            <th>
+                <div>
+                    הוצאה
+                </div>
+            </th>
+            <th>
+                <div>
+                    אסמכתא
+                </div>
+            </th>
+            <th>
+                <div ng-if='accountFilter.company_account_id !== ""'>
+                    יתרה
+                </div>
+            </th>
+        </tr>
+    </thead>
+</table>
+<div class="rows_table_fun" scroll-fill="300">
+
+    <table>
+        <tbody>
+            <tr ng-repeat="t in filteredTransactions" ng-class="{true: 'funds-table-row month-sum', false: 'funds-table-row clearfix'}[t.sumRow == true]">
+                <td ng-if="!t.sumRow">
+                    <div>
+                        {{t.due_date}}
+                        <div class="tooltip_kvua" data-ng-style="{display:(t.ind_kvua == 1)?'inline-block':'none'}"><span>פעולה מחזורית קבועה</span></div>
+                    </div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div>
+                        <i class="{{t.bank_id}}"></i>
+                        {{t.company_account_nickname}}
+                    </div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div>{{t.payment_type_name}} &nbsp;</div>
+                    <img class="img_check" src="image/img_check.png" data-ng-style="{display:(t.picture_link !== null)?'inline-block':'none'}" ng-click="openCheckImg(t.picture_link)" />
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div class="editableContent">
+                        <i data-ng-click="targetNameChange(t)" class="icon_editable" ng-init="t.targetNameChange=false" data-ng-show="t.ind_bank == 1"></i>
+                        <input type="text" data-ng-model="t.target_name" contenteditable="{{t.targetNameChange}}" ng-disabled="!t.targetNameChange">
+                        <div class="trans_name_tooltip" data-ng-style="{display:(t.trans_name)?'inline-block':'none'}"><span><i>מוגדר בח-ן כ"{{t.trans_name}}"</i></span></div>
+                    </div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <select ng-model="transactionTypesSelected"  ng-change="updateTransactionTypeName(t)">
+                        <option ng-repeat="a in appData.transactionTypes" ng-selected="a.trans_type_name == t.trans_type_name">{{a.trans_type_name}}</option>
+                    </select>
+                    <div class="selected_dd" data-ng-click="transTypeChange(t)" focus-next>{{t.trans_type_name }} &nbsp;   </div>
+                    <div transaction-dropdown data-ng-show="t.transTypeChange" selected-transaction="t" on-selected-changed="updateTransactionType(t, trans_type_name)"></div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div class="transaction-income sum-plus" data-ng-style="{visibility:(t.ind_expence == 0)?'visible':'hidden'}"><span>&#8362;</span>{{getTotal(t.next_total)}}</div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div class="transaction-expense sum-minus" data-ng-style="{visibility:(t.ind_expence == 1)?'visible':'hidden'}"><span>&#8362;</span>{{getTotal(t.next_total)}}</div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div>{{t.asmachta}}&nbsp;</div>
+                </td>
+                <td ng-if="!t.sumRow">
+                    <div data-ng-show="accountFilter.company_account_id"><span>&#8362;</span>{{getTotal(t.itra)}}&nbsp;</div>
+                </td>
+
+                <td ng-if="t.sumRow" colspan="4">
+                    <div>{{accoConversions.getDateMonth(t.due_date.toString().split('/')[1]) + ' ' + t.due_date.toString().split('/')[2]}} - סה"כ</div>
+                </td>
+                <td ng-if="t.sumRow">
+                    <div class="transaction-income sum-plus"><span>&#8362;</span>{{getTotal(totalsObj[t.due_date.split("/")[1]].totalIncome)}}</div>
+                </td>
+                <td ng-if="t.sumRow" colspan="4">
+                    <div class="transaction-expense sum-minus"><span>&#8362;</span>{{getTotal(totalsObj[t.due_date.split("/")[1]].totalExpenses)}}</div>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>-->

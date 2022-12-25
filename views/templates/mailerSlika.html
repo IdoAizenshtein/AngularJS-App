@@ -1,0 +1,24 @@
+﻿<div data-ng-controller="fundMGMTSlikaCtrl">
+    <div class="popup-header">
+        <h2>שליחת מייל </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.loaderMailerPop" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="mailer">
+            <form autocomplete="off">
+                <fieldset>
+                    <label>כתובת דוא"ל</label>
+                    <input type="text" ng-model="mail" />
+                    <div class="error_alerts_bank">
+                        {{appData.errorSenderMailerExcel}}
+                    </div>
+                </fieldset>
+                <button exports-mailer-slika ng-disabled="appData.loaderMailerPop">
+                    שלח למייל
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

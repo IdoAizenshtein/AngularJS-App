@@ -1,0 +1,39 @@
+<div ng-controller="mainAccountantsCtrl">
+    <div class="popup-header">
+        <h2>
+            בחר תאריך תפוגה
+            -
+        </h2>
+        <small>
+            {{appData.setDeletedCompanyList.COMPANY_NAME}}
+        </small>
+    </div>
+    <div class="popup-content" ng-init="$parent.appData.dateSelectedDelete = 'date'">
+        <div ng-show="appData.listAllDeletedCompanyLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="inputRadioDate">
+        <input type="radio" id="dateSelectdDate" ng-model="$parent.appData.dateSelectedDelete" value="date">
+        <label for="dateSelectdDate">
+לפי תאריך
+        </label>
+        </div>
+        <div class="datepickerWrap" date-picker-inline names="datePickerInlineDeletedComapny"></div>
+        <div class="inputRadioDate">
+            <input type="radio" id="dateSelectd" ng-model="$parent.appData.dateSelectedDelete" value="null">
+            <label for="dateSelectd">
+                ללא תאריך
+            </label>
+        </div>
+
+        <div class="buttonGr">
+            <button type="button" ng-click="companyUndeleted()">
+                אישור
+            </button>
+            <button ng-click="hidePopup()" type="button">
+                ביטול
+            </button>
+        </div>
+    </div>
+</div>
+

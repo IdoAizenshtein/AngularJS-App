@@ -1,0 +1,326 @@
+<ul class="list_customers">
+    <div class="helpsCompanyInside" ng-if="Showhelp">
+        <i class="fi-arrow-up"></i>
+        בלחיצה על חברה תועבר לפרופיל חברה בה יוצגו כל נתוניה
+    </div>
+    <li class="list_company_not_abc companyTab clearfix" data-ng-repeat="b in appData.afterSort | filter:searchText"
+        ng-if="selectCompanyTypeSort == 'unEnteredMonth' || selectCompanyTypeSort == 'enteredMonth'" ng-click="goToLink(a.companyId, 'listCompany')">
+        <div class="names_of_customers">
+            <div class="icon_customer">
+                <img src="image/customer_icon.png">
+            </div>
+            <strong>{{b.companyName}}</strong>
+
+            <p>
+                ח.פ./ע.מ.
+                {{b.companyHp}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getSourceProgramId(b.source_program_id)}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getEsderMaam(b.esder_maam)}}
+            </p>
+        </div>
+        <div class="contact_of_customers">
+            <p>
+                <strong>איש קשר</strong>
+                {{b.full_name}}
+            </p>
+
+            <p ng-if="b.phone_number !== null"><strong> טלפון</strong><a target="_blank" href="tel:{{b.phone_number}}">{{b.phone_number}}</a></p>
+
+            <p ng-if="mailCheck(b.mail)"><strong>דוא"ל</strong><a target="_blank" href="mailto:{{b.mail}}">{{b.mail}}</a></p>
+
+            <p class="sum_inv_cur_mon" data-ng-class="{'class_green': b.sum_inv_avg > 0}">
+                <strong>הזנה אחרונה</strong>
+                                <span ng-if="b.last_inv_date">
+                                    {{ b.last_inv_date}}
+                                </span>
+                <span ng-if="b.sum_inv_cur_mon !== 0">| &nbsp;  {{b.sum_inv_cur_mon }} מסמכים </span>
+            </p>
+
+            <p><strong>ממוצע חודשי</strong>
+                {{b.sum_inv_avg }} מסמכים
+            </p>
+            <!--<p>-->
+                <!--<input id="ind_mail_to_send" type="checkbox" ng-model="b.ind_mail_to_send" ng-true-value="1" ng-false-value="0" ng-click="$event.stopPropagation();" ng-change="$event.stopPropagation(); editMailToSend(b)">-->
+                <!--<label for="ind_mail_to_send" ng-click="$event.stopPropagation();">-->
+                    <!--שליחת מייל יומי לאיש קשר-->
+                <!--</label>-->
+            <!--</p>-->
+            <!--<p ng-if="b.ind_account_exists_null" class="ind_account_exists_null">-->
+                <!--לא ניתן לשלוח מייל ללא חשבונות בנק-->
+            <!--</p>-->
+        </div>
+        <div class="icons_contacts_companys clearfix">
+            <ul class="icons_contacts">
+                <li data-ng-repeat="c in b.user_details | limitTo:6 | filter:searchText" ng-if="b.user_details.length > 0">
+                    <i data-ng-click="setListUsersOfCompany($event, c.acc_user_id, b.companyId, 'del', $index)"></i>
+                    <img ng-if="c.acc_picture" src="data:image/png;base64,{{c.acc_picture }}"/>
+                    {{c.acc_user_nick_name}}
+
+                            <span ng-if="!c.acc_picture">
+                                {{c.acc_user_full_name}}
+                            </span>
+                </li>
+                <li class="add_icons">
+                    <div ng-click="b.openUsersList = !b.openUsersList;openListCompanys(b, $event)"
+                         data-ng-class="{'active':b.openUsersList}"></div>
+                    <ul ng-show="b.openUsersList">
+                        <li data-ng-repeat="d in b.usersList"
+                            data-ng-click="setListUsersOfCompany($event, d, b.companyId)"
+                            ng-if="d.ind_office == 1 && d.ind_manage_exist == 0">
+                            {{d.full_name}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li ng-click="goToLink(a.companyId, 'listCompany')" class="list_company_not_abc companyTab clearfix" data-ng-repeat="b in appData.afterSort | filter:searchText"
+        ng-if="selectCompanyTypeSort == 'dateLast' && b.last_inv_date">
+        <div class="names_of_customers">
+            <div class="icon_customer">
+                <img src="image/customer_icon.png">
+            </div>
+            <strong>{{b.companyName}}</strong>
+
+            <p>
+                ח.פ./ע.מ.
+                {{b.companyHp}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getSourceProgramId(b.source_program_id)}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getEsderMaam(b.esder_maam)}}
+            </p>
+        </div>
+        <div class="contact_of_customers">
+            <p>
+                <strong>איש קשר</strong>
+                {{b.full_name}}
+            </p>
+
+            <p ng-if="b.phone_number !== null"><strong> טלפון</strong><a target="_blank"
+                                                                         href="tel:{{b.phone_number}}">{{b.phone_number}}</a>
+            </p>
+
+            <p ng-if="mailCheck(b.mail)"><strong>דוא"ל</strong><a target="_blank" href="mailto:{{b.mail}}">{{b.mail}}</a>
+            </p>
+
+            <p class="sum_inv_cur_mon" data-ng-class="{'class_green': b.sum_inv_avg > 0}">
+                <strong>הזנה אחרונה</strong>
+                                <span ng-if="b.last_inv_date">
+                                    {{ b.last_inv_date}}
+                                </span>
+                <span ng-if="b.sum_inv_cur_mon !== 0">| &nbsp;  {{b.sum_inv_cur_mon }} מסמכים </span>
+            </p>
+
+            <p><strong>ממוצע חודשי</strong>
+                {{b.sum_inv_avg }} מסמכים
+            </p>
+            <!--<p>-->
+                <!--<input id="ind_mail_to_send" type="checkbox" ng-model="b.ind_mail_to_send" ng-true-value="1" ng-false-value="0" ng-click="$event.stopPropagation();" ng-change="$event.stopPropagation(); editMailToSend(b)">-->
+                <!--<label for="ind_mail_to_send" ng-click="$event.stopPropagation();">-->
+                    <!--שליחת מייל יומי לאיש קשר-->
+                <!--</label>-->
+            <!--</p>-->
+            <p ng-if="b.ind_account_exists_null" class="ind_account_exists_null">
+                לא ניתן לשלוח מייל ללא חשבונות בנק
+            </p>
+        </div>
+        <div class="icons_contacts_companys clearfix">
+            <ul class="icons_contacts">
+                <li data-ng-repeat="c in b.user_details | limitTo:6 | filter:searchText" ng-if="b.user_details.length > 0">
+                    <i data-ng-click="setListUsersOfCompany($event, c.acc_user_id, b.companyId, 'del', $index)"></i>
+                    <img ng-if="c.acc_picture" src="data:image/png;base64,{{c.acc_picture }}"/>
+                    {{c.acc_user_nick_name}}
+
+                            <span ng-if="!c.acc_picture">
+                                {{c.acc_user_full_name}}
+                            </span>
+                </li>
+                <li class="add_icons">
+                    <div ng-click="b.openUsersList = !b.openUsersList;openListCompanys(b, $event)"
+                         data-ng-class="{'active':b.openUsersList}"></div>
+                    <ul ng-show="b.openUsersList">
+                        <li data-ng-repeat="d in b.usersList"
+                            data-ng-click="setListUsersOfCompany($event, d, b.companyId)"
+                            ng-if="d.ind_office == 1 && d.ind_manage_exist == 0">
+                            {{d.full_name}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li ng-click="goToLink(a.companyId, 'listCompany')" class="list_company_not_abc companyTab clearfix" data-ng-repeat="b in appData.afterSort | filter:searchText"
+        ng-if="selectCompanyTypeSort == 'dateLast' && !b.last_inv_date">
+        <div class="names_of_customers">
+            <div class="icon_customer">
+                <img src="image/customer_icon.png">
+            </div>
+            <strong>{{b.companyName}}</strong>
+
+            <p>
+                ח.פ./ע.מ.
+                {{b.companyHp}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getSourceProgramId(b.source_program_id)}}
+            </p>
+
+            <p class="id_program">
+                {{accoConversions.getEsderMaam(b.esder_maam)}}
+            </p>
+        </div>
+        <div class="contact_of_customers">
+            <p>
+                <strong>איש קשר</strong>
+                {{b.full_name}}
+            </p>
+
+            <p ng-if="b.phone_number !== null"><strong> טלפון</strong><a target="_blank"
+                                                                         href="tel:{{b.phone_number}}">{{b.phone_number}}</a>
+            </p>
+
+            <p ng-if="mailCheck(b.mail)"><strong>דוא"ל</strong><a target="_blank" href="mailto:{{b.mail}}">{{b.mail}}</a>
+            </p>
+
+            <p class="sum_inv_cur_mon" data-ng-class="{'class_green': b.sum_inv_avg > 0}">
+                <strong>הזנה אחרונה</strong>
+                                <span ng-if="b.last_inv_date">
+                                    {{ b.last_inv_date}}
+                                </span>
+                <span ng-if="b.sum_inv_cur_mon !== 0">| &nbsp;  {{b.sum_inv_cur_mon }} מסמכים </span>
+            </p>
+
+            <p><strong>ממוצע חודשי</strong>
+                {{b.sum_inv_avg }} מסמכים
+            </p>
+            <!--<p>-->
+                <!--<input id="ind_mail_to_send" type="checkbox" ng-model="b.ind_mail_to_send" ng-true-value="1" ng-false-value="0" ng-click="$event.stopPropagation();" ng-change="$event.stopPropagation(); editMailToSend(b)">-->
+                <!--<label for="ind_mail_to_send" ng-click="$event.stopPropagation();">-->
+                    <!--שליחת מייל יומי לאיש קשר-->
+                <!--</label>-->
+            <!--</p>-->
+            <p ng-if="b.ind_account_exists_null" class="ind_account_exists_null">
+                לא ניתן לשלוח מייל ללא חשבונות בנק
+            </p>
+        </div>
+        <div class="icons_contacts_companys clearfix">
+            <ul class="icons_contacts">
+                <li data-ng-repeat="c in b.user_details | limitTo:6 | filter:searchText" ng-if="b.user_details.length > 0">
+                    <i data-ng-click="setListUsersOfCompany($event, c.acc_user_id, b.companyId, 'del', $index)"></i>
+                    <img ng-if="c.acc_picture" src="data:image/png;base64,{{c.acc_picture }}"/>
+                    {{c.acc_user_nick_name}}
+
+                            <span ng-if="!c.acc_picture">
+                                {{c.acc_user_full_name}}
+                            </span>
+                </li>
+                <li class="add_icons">
+                    <div ng-click="b.openUsersList = !b.openUsersList;openListCompanys(b, $event)"
+                         data-ng-class="{'active':b.openUsersList}"></div>
+                    <ul ng-show="b.openUsersList">
+                        <li data-ng-repeat="d in b.usersList"
+                            data-ng-click="setListUsersOfCompany($event, d, b.companyId)"
+                            ng-if="d.ind_office == 1 && d.ind_manage_exist == 0">
+                            {{d.full_name}}
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="wrap_company clearfix" data-ng-repeat="a in appData.afterSortFirst"
+        ng-if="selectCompanyTypeSort == 'abc'">
+        <h2 class="abc_title" ng-if="!searchText">{{a}}</h2>
+        <ul>
+            <li ng-click="goToLink(b.companyId, 'listCompany')" class="companyTab" data-ng-repeat="b in appData.afterSort[a] | filter:searchText">
+                <div class="names_of_customers">
+                    <div class="icon_customer">
+                        <img src="image/customer_icon.png">
+                    </div>
+                    <strong>{{b.companyName}}</strong>
+                    <p>
+                        ח.פ./ע.מ.
+                        {{b.companyHp}}
+                    </p>
+                    <p class="id_program">
+                        {{accoConversions.getSourceProgramId(b.source_program_id)}}
+                    </p>
+                    <p class="id_program">
+                        {{accoConversions.getEsderMaam(b.esder_maam)}}
+                    </p>
+                </div>
+                <div class="contact_of_customers">
+                    <p>
+                        <strong>איש קשר</strong>
+                        {{b.full_name}}
+                    </p>
+
+                    <p ng-if="b.phone_number !== null"><strong> טלפון</strong><a target="_blank"
+                                                                                 href="tel:{{b.phone_number}}">{{b.phone_number}}</a>
+                    </p>
+
+                    <p ng-if="mailCheck(b.mail)"><strong>דוא"ל</strong><a target="_blank"
+                                                                          href="mailto:{{b.mail}}">{{b.mail}}</a>
+                    </p>
+
+                    <p class="sum_inv_cur_mon" data-ng-class="{'class_green': b.sum_inv_avg > 0}">
+                        <strong>הזנה אחרונה</strong>
+                                <span ng-if="b.last_inv_date">
+                                    {{ b.last_inv_date}}
+                                </span>
+                        <span ng-if="b.sum_inv_cur_mon !== 0">| &nbsp;  {{b.sum_inv_cur_mon }} מסמכים </span>
+                    </p>
+
+                    <p><strong>ממוצע חודשי</strong>
+                        {{b.sum_inv_avg }} מסמכים
+                    </p>
+                    <!--<p>-->
+                        <!--<input id="ind_mail_to_send" type="checkbox" ng-model="b.ind_mail_to_send" ng-true-value="1" ng-false-value="0" ng-click="$event.stopPropagation();" ng-change="$event.stopPropagation(); editMailToSend(b)">-->
+                        <!--<label for="ind_mail_to_send" ng-click="$event.stopPropagation();">-->
+                            <!--שליחת מייל יומי לאיש קשר-->
+                        <!--</label>-->
+                    <!--</p>-->
+                    <p ng-if="b.ind_account_exists_null" class="ind_account_exists_null">
+                        לא ניתן לשלוח מייל ללא חשבונות בנק
+                    </p>
+                </div>
+                <div class="icons_contacts_companys clearfix">
+                    <ul class="icons_contacts">
+                        <li data-ng-repeat="c in b.user_details | limitTo:6 | filter:searchText" ng-if="b.user_details.length > 0">
+                            <i data-ng-click="setListUsersOfCompany($event, c.acc_user_id, b.companyId, 'del', $index)"></i>
+                            <img ng-if="c.acc_picture" src="data:image/png;base64,{{c.acc_picture }}"/>
+                            {{c.acc_user_nick_name}}
+
+                            <span ng-if="!c.acc_picture">
+                                {{c.acc_user_full_name}}
+                            </span>
+                        </li>
+                        <li class="add_icons">
+                            <div ng-click="b.openUsersList = !b.openUsersList;openListCompanys(b, $event)"
+                                 data-ng-class="{'active':b.openUsersList}"></div>
+                            <ul ng-show="b.openUsersList">
+                                <li data-ng-repeat="d in b.usersList"
+                                    data-ng-click="b.openUsersList = false; setListUsersOfCompany($event, d, b.companyId)"
+                                    ng-if="d.ind_office == 1 && d.ind_manage_exist == 0">
+                                    {{d.full_name}}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

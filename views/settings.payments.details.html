@@ -1,0 +1,520 @@
+<div class="scrollDesign insideContent">
+    <div class="closeState">
+        <img src="image/close_popup.png" class="closeAllAlrets" ng-click="$state.go('settings.payments')" alt="חזור"
+             title="חזור" tooltips-mess="">
+    </div>
+
+    <div class="titlesState">
+        <div ng-click="filters_SettPays(false, 'allFiltersSett');"
+             style="cursor: pointer;" class="hover"
+             ng-class="{'active': typesFilters.allFiltersSett==true}">
+            <h3>
+                סה"כ חברות
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.billing_report_4company_sum.COMPANY_CNT">
+                                    {{appData.billing_report_4company_sum.COMPANY_CNT}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.COMPANY_CNT">
+                -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'SUG_HIUV1');"
+             style="cursor: pointer;" class="hover"
+             ng-class="{'active': typesFilters.SUG_HIUV1==true}">
+            <h3>
+                לפי חברה
+            </h3>
+            <p class="ltr">
+                <span ng-if="appData.billing_report_4company_sum.HIUV_PER_COMPANY_COUNT">
+                                    {{appData.billing_report_4company_sum.HIUV_PER_COMPANY_COUNT}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.HIUV_PER_COMPANY_COUNT">
+                -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'SUG_HIUV2');"
+             style="cursor: pointer;"
+             class="hover"
+             ng-class="{'active': typesFilters.SUG_HIUV2==true}">
+            <h3>
+                לפי שורה
+            </h3>
+            <p class="ltr">
+              <span ng-if="appData.billing_report_4company_sum.HIUV_PER_ROW_COUNT">
+                                    {{appData.billing_report_4company_sum.HIUV_PER_ROW_COUNT}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.HIUV_PER_ROW_COUNT">
+                -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'IND_BANK_ITEM');"
+             style="cursor: pointer;" class="hover"
+             ng-class="{'active': typesFilters.IND_BANK_ITEM==true}">
+            <h3>
+                ייצוא דפי בנק
+            </h3>
+            <p ng-if="!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2">
+                <span ng-if="appData.billing_report_4company_sum.YETZU_BANK">
+                                    {{appData.billing_report_4company_sum.YETZU_BANK}}
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.YETZU_BANK && appData.billing_report_4company_sum.TOTAL_YETZU_BANK"
+                      class="separator">
+                        |
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.TOTAL_YETZU_BANK">
+                                   <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_YETZU_BANK)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.YETZU_BANK && !appData.billing_report_4company_sum.TOTAL_YETZU_BANK">
+                    -
+                </span>
+            </p>
+            <p ng-if="appData.sums_existing_billing.length  && appData.sums_existing_billing.length>2">
+                <span>
+                                    {{appData.sums_existing_billing[5]}}
+                </span>
+                <span class="separator">
+                   |
+                </span>
+                <span>
+                    <small>₪</small>{{roundNumPoints(appData.sums_existing_billing[4])}}
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'IND_CARD_ITEM');"
+             style="cursor: pointer;" class="hover"
+             ng-class="{'active': typesFilters.IND_CARD_ITEM==true}">
+            <h3>
+                ייצוא כ.אשראי
+            </h3>
+            <p ng-if="!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2">
+                <span ng-if="appData.billing_report_4company_sum.YETZU_CCARD">
+                    {{appData.billing_report_4company_sum.YETZU_CCARD}}
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.YETZU_CCARD && appData.billing_report_4company_sum.TOTAL_YETZU_CCARD"
+                      class="separator">
+                        |
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.TOTAL_YETZU_CCARD">
+                    <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_YETZU_CCARD)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.YETZU_CCARD && !appData.billing_report_4company_sum.TOTAL_YETZU_CCARD">
+                    -
+                </span>
+            </p>
+            <p ng-if="appData.sums_existing_billing.length && appData.sums_existing_billing.length>2">
+                <span>
+                                    {{appData.sums_existing_billing[3]}}
+                </span>
+                <span class="separator">
+                        |
+                </span>
+                <span>
+                                   <small>₪</small>{{roundNumPoints(appData.sums_existing_billing[2])}}
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'ITEM_PRICE_PER_OTHER_ITEMS_DIS');"
+             style="cursor: pointer;" class="hover"
+             ng-class="{'active': typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS==true}">
+            <h3>
+                פ.אחרים
+            </h3>
+            <p>
+                <span ng-if="appData.sums_existing_billing.length">
+                {{appData.sums_existing_billing[1]}}
+                </span>
+                <span ng-if="appData.sums_existing_billing.length && appData.billing_report_4company_sum.ITEM_PRICE_PER_OTHER_ITEMS_DIS"
+                      class="separator">
+                |
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.ITEM_PRICE_PER_OTHER_ITEMS_DIS && appData.sums_existing_billing.length == 2">
+                  <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.ITEM_PRICE_PER_OTHER_ITEMS_DIS)}}
+                </span>
+                <span ng-if="appData.sums_existing_billing.length > 2">
+                  <small>₪</small>{{roundNumPoints(appData.sums_existing_billing[0])}}
+                </span>
+                <span ng-if="(!appData.billing_report_4company_sum.ITEM_PRICE_PER_OTHER_ITEMS_DIS  && appData.sums_existing_billing.length == 2) || !appData.sums_existing_billing.length">
+                  -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                כמות מסמכים
+            </h3>
+            <p>
+                <span ng-if="appData.billing_report_4company_sum.SRIKA_TOTAL_ROWS">
+                                    {{appData.billing_report_4company_sum.SRIKA_TOTAL_ROWS}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.SRIKA_TOTAL_ROWS">
+                    -
+                </span>
+            </p>
+        </div>
+        <div ng-click="filters_SettPays(true, 'IND_SRIKA_ITEM');"
+             style="cursor: pointer;"
+             class="hover"
+             ng-class="{'active': typesFilters.IND_SRIKA_ITEM==true}">
+            <h3>
+                פ.יומן
+            </h3>
+            <p>
+             <span ng-if="appData.billing_report_4company_sum.SRIKA_CNT || appData.billing_report_4company_sum.SRIKA_CUP_CNT">
+                                    {{appData.billing_report_4company_sum.SRIKA_CNT + appData.billing_report_4company_sum.SRIKA_CUP_CNT}}
+                </span>
+                <span ng-if="(appData.billing_report_4company_sum.SRIKA_CNT || appData.billing_report_4company_sum.SRIKA_CUP_CNT) && ((appData.billing_report_4company_sum.TOTAL_SRIKA_CUP_PRICE > 0) ? appData.billing_report_4company_sum.TOTAL_SRIKA_CUP_PRICE : appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE)"
+                      class="separator">
+                        |
+                </span>
+                <span ng-if="(appData.billing_report_4company_sum.TOTAL_SRIKA_CUP_PRICE + appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE) > 0">
+                                   <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_SRIKA_CUP_PRICE + appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.SRIKA_CNT && ((appData.billing_report_4company_sum.TOTAL_SRIKA_CUP_PRICE + appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE) === 0)">
+                    -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                הנחה למסמך
+            </h3>
+            <p ng-if="(!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2) && (!appData.billing_report_4company_sum.DISCOUNT_EXP || checkIfFuture(appData.billing_report_4company_sum.DISCOUNT_EXP))">
+                <span ng-if="appData.billing_report_4company_sum.DISCOUNT_PRC_SUM">
+                    <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.DISCOUNT_PRC_SUM)}}
+                </span>
+
+                <span ng-if="!appData.billing_report_4company_sum.DISCOUNT_PRC_SUM && appData.billing_report_4company_sum.DISCOUNT">
+                    <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.DISCOUNT)}}
+                </span>
+                <span ng-if="(appData.billing_report_4company_sum.DISCOUNT_PRC_SUM || appData.billing_report_4company_sum.DISCOUNT) && appData.billing_report_4company_sum.DISCOUNT_EXP"
+                      class="separator">
+                        |
+                </span>
+                <span ng-if="appData.billing_report_4company_sum.DISCOUNT_EXP && (appData.billing_report_4company_sum.DISCOUNT_PRC_SUM || appData.billing_report_4company_sum.DISCOUNT)">
+                    {{appData.billing_report_4company_sum.DISCOUNT_EXP}}
+                </span>
+                <span ng-if="(!appData.billing_report_4company_sum.DISCOUNT_PRC_SUM && !appData.billing_report_4company_sum.DISCOUNT)">
+                    -
+                </span>
+            </p>
+            <p ng-if="appData.sums_existing_billing.length && appData.sums_existing_billing.length>2 || (appData.billing_report_4company_sum.DISCOUNT_EXP && !checkIfFuture(appData.billing_report_4company_sum.DISCOUNT_EXP))">
+                <span>
+                    -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                הנחה פ.יומן ספקים
+            </h3>
+            <p>
+            <span ng-if="(appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_ITEM + appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_CUP_ITEM) > 0">
+                                   <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_ITEM + appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_CUP_ITEM)}}
+                </span>
+                <span ng-if="(appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_ITEM + appData.billing_report_4company_sum.DISCOUNT_FOR_SRIKA_CUP_ITEM) === 0">
+                    -
+                </span>
+            </p>
+        </div>
+        <div>
+            <h3>
+                סה"כ לתשלום כולל מע"מ
+            </h3>
+            <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS==true">
+                   <span ng-if="appData.billing_report_4company_sum.TOTAL_PER_OTHER_ITEMS_MAAM">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PER_OTHER_ITEMS_MAAM)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.TOTAL_PER_OTHER_ITEMS_MAAM">
+                -
+                </span>
+            </p>
+            <p ng-if="typesFilters.IND_SRIKA_ITEM==true">
+                   <span ng-if="appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE_MAAM">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE_MAAM)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.TOTAL_SRIKA_PRICE_MAAM">
+                -
+                </span>
+            </p>
+            <p ng-if="typesFilters.IND_BANK_ITEM==true">
+                   <span ng-if="appData.billing_report_4company_sum.TOTAL_YETZU_BANK_MAAM">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_YETZU_BANK_MAAM)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.TOTAL_YETZU_BANK_MAAM">
+                -
+                </span>
+            </p>
+            <p ng-if="typesFilters.IND_CARD_ITEM==true">
+                   <span ng-if="appData.billing_report_4company_sum.TOTAL_YETZU_CCARD_MAAM">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_YETZU_CCARD_MAAM)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.TOTAL_YETZU_CCARD_MAAM">
+                -
+                </span>
+            </p>
+            <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true && (!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2)">
+                <span ng-if="appData.billing_report_4company_sum.TOTAL_PAYMENT">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PAYMENT)}}
+                </span>
+                <span ng-if="!appData.billing_report_4company_sum.TOTAL_PAYMENT">
+                -
+                </span>
+            </p>
+            <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true &&  appData.sums_existing_billing.length && appData.sums_existing_billing.length>2">
+                <span>
+                        <small>₪</small>{{roundNumPoints(appData.sums_existing_billing[2] + appData.sums_existing_billing[4])}}
+                </span>
+            </p>
+
+
+        </div>
+        <div class="leftSideState" style="
+    position: absolute;
+    left: 24px;
+    top: -60px;
+">
+            <div>
+                <select ng-model="appData.groupOfCardsVal"
+                        ng-options="item.billing_account_id as item.name for item in appData.groupOfCards"
+                        ng-change="groupOfCardsValChange(appData.groupOfCardsVal)">
+                </select>
+            </div>
+            <div>
+                <input type="text" ng-model="search"
+                       placeholder="חיפוש"
+                       class="form-control" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-show="appData.billing_report_4company.length > 0 || search.length > 0"/>
+                <ul class="exports">
+                    <li class="excel" exports-excel-acc-pays>
+                        <span>ייצוא לExcel</span>
+                        <i></i>
+                    </li>
+                    <li class="mail" data-ng-click="sendMailer()">
+                        <span>שליחה במייל</span>
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-acc-pays>
+                        <span>הדפסה</span>
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!--    ACCOUNTANT_OFFICE_ID: "4dfe9364-3fee-3237-e053-650019ace89c"-->
+    <!--    BANK_ACCOUNT_ID: null-->
+    <!--    BANK_ID: null-->
+    <!--    BANK_SNIF_ID: null-->
+    <!--    BILLING_ACCOUNT_ADDRESS: null-->
+    <!--    BILLING_ACCOUNT_CITY: null-->
+    <!--    BILLING_ACCOUNT_COMPANY_NAME: null-->
+    <!--    BILLING_ACCOUNT_EMAIL: null-->
+    <!--    BILLING_ACCOUNT_HP: null-->
+    <!--    BILLING_ACCOUNT_ID: null-->
+    <!--    BILLING_ACCOUNT_NAME: "מירי מאוטנר"-->
+    <!--    BILLING_ACCOUNT_PHONE: null-->
+    <!--    CARDVALIDITYMONTH: null-->
+    <!--    CARDVALIDITYYEAR: null-->
+    <!--    COMPANY_LAST_PAYMENT_STATUS: null-->
+    <!--    COMPANY_NEXT_PAYMENT_DATE: "25/05/2017"-->
+    <!--    COMPANY_NEXT_PAYMENT_TOTAL: 0-->
+    <!--    EXTSP_CARDNUMBER5: null-->
+    <!--    EXTSP_MUTAG24: null-->
+    <!--    IND_ACCOUNTANT: 1-->
+    <!--    IND_DELETED: null-->
+    <!--    IND_DISCOUNT: null-->
+    <!--    IND_LELO_MAAM: 0-->
+    <!--    IND_PRIMARY: 0-->
+    <!--    IND_SICUM_CHESHBONIT: null-->
+    <!--    IND_TRY_AGAIN: 0-->
+    <!--    INVOICE_DESC_ADDON: null-->
+    <!--    LIMIT_DATE: null-->
+    <!--    LIMIT_TOTAL: null-->
+    <!--    OPERATIONRESPONSE: null-->
+    <!--    PAYMENT_TYPE_ID: null-->
+    <!--    STATUS_DESC: null-->
+    <!--    SUG_HIUV: null-->
+    <!--    TOKENEXDATE: null-->
+    <!--    TOKENRESPONSE: null-->
+
+    <div ng-show="loaderSettPays" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <div class="tableMainAccCards">
+        <div class="col-md-12" ng-show="appData.billing_report_4company.length > 0">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <th>
+                    חברה
+                </th>
+                <th>
+                    סוג חיוב
+                </th>
+                <th>
+                    ייצוא דפי בנק
+                </th>
+                <th>
+                    הנחה
+                </th>
+                <th>
+                    סכום
+                </th>
+                <th>
+                    ייצוא כ. אשראי
+                </th>
+                <th>
+                    הנחה
+                </th>
+                <th>
+                    סכום
+                </th>
+                <th>
+                    פ.יומן
+                </th>
+                <th>
+                    סכום
+                </th>
+                <th>
+                    פריטים נוספים
+                </th>
+                <th>
+                    סה"כ לתשלום
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+                </thead>
+                <tbody scroll-fill="{{scrollHeightTableInside}}">
+                <tr ng-repeat="a in filtered = (appData.billing_report_4company | filter:search) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                    <td>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{accoConversions.getTypeHiuv(a.SUG_HIUV)}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.YETZU_BANK}}
+                            &nbsp;
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.DISCOUNT_BANK}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.TOTAL_YETZU_BANK}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.YETZU_CCARD}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.DISCOUNT_CCARD}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.TOTAL_YETZU_CCARD}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.SRIKA_TOTAL_ROWS}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.TOTAL_SRIKA_PRICE > 0 ? a.TOTAL_SRIKA_PRICE : a.TOTAL_SRIKA_CUP_PRICE}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.ITEM_PRICE_PER_OTHER_ITEMS_DIS}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            {{a.TOTAL_PAYMENT}}
+                            &nbsp;
+
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <span ng-click="billing_account_getitemsPop(appData.groupOfCardsVal, a.COMPANY_ID, a.COMPANY_NAME)"
+                                  class="edits">
+                                <i class="fi-page-export"></i>
+                                עריכה
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titleNotFilter" ng-show="!filtered.length && !loaderSettPays">
+            לא נמצאה התאמה
+        </div>
+    </div>
+    <div class="rowsSort" ng-show="filtered.length > 0">
+        <div class="selectRows">
+            הצג
+            <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+            </select>
+            שורות
+        </div>
+        <div class="sumRows">
+            סה״כ שורות שנמצאו
+            {{filtered.length}}
+            מתוך
+            {{appData.billing_report_4company.length}}
+        </div>
+        <div class="pagRows" ng-show="appData.billing_report_4company.length > 0 && filtered.length > entryLimit">
+            <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                        items-per-page="entryLimit"
+                        total-items="appData.billing_report_4company.length" ng-model="currentPage"
+                        class="pagination-sm"
+                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                        last-text="עמ׳ אחרון"></pagination>
+        </div>
+    </div>
+</div>
+

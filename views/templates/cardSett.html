@@ -1,0 +1,90 @@
+<div ng-init="init()" ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+התאמת כרטיס
+        </h2>
+    </div>
+    <div class="popup-content">
+<div>
+    <div>
+        {{appData.cardSett.cust_id}}
+    </div>
+    <div>
+        {{appData.cardSett.company_customer_name}}
+    </div>
+</div>
+
+        <form name="formPopAcc" novalidate ng-submit="setAccCard(formPopAcc)" class="wrap-popupAcc">
+            <div class="formCard">
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">
+                            התאם לחשבון בנק
+                        </th>
+                        <th>
+                            סניף
+                        </th>
+                        <th>
+מס׳ חשבון
+                        </th>
+                        <th>
+שם חשבון
+                        </th>
+                        <th>
+תאריך עדכון אחרון
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <input type="radio"
+                                   ng-model="$parent.appData.cardSettAcc"
+                                   name="uuidAcc"
+                                   value="null" required/>
+                        </td>
+                        <td colspan="5">
+ללא
+                        </td>
+                    </tr>
+                    <tr data-ng-repeat="a in appData.selectedCompany.accounts.bank_account_list">
+                        <td>
+                            <input type="radio"
+                                   ng-model="$parent.appData.cardSettAcc"
+                                   name="uuidAcc"
+                                   value="{{a.company_account_id}}" required/>
+                        </td>
+                        <td>
+                            {{accoConversions.getBankName(a.bank_id)}}
+                        </td>
+                        <td>
+                            {{a.bank_snif_id}}
+                        </td>
+                        <td>
+{{a.bank_account_number}}
+                        </td>
+                        <td>
+{{a.company_account_nickname}}
+                        </td>
+                        <td>
+{{a.balance_last_update_date}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p ng-if="formPopAcc.$invalid" class="erroeAl">
+                אנא בחר את הבנק הרצוי
+            </p>
+            <div class="buttonsCards">
+                <button type="submit">
+                    אישור
+                </button>
+                <strong data-ng-click="hidePopup()">
+                    ביטול
+                </strong>
+            </div>
+        </form>
+    </div>
+</div>

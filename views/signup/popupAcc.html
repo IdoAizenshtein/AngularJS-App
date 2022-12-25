@@ -1,0 +1,34 @@
+<div data-ng-controller="signupCtrl">
+    <div class="popup-header">
+        <h2>
+            חשבונות בנק
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form name="formPopAcc" novalidate ng-submit="setPAcc(formPopAcc)" class="wrap-popupAcc">
+            <p>זיהינו<span class="number_acc">{{appData.accSet.length}}</span> חשבונות בנק שונים תחת שם משתמש זה, בחר
+                בחשבון הבנק העיקרי של העסק</p>
+            <ul class="radio_bank">
+                <li data-ng-repeat="a in appData.accSet">
+                    <input type="radio"
+                           id="row{{$index}}"
+                           ng-model="$parent.appData.uuidAcc"
+                           name="uuidAcc"
+                           value="{{a.company_account_id}}" required/>
+
+                    <label for="row{{$index}}">
+                        {{getNameBank(a.bank_id)}} -
+                        חשבון
+                        {{a.account_id}}
+                        ( סניף {{a.snif_id}} )
+                    </label>
+                </li>
+
+            </ul>
+            <p ng-if="formPopAcc.$invalid" class="erroeAl">
+אנא בחר את הבנק הרצוי
+            </p>
+            <button type="submit">הגדר חשבון ראשי</button>
+        </form>
+    </div>
+</div>

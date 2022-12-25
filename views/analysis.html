@@ -1,0 +1,288 @@
+<div ng-init="init()" ng-controller="analysisCtrl">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+
+    <div class="page-content bg-dark" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="headerAnalisis">
+            <ul class="tabs_links">
+                <li>
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = ''; appData.changeListAnalisis = false;loadPageAnalisis('1000'); targetTab = '1000';"
+                         ng-class="{'active': targetTab == '1000'}">
+                        הכנסות
+                    </div>
+                </li>
+                <li>
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = '';appData.changeListAnalisis = false;loadPageAnalisis('1022'); targetTab = '1022';"
+                         ng-class="{'active': targetTab == '1022'}">
+                        עלות המכירות
+                    </div>
+                </li>
+                <li class="golmi">
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = '';appData.changeListAnalisis = false;loadPageAnalisis('golmi'); targetTab = 'golmi';"
+                         ng-class="{'active': targetTab == 'golmi'}">
+                        רווח גולמי
+                    </div>
+                </li>
+                <li>
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = '';appData.changeListAnalisis = false;loadPageAnalisis('1011'); targetTab = '1011';"
+                         ng-class="{'active': targetTab == '1011'}">
+                        הוצאות הנהלה וכלליות
+                    </div>
+                </li>
+                <li>
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = '';appData.changeListAnalisis = false;loadPageAnalisis('1033'); targetTab = '1033';"
+                         ng-class="{'active': targetTab == '1033'}">
+                        הוצאות מימון
+                    </div>
+                </li>
+                <li class="naki">
+                    <div ng-click="transCodes = '';sortCodes ='';selectName = '';loadPageAnalisis('naki'); targetTab = 'naki';appData.changeListAnalisis = false;"
+                         ng-class="{'active': targetTab == 'naki'}">
+                        רווח נקי
+                    </div>
+                </li>
+            </ul>
+            <div class="funds-action-bar clearfix">
+                <div dropdown class="dropdownLeft">
+                    <button class="dropdown-toggle">
+                        תאריך נבחר:
+                        {{appData.datesSelectAnalisis}}
+                    </button>
+                    <div class="dropdown-content">
+                        <form class="filter-form" autocomplete="off">
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilter.type" value="0" id="dateFilter1" ng-change="disabledDates();">
+                                <label for="dateFilter1">
+חודש
+                                </label>
+                                <select ng-model="dateFilter.byMonth"
+                                        ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                                <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilter.type = '0';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilter.type" value="1" id="dateFilter2" ng-change="disabledDates();">
+                                <label for="dateFilter2">
+                                    לפי שנה
+                                </label>
+                                <select data-ng-model="dateFilter.byOnlyYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilter.type = '1';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilter.type" value="2" id="dateFilter3" ng-change="disabledDates();">
+                                <label for="dateFilter3">
+                                    בין חודשים
+                                </label>
+                                <select data-ng-model="dateFilter.fromMonth" ng-class="{'redErrors': appData.redErrorFilterType == '2'}"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+
+                                <div>
+                                    עד
+                                </div>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilter.type = '2';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <button data-ng-click="loadPageAnalisis(targetTab);appData.changeListAnalisis = false;"
+                                        class="dropdown-close button" ng-disabled="appData.redErrorFilterType !== false">
+                                    עדכון
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div scroll-fill="{{scrollHeightAnalysis}}" style="margin-top: 55px;padding-left: 5px;" class="scrollDesign">
+            <div ng-show="!loaderAnalysis" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+
+            <div class="graphAnalisis"
+                 ng-show="appData.analysis.length > 0">
+                <div class="funds-totals">
+                    <div>
+                        <div class="title_sum">
+                            <p>
+                                סה"כ לתקופה
+                            </p>
+                        </div>
+                        <div class="precentData thisYear" ng-show="sum"><span>&#8362;</span>{{getTotal(sum)}}
+                        </div>
+                        <div ng-show="!sum" class="precentData thisYear">
+                            -
+                        </div>
+                    </div>
+                    <div ng-if="targetTab == 'golmi' || targetTab == 'naki'">
+                        <div class="title_sum">
+                            <p>
+                                אחוז מהמחזור
+                            </p>
+                        </div>
+                        <div class="precentData ltr">{{precentThisYears}}<span>%</span></div>
+                    </div>
+                    <div ng-if="targetTab == 'golmi' || targetTab == 'naki'">
+                        <div class="title_sum">
+                            <p>
+                                שינוי מתקופה קודמת
+                            </p>
+                        </div>
+                        <div class="precentData ltr" ng-class="{'red': (precentThisYears - precentPrevYear) < 0, 'green': (precentThisYears - precentPrevYear) > 0, 'gray': (precentThisYears - precentPrevYear) == 0}">
+                            {{(precentThisYears - precentPrevYear)}}<span>%</span>
+                        </div>
+                    </div>
+                    <div ng-if="targetTab == 'golmi' || targetTab == 'naki'" style="width: 40px;">
+                        &nbsp;
+                    </div>
+
+                    <div>
+                        <div class="title_sum">
+                            <p>
+                                אשתקד
+                            </p>
+                        </div>
+                        <div class="precentData prevYear" ng-show="sumPrev"><span>&#8362;</span>{{getTotal(sumPrev)}}
+                        </div>
+                        <div ng-show="!sumPrev" class="precentData prevYear">
+                            -
+                        </div>
+                    </div>
+                    <div ng-if="targetTab !== 'golmi' && targetTab !== 'naki'">
+                        <div class="title_sum">
+                            <p>
+                                אחוז שינוי
+                            </p>
+                        </div>
+                        <div class="precentData {{precentTotalClass}}" ng-show="precentTotal">{{precentTotal}}</div>
+                        <div ng-show="!precentTotal" class="sum-plus">
+                            -
+                        </div>
+                    </div>
+                    <div ng-if="targetTab == 'golmi' || targetTab == 'naki'">
+                        <div class="title_sum">
+                            <p>
+                                אחוז מהמחזור אשתקד
+                            </p>
+                        </div>
+                        <div class="precentData ltr" ng-show="precentPrevYear">{{precentPrevYear}}<span>%</span></div>
+                        <div ng-show="!precentPrevYear" class="precentData thisYear">
+                            -
+                        </div>
+                    </div>
+                    <div class="sideLeftAnalisis">
+                        <ul class="exports">
+                            <li class="excel" exports-excel-analisis tooltips-tazrim title="ייצוא לExcel">
+                                <i></i>
+                            </li>
+                            <li class="mail" tooltips-tazrim ng-click="sendMailer()" title="שליחה במייל">
+                                <i></i>
+                            </li>
+                            <li class="print" tooltips-tazrim exports-print-analisis title="הדפסה">
+                                <i></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="graphWrap" ng-if="appData.analysis.length > 0">
+                    <div class="nav_chart">
+                        <h2>{{selectName}}</h2>
+                        <select ng-show="targetTab !== 'naki' && targetTab !== 'golmi' && selectTrans.length > 1"
+                                ng-model="appData.selectTransId" ng-options="item as item.name for item in selectTrans"
+                                ng-change="selectTransChange(appData.selectTransId)"
+                                ng-disabled="appData.selectCodeSortId.id == 'null'">
+                        </select>
+                        <select ng-show="targetTab !== 'naki' && targetTab !== 'golmi' && selectCodeSort.length > 0"
+                                ng-model="appData.selectCodeSortId" ng-options="item as item.name for item in selectCodeSort"
+                                ng-change="selectCodeSortChange(appData.selectCodeSortId)">
+                        </select>
+                    </div>
+                    <div ng-if="chartDataGr" chart-draw chart-data="chartData" class="chartDataGr" data-method="ctrlFn"></div>
+                    <div class="chartDataGr" ng-show="!chartDataGr">
+                        <h2>אין נתונים בתאריכים שהוזנו</h2>
+                    </div>
+                </div>
+
+                <div class="grid_data" ng-show="targetTab !== 'naki' && targetTab !== 'golmi'"
+                     ng-if="appData.listAnalisis.length > 0">
+                    <div class="row_data_grid level_one"  ng-repeat="a in appData.listAnalisis"
+                         ng-class="{'open_level': a.rowshow}">
+                        <div class="w_80" ng-click="a.rowshow=!a.rowshow"><i></i>
+                            <span ng-if="a.level_1.name == null">{{nameTabs(targetTab)}}</span>
+                            <span ng-if="a.level_1.name !== null"> {{a.level_1.number}} - {{a.level_1.name}}</span>
+                        </div>
+                        <div class="w_10 blue_num" ng-click="a.rowshow=!a.rowshow">₪
+                            {{getTotal(a.level_1.sum)}}
+                        </div>
+                        <div class="w_10" ng-click="a.rowshow=!a.rowshow"><span
+                                style="direction: rtl;display: inline-block;">מסך ההכנסות  </span>
+                            {{getTotal(a.level_1.percentage)}}%
+                        </div>
+                        <div class="row_data_grid level_two"  ng-repeat="v in a.level_1.level_2"
+                             ng-init="v.rowshow = false;" ng-show="a.rowshow" ng-class="{'open_level': v.rowshow}">
+                            <div class="w_80" ng-click="openRowThree(v.id);v.rowshow=!v.rowshow;"><i></i>
+                                {{v.number}} - {{v.name}}
+                            </div>
+                            <div class="w_10 blue_num" ng-click="openRowThree(v.id);v.rowshow=!v.rowshow">₪
+                                {{getTotal(v.sum)}}
+                            </div>
+                            <div class="w_10 normal_font" ng-click="openRowThree(v.id);v.rowshow=!v.rowshow">
+                                {{getTotal(v.percentage)}}%
+                            </div>
+                            <div class="row_data_grid titles_tree" ng-if="v.level_3.length > 0" ng-show="v.rowshow">
+                                <div class="w_10">תאריך</div>
+                                <div class="w_30">שם לקוח</div>
+                                <div class="w_30">פרטים</div>
+                                <div class="w_10">אסמכתא</div>
+                                <div class="w_10">סכום</div>
+                            </div>
+                            <div class="row_data_grid level_tree"  ng-repeat="c in v.level_3"
+                                 ng-if="v.level_3.length > 0" ng-show="v.rowshow">
+                                <div class="w_10">                            &nbsp;
+
+                                    {{c.reference_date}}
+                                </div>
+                                <div class="w_30">                            &nbsp;
+
+                                    {{c.opposit_customer_name}}
+                                </div>
+                                <div class="w_30">
+
+                                    {{c.description}}
+                                    &nbsp;
+                                </div>
+                                <div class="w_10">                            &nbsp;
+
+                                    {{c.asmachta1}}
+                                </div>
+                                <div class="w_10" ng-style="{'color': c.ind_hova !== 1 ? '#62b03f' : '#ec3c66'}">                            &nbsp;
+                                    ₪
+                                    {{getTotal(c.total)}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="graphAnalisis"
+                 ng-show="appData.analysis && !appData.analysis.length">
+                <h1>
+                    אין נתונים להצגה
+                </h1>
+            </div>
+
+        </div>
+
+    </div>
+</div>

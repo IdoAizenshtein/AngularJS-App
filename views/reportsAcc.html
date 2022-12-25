@@ -1,0 +1,9 @@
+<div data-ng-init="initPage()">
+    <div class="funds-header">
+        <h2 class="page-header" style="display: inline-block;">
+            דוחות
+        </h2>
+        <i class="closeBack gotoAllReports fa fa-times" title="חזור" ng-if="$state.current.name !== 'mainAccountants.reports.main'" ui-sref="mainAccountants.reports.main"></i>
+    </div>
+    <div ui-view="lazyLoadView" scroll-fill="130" class="scrollDesign"></div>
+</div>

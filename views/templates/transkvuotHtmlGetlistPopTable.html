@@ -1,0 +1,78 @@
+<div ng-controller="regularOpCtrl">
+    <div class="popup-header">
+        <h2>
+            <div ng-if="appData.transkvuotHtmlGetlistPopTable.ind_expense == 0">
+                {{getNameKey('7b94ad34-2bc1-4f4a-b905-a9f582a06179')}}
+            </div>
+            <div ng-if="appData.transkvuotHtmlGetlistPopTable.ind_expense == 1">
+                {{getNameKey('f605bc82-2921-4548-b09b-937c7baa1c2a')}}
+            </div>
+        </h2>
+    </div>
+    <div class="popup-content">
+        <h2 ng-if="appData.transkvuotHtmlGetlistPopTable.dataTable.length == 0">
+            לא נמצאו נתונים
+        </h2>
+        <div class="table_data">
+            <div class="head_table" ng-if="appData.transkvuotHtmlGetlistPopTable.dataTable.length > 0">
+                <div></div>
+                <!--<input type="search" class="searchTable" placeholder="חיפוש..."-->
+                       <!--ng-model="appData.transkvuotHtmlGetlistPopTable.searchText">-->
+                <!--<button class="deleteall" ng-click="deleteAllRowFromTable2Pop(appData.transkvuotHtmlGetlistPopTable)"-->
+                        <!--ng-if="appData.transkvuotHtmlGetlistPopTable.target_type_id == 11">-->
+                    <!--<span>הסר מקבוצה זו</span>-->
+                <!--</button>-->
+            </div>
+            <div class="table" ng-if="appData.transkvuotHtmlGetlistPopTable.dataTable.length > 0">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>
+                            <!--<input type="checkbox" class="checkall"-->
+                                   <!--data-ng-model="appData.transkvuotHtmlGetlistPopTable.checks">-->
+                            &nbsp;
+                        </th>
+                        <th><span
+                                ng-click="appData.transkvuotHtmlGetlistPopTable.predicate = 'trans_date'; appData.transkvuotHtmlGetlistPopTable.reverse=!appData.transkvuotHtmlGetlistPopTable.reverse">תאריך</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.transkvuotHtmlGetlistPopTable.predicate = 'trans_desc_azonly'; appData.transkvuotHtmlGetlistPopTable.reverse=!appData.transkvuotHtmlGetlistPopTable.reverse">סוג</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.transkvuotHtmlGetlistPopTable.predicate = 'asmachta'; appData.transkvuotHtmlGetlistPopTable.reverse=!appData.transkvuotHtmlGetlistPopTable.reverse">אסמכתא</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.transkvuotHtmlGetlistPopTable.predicate = 'bank_total'; appData.transkvuotHtmlGetlistPopTable.reverse=!appData.transkvuotHtmlGetlistPopTable.reverse">סכום</span>
+                        </th>
+                        <th><span
+                                ng-click="appData.transkvuotHtmlGetlistPopTable.predicate = 'frequency'; appData.transkvuotHtmlGetlistPopTable.reverse=!appData.transkvuotHtmlGetlistPopTable.reverse">תדירות</span>
+                        </th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="b in appData.transkvuotHtmlGetlistPopTable.dataTable | filter:appData.transkvuotHtmlGetlistPopTable.searchText | orderBy:appData.transkvuotHtmlGetlistPopTable.predicate:appData.transkvuotHtmlGetlistPopTable.reverse"
+                        ng-class="{'bgGray': b.checks || appData.transkvuotHtmlGetlistPopTable.checks}">
+                        <td>
+                            <!--<input type="checkbox" class="checkbox"-->
+                                   <!--ng-checked="appData.transkvuotHtmlGetlistPopTable.checks"-->
+                                   <!--ng-model="b.checks">-->
+                            &nbsp;
+                        </td>
+                        <td>{{b.trans_date}}</td>
+                        <td>{{b.trans_desc_azonly}}</td>
+                        <td>{{b.asmachta}}</td>
+                        <td class="total_average">{{b.bank_total}}</td>
+                        <td>{{accoConversions.getFrequency(b.frequncy)}}</td>
+                        <td><a href="javascript:void(0);" class="delete_single"
+                               ng-if="appData.transkvuotHtmlGetlistPopTable.target_type_id == 11"
+                               ng-click="deleteRowFromTable2Pop(appData.transkvuotHtmlGetlistPopTable.dataTable, appData.transkvuotHtmlGetlistPopTable.dataTable.length, appData.transkvuotHtmlGetlistPopTable.trans_id, b.bank_trans_id, b.match_link_id)">הסרה
+                            מהרשימה</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

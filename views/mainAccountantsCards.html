@@ -1,0 +1,558 @@
+<div ng-show="!$parent.appData.loaderAccMainCards" class="loader_table">
+    <img src="image/loader.gif" alt="Loading...">
+</div>
+<div class="funds-totals mainPageAcc" ng-init="init()" data-ng-class="{'openMoreNav': openMoreNav}">
+    <ul class="tabCardsAcc">
+        <li ng-click="appData.tabCardsAcc = 1;filterTabs();" ng-class="{'active': appData.tabCardsAcc == 1}">
+            <span>
+                            פורמט דפי בנק
+            </span>
+        </li>
+        <li ng-click="appData.tabCardsAcc = 2;filterTabs();" ng-class="{'active': appData.tabCardsAcc == 2}">
+            <span>
+                            פורמט פקודות יומן
+            </span>
+        </li>
+    </ul>
+    <div data-ng-click="typesFiltersActive('sumCompanies')" data-ng-class="{'active': typesFilters.sumCompanies}">
+        <div class="title_sum">
+            <p>
+                סה״כ חברות
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="listCardsTitles">
+            {{listCardsTitles.sumCompanies}}
+        </div>
+        <div ng-show="!listCardsTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <div data-ng-click="typesFiltersActive('status_have')" data-ng-class="{'active': typesFilters.status_have}">
+        <div class="title_sum">
+            <p>
+                סה״כ פעולות לייצוא
+            </p>
+        </div>
+        <div class="sum-data-red" data-ng-show="listCardsTitles">
+            {{listCardsTitles.status_have}}
+        </div>
+        <div ng-show="!listCardsTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <div data-ng-click="typesFiltersActive('status_zero')" data-ng-class="{'active': typesFilters.status_zero}">
+        <div class="title_sum">
+            <p>
+                סה״כ טעינות שנכשלו
+            </p>
+        </div>
+        <div class="sum-data" data-ng-show="listCardsTitles">
+            {{listCardsTitles.status_zero}}
+        </div>
+        <div ng-show="!listCardsTitles" class="sum-data">
+            -
+        </div>
+    </div>
+    <div class="exportsMainAcc" ng-show="appData.tabCardsAcc == 2">
+        <!--<button ng-click="ccardSethamlazacustId()" class="ccardSethamlazacustId" ng-if="!allApproved">-->
+        <!--המלצות שיוך כרטיסים-->
+        <!--</button>-->
+        <i class="fi-widget openSettingsAccCardsCalendar" ng-click="openSettingsAccCardsCalendar()"></i>
+        <button ng-click="ccardPreparehamlaza()" class="ccardSethamlazacustId" ng-if="allApproved">
+            אשר הכל
+        </button>
+        <input type="text" ng-model="appData.searchCards" ng-change="filterAllCards(true, true)"
+               placeholder="חיפוש לפי חברה, חשבון, מספר כרטיס, שם כרטיס"
+               class="form-control" ng-model-options="{ debounce: {'default': 500 }}"
+               data-ng-show="appData.listCardsAcc.length > 0 || appData.searchCards.length > 0"/>
+
+        <button data-ng-click="openMoreNavScroll();" class="open-filters-perform">
+            סינון מתקדם
+        </button>
+
+        <ul class="exports">
+            <li class="excel" exports-excel-acc-cards>
+                <span>ייצוא לExcel</span>
+                <i></i>
+            </li>
+            <li class="mail" data-ng-click="sendMailer()">
+                <span>שליחה במייל</span>
+                <i></i>
+            </li>
+            <li class="print" exports-print-acc-cards>
+                <span>הדפסה</span>
+                <i></i>
+            </li>
+        </ul>
+    </div>
+    <div class="exportsMainAcc tabTwoCards" ng-show="appData.tabCardsAcc == 1">
+        <div>
+            <button data-ng-click="openMoreNavScroll();" class="open-filters-perform">
+                סינון מתקדם
+            </button>
+            <ul class="exports">
+                <li class="excel" exports-excel-acc-cards>
+                    <span>ייצוא לExcel</span>
+                    <i></i>
+                </li>
+                <li class="mail" data-ng-click="sendMailer()">
+                    <span>שליחה במייל</span>
+                    <i></i>
+                </li>
+                <li class="print" exports-print-acc-cards>
+                    <span>הדפסה</span>
+                    <i></i>
+                </li>
+            </ul>
+            <i class="fi-widget" ng-click="openSettingsAccCards()"></i>
+        </div>
+        <div>
+            <button class="ccardSethamlazacustId"
+                    ng-if="appData.adminSoft"
+                    ng-click="showPopupPre_get_fictive();" style="float: right;background: #EC3C66;">
+                מיפוי שנה
+            </button>
+            <button class="ccardSethamlazacustId" style="float: right"
+                    onclick="window.open('https://docs.google.com/document/d/14mHId2SBQrg-ZHKBxyw_EL1WY5tn6BzDC-i8tiaXxZk/edit', '_blank')">
+                הנחיה למניעת כפילויות
+            </button>
+            <input type="text" ng-model="appData.searchCards" ng-change="filterAllCards(true, true)"
+                   placeholder="חיפוש לפי חברה, חשבון, מספר כרטיס, שם כרטיס"
+                   class="form-control" ng-model-options="{ debounce: {'default': 500 }}"
+                   data-ng-show="appData.listCardsAcc.length > 0 || appData.searchCards.length > 0"/>
+
+            <button ng-click="appData.exportHashProg = true; exportPop()" class="ccardSethamlazacustId" ng-show="isExistHash(appData.filteredCardsItemsAll)">
+                יצא לחשבשבת
+            </button>
+            <button ng-click="ccardSethamlazacustId()" class="ccardSethamlazacustId"
+                    ng-if="!allApproved && appData.adminSoft">
+                המלצות שיוך כרטיסים
+            </button>
+            <button ng-click="ccardPreparehamlaza()" class="ccardSethamlazacustId" ng-if="allApproved">
+                אשר הכל
+            </button>
+        </div>
+    </div>
+</div>
+<div class="filters ExFilters" data-ng-show="openMoreNav" data-ng-class="{'openMoreNav': openMoreNav}">
+    <div dropdown>
+        <div class="dropdown-toggle filtered-hint" ng-show="appData.typesStatus.length > 0">
+            <ul>
+                <li ng-cloak class="animate-repeat"
+                    ng-show="!listim.length || listim.length == appData.typesStatus.length"
+                    style="color: #5a5e61; ">
+                    סטטוס
+                </li>
+                <li ng-cloak class="animate-repeat"
+                    ng-repeat="t in listim = (appData.typesStatus | filter: !t.type)"
+                    ng-hide="!listim.length || listim.length == appData.typesStatus.length">
+                    <p>
+                        {{accoConversions.getStatusListDD(t.type)}}
+                        <span>, </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown-content">
+            <form class="filter-form type_trans" autocomplete="off">
+                <div class="form-control">
+                    <input type="checkbox" ng-model="selectedAll" id="changeAll" ng-click="checkAll()"
+                           ng-init="selectedAll = true"/>
+                    <label for="changeAll">
+                        בחר / נקה הכל
+                    </label>
+                </div>
+                <div class="form-control" ng-repeat="t in appData.typesStatus">
+                    <input type="checkbox" ng-model="t.active"
+                           id="{{accoConversions.getStatusListDD(t.type)}}" ng-change="filterAllCards()">
+                    <label for="{{accoConversions.getStatusListDD(t.type)}}">
+                        {{accoConversions.getStatusListDD(t.type)}}
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div dropdown>
+        <div class="dropdown-toggle filtered-hint" ng-show="appData.typesSoftware.length > 0">
+            <ul>
+                <li ng-cloak class="animate-repeat"
+                    ng-show="!listimType.length || selectedAllTypes == true"
+                    style="color: #5a5e61;">
+                    סוג תוכנה
+                </li>
+                <li ng-cloak class="animate-repeat"
+                    ng-repeat="t in listimType = (appData.typesSoftware | filter: !t.type)"
+                    ng-hide="!listimType.length || selectedAllTypes == true">
+                    <p>
+                        {{t.text}}
+                        <span>, </span>
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown-content">
+            <form class="filter-form type_trans" autocomplete="off">
+                <div class="form-control">
+                    <input type="checkbox" ng-model="selectedAllTypes" id="checkAllSoftType"
+                           ng-click="checkAllSoftType()" ng-init="selectedAllTypes = true"/>
+                    <label for="checkAllSoftType">
+                        בחר / נקה הכל
+                    </label>
+                </div>
+                <div class="form-control" ng-repeat="t in appData.typesSoftware">
+                    <input type="checkbox" ng-model="t.active" id="{{t.type}}" ng-change="filterAllExSoft()">
+                    <label for="{{t.type}}">
+                        {{t.text}}
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div dropdown>
+        <div class="dropdown-toggle filtered-hint" ng-show="appData.adminSoft">
+            <ul>
+                <li ng-cloak class="animate-repeat"
+                    style="color: #5a5e61;">
+                    בוצע מיפוי
+                </li>
+            </ul>
+        </div>
+        <div class="dropdown-content">
+            <form class="filter-form type_trans" autocomplete="off">
+                <div class="form-control">
+                    <input type="checkbox" ng-model="selectedAllTypes_indMupa" id="checkAllSoftType_indMupa"
+                           ng-click="checkAllMupaType()" ng-init="selectedAllTypes_indMupa = true"/>
+                    <label for="checkAllSoftType_indMupa">
+                        בחר / נקה הכל
+                    </label>
+                </div>
+                <div class="form-control">
+                    <input type="checkbox" ng-model="indMupa_yes" id="indMupa_yes" ng-change="filterAllMupa()" ng-init="indMupa_yes = true">
+                    <label for="indMupa_yes">
+                        כן
+                    </label>
+                </div>
+                <div class="form-control">
+                    <input type="checkbox" ng-model="indMupa_no" id="indMupa_no" ng-change="filterAllMupa()" ng-init="indMupa_no = true">
+                    <label for="indMupa_no">
+                        לא
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <div>
+        <form class="filter-form inline" autocomplete="off">
+            <div>
+                הצג:
+            </div>
+            <div>
+                <input id="expall" type="radio" data-ng-model="filterComments"
+                       value="all" name="ind_expenceRadio" ng-change="filterAllCards(true, true)">
+                <label for="expall">
+                    הכל
+                </label>
+            </div>
+            <div>
+                <input id="exp0" type="radio" data-ng-model="filterComments"
+                       value="0" name="ind_expenceRadio" ng-change="filterAllCards(true, true)">
+                <label for="exp0">
+                    רק הערות
+                </label>
+            </div>
+            <div>
+                <input id="exp1" type="radio" data-ng-model="filterComments"
+                       value="1" name="ind_expenceRadio" ng-change="filterAllCards(true, true)">
+                <label for="exp1">
+                    ללא הערות
+                </label>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <div class="tableMainAccCards">
+        <div class="col-md-12" ng-show="appData.filteredCardsItems > 0">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <th>&nbsp;</th>
+                <th>
+                    פעולות לייצוא
+                </th>
+                <th>
+                    כרטיס
+                </th>
+                <th>
+                    עדכון אחרון
+                </th>
+                <th>
+                    אינדקס כרטיס
+                </th>
+                <th>
+                    אינדקס בנק
+                </th>
+                <th>
+                    ייצוא אחרון
+                </th>
+                <th>
+                    סטטוס
+                </th>
+                <th>&nbsp;</th>
+                </thead>
+                <tbody scroll-fill="{{scrollHeightTable}}" vs-repeat>
+                <tr ng-repeat="a in appData.filteredCardsItemsAll = (appData.listCardsAcc) | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+                    ng-class="{'titlelistCardsAcc': a.title}">
+                    <td>
+                        <span ng-if="a.title" tooltips-tazrim title="{{tooltipsRet(a)}}">
+                          {{a.company_name}}
+                        </span>
+                        <span ng-if="a.title && a.programId">
+                            -
+                          {{a.programId}}
+                        </span>
+                        <span ng-if="appData.adminSoft && a.title && a.indMupa === 1" style="color: #62B03F">
+                            -
+                        בוצע מיפוי
+                        </span>
+
+                        <input type="checkbox" ng-model="a.checked" ng-if="!a.title"
+                               ng-change="blacklist(a, a.company_id)">
+                    </td>
+                    <td ng-if="a.title && appData.tabCardsAcc == 2">
+                        <button ng-click="export(a.company_id, true)" ng-disabled="checkPeulot(a.company_id)">
+                            ייצוא כרטיסים
+                        </button>
+                    </td>
+                    <td ng-if="!a.title">
+                        {{a.peulot_num}}
+                    </td>
+                    <td ng-if="!a.title" style="position: relative">
+                        <img src="image/icons8-currency-exchange-50.png"
+                             style="cursor: pointer;
+    width: 24px;
+    height: 24px;
+    padding: 0 0 0 2px;
+    position: absolute;
+    right: 0;
+    top: 19px;"
+                             ng-click="ccard_izu_cust_curr_get(a)"
+                             ng-if="a.count_empty !== null || a.count_full !== null">
+                        <div ng-if="a.count_empty !== null || a.count_full !== null" style="    padding-right: 32px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;">
+                                                    {{a.credit_card_nickname}}
+                        </div>
+                        <div ng-if="a.count_empty === null && a.count_full === null">
+                                                    {{a.credit_card_nickname}}
+                        </div>
+                    </td>
+                    <td ng-if="!a.title">
+                       <span ng-if="a.balance_last_update_date !== null">
+                            {{a.balance_last_update_date}}
+                               <span ng-if="accoConversions.getStatus(a.token_status)">
+                                                                                     |
+                               </span>
+                               <span ng-if="a.token_status !== 6"
+                                     ng-class="{'underline' : a.token_status == 2 || a.token_status == 4 || a.token_status == 3 || a.token_status == 157 || a.token_status == 158 }"
+                                     ng-click="updateAccountPassword(a, 'data')">
+                                             {{accoConversions.getStatus(a.token_status)}}
+                               </span>
+                             <span ui-sref="mainAccountants.poalimAsakim" ng-if="a.token_status == 6" class="underline">
+                                             {{accoConversions.getStatus(a.token_status)}}
+                               </span>
+                        </span>
+                        <span ng-if="a.balance_last_update_date == null">
+                            &nbsp;
+                        </span>
+                    </td>
+                    <td ng-if="!a.title" ng-init="a.editCustId = false" class="editCustIdTdEx">
+                        <!--<span ng-if="a.izu_cast_id !== null && a.editCustId == false">-->
+                        <!--{{a.izu_cast_id}}-->
+                        <!--</span>-->
+                        <!--<span ng-if="a.izu_cust_nickname !== null && a.editCustId == false">-->
+                        <!--|-->
+                        <!--{{a.izu_cust_nickname}}-->
+                        <!--</span>-->
+                        <!--<span ng-if="a.izu_cast_id == null && a.izu_cust_nickname == null && a.editCustId == false">-->
+                        <!--&nbsp;-->
+                        <!--</span>-->
+                        <!--<span ng-if="a.editCustId == true" class="inputCustIdEdit">-->
+                        <!--<input type="text" ng-model="a.modelCustId">-->
+                        <!--</span>-->
+                        <!--<i ng-click="a.editCustId = false" ng-if="a.editCustId == true" class="cancelCustId"></i>-->
+                        <!--<i ng-click="a.editCustId = false; set_card_cust_id(a)" ng-if="a.editCustId == true" class="saveCustId"></i>-->
+                        <!--<i ng-click="a.editCustId = true" ng-if="a.editCustId == false" class="editCustId"></i>-->
+                        <div>
+                            <i ng-click="a.editCustId = false; set_card_cust_id(a)"
+                               ng-if="a.editCustId == true && a.izu_source_program_id !== null && a.izu_source_program_id !== 333 && a.izu_source_program_id == 9995"
+                               class="saveCustId fa fa-floppy-o"></i>
+                            <i ng-click="a.editCustId = true"
+                               ng-if="a.editCustId == false && a.izu_source_program_id !== null && a.izu_source_program_id !== 333 && a.izu_source_program_id == 9995"
+                               class="editCustId fa fa-pencil-square-o"></i>
+                            <span ng-if="a.izu_cust_id !== null && a.editCustId == false">
+                                        {{a.izu_cast_id}}
+                                     </span>
+                            <span ng-if="a.izu_cust_nickname !== null && a.editCustId == false">
+                                         |
+                                        {{a.izu_cust_nickname}}
+                                    </span>
+                            <span ng-if="a.izu_cust_id == null && a.editCustId == false">&nbsp;</span>
+                            <span ng-if="a.editCustId == true" class="inputCustIdEdit">
+                                        <input type="text" ng-model="a.modelCustId"
+                                               ng-style="{ 'border' : (a.modelCustId) ? '1px solid #cacaca' : '1px solid  #ec3c66' }">
+                                    </span>
+                            <i class="fa fa-trash clearAccBank" ng-if="appData.adminSoft"
+                               ng-click="clearAccBank(a.credit_card_id)"></i>
+                        </div>
+                    </td>
+                    <td ng-if="!a.title" style="position: relative;">
+                        <span ng-if="a.izu_account_cust_id !== null">
+                            {{a.izu_account_cust_id}}
+                        </span>
+                        <span ng-if="a.izu_account_cust_nickname !== null">
+                            |
+
+                            {{a.izu_account_cust_nickname}}
+                        </span>
+                        <span ng-if="a.izu_account_cust_id == null && a.izu_account_cust_nickname == null">
+                            &nbsp;
+                        </span>
+                        <img src="image/matchIcon.png"
+                             style="cursor: pointer;position: absolute;left: 0;top: -3px;"
+                             ng-disabled="disabled_till_run_credit_card_match1"
+                             ng-click="run_credit_card_match1(a.company_account_id)"
+                             ng-if="appData.adminSoft">
+                    </td>
+                    <td ng-if="!a.title">
+                        <div class="keys" ng-if="a.last_export_date !== null">
+                            <strong>
+                                {{a.last_export_date}}
+                            </strong>
+
+                            <p>
+                                {{a.last_export_user_name}}
+                            </p>
+                            <i class="fa fa-file-o clearAccBank" ng-if="appData.adminSoft"
+                               ng-click="clearAccCard(a.credit_card_id)"></i>
+                        </div>
+                        <!--<i data-ng-click="editAlerts(a, a.company_id)"-->
+                        <!--data-ng-class="{'editDescActive' :a.explain_desc !== null,'editDesc' :a.explain_desc == null}"></i>-->
+
+                        <span ng-if="a.last_export_date == null">
+                            &nbsp;
+                        </span>
+                    </td>
+                    <td ng-if="!a.title">
+                        <div data-ng-class="{'blue': a.last_export_status == 2}"
+                             ng-style="{'color': a.last_export_status == 0 || a.last_export_status == 8 || a.last_export_status == 55 ? '#62b03f' : '#ec3c66'}">
+                            <img src="image/xErr.png" alt="error"
+                                 ng-if="a.last_export_status !== 0 && a.last_export_status !== 8 && a.last_export_status !== 56 && a.last_export_status !== 55 && a.last_export_status !== 2 && a.last_export_status !== null">
+                            <img src="image/vSuc.png" alt="suc"
+                                 ng-if="a.last_export_status == 0 || a.last_export_status == 8 || a.last_export_status == 55">
+                            <img src="image/tooltip_kvua.png"
+                                 ng-if="a.last_export_status == 56">
+                            <span ng-if="a.last_export_status !== null">
+                                  {{ accoConversions.getStatusCompanyEx(a.last_export_status, a.izu_source_program_id)}}
+                            </span>
+                            <span ng-if="a.last_export_status == null">
+&nbsp;
+                            </span>
+                        </div>
+                    </td>
+                    <td ng-if="!a.title">
+                        <div ng-if="a.last_export_status == 55" class="buttonsLastEx">
+                            <div ng-click="popUpApply(a, 'edit')">
+                                <i class="fa fa-pencil"></i>
+                                עריכה
+                            </div>
+                            <div class="vi" ng-click="popUpApply(a, 'vi')">
+                                <i class="fa fa-check"></i>
+                                אשר המלצה
+                            </div>
+                        </div>
+
+                        <div ng-if="a.last_export_status == 57" class="buttonsLastEx">
+                            <div ng-click="popUpApply(a, 'edit')">
+                                <i class="fa fa-pencil"></i>
+                                עריכה
+                            </div>
+                        </div>
+
+                        <div ng-if="a.last_export_status == null" class="buttonsLastEx">
+                            <div ng-click="appData.ccard_izu_cust_curr_getRun=false;popUpApply(a)">
+                                <i class="fi-page-export"></i>
+                                ייצוא ראשוני
+                            </div>
+                            <div ng-click="deleteCard(a.credit_card_id)">
+                                <i class="fi-x"></i>
+                                מחק
+                            </div>
+                        </div>
+
+                        <!--<button class="perform" ng-click="popUpApply(a)" ng-if="a.last_export_date == null || a.last_export_status == 55">-->
+                        <!--לחץ לביצוע-->
+                        <!--</button>-->
+                        <div ng-if="a.last_export_date !== null && a.last_export_status !== 55 && a.last_export_status !== 57"
+                             ng-class="{'buttonsLastExCards': a.last_export_status !== 3}">
+                            <button class="perform" ng-if="a.last_export_status == 3"
+                                    ng-click="popUpApply(a)" class="redButton">
+                                בדוק יתרות
+                            </button>
+                            <i ng-click="openBug(a)" class="fa fa-bug exHasBug middleSpace"
+                               ng-if="a.last_export_status == 3"
+                               title="פתיחת קריאת שירות ל bizibox" tooltips></i>
+                            <div ng-click="openBug(a)" ng-if="a.last_export_status !== 3">
+                                <i class="fa fa-bug"></i>
+                                קריאת שירות
+                            </div>
+                        </div>
+
+                        <div ng-if="a.last_export_date == null || a.last_export_status == 55 || a.last_export_status == 57">
+                            <i ng-click="openBug(a)" class="fa fa-bug exHasBug middleSpace"
+                               title="פתיחת קריאת שירות ל bizibox" tooltips></i>
+                            &nbsp;
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="titleNotFilter" ng-show="appData.filteredCardsItems == 0">
+            לא נמצאה התאמה
+        </div>
+    </div>
+</div>
+<div class="rowsSort" data-ng-show="appData.listCardsAcc.length > 0 && appData.filteredCardsItems > 0">
+    <div class="selectRows">
+        הצג
+        <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+            <option>20</option>
+            <option>50</option>
+            <option>100</option>
+            <option>150</option>
+        </select>
+        שורות
+    </div>
+    <!--<div class="sumRows">-->
+        <!--סה״כ שורות שנמצאו-->
+        <!--{{appData.filteredCardsItems - listCardsTitles.sumCompanies}}-->
+        <!--מתוך-->
+        <!--{{sumAllRows - listCardsTitles.sumCompanies}}-->
+    <!--</div>-->
+    <div class="pagRows" ng-show="appData.filteredCardsItems > 0 && appData.filteredCardsItems > entryLimit">
+        <!--<div pagination="" page="currentPage" on-select-page="setPage(page)" boundary-links="true"-->
+        <!--total-items="appData.filteredCardsItems" items-per-page="entryLimit" class="pagination-small"-->
+        <!--previous-text="&laquo;" next-text="&raquo;"></div>-->
+        <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)" items-per-page="entryLimit"
+                    total-items="appData.filteredCardsItems" ng-model="currentPage" class="pagination-sm"
+                    previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                    last-text="עמ׳ אחרון"></pagination>
+    </div>
+</div>

@@ -1,0 +1,714 @@
+<div ng-if="!showPopPassword" class="showPopPasswordForm">
+    <form name="showPopPasswordForm" novalidate ng-submit="checkpopPasswordCompaiesTab(showPopPasswordForm)">
+        <p>
+            אנא הקלד סיסמה:
+        </p>
+
+        <div class="inputsPass"
+             ng-class="{'errorInput': (showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched) && (showPopPasswordForm.pass.$error.required || showPopPasswordForm.pass.$error.valid)}">
+            <input style="display:none" type="password" autocomplete="off">
+            <input pass-tab-bil autocomplete="off" type="password"
+                   readonly
+                   onfocus="this.removeAttribute('readonly');"
+                   ng-model="popPasswordCompaiesTab" name="pass" required="">
+        </div>
+        <div ng-show="showPopPasswordForm.$submitted || showPopPasswordForm.pass.$touched" class="alertsMessages">
+            <div ng-show="showPopPasswordForm.pass.$error.required">
+                מידע זה הינו מידע חובה
+            </div>
+            <div ng-show="showPopPasswordForm.pass.$error.valid">
+                הסיסמה אינה נכונה
+            </div>
+        </div>
+        <button type="submit">
+            אישור
+        </button>
+    </form>
+</div>
+
+<div ng-if="showPopPassword">
+    <div ng-show="loaderAccMainBill" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <ul class="tabCardsAcc grNavBill">
+        <li ng-click="appData.tabAccBill = 1; loadAccBiling();" ng-class="{'active': appData.tabAccBill == 1}">
+            <span>
+שוטף
+            </span>
+        </li>
+        <li ng-click="appData.tabAccBill = 2;get_chayavim_masach();" ng-class="{'active': appData.tabAccBill == 2}">
+            <span>
+חייבים
+            </span>
+        </li>
+    </ul>
+
+    <div class="funds-totals mainPageAcc billingPage clearfixAfter" ng-init="init()"
+         data-ng-class="{'openMoreNav': openMoreNav, 'PAYMENT_TAB_HIDDEN': appData.tabAccBill == 2}">
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="show.IND_ZEFI = 0;appData.PAYMENTTABS = '1';show.PAYMENT_TAB = '';filterData();"
+             ng-class="{'active':appData.PAYMENTTABS == '1'}">
+            <div class="title_sum">
+                <p>
+                    הכל
+                </p>
+            </div>
+            <div class="sum-data">
+                {{appData.itemsBillAllLen}}
+            </div>
+            <div ng-show="appData.itemsBillAllLen == undefined" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="appData.PAYMENTTABS = '';show.IND_ZEFI = 0; show.PAYMENT_TAB = 2;filterData();"
+             ng-class="{'active':show.PAYMENT_TAB == 2 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    לחיוב
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="count_paymet_tab">
+                {{count_paymet_tab.billable}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="appData.PAYMENTTABS = '';show.IND_ZEFI = 0;show.PAYMENT_TAB = 1;filterData();"
+             ng-class="{'active':show.PAYMENT_TAB == 1 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    נכשלים
+                </p>
+            </div>
+            <div class="sum-data-red" data-ng-show="count_paymet_tab">
+                {{count_paymet_tab.fails}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1" ng-click="appData.PAYMENTTABS = '3';show.IND_ZEFI = 0;filterData()"
+             ng-class="{'active':appData.PAYMENTTABS == '3'}">
+            <div class="title_sum">
+                <p>
+                    נכשלים היום
+                </p>
+            </div>
+            <div class="sum-data-red" ng-show="count_paymet_tab">
+                {{count_paymet_tab.failsToday}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="appData.PAYMENTTABS = '';show.IND_ZEFI = 0;show.PAYMENT_TAB = 0;filterData();"
+             ng-class="{'active':show.PAYMENT_TAB === 0 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    תקינים
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="count_paymet_tab">
+                {{count_paymet_tab.normal}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="appData.PAYMENTTABS = '';show.IND_ZEFI = 0;show.PAYMENT_TAB = 0;filterData();"
+             ng-class="{'active':show.PAYMENT_TAB === 0 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    סה"כ חוייב
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="count_paymet_tab">
+                {{round2Fixed(count_paymet_tab.totalSumPay)}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 1"
+             ng-click="appData.PAYMENTTABS = '';show.IND_ZEFI = 0;show.PAYMENT_TAB = 1;filterData();"
+             ng-class="{'active':show.PAYMENT_TAB == 1 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    סה"כ נכשל
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="count_paymet_tab">
+                {{round2Fixed(count_paymet_tab.totalSumFailed)}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+
+
+        <div ng-show="appData.tabAccBill == 1" ng-click="appData.PAYMENTTABS = '4';filterData()"
+             ng-class="{'active':appData.PAYMENTTABS == '4'}">
+            <div class="title_sum">
+                <p>
+                    מוצלחים
+                </p>
+            </div>
+            <div class="sum-data-green" ng-show="count_paymet_tab">
+                {{count_paymet_tab.success}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+
+        <div ng-show="appData.tabAccBill == 1" ng-click="appData.PAYMENTTABS = ''; show.IND_ZEFI = 1;  filterData();"
+             ng-class="{'active':show.IND_ZEFI == 1 && appData.PAYMENTTABS !== '3' && appData.PAYMENTTABS !== '4'}">
+            <div class="title_sum">
+                <p>
+                    צפי
+                </p>
+            </div>
+            <div class="sum-data-yellow" data-ng-show="count_paymet_tab">
+                {{round2Fixed(count_paymet_tab.zefi)}}
+            </div>
+            <div ng-show="!count_paymet_tab" class="sum-data">
+                -
+            </div>
+        </div>
+
+        <div ng-show="appData.tabAccBill == 2" ng-click="appData.filter2 = 'all'; filterData2()"
+             ng-class="{'active':appData.filter2 == 'all'}">
+            <div class="title_sum">
+                <p>
+                    כמות חייבים
+                </p>
+            </div>
+            <div class="sum-data-red" ng-show="appData.get_chayavim_masachAll.length">
+                {{appData.get_chayavim_masachAll.length}}
+            </div>
+            <div ng-show="!appData.get_chayavim_masachAll.length" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 2" ng-click="appData.filter2 = 'all'; filterData2()"
+             ng-class="{'active':appData.filter2 == 'all'}">
+            <div class="title_sum">
+                <p>
+                    סכום כולל
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="appData.sumOfGet_chayavim_masach">
+                {{round2Fixed(appData.sumOfGet_chayavim_masach)}}
+            </div>
+            <div ng-show="!appData.sumOfGet_chayavim_masach" class="sum-data">
+                -
+            </div>
+        </div>
+
+        <div ng-show="appData.tabAccBill == 2" ng-click="filterData2('0')" ng-class="{'active':appData.filter2 == '0'}">
+            <div class="title_sum">
+                <p>
+                    כמות תזרים
+                </p>
+            </div>
+            <div class="sum-data-black" ng-show="appData.sumsOfChayavimAll.tazrimCount  !== undefined">
+                {{appData.sumsOfChayavimAll.tazrimCount}}
+            </div>
+            <div ng-show="appData.sumsOfChayavimAll.tazrimCount  == undefined" class="sum-data-black">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 2" ng-click="filterData2('0')" ng-class="{'active':appData.filter2 == '0'}">
+            <div class="title_sum">
+                <p>
+                    סכום תזרים
+                </p>
+            </div>
+            <div class="sum-data-black" ng-show="appData.sumsOfChayavimAll.tazrimSum !== undefined">
+                {{round2Fixed(appData.sumsOfChayavimAll.tazrimSum)}}
+            </div>
+            <div ng-show="appData.sumsOfChayavimAll.tazrimSum  == undefined" class="sum-data-black">
+                -
+            </div>
+        </div>
+
+        <div ng-show="appData.tabAccBill == 2" ng-click="filterData2('1')" ng-class="{'active':appData.filter2 == '1'}">
+            <div class="title_sum">
+                <p>
+                    כמות רו"ח
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="appData.sumsOfChayavimAll.accCount !== undefined">
+                {{appData.sumsOfChayavimAll.accCount}}
+            </div>
+            <div ng-show="appData.sumsOfChayavimAll.accCount == undefined" class="sum-data">
+                -
+            </div>
+        </div>
+        <div ng-show="appData.tabAccBill == 2" ng-click="filterData2('1')" ng-class="{'active':appData.filter2 == '1'}">
+            <div class="title_sum">
+                <p>
+                    סכום רו"ח
+                </p>
+            </div>
+            <div class="sum-data" data-ng-show="appData.sumsOfChayavimAll.accSum !== undefined">
+                {{round2Fixed(appData.sumsOfChayavimAll.accSum)}}
+            </div>
+            <div ng-show="appData.sumsOfChayavimAll.accSum  == undefined" class="sum-data">
+                -
+            </div>
+        </div>
+
+        <div class="exportsMainAcc billingTopLeftMenu" ng-show="appData.tabAccBill == 1">
+            <div>
+                <div class="funds-header headerTaz inputTablesBiling">
+                    <div dropdown class="dropdownLeft">
+                        <button class="dropdown-toggle">
+                            תאריך נבחר:
+                            {{textTitlePage}}
+                        </button>
+                        <div class="dropdown-content">
+                            <form class="filter-form" autocomplete="off">
+                                <div class="form-control">
+                                    <input type="radio" data-ng-model="appData.dateFilterTypesBill" value="00"
+                                           id="dateFilter0"
+                                           class="radioDates"
+                                           ng-change="disabledDates();">
+                                    <label for="dateFilter0" style="width: 300px;">
+                                        היום
+                                    </label>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype0" type="radio"
+                                           class="radioDates"
+                                           data-ng-model="appData.dateFilterTypesBill"
+                                           value="0" ng-change="disabledDates();">
+                                    <label for="dateFiltertype0">
+                                        חודש
+                                    </label>
+                                    <select ng-model="appData.dateFilter.byMonth"
+                                            ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesBill = '0';disabledDates();"></select>
+                                    <select data-ng-model="appData.dateFilter.byYear" data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesBill = '0';disabledDates();"></select>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype1" type="radio"
+                                           class="radioDates"
+                                           data-ng-model="appData.dateFilterTypesBill"
+                                           value="1" ng-change="disabledDates();">
+                                    <label for="dateFiltertype1">
+                                        בין תאריכים
+                                    </label>
+
+                                    <div class="datepicker_inputs">
+                                        <div class="datepicker_wrap">
+                                            <input date-picker-tazrim-add type="text"
+                                                   ng-model="appData.datesPicker.fromDatePicker"
+                                                   readonly="readonly"
+                                                   class="radioDates"
+                                                   name="fromDatePicker"
+                                                   ng-change="appData.dateFilterTypesBill = '1';disabledDates();"
+                                                   ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+                                        </div>
+                                        <div class="between_line">-</div>
+                                        <div class="datepicker_wrap">
+                                            <input date-picker-tazrim-add type="text"
+                                                   ng-model="appData.datesPicker.toDatePicker"
+                                                   readonly="readonly"
+                                                   class="radioDates"
+                                                   name="toDatePicker"
+                                                   ng-change="appData.dateFilterTypesBill = '1';disabledDates();"
+                                                   ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-control">
+                                    <input id="dateFiltertype2" type="radio"
+                                           class="radioDates"
+                                           data-ng-model="appData.dateFilterTypesBill"
+                                           value="2" ng-change="disabledDates();">
+                                    <label for="dateFiltertype2">
+                                        בין חודשים
+                                    </label>
+                                    <select data-ng-model="appData.dateFilter.fromMonth"
+                                            data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesBill = '2';disabledDates();"
+                                            ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                                    <select data-ng-model="appData.dateFilter.fromYear"
+                                            data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesBill = '2';disabledDates();"
+                                            ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+
+                                    <div class="label_between">
+                                        עד
+                                    </div>
+                                    <select data-ng-model="appData.dateFilter.toMonth"
+                                            data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                            ng-change="appData.dateFilterTypesBill = '2';disabledDates();"
+                                            ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                                    <select data-ng-model="appData.dateFilter.toYear" data-ng-options="y for y in years"
+                                            ng-change="appData.dateFilterTypesBill = '2';disabledDates();"
+                                            ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                                </div>
+                                <div class="form-control">
+                                    <button ng-click="loadAccBiling()"
+                                            ng-disabled="appData.redErrorFilterType !== false"
+                                            class="dropdown-close button">
+                                        עדכון
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--<input date-picker-set-date type="text" readonly="readonly"-->
+                    <!--ng-model="$parent.datesPicker"-->
+                    <!--name="datesPicker">-->
+
+                    <button ng-click="prepare_billing()" class="clicks">
+                        הכן כרטיסים לחיוב
+                    </button>
+
+                    <select ng-model="appData.selectBill" ng-change="filterData()" class="selectBill">
+                        <option value="null">
+                            הכל
+                        </option>
+                        <option value="0">
+                            תזרים
+                        </option>
+                        <option value="1">
+                            רואה חשבון
+                        </option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="billSr">
+                <input type="text" ng-model="appData.searchBill"
+                       placeholder="חיפוש" ng-model-options="{ debounce: {'default': 500 }}"
+                       data-ng-show="appData.itemsBillMain.length > 0 || appData.searchBill.length > 0"
+                       ng-change="filterData()"
+                       class="form-control"/>
+                <button ng-click="run_billing()">
+                    לחץ לחיוב
+                </button>
+                <ul class="exports">
+                    <li class="excel" exports-excel-acc-bill>
+                        <span>ייצוא לExcel</span>
+                        <i></i>
+                    </li>
+                    <li class="mail" data-ng-click="sendMailer(1)">
+                        <span>שליחה במייל</span>
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-acc-bill>
+                        <span>הדפסה</span>
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="exportsMainAcc billingTopLeftMenu" ng-show="appData.tabAccBill == 2">
+            <div class="billSr">
+                <input type="text" ng-model="appData.searchBill2"
+                       placeholder="חיפוש" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-change="filterData2()"
+                       ng-show="appData.get_chayavim_masach.length > 0 || appData.searchBill2.length > 0"
+                       class="form-control"/>
+
+                <ul class="exports">
+                    <li class="excel" exports-excel-acc-bill2>
+                        <span>ייצוא לExcel</span>
+                        <i></i>
+                    </li>
+                    <li class="mail" data-ng-click="sendMailer(2)">
+                        <span>שליחה במייל</span>
+                        <i></i>
+                    </li>
+                    <li class="print" exports-print-acc-bill2>
+                        <span>הדפסה</span>
+                        <i></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div ng-show="appData.tabAccBill == 1">
+        <div class="tableMainAccCards tableBilling">
+            <div class="col-md-12" ng-show="appData.itemsAllBill.length > 0">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <th>
+                        <span>
+                                                    שם חברה
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+שם בעל הכרטיס
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+                        ח.פ.
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+                        תאריך חיוב
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+                    מספר עסקה
+                            </span>
+                    </th>
+                    <th>
+                        <span>
+                        כרטיס
+                            </span>
+                    </th>
+                    <th>
+                        <span>
+                        סוג תשלום
+                             </span>
+                    </th>
+                    <th>
+                        <span>
+                        סכום
+                        </span>
+                    </th>
+                    <th>
+                        <span>
+                        סטטוס
+                        </span>
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    </thead>
+                    <tbody scroll-fill="{{scrollHeightTable}}">
+                    <tr ng-repeat="a in appData.itemsAllBill = (appData.itemsBill | filter:show:strict)  | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit"
+                        ng-class="{'green': a.STATUS_DESC == 'תקין'}">
+                        <td>
+                            {{a.BILLING_ACCOUNT_COMPANY_NAME}}
+                            &nbsp;
+                        </td>
+                        <td>
+                            {{a.BILLING_ACCOUNT_NAME}}
+                            &nbsp;
+                        </td>
+                        <td>
+                            {{a.BILLING_ACCOUNT_HP}} &nbsp;
+
+                        </td>
+                        <td>
+                            {{a.PAYMENT_DATE}} &nbsp;
+
+                        </td>
+                        <td>
+                            {{a.INTERNALDEALNUMBER}} &nbsp;
+
+                        </td>
+                        <td>
+                            {{a.EXTSP_CARDNUMBER5}} &nbsp;
+
+                        </td>
+                        <td>
+                            {{accoConversions.getTypePaymentBiling(a.PAYMENT_TYPE_ID)}} &nbsp;
+
+                        </td>
+                        <td class="ltr">
+                            {{toFixedTrunc(a.SUMTOBILL)}} &nbsp;
+
+                        </td>
+                        <td>
+                            {{a.STATUS_DESC}} &nbsp;
+
+                            <i ng-if="a.STATUS !== 0" class="fa fa-exclamation-circle" tooltips-tazrim
+                               style="color: #ec3c66"
+                               title="{{a.DESCRIPTION}}"></i>
+                        </td>
+                        <td>
+                            &nbsp;
+                            <!--<button ng-click="freeze(a.BILLING_PAYMENT_ID)">-->
+                                <!--הקפא חיוב-->
+                            <!--</button>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="titleNotFilter" ng-show="appData.itemsAllBill.length == 0">
+                לא נמצאה התאמה
+            </div>
+        </div>
+        <div class="rowsSort" ng-show="appData.itemsAllBill.length > 0 || appData.searchBill.length > 0">
+            <div class="selectRows">
+                הצג
+                <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                    <option>150</option>
+                </select>
+                שורות
+            </div>
+            <div class="sumRows">
+                סה״כ שורות שנמצאו
+                {{appData.itemsAllBill.length}}
+                מתוך
+                {{appData.itemsBill.length}}
+            </div>
+            <div class="pagRows" ng-show="appData.itemsAllBill.length > 0 && appData.itemsAllBill.length > entryLimit">
+                <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                            items-per-page="entryLimit"
+                            total-items="appData.itemsAllBill.length" ng-model="currentPage" class="pagination-sm"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                            last-text="עמ׳ אחרון"></pagination>
+            </div>
+        </div>
+    </div>
+    <div ng-show="appData.tabAccBill == 2" class="tableBilling2">
+        <div class="tableMainAccCards tableBilling">
+            <div class="col-md-12" ng-show="appData.itemsAllBill2.length > 0">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <th>
+                        <span ng-click="sort_by('BILLING_ACCOUNT_COMPANY_NAME')">
+                                                    שם חברה
+                                               <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                           <span ng-click="sort_by('BILLING_ACCOUNT_HP')">
+                        ח.פ.
+                                              <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                           <span ng-click="sort_by('BILLING_ACCOUNT_PHONE')">
+טלפון
+                                              <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                            <span ng-click="sort_by('PAYMENT_DATE')">
+תאריך חיוב מקורי
+                                               <i class="glyphicon glyphicon-sort"></i>
+                            </span>
+                    </th>
+                    <th>
+                             <span ng-click="sort_by('EXTSP_CARDNUMBER5')">
+כרטיס
+                                 <i class="glyphicon glyphicon-sort"></i>
+                             </span>
+                    </th>
+                    <th>
+                             <span ng-click="sort_by('PAYMENT_TYPE_ID')">
+סוג תשלום
+                                             <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                              <span ng-click="sort_by('SUMTOBILL')">
+                                  סכום
+                       <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                              <span ng-click="sort_by('STATUS_DESC')">
+                        סטטוס
+
+                       <i class="glyphicon glyphicon-sort"></i>
+                        </span>
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                    </thead>
+                    <tbody scroll-fill="{{scrollHeightTable}}">
+                    <tr ng-repeat="a in appData.itemsAllBill2 = (appData.get_chayavim_masach | orderBy : predicate :reverse:ignore)  | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
+                        <td>
+                            {{a.BILLING_ACCOUNT_COMPANY_NAME}}
+                            &nbsp;
+                        </td>
+                        <td>
+                            {{a.BILLING_ACCOUNT_HP}} &nbsp;
+                        </td>
+                        <td>
+                            {{a.BILLING_ACCOUNT_PHONE}} &nbsp;
+                        </td>
+                        <td>
+                            {{a.PAYMENT_DATE}}
+                            |
+                            {{a.HOV_DAYS}} &nbsp;
+                        </td>
+                        <td>
+                            {{a.EXTSP_CARDNUMBER5}} &nbsp;
+                        </td>
+                        <td>
+                            {{accoConversions.getTypePaymentBiling(a.PAYMENT_TYPE_ID)}} &nbsp;
+                        </td>
+                        <td>
+                            {{a.SUMTOBILL}} &nbsp;
+                        </td>
+                        <td>
+                            {{a.STATUS_DESC}} &nbsp;
+
+                            <i ng-if="a.STATUS !== 0" class="fa fa-exclamation-circle" tooltips-tazrim
+                               style="color: #ec3c66"
+                               title="{{a.DESCRIPTION}}"></i>
+                        </td>
+                        <td>
+                            <button ng-click="pays(a.BILLING_PAYMENT_ID, a.BILLING_ACCOUNT_COMPANY_NAME)">
+                                שולם
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="titleNotFilter" ng-show="appData.itemsAllBill2.length == 0">
+                לא נמצאה התאמה
+            </div>
+        </div>
+        <div class="rowsSort"
+             ng-show="appData.itemsAllBill2.length > 0 || appData.searchBill2.length > 0">
+            <div class="selectRows">
+                הצג
+                <select ng-model="entryLimit" class="form-control" ng-change="entryLimitChange()">
+                    <option>20</option>
+                    <option>50</option>
+                    <option>100</option>
+                    <option>150</option>
+                </select>
+                שורות
+            </div>
+            <div class="sumRows">
+                סה״כ שורות שנמצאו
+                {{appData.itemsAllBill2.length}}
+                מתוך
+                {{appData.get_chayavim_masach.length}}
+            </div>
+            <div class="pagRows"
+                 ng-show="appData.itemsAllBill2.length > 0 && appData.itemsAllBill2.length > entryLimit">
+                <pagination max-size="maxSize" boundary-links="true" on-select-page="setPage(page)"
+                            items-per-page="entryLimit"
+                            total-items="appData.itemsAllBill2.length" ng-model="currentPage" class="pagination-sm"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                            last-text="עמ׳ אחרון"></pagination>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

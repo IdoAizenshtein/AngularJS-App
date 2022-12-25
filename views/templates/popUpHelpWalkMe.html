@@ -1,0 +1,21 @@
+<div ng-controller="mainCtrl">
+    <h1>
+        ברוכים הבאים ל-Bizibox,
+        {{$parent.appData.defMonth.full_name}}!
+    </h1>
+    <img src="image/helpWmBg.png">
+    <p>
+        זו הזדמנות מצוינת לייעל את הניהול הפיננסי של העסק שלך!
+        <br>
+        בשלבים הבאים נכיר לך את היתרונות של Bizibox ונסביר לך שלב אחר שלב כיצד ניתן לייעל את העסק באמצעותה.
+    </p>
+
+    <button ng-click="gotoPopWalkthrus()">
+        קדימה, מתחילים!
+    </button>
+    <div>
+        <strong ng-click="popWalkthrusClose()">
+            דלג בינתיים
+        </strong>
+    </div>
+</div>

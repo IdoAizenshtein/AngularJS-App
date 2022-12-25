@@ -1,0 +1,223 @@
+﻿<div>
+    <div class="popup-header">
+        <h2>
+            הוספת חברה חדשה
+        </h2>
+    </div>
+
+    <div class="popup-content">
+        <form name="addCompanyForm" novalidate ng-submit="addCompany(addCompanyForm);" ng-init="clickUpload()">
+            <div class="wrapInputForm">
+                <label>
+                    שם החברה
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.cName.$touched) && addCompanyForm.cName.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.cName.$touched) && addCompanyForm.cName.$valid }">
+                    <input style="display:none" type="text" autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.cname" name="cName" required="" replace-and/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.cName.$touched" class="alertsMessages">
+                    <div ng-show="addCompanyForm.cName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    מס' ח.פ. / ת.ז.:
+                </label>
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.uHp.$touched || addCompanyForm.uHp.$invalid), 'sucInput': (addCompanyForm.$submitted || addCompanyForm.uHp.$touched) && addCompanyForm.uHp.$valid }">
+                    <input style="display:none" type="text" autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.hp" name="uHp" required="" legal-tz
+                           check-company-hp/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.uHp.$touched || addCompanyForm.uHp.$invalid"
+                     class="alertsMessages">
+                    <div ng-show="addCompanyForm.uHp.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="addCompanyForm.uHp.$error.integer">
+                        מספר לא חוקי
+                    </div>
+                    <span ng-show="addCompanyForm.uHp.$error.unique">
+ח.פ. זה קיים במערכת
+      </span>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    דווח מע"מ
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.tax.$touched) && addCompanyForm.tax.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.tax.$touched) && addCompanyForm.tax.$valid }">
+                    <select name="tax" ng-model="appData.companyAdd.tax" required>
+                        <option value="">בחירה מרשימה</option>
+                        <option value="555">חודשי</option>
+                        <option value="444">דו חודשי</option>
+                        <option value="777">עוסק פטור</option>
+                    </select>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.tax.$touched" class="alertsMessages">
+                 <span ng-show="addCompanyForm.tax.$error.required">
+        מידע זה הינו מידע חובה
+                </span>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    תוכנה
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.software.$touched) && addCompanyForm.software.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.software.$touched) && addCompanyForm.software.$valid }">
+                    <select name="software" ng-model="appData.companyAdd.software" required>
+                        <option ng-repeat="a in appData.get_source_programs" value="{{a.PROGRAM_ID}}">
+                            {{a.PROGRAM_NAME}}
+                        </option>
+                    </select>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.software.$touched" class="alertsMessages">
+                 <span ng-show="addCompanyForm.software.$error.required">
+        מידע זה הינו מידע חובה
+                </span>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    מסד נתונים
+                </label>
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.uName.$touched) && addCompanyForm.db_name.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.db_name.$touched) && addCompanyForm.db_name.$valid }">
+                    <input style="display:none" type="text" autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.db_name" name="db_name"
+                           placeholder="לא חובה"/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.db_name.$touched" class="alertsMessages">
+                    <div ng-show="addCompanyForm.db_name.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                &nbsp;
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    שם מלא
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.uName.$touched) && addCompanyForm.uName.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.uName.$touched) && addCompanyForm.uName.$valid }">
+                    <input style="display:none" type="text" autocomplete="off">
+                    <input type="text"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.name" name="uName" placeholder="לא חובה"
+                           ng-pattern="/\s/"/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.uName.$touched" class="alertsMessages">
+                    <div ng-show="addCompanyForm.uName.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="addCompanyForm.uName.$error.pattern">
+                        יש לרשום שם פרטי ושם משפחה
+                    </div>
+                </div>
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    כתובת דוא”ל:
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.uEmail.$touched) && addCompanyForm.uEmail.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.uEmail.$touched) && addCompanyForm.uEmail.$valid }">
+                    <input style="display:none" type="email" autocomplete="off">
+                    <input type="email"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.email" name="uEmail" placeholder="לא חובה"
+                           class="mailLtr"
+                           ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/" user-checks-company/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.uEmail.$touched" class="alertsMessages">
+      <span ng-show="addCompanyForm.uEmail.$error.required">
+        מידע זה הינו מידע חובה
+      </span>
+                    <span ng-show="addCompanyForm.uEmail.$error.pattern">
+        כתובת המייל שהזנת אינה תקינה
+      </span>
+                    <span ng-show="addCompanyForm.uEmail.$error.unique">
+מייל זה קיים במערכת
+      </span>
+                </div>
+
+            </div>
+            <div class="wrapInputForm">
+                <label>
+                    טלפון נייד:
+                </label>
+
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (addCompanyForm.$submitted || addCompanyForm.uTel.$touched) && addCompanyForm.uTel.$invalid, 'sucInput': (addCompanyForm.$submitted || addCompanyForm.uTel.$touched) && addCompanyForm.uTel.$valid }">
+                    <input style="display:none" type="tel" autocomplete="off">
+                    <input type="tel"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           autocomplete="off" ng-model="appData.companyAdd.tel" placeholder="לא חובה" name="uTel"
+                           ensure-unique-tel-not-req/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="addCompanyForm.$submitted || addCompanyForm.uTel.$touched" class="alertsMessages">
+                    <div ng-show="addCompanyForm.uTel.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="addCompanyForm.uTel.$error.minlength || addCompanyForm.uTel.$error.maxlength || addCompanyForm.uTel.$error.integer">
+                        המספר שהזנת אינו חוקי
+                    </div>
+                </div>
+            </div>
+            <div class="addCompanySubmit">
+                <input type="submit" value="הוספה" ng-disabled="appData.companyAdd.disabledButton"/>
+            </div>
+            <input type="hidden" ng-click="resetCompany(addCompanyForm)" id="resetCompany" value="Reset"/>
+        </form>
+        <div class="linkToPopStandAll" ng-click="get_exporter_companies()">
+            הקמה מהירה
+        </div>
+    </div>
+</div>

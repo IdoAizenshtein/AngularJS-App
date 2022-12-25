@@ -1,0 +1,27 @@
+<div>
+    <input ng-model="companySearch" type="text" placeholder="{{$parent.appData.placeholderNameCompanies}}">
+    <i class="fa fa-times-circle removeCompany" ng-click="$parent.$parent.removeCompany()" ng-if="$parent.appData.defMonth.ind_accountants == 1 && !$parent.$state.includes('mainAccountants')"></i>
+    <i class="fa fa-times-circle removeCompany" ng-click="companySearch='';$parent.$parent.removeCompanyRegular()" ng-show="$parent.appData.defMonth.ind_accountants !== 1"></i>
+
+    <!--<img src="image/remove_alerts.png" class="removeCompany" >-->
+    <img data-ng-show="$parent.appData.defMonth.ind_accountants == 0 || ($parent.appData.defMonth.ind_accountants == 1 && !$parent.$state.includes('mainAccountants'))" class="open-search" src="image/arrow_s.png" data-ng-click="$parent.showList = !$parent.showList">
+    <img data-ng-show="$parent.appData.defMonth.ind_accountants == 1 && $parent.$state.includes('mainAccountants')" class="open-search" src="image/arrowWhite.png" data-ng-click="$parent.showList = !$parent.showList">
+</div>
+
+<div class="company-list-cnt" ng-class="{'showListCompany': $parent.showList}">
+    <ul ng-class="{'hAutoAddButton': $parent.appData.defMonth.ind_accountants == 1}" vs-repeat="53">
+        <li ng-repeat="c in (filteredItems = (companies | companyFilter:companySearch))" ng-click="selectCompany(c)" tabindex="{{$index}}">
+            <div class="avatar" ng-show="$parent.$parent.appData.defMonth.ind_accountants == 0">
+                <img src="image/customer_icon.png" alt="{{c.companyName}}">
+            </div>
+            <div class="content_company">
+                <strong>{{c.companyName}}</strong>
+                <span ng-show="$parent.$parent.appData.defMonth.ind_accountants == 0">{{c.full_name}} -</span>
+                <span ng-show="$parent.$parent.appData.defMonth.ind_accountants == 0">{{c.companyHp}}</span>
+            </div>
+        </li>
+    </ul>
+    <button ng-if="$parent.appData.defMonth.ind_accountants == 1" class="add_company_butt" ng-click="$parent.$parent.addCompanyOpen()">
+        הוספת חברה חדשה +
+    </button>
+</div>

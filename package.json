@@ -1,0 +1,15 @@
+{
+  "name": "bizibox",
+  "version": "3.74",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-cache": "^1.1.3",
+    "gulp-concat": "^2.6.1",
+    "gulp-less": "^3.5.0",
+    "gulp-ngmin": "^0.3.0",
+    "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "gulp-cli": "^2.2.0"
+  }
+}

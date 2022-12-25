@@ -1,0 +1,57 @@
+<div ng-controller="tazrimCtrl">
+
+    <div class="popup-header">
+        <h2>
+            הוספת סוג פעולה
+        </h2>
+    </div>
+
+    <div class="popup-content">
+        <div class="update_bank">
+            <form autocomplete="off">
+                <div>
+                    <label>
+                        שם הפעולה
+                    </label>
+                    <div class="input transAdd">
+                        <input type="text" ng-model="appData.newTransactionName" placeholder="" />
+                    </div>
+                </div>
+                <div data-ng-show="false">
+                    <label style="display: inline-block;">
+                        סוג הפעולה
+                    </label>
+                    <div class="input">
+                        <div class="form-control" style="display: inline-block;">
+                            <input type="radio" data-ng-model="newTransactionIndType" value="0" style="width: 20px;display: inline-block;" id="newTransactionIndType1">
+                            <label style="display: inline-block;" for="newTransactionIndType1">
+                                הכנסה
+                            </label>
+                        </div>
+                        <div class="form-control" style="display: inline-block;">
+                            <input type="radio" data-ng-model="newTransactionIndType" value="1" style="width: 20px;display: inline-block;" id="newTransactionIndType2">
+                            <label style="display: inline-block;" for="newTransactionIndType2">
+                                הוצאה
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="error_alerts_bank">
+                    {{error}}
+                </div>
+                <div class="buttons_group">
+                    <button ng-click="addNewTransType()" ng-disabled="!appData.newTransactionName">
+                        עדכן פרטים
+                    </button>
+                    <button data-ng-click="hidePopup()">
+                        ביטול
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h1>{{error}}</h1>
+
+</div>

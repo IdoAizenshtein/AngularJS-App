@@ -1,0 +1,93 @@
+<form class="formsBanksWrap css-form"
+      name="formBank"
+      novalidate
+      autocomplete="off"
+      ng-init="initStates()"
+      ng-submit="addPost(formBank, user.myBanks)">
+
+    <div class="titleBank1">
+        קישור חשבון הבנק מאפשר לנו לתת לך תמונת מצב פיננסית אמיתית של העסק.
+        <br>
+        קשר את חשבון הבנק שלך כדי לחוות את העצמה האמיתית של Bizibox.
+    </div>
+
+    <h2>{{ user.myBanks.name }}</h2>
+
+    <div class="ssl_title">
+        <img src="image/ssl_bank.png" alt="">
+
+        <p>אתר זה עושה שימוש בטכנולוגיית SSL 128 bit שהינה התקן המוביל לאבטחת מידע באינטרנט ואשר אושרה
+            לשימוש על-ידי כל אתרי הבנקים.</p>
+    </div>
+
+    <h1 class="loader-banks" ng-show="alertErrorHead"
+        data-ng-class="{'redError': errorRed == true}">
+        {{error}}
+    </h1>
+
+    <fieldset>
+        <h3 ng-style="{'background-color':user.myBanks.color, 'color':'white'}">פרטי הכניסה לחשבון הבנק</h3>
+        <div class="capslockAlert">
+            {{capslockAlert}}
+        </div>
+        <div ng-repeat="label in user.myBanks.inputs track by $index" class="wrapInputForm">
+            <ng-form name="sfIn">
+                <label>
+                    {{ label.name }}
+                </label>
+                <div class="inputForm"
+                     data-ng-class="{'errorInput': (formBank.$submitted || sfIn.nameBankVal.$touched) && sfIn.nameBankVal.$invalid, 'sucInput': (formBank.$submitted || sfIn.nameBankVal.$touched) && sfIn.nameBankVal.$valid }">
+                    <input style="display:none"
+                           type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}"
+                           autocomplete="off">
+                    <input autocomplete="off"
+                           readonly
+                           onfocus="this.removeAttribute('readonly');"
+                           type="{{(label.val == 'bank_pass')?((showPassword)?'text':'password'):'text'}}"
+                           ng-model="label.data"
+                           placeholder="{{label.placeholders}}"
+                           name="nameBankVal"
+                           required
+                           id="{{label.val}}"
+                           only-not-hebrew
+                           validation-banks
+                           capslock/>
+                    <i>
+                        <img class="errorIcon" src="image/error_icon.png" alt="">
+                        <img class="sucIcon" src="image/succses_icon.png" alt="">
+                    </i>
+                </div>
+                <div ng-show="formBank.$submitted || sfIn.nameBankVal.$touched" class="alertsMessages">
+                    <div ng-show="sfIn.nameBankVal.$error.required">
+                        מידע זה הינו מידע חובה
+                    </div>
+                    <div ng-show="!sfIn.nameBankVal.$error.valid && sfIn.nameBankVal.$error.onlyNotHebrew">
+                        אין להקליד אותיות עבריות
+                    </div>
+                    <div ng-show="!sfIn.nameBankVal.$error.required && sfIn.nameBankVal.$error.valid">
+                        {{bank_pass}}
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+        <div class="showPassCheck" data-ng-show="user.myBanks.val !== '999'">
+            <input type="checkbox" ng-model="showPassword" id="showPass">
+            <label for="showPass">
+                הצג סיסמא
+            </label>
+        </div>
+    </fieldset>
+    <div class="groupButtonBank">
+        <button type="submit" ng-disabled="state_enable">
+            קשר חשבון בנק
+        </button>
+        <div class="exampleLink" data-ng-click="signLoginEx()">
+            דלג למוצר לדוגמה
+        </div>
+    </div>
+    <div class="key_bank" ng-if="user.myBanks.val == '12'">
+        <img src="image/key_disk.png" alt="">
+
+        <p>יש לך MiniKey? צור קשר בטלפון 03-5610382 לצורך רישום לשירות.</p>
+    </div>
+</form>

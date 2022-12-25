@@ -1,0 +1,52 @@
+<div ng-init="init()" ng-controller="settingsCtrl">
+    <div class="popup-header">
+        <h2>
+            הפעלת bizibox spider
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.tokenTypeRunPrent == 'bank'">
+            <input type="checkbox" id="id1" ng-model="appData.checkboxRunTypeSett[0].val">
+            <label for="id1">
+                עו״ש
+            </label>
+        </div>
+        <div ng-if="appData.tokenTypeRunPrent == 'bank'">
+            <input type="checkbox" id="id2" ng-model="appData.checkboxRunTypeSett[1].val">
+            <label for="id2">
+                כרטיסי אשראי
+            </label>
+        </div>
+        <div ng-if="appData.tokenTypeRunPrent == 'bank'">
+            <input type="checkbox" id="id3" ng-model="appData.checkboxRunTypeSett[2].val">
+            <label for="id3">
+                צילומי שקים
+                <span class="alertRunType" ng-if="appData.checkboxRunTypeSett[2].val == true"> - שים לב - פעולת משיכת צילומי השקים עלולה להיות ממושכת </span>
+            </label>
+        </div>
+        <div ng-if="appData.tokenTypeRunPrent == 'bank'">
+            <input type="checkbox" id="id4" ng-model="appData.checkboxRunTypeSett[3].val">
+            <label for="id4">
+                נלווים (פקדונות, הלוואות, שקים למשמרת)
+            </label>
+        </div>
+
+        <div ng-if="appData.tokenTypeRunPrent !== 'bank'">
+            <input type="checkbox" id="id11" ng-model="appData.checkboxRunTypeSett[0].val">
+            <label for="id11">
+                עתיד
+            </label>
+        </div>
+        <div ng-if="appData.tokenTypeRunPrent !== 'bank'">
+            <input type="checkbox" id="id22" ng-model="appData.checkboxRunTypeSett[1].val">
+            <label for="id22">
+                עבר
+            </label>
+        </div>
+        <div class="buttonAppro" ng-style="{'margin-top': appData.tokenTypeRunPrent !== 'bank'  ? '90px' : '0px'}">
+            <button ng-click="playRunType()">
+                אישור
+            </button>
+        </div>
+    </div>
+</div>

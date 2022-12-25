@@ -1,0 +1,6 @@
+﻿<div ng-if="(appData.selectedCompany.solekData.length == 1) || (appData.selectedCompany.solekData.length > 1 && !filteredDataAll.length)" class="wrapAlerts" style="margin: 0 auto; position: absolute; height: 100%; width: 100%; text-align: center; top: 300%;">
+    <div ng-show="appData.selectedCompany.solekData.length == 1" class="notDataAlerts">אין נתונים לחברה זו</div>
+    <div ng-show="appData.selectedCompany.solekData.length > 1 && !filteredDataAll.length" class="notDataAlerts">אין נתונים בסינון זה</div>
+</div>
+
+<div chart-draw chart-data="chartData" scroll-fill="300" style="margin: 25px 32px 0px 23px; " ng-show="appData.selectedCompany.solekData.length > 1 && filteredDataAll.length"></div>

@@ -1,0 +1,95 @@
+<div class="relative cancelMatchStyle">
+    <div class="funds-header">
+        <div class="row_data_select">
+            <label for="banks_match_sort">
+                פעולות שהותאמו בחשבון
+            </label>
+            <select ng-model="appData.defaultCompanyAcc" ng-change="loadBankPeulotCancel()"
+                    ng-options="item.company_account_id as item.company_account_nickname for item in appData.selectedCompany.accounts.bank_account_list"
+                    class="bank{{appData.selectBankMatchId}}"></select>
+            <span class="label_date_select"> | &nbsp; הצג:</span>
+            <select class="select_dates_revers" ng-model="appData.sortDateBank" ng-change="loadBankPeulotCancel()"
+                    data-ng-options="a.val as a.name for a in selectDatesValueCancel"></select>
+            <span class="label_date_select"> | &nbsp;</span>
+            <!--<div class="labelCancelMatch">-->
+            <!--<input type="checkbox" ng-model="$parent.checkRemove" id="checkRemove"-->
+            <!--ng-change="loadBankPeulotCancel()">-->
+            <!--<label for="checkRemove">-->
+            <!--הצג מחוקים-->
+            <!--</label>-->
+            <!--</div>-->
+            <input class="searchBankMatchCancelTop" ng-model-options="{ debounce: {'default': 500 }}"
+                   ng-model="$parent.termFilterMatchCancel" placeholder="חיפוש" ng-change="sortBankPeulot()">
+            <!--<span class="label_date_select"> | &nbsp;</span>-->
+            <!--<div class="labelCancelMatch helpWmEvent">-->
+            <!--<label ng-click="openWalkthruById(250936)">-->
+            <!--עזור לי להתאים-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--<div class="data_sum_select" ng-if="appData.lengthBankMatch !== 0">-->
+            <!--<span class="select_all_match">{{appData.lengthBankMatch}}</span>-->
+            <!--התאמות-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="match_peulot scrollDesign" scroll-fill="{{scrollMatchCancel}}">
+        <h1 ng-if="appData.lengthBankMatch == 0">
+            לא נמצאו פעולות מותאמות לחשבון זה
+        </h1>
+        <div ng-repeat="a in appData.datesListBankMatch"
+             ng-if="appData.lengthBankMatch !== 0" class="groupDateList cube{{appData.listBankMatchAfter[a].length}}">
+            <h2 class="date_sort_li">
+                {{a}}
+            </h2>
+            <div class="liDateBank cancelPeulot" ng-repeat="t in appData.listBankMatchAfter[a]"
+                 ng-class="{'active': t.active}">
+                <div ng-if="t.picture_link && checkPictureLink(t.picture_link)"
+                     ng-click="openCheckImg(t.picture_link, appData.defaultCompanyAcc, t.trans_id)"
+                     class="pictures fa fa-picture-o"
+                     ng-style="{'color': t.picture_link !== 'x' ? '#494c53' : '#ec3c66'}"></div>
+                <!--<strong ng-class="{'blueBg': t.match_date !== null}" title="{{t.trans_desc_azonly}}" tooltips-check>{{t.trans_desc_azonly}}</strong>-->
+                <strong title="{{t.trans_desc_azonly}}" tooltips-check>{{t.trans_desc_azonly}}</strong>
+                <div class="sum_match">
+                    <span ng-class="{'red_match': t.source_ind_expence == 1, 'green_match': t.source_ind_expence == 0 }">₪ {{getTotal(t.total)}}</span>
+                </div>
+                <div ng-if="t.asmachta !== null" class="asmacta_match">
+                    <div>
+                        אסמכתא:
+                    </div>
+                    <div>
+                        {{t.asmachta}}
+                    </div>
+                </div>
+                <div ng-if="t.match_date !== null" class="match_date">
+<span ng-if="appData.sortDateBank == false">
+        <div>
+            תאריך התאמה:
+        </div>
+                    <div>
+                        {{t.trans_date}}
+                    </div>
+</span>
+                    <span ng-if="appData.sortDateBank == true">
+        <div>
+            תאריך פעולה:
+        </div>
+                    <div>
+                        {{t.match_date}}
+                    </div>
+</span>
+                </div>
+                <div class="bottomCubeLink">
+                    <span class="iconBott">
+                        <i class="mega-octicon octicon-person" ng-if="t.ind_sug_hatama == 0" tooltips
+                           title="הותאם ע״י {{t.matched_by}} בתאריך {{t.match_date}}"></i>
+<i class="fa fa-laptop" ng-if="t.ind_sug_hatama == 1" title="הותאם ע״י המערכת בתאריך {{t.match_date}}" tooltips></i>
+
+                    </span>
+                    <span ng-click="loadTablePeulotRemove(t.bank_trans_id, t.trans_desc_azonly)">
+ביטול התאמה
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

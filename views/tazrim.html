@@ -1,0 +1,1079 @@
+<div ng-init="init()" ng-controller="tazrimCtrl">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+    <!--<i class="bgAllNew" ng-if="appData.popUpAllNew2 || appData.popUpAllNew3"></i>-->
+
+    <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="funds-header headerTaz">
+            <h2 class="page-header tazrimHeader" style="display: inline-block;"
+                ng-class="{'helpViewColor': appData.helpSignUp == true && (appData.helpSignUpInd > 12 && appData.helpSignUpInd < 16)}">
+                תזרים מפורט
+            </h2>
+            <div class="funds-action-bar clearfix">
+                <button data-ng-click="openMoreNavScroll()" class="open-filters">
+                    סינון מתקדם
+                </button>
+                <select ng-model="appData.selectedItem" ng-change="changeItem(appData.selectedItem)"
+                        data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 14}"
+                        ng-options="item as item.company_account_nickname for item in appData.banksList"
+                        class="bank{{appData.selectedItem.bank_id}}">
+                </select>
+                <div dropdown class="dropdownLeft"
+                     ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 13}">
+                    <button class="dropdown-toggle">
+                        תאריך נבחר:
+                        {{textTitlePage}}
+                    </button>
+                    <div class="dropdown-content">
+                        <form class="filter-form" autocomplete="off">
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypesTzrim" value="00"
+                                       id="dateFilter0"
+                                       ng-change="disabledDates();">
+                                <label for="dateFilter0" style="width: 300px;">
+                                    החודש הקרוב
+                                </label>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype0" type="radio" data-ng-model="appData.dateFilterTypesTzrim"
+                                       value="0" ng-change="disabledDates();">
+                                <label for="dateFiltertype0">
+                                    חודש
+                                </label>
+                                <select ng-model="appData.dateFilter.byMonth"
+                                        ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTzrim = '0';disabledDates();"></select>
+                                <select data-ng-model="appData.dateFilter.byYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTzrim = '0';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype1" type="radio" data-ng-model="appData.dateFilterTypesTzrim"
+                                       value="1" ng-change="disabledDates();">
+                                <label for="dateFiltertype1">
+                                    בין תאריכים
+                                </label>
+
+                                <div class="datepicker_inputs">
+                                    <div class="datepicker_wrap">
+                                        <input date-picker-tazrim-add type="text"
+                                               ng-model="appData.datesPicker.fromDatePicker"
+                                               readonly="readonly"
+                                               name="fromDatePicker"
+                                               ng-change="appData.dateFilterTypesTzrim = '1';disabledDates();"
+                                               ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+                                    </div>
+                                    <div class="between_line">-</div>
+                                    <div class="datepicker_wrap">
+                                        <input date-picker-tazrim-add type="text"
+                                               ng-model="appData.datesPicker.toDatePicker"
+                                               readonly="readonly"
+                                               name="toDatePicker"
+                                               ng-change="appData.dateFilterTypesTzrim = '1';disabledDates();"
+                                               ng-class="{'redErrors': appData.redErrorFilterType == '1'}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-control">
+                                <input id="dateFiltertype2" type="radio" data-ng-model="appData.dateFilterTypesTzrim"
+                                       value="2" ng-change="disabledDates();">
+                                <label for="dateFiltertype2">
+                                    בין חודשים
+                                </label>
+                                <select data-ng-model="appData.dateFilter.fromMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTzrim = '2';disabledDates();"
+                                        ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                                <select data-ng-model="appData.dateFilter.fromYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTzrim = '2';disabledDates();"
+                                        ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+
+                                <div class="label_between">
+                                    עד
+                                </div>
+                                <select data-ng-model="appData.dateFilter.toMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTzrim = '2';disabledDates();"
+                                        ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                                <select data-ng-model="appData.dateFilter.toYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTzrim = '2';disabledDates();"
+                                        ng-class="{'redErrors': appData.redErrorFilterType == '2'}"></select>
+                            </div>
+                            <div class="form-control">
+                                <button ng-click="selectDatesOnSubmit()"
+                                        ng-disabled="appData.redErrorFilterType !== false"
+                                        class="dropdown-close button">
+                                    עדכון
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <input ng-change="filtersTazrim()" ng-model-options="{ debounce: {'default': 500 }}"
+                       ng-model="appData.freeSearch" placeholder="חיפוש (לדוגמה: סיווג, תיאור, סוג פעולה)">
+            </div>
+        </div>
+        <div class="filters headerTazrimFilters" data-ng-show="openMoreNav">
+            <div dropdown>
+                <div class="dropdown-toggle filtered-hint" ng-show="appData.typePay.length > 0">
+                    <ul>
+                        <li ng-cloak class="animate-repeat"
+                            ng-show="!listim.length || listim.length == appData.typePay.length"
+                            style="color: #5a5e61; ">
+                            סוג תשלום
+                        </li>
+                        <li ng-cloak class="animate-repeat"
+                            ng-repeat="t in listim = (appData.typePay | filter: !t.serchkey_cat_id)"
+                            ng-hide="!listim.length || listim.length == appData.typePay.length">
+                            <p>
+                                {{t.searchkey_cat_name}} <span>, </span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown-content">
+                    <form class="filter-form type_trans" autocomplete="off">
+                        <div class="form-control">
+                            <input type="checkbox" ng-model="selectedAll" id="changeAll" ng-click="checkAll()"
+                                   ng-init="selectedAll = true"/>
+                            <label for="changeAll">
+                                בחר / נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control" ng-repeat="t in appData.typePay">
+                            <input type="checkbox" ng-model="t.paymentActive" id="{{t.serchkey_cat_id}}"
+                                   ng-change="filtersTazrim()">
+                            <label for="{{t.serchkey_cat_id}}">
+                                {{t.searchkey_cat_name}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div dropdown>
+                <div class="dropdown-toggle filtered-hint" ng-show="appData.typePeulaRows.length > 0">
+                    <ul>
+                        <li ng-cloak class="animate-repeat"
+                            ng-show="!listimp.length || listimp.length == appData.typePeulaRows.length"
+                            style="color: #5a5e61; ">
+                            סוג פעולה
+                        </li>
+                        <li ng-cloak class="animate-repeat"
+                            ng-repeat="t in listimp = (appData.typePeulaRows | filter: !t.trans_type_id)"
+                            ng-hide="!listimp.length || listimp.length == appData.typePeulaRows.length">
+                            <p>
+                                {{t.trans_type_name}} <span>, </span>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown-content">
+                    <form class="filter-form type_trans" autocomplete="off">
+                        <div class="form-control">
+                            <input type="checkbox" ng-model="selectedAllPeula" id="changeAllPeula"
+                                   ng-click="checkAllPeula()"
+                                   ng-init="selectedAllPeula = true"/>
+                            <label for="changeAllPeula">
+                                בחר / נקה הכל
+                            </label>
+                        </div>
+                        <div class="form-control" ng-repeat="t in appData.typePeulaRows">
+                            <input type="checkbox" ng-model="t.peulaActive" id="{{t.trans_type_id}}"
+                                   ng-change="filtersTazrim()">
+                            <label for="{{t.trans_type_id}}">
+                                {{t.trans_type_name}}
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="groupSum">
+            <div>
+                <div class="funds-totals tazrimTotalos">
+                    <div data-ng-class="{'helpView': appData.helpSignUp == true && appData.helpSignUpInd == 14}">
+                        <div class="title_sum">
+                            <p>יתרת פתיחה ל
+                                {{getDateEqualTodayTazrim(appData.selectedItem.balance_last_update_date)}}</p>
+                        </div>
+                        <div class="sum-data"
+                             ng-show="appData.selectedItem.opening_balance || appData.selectedItem.opening_balance == 0">
+                            <span>&#8362;</span>{{getTotal(appData.selectedItem.opening_balance)}}
+                        </div>
+                        <div ng-show="!appData.selectedItem.opening_balance && appData.selectedItem.opening_balance !== 0"
+                             class="sum-data">
+                            -
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title_sum">
+                            <p>מסגרת אשראי</p>
+                        </div>
+                        <div class="sum-data"
+                             ng-show="appData.selectedItem.credit_facility || appData.selectedItem.credit_facility == 0">
+                            <span>&#8362;</span>{{getTotal(appData.selectedItem.credit_facility)}}
+                        </div>
+                        <div ng-show="!appData.selectedItem.credit_facility && appData.selectedItem.credit_facility !== 0"
+                             class="sum-data">
+                            -
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title_sum">
+                            <p ng-show="(!appData.selectedItem.balance_use  || appData.selectedItem.balance_use || appData.selectedItem.balance_use == 0) && appData.selectedItem.balance_use >= 0">
+                                יתרה לשימוש</p>
+                            <p ng-show="(appData.selectedItem.balance_use) && appData.selectedItem.balance_use < 0">
+                                חריגה ממסגרת
+                                אשראי</p>
+                        </div>
+                        <div ng-show="(appData.selectedItem.balance_use || appData.selectedItem.balance_use == 0)"
+                             ng-class="appData.selectedItem.balance_use > 0 ? 'sum-plus' : 'sum-minus'">
+                            <span>&#8362;</span>{{getTotal(appData.selectedItem.balance_use,
+                            true)}}
+                        </div>
+                        <div ng-show="!appData.selectedItem.balance_use && appData.selectedItem.balance_use !== 0"
+                             class="sum-data">
+                            -
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sideLeftTazrim" ng-show="appData.selectedCompany">
+            <div class="add_rows_taz"
+                 data-ng-class="{'helpViewLab': appData.helpSignUp == true && appData.helpSignUpInd == 15}">
+                <label>הוספה:</label>
+                <button ng-click="addRowTazrimSend('hachnasa')">
+                    הכנסה
+                </button>
+                <button ng-click="addRowTazrimSend('hozaa')">
+                    הוצאה
+                </button>
+            </div>
+            <div dialog class="noTitleStuff">
+                <div id="dialog">
+                    <div ng-show="appData.alertSucAdd">
+                        <div>
+                            הפעולה נוספה בהצלחה!
+                        </div>
+                        <p ng-click="gotoRowAdd()">
+                            עבור לתאריך הפעולה שהתווספה
+                        </p>
+                    </div>
+                    <div ng-show="appData.alertSucUpd" class="lh60">
+                        הפעולה עודכנה בהצלחה!
+                    </div>
+                </div>
+                <div class="ui-dialog-close" data-ng-click="appData.openDialog = false"></div>
+            </div>
+            <div dialog-select class="noTitleStuffSmall" ng-class="{'notDate': appData.alertSucUpdSelect == null}">
+                <!--<div class="tooltipArr3" ng-if="appData.popUpAllNew3" stop-propag>-->
+                <!--<div>-->
+                <!--<input type="checkbox" ng-model="hidealertnew3" id="hidealert3" ng-change="notShowNew3(hidealertnew3)">-->
+                <!--<label for="hidealert3">-->
+                <!--אל תציג שוב-->
+                <!--</label>-->
+                <!--<img src="image/close_popup.png" stop-propag alt="סגור" ng-click="appData.popUpAllNew3 = false">-->
+                <!--</div>-->
+                <!--התחדשנו - מעתה בכניסה למסך תוכל לראות האם יש חריגה צפויה בחודש הקרוב-->
+                <!--</div>-->
+                <div class="dialogSelectContent">
+                    <div ng-show="appData.alertSucUpdSelect !== null">
+                        <div>
+                            חריגה צפויה ב
+                            {{appData.alertSucUpdSelect}}
+                        </div>
+                        <p ng-click="gotoRowHariga()">
+                            לחץ למעבר
+                        </p>
+                    </div>
+                    <div ng-show="appData.alertSucUpdSelect == null" class="lh60">
+                        לא צפויה חריגה בחודש הקרוב
+                    </div>
+                </div>
+                <div class="ui-dialog-close" ng-click="appData.openDialogSelect = false"></div>
+            </div>
+            <div class="nav_filter_left">
+                <button ng-click="loadPrev()" class="prev_tr" title="נתוני 30 יום הקודמים">
+                    <i></i>
+                </button>
+                <button ng-click="loadMore()" class="next_tr" title="נתוני 30 יום הבאים">
+                    <i></i>
+                </button>
+            </div>
+            <ul class="exports">
+                <li class="importexcel" ng-click="updateFromExcel()">
+                    <span>ייבוא מExcel</span>
+                    <i></i>
+                </li>
+                <li class="excel" exports-excel-tazrim>
+                    <span>ייצוא לExcel</span>
+                    <i></i>
+                </li>
+                <li class="mail" ng-click="sendMailer()">
+                    <span>שליחה במייל</span>
+                    <i></i>
+                </li>
+                <li class="print" exports-print-tazrim>
+                    <span>הדפסה</span>
+                    <i></i>
+                </li>
+            </ul>
+        </div>
+        <div class="filterTazrim">
+            <!--<div class="tooltipArr2" ng-if="appData.popUpAllNew2" stop-propag>-->
+            <!--<div>-->
+            <!--<input type="checkbox" ng-model="hidealertnew2" id="hidealert2" ng-change="notShowNew2(hidealertnew2)">-->
+            <!--<label for="hidealert2">-->
+            <!--אל תציג שוב-->
+            <!--</label>-->
+            <!--<img src="image/close_popup.png" stop-propag alt="סגור" ng-click="appData.popUpAllNew2 = false">-->
+            <!--</div>-->
+            <!--התחדשנו  -  מעתה בלוח שנה של בחירת תאריך הימים בהם יש חריגה יצבעו באדום-->
+            <!--</div>-->
+
+            <div class="rowHead">
+                <div>תאריך</div>
+                <div>&nbsp;</div>
+                <div>ח-ן</div>
+                <div>סוג תשלום</div>
+                <div>סוג פעולה</div>
+                <div>אסמכתא</div>
+                <div>תיאור</div>
+                <div>&nbsp;</div>
+                <div>הכנסה</div>
+                <div>הוצאה</div>
+                <div>יתרה</div>
+                <div>פעולות</div>
+            </div>
+            <div ng-show="showAlertNull" class="alertNull">
+                אין נתונים בתאריכים
+                {{appData.defPrev}} - {{appData.defNext}}
+                ,
+                חפשו שנית בתאריכים שונים
+            </div>
+            <div ng-show="showAlertNullAcc" class="alertNull">
+                לא נמצאו חשבונות
+            </div>
+            <div scroll-fill="{{scrollHeightTazrim}}">
+                <div ng-if="!loaderTazrim" class="loader_table">
+                    <img src="image/loader.gif" alt="Loading...">
+                </div>
+                <div class="scrollWrap" ng-if="appData.filterTazrim" vs-repeat scroll-fill="{{scrollHeightTazrim}}">
+                    <div ng-repeat="a in appData.filterTazrim" ng-class="{'openDd':(a.openListThis !== false) }">
+                        <div ng-if="a.target_type_id == 18" class="rowPast"
+                             id="{{a.trans_id}}"
+                             ng-click="activeAllRow(a);" ng-class="{'active_row': a.classActive}"
+                             ng-init="a.asmachtaDisabled = true; a.date = true; a.companyAccount = true; a.payMent = true; a.transName = true; a.sumEdit = true; a.itraSum = true;  a.cancelEdit = false;a.custom = true; a.changeRef = false;a.classActive = false;a.changePeula = true;a.listPeulot=false;a.openListThis = false;">
+                            <div class="date"><input type="text" ng-model="a.day_id" ng-disabled="false"
+                                                     class="dateNotDisabled"
+                                                     ng-class="{'dateNotDisabledBorder':!a.date}"
+                                                     title="{{a.original_date}}"
+                                                     tooltips-tazrim date-picker-tazrim calendar="false"
+                                                     readonly="readonly"
+                                                     ng-change="a.changeRef = true; changeDate(a);"></div>
+                            <div>
+                                <div class="machzorit" tooltips-tazrim ng-if="a.sign_type == 1 || a.sign_type == 11"
+                                     title="פעולה מחזורית קבועה"></div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <select ng-model="a.company_account_id"
+                                        ng-options="a.company_account_id as a.bank_account_number for a in appData.selectedCompany.accounts.bank_account_list"
+                                        ng-disabled="a.companyAccount"
+                                        class="selectBanks bank{{getBankId(a.company_account_id)}}"
+                                        ng-change="a.changeRef = true">
+                                </select>
+                            </div>
+                            <div ng-init="paymentTypsConfig(a)">
+                                <select ng-if="a.paymentTypsConfigAll" ng-model="a.selectedItemPayMent"
+                                        ng-options="item as item.searchkey_cat_name for item in a.paymentTypsConfigAll"
+                                        ng-disabled="a.payMent"
+                                        ng-change="a.changePayVal = a.payment_type_id; a.changeRef = true;"></select>
+                                <div class="payAn"
+                                     ng-if="a.serchkey_cat_id !== 'adc85ff7-1578-4893-8a9a-9001f5f6bc5f' && a.serchkey_cat_id !== '2802e927-1ec7-462a-9f9c-2580f939cc71' && a.serchkey_cat_id !== 'bae4449d-c934-4ea0-abf6-762f25a35c3d'">
+                                    <span ng-if="a.searchkey_cat_name">
+                                        {{a.searchkey_cat_name}}
+                                    </span>
+                                    <span ng-if="!a.searchkey_cat_name">
+                                      &nbsp;
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="typePeulot" ng-init="a.showInputSearch = false">
+                                <input type="text" class="typePeula width100" ng-show="!a.showInputSearch"
+                                       tooltip="{{a.trans_type_name}}"
+                                       tooltips-elipsis-tazrim
+                                       ng-click="changePeulaClick(a, $event)"
+                                       ng-class="{'disabled': a.changePeula}"
+                                       ng-readonly="a.changePeula" placeholder="בחר סוג פעולה"
+                                       data-ng-model="a.trans_type_name"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <input type="text" class="typePeula width100" ng-show="a.showInputSearch"
+                                       tooltip="{{a.searchType}}" tooltips-elipsis-tazrim
+                                       ng-click="a.openListThis = !a.openListThis;a.searchType = ''; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-model="a.searchType" placeholder="בחר סוג פעולה"
+                                       ng-keypress="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <div ng-if="a.listPeulot" class="dropList">
+                                    <ul>
+                                        <li key-navigation
+                                            ng-repeat="item in appData.transactionTypesReg | typeListFilter:a.searchType"
+                                            tabindex="{{$index}}"
+                                            ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"
+                                            ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                                            <input type="text" data-ng-model="item.trans_type_name"
+                                                   data-ng-init="item.edits = false" ng-disabled="!item.edits"
+                                                   ng-click="$event.stopPropagation();">
+                                            <img ng-if="item.ind_create_default_supplier !== 1"
+                                                 src="image/edit_title.png"
+                                                 data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                            <!--src="image/delete_update.png"-->
+                                            <!--data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                                        </li>
+
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesIN | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hachnasa && a.hachnasa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesEX | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hozaa && a.hozaa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                    </ul>
+                                    <div ng-click="showAddTransTypeDialog(a)">
+                                        הוסף סוג פעולה
+                                    </div>
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div ng-init="asmachtaEmpty(a)">
+                                <input number-only-asmachta type="text" ng-model="a.asmachta"
+                                       ng-disabled="a.asmachtaDisabled">&nbsp;
+                            </div>
+                            <div tooltips-acc-elipsis-hover tooltip="{{a.trans_name}}">
+                                <input type="text" ng-model="a.trans_name" ng-disabled="a.transName">
+                            </div>
+                            <div class="iconChecks">
+                                <i ng-if="a.picture_link && checkPictureLink(a.picture_link)"
+                                   ng-click="openCheckImg(a.picture_link, a.company_account_id, a.trans_id)" class="fa fa-picture-o"
+                                   ng-style="{'color': a.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}"></i>&nbsp;
+                            </div>
+                            <div class="hachnasa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hachnasa)"
+                                       ng-model="a.hachnasa"
+                                       ng-show="!a.sumEdit"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hachnasa)"
+                                     ng-show="a.sumEdit">
+                                    {{getTotal(a.hachnasa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div class="hozaa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hozaa)" ng-show="!a.sumEdit"
+                                       ng-model="a.hozaa"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hozaa)" ng-show="a.sumEdit">
+                                    {{getTotal(a.hozaa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div class="itrot">
+                                <div ng-model="a.union_itra" ng-if="appData.selectedItem.company_account_id == 'null'"
+                                     class="{{a.union_itra_color}}">{{round2Fixed(a.union_itra)}}
+                                    &nbsp;
+                                </div>
+                                <div ng-if="appData.selectedItem.company_account_id !== 'null'"
+                                     class="{{a.itracolor}}">
+                                    {{round2Fixed(a.itra)}}
+                                    &nbsp;
+                                </div>
+                                <i tooltips-tazrim title="צפויה חריגה בחשבון זה"
+                                   ng-if="a.union_itra_color == 'green' && a.ind_hariga == true && appData.selectedItem.company_account_id == 'null'"></i>
+                            </div>
+                            <div class="edits">
+                                <i>
+                                    &nbsp;
+                                </i>
+                                <i ng-click="toggleEdit(a)" class="editToggle">
+<span ng-hide="a.cancelEdit">עריכה
+</span>
+                                    <span ng-hide="!a.cancelEdit">שמירה
+</span>
+                                </i>
+                                <i ng-show="a.cancelEdit" ng-click="cancelRow(a)" class="cancelIcon">בטל
+                                </i>
+                                <!--<i ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"-->
+                                <!--ng-click="deleteRow(a,'removeRow')" class="removeRowIcon">מחיקה-->
+                                <!--</i>-->
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                            <div class="edits smallWidth">
+                                <i>
+                                    &nbsp;
+                                </i>
+                                <i ng-click="toggleEdit(a)" class="editToggle">
+<span tooltips-tazrim ng-hide="a.cancelEdit" title="עריכה">
+&nbsp;
+</span>
+                                    <span tooltips-tazrim ng-hide="!a.cancelEdit" title="שמירה">
+&nbsp;
+</span>
+                                </i>
+                                <i tooltips-tazrim ng-show="a.cancelEdit" ng-click="cancelRow(a)"
+                                   class="cancelIcon"
+                                   title="בטל">
+                                    &nbsp;
+                                </i>
+                                <i tooltips-tazrim
+                                   ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"
+                                   ng-click="deleteRow(a,'removeRow')"
+                                   class="removeRowIcon"
+                                   title="מחיקה">
+                                    &nbsp;
+                                </i>
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                            <!--<small style="display: none">-->
+                            <!--{{a}}-->
+                            <!--</small>-->
+                        </div>
+                        <div ng-if="a.showRowPast" class="sumPast">
+                            <div><span>&nbsp;</span>
+
+                                פעולות עבר
+                                <span>&nbsp;</span>
+                            </div>
+                            <div>
+                                &nbsp;
+                            </div>
+                        </div>
+                        <div id="{{a.trans_id}}"
+                             ng-if="a.ind_nigreret == true && a.target_type_id !== 18" class="nigreretRow"
+                             ng-click=" activeAllRow(a);" ng-class="{'active_row': a.classActive}"
+                             ng-init="a.asmachtaDisabled = true; a.date = true; a.companyAccount = true; a.payMent = true; a.transName = true; a.sumEdit = true; a.cancelEdit = false;a.custom = true; a.changeRef = false;a.classActive = false;a.changePeula = true;a.listPeulot=false;a.openListThis = false;">
+                            <div class="date"><input type="text" ng-model="a.day_id" ng-disabled="false"
+                                                     class="dateNotDisabled"
+                                                     ng-class="{'dateNotDisabledBorder':!a.date}"
+                                                     title="{{a.original_date}}"
+                                                     tooltips-tazrim date-picker-tazrim calendar="false"
+                                                     readonly="readonly"
+                                                     ng-change="a.changeRef = true; changeDate(a);"></div>
+                            <div>
+                                <div class="machzorit" tooltips-tazrim ng-if="a.sign_type == 1 || a.sign_type == 11"
+                                     title="פעולה מחזורית קבועה"></div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <select ng-model="a.company_account_id"
+                                        ng-options="a.company_account_id as a.bank_account_number for a in appData.selectedCompany.accounts.bank_account_list"
+                                        ng-disabled="a.companyAccount"
+                                        class="selectBanks bank{{getBankId(a.company_account_id)}}"
+                                        ng-change="a.changeRef = true">
+                                </select>
+                            </div>
+                            <div ng-init="paymentTypsConfig(a)">
+                                <select ng-if="a.paymentTypsConfigAll" ng-model="a.selectedItemPayMent"
+                                        ng-options="item as item.searchkey_cat_name for item in a.paymentTypsConfigAll"
+                                        ng-disabled="a.payMent"
+                                        ng-change="a.changePayVal = a.payment_type_id; a.changeRef = true;"></select>
+
+                                <div class="payAn"
+                                     ng-if="a.serchkey_cat_id !== 'adc85ff7-1578-4893-8a9a-9001f5f6bc5f' && a.serchkey_cat_id !== '2802e927-1ec7-462a-9f9c-2580f939cc71' && a.serchkey_cat_id !== 'bae4449d-c934-4ea0-abf6-762f25a35c3d'">
+                                   <span ng-if="a.searchkey_cat_name">
+                                        {{a.searchkey_cat_name}}
+                                    </span>
+                                    <span ng-if="!a.searchkey_cat_name">
+                                      &nbsp;
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="typePeulot" ng-init="a.showInputSearch = false">
+                                <input type="text" class="typePeula width100" ng-show="!a.showInputSearch"
+                                       tooltip="{{a.trans_type_name}}" tooltips-elipsis-tazrim
+                                       ng-click="changePeulaClick(a, $event)" ng-class="{'disabled': a.changePeula}"
+                                       ng-readonly="a.changePeula" placeholder="בחר סוג פעולה"
+                                       data-ng-model="a.trans_type_name"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <input type="text" class="typePeula width100" ng-show="a.showInputSearch"
+                                       tooltip="{{a.searchType}}" tooltips-elipsis-tazrim
+                                       ng-click="a.openListThis = !a.openListThis;a.searchType = ''; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-model="a.searchType" placeholder="בחר סוג פעולה"
+                                       ng-keypress="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <div ng-if="a.listPeulot" class="dropList">
+                                    <ul>
+                                        <li key-navigation
+                                            ng-repeat="item in appData.transactionTypesReg | typeListFilter:a.searchType"
+                                            tabindex="{{$index}}"
+                                            ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"
+                                            ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                                            <input type="text" ng-model="item.trans_type_name"
+                                                   data-ng-init="item.edits = false" ng-disabled="!item.edits"
+                                                   ng-click="$event.stopPropagation();">
+                                            <img ng-if="item.ind_create_default_supplier !== 1"
+                                                 src="image/edit_title.png"
+                                                 ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                            <!--src="image/delete_update.png"-->
+                                            <!--ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                                        </li>
+
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesIN | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hachnasa && a.hachnasa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesEX | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hozaa && a.hozaa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                    </ul>
+
+                                    <div ng-click="showAddTransTypeDialog(a)">
+                                        הוסף סוג פעולה
+                                    </div>
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div ng-init="asmachtaEmpty(a)">
+                                <input number-only-asmachta type="text" ng-model="a.asmachta"
+                                       ng-disabled="a.asmachtaDisabled">&nbsp;
+                            </div>
+                            <div tooltips-acc-elipsis-hover tooltip="{{a.trans_name}}">
+                                <input type="text" ng-model="a.trans_name" ng-disabled="a.transName">
+                            </div>
+                            <div class="iconChecks">
+                                <i ng-if="a.picture_link && checkPictureLink(a.picture_link)"
+                                   ng-click="openCheckImg(a.picture_link, a.company_account_id, a.trans_id)" class="fa fa-picture-o"
+                                   ng-style="{'color': a.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}"></i>&nbsp;
+                            </div>
+                            <div class="hachnasa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hachnasa)"
+                                       ng-model="a.hachnasa"
+                                       ng-show="!a.sumEdit"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hachnasa)" ng-show="a.sumEdit">
+                                    {{getTotal(a.hachnasa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div class="hozaa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hozaa)" ng-show="!a.sumEdit"
+                                       ng-model="a.hozaa"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hozaa)" ng-show="a.sumEdit">
+                                    {{getTotal(a.hozaa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                &nbsp;
+                            </div>
+                            <div class="edits">
+                                <i>
+                                    <button class="matchBtn" ng-click="matchFromTazrim(a)">
+                                        התאמה
+                                    </button>
+                                </i>
+                                <i ng-click="toggleEdit(a)" class="editToggle"
+                                   ng-hide="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    <span ng-hide="a.cancelEdit">עריכה</span>
+                                    <span ng-hide="!a.cancelEdit">שמירה</span>
+                                </i>
+                                <i ng-show="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    &nbsp;
+                                </i>
+                                <i ng-show="a.cancelEdit" ng-click="cancelRow(a)" class="cancelIcon">בטל</i>
+                                <i ng-hide="a.cancelEdit || a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)"
+                                   ng-click="deleteRow(a,'removeRow')"
+                                   class="removeRowIcon">מחיקה</i>
+                                <!--<i ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"-->
+                                <!--ng-click="deleteRow(a,'removeRow')"-->
+                                <!--class="removeRowIcon">מחיקה</i>-->
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                            <div class="edits smallWidth">
+                                <!--<i>&nbsp;</i>-->
+                                <i class="fa fa-arrows-h" tooltips-tazrim title="התאמה"
+                                   ng-click="matchFromTazrim(a)"></i>
+                                <i ng-click="toggleEdit(a)" class="editToggle"
+                                   ng-hide="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+<span tooltips-tazrim ng-hide="a.cancelEdit" title="עריכה">
+&nbsp;
+</span>
+                                    <span tooltips-tazrim ng-hide="!a.cancelEdit" title="שמירה">
+&nbsp;
+</span>
+                                </i>
+                                <i ng-show="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    &nbsp;
+                                </i>
+                                <i tooltips-tazrim ng-show="a.cancelEdit" ng-click="cancelRow(a)"
+                                   class="cancelIcon"
+                                   title="בטל">
+                                    &nbsp;
+                                </i>
+                                <i tooltips-tazrim
+                                   ng-hide="a.cancelEdit || a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)"
+                                   ng-click="deleteRow(a,'removeRow')"
+                                   class="removeRowIcon"
+                                   title="מחיקה">
+                                    &nbsp;
+                                </i>
+                                <!--<i tooltips-tazrim-->
+                                <!--ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"-->
+                                <!--ng-click="deleteRow(a,'removeRow')"-->
+                                <!--class="removeRowIcon"-->
+                                <!--title="מחיקה">-->
+                                <!--&nbsp;-->
+                                <!--</i>-->
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                        </div>
+                        <div ng-if="a.showRowSumNig" class="sumNigreret">
+                            <div>
+                                <span>&nbsp;</span>
+                                פעולות שטרם הופקדו/נפרעו
+                                <span>&nbsp;</span>
+                            </div>
+                            <div> {{round2Fixed(calcSum)}}</div>
+                        </div>
+                        <div id="{{a.trans_id}}"
+                             ng-if="a.ind_nigreret == false && a.target_type_id !== 18"
+                             class="rowTazrim"
+                             ng-click=" activeAllRow(a);" ng-class="{'active_row': a.classActive}"
+                             ng-init="a.asmachtaDisabled = true; a.date = true; a.companyAccount = true; a.payMent = true; a.transName = true; a.sumEdit = true; a.itraSum = true; a.cancelEdit = false;a.custom = true; a.changeRef = false; a.classActive = false;a.changePeula = true;a.listPeulot=false;a.openListThis = false;">
+                            <div class="date"><input type="text" ng-model="a.day_id" ng-disabled="false"
+                                                     class="dateNotDisabled"
+                                                     ng-class="{'dateNotDisabledBorder':!a.date}"
+                                                     tooltips-tazrim
+                                                     title="לחץ לשינוי תאריך פרעון"
+                                                     date-picker-tazrim readonly="readonly"
+                                                     calendar="false" ng-change="a.changeRef = true; changeDate(a);">
+                            </div>
+                            <div>
+                                <div class="machzorit" tooltips-tazrim ng-if="a.sign_type == 1 || a.sign_type == 11"
+                                     title="פעולה מחזורית קבועה"></div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <select ng-model="a.company_account_id"
+                                        ng-options="a.company_account_id as a.bank_account_number for a in appData.selectedCompany.accounts.bank_account_list"
+                                        ng-disabled="a.companyAccount"
+                                        class="selectBanks bank{{getBankId(a.company_account_id)}}"
+                                        ng-change="a.changeRef = true">
+                                </select>
+                            </div>
+                            <div ng-init="paymentTypsConfig(a)">
+                                <select ng-if="a.paymentTypsConfigAll" ng-model="a.selectedItemPayMent"
+                                        ng-options="item as item.searchkey_cat_name for item in a.paymentTypsConfigAll"
+                                        ng-disabled="a.payMent"
+                                        ng-change="a.changePayVal = a.payment_type_id; a.changeRef = true;"></select>
+                                <div class="payAn"
+                                     ng-if="a.serchkey_cat_id !== 'adc85ff7-1578-4893-8a9a-9001f5f6bc5f' && a.serchkey_cat_id !== '2802e927-1ec7-462a-9f9c-2580f939cc71' && a.serchkey_cat_id !== 'bae4449d-c934-4ea0-abf6-762f25a35c3d'">
+                                     <span ng-if="a.searchkey_cat_name">
+                                        {{a.searchkey_cat_name}}
+                                    </span>
+                                    <span ng-if="!a.searchkey_cat_name">
+                                      &nbsp;
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="typePeulot" ng-init="a.showInputSearch = false">
+                                <input type="text" class="typePeula width100" ng-show="!a.showInputSearch"
+                                       tooltip="{{a.trans_type_name}}" tooltips-elipsis-tazrim
+                                       ng-click="changePeulaClick(a, $event)" ng-class="{'disabled': a.changePeula}"
+                                       ng-readonly="a.changePeula" placeholder="בחר סוג פעולה"
+                                       data-ng-model="a.trans_type_name"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <input type="text" class="typePeula width100" ng-show="a.showInputSearch"
+                                       tooltip="{{a.searchType}}" tooltips-elipsis-tazrim
+                                       ng-click="a.openListThis = !a.openListThis;a.searchType = ''; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-keypress="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event)"
+                                       ng-model="a.searchType" placeholder="בחר סוג פעולה"
+                                       ng-change="a.openListThis = true; openPeulotList(a.trans_id, a.openListThis, $event);a.changeRef = true;"
+                                       focus-li>
+                                <div ng-if="a.listPeulot" class="dropList">
+                                    <ul>
+                                        <li key-navigation
+                                            ng-repeat="item in appData.transactionTypesReg | typeListFilter:a.searchType"
+                                            tabindex="{{$index}}"
+                                            ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"
+                                            ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                                            <input type="text" data-ng-model="item.trans_type_name"
+                                                   data-ng-init="item.edits = false" ng-disabled="!item.edits"
+                                                   ng-click="$event.stopPropagation();">
+                                            <img ng-if="item.ind_create_default_supplier !== 1"
+                                                 src="image/edit_title.png"
+                                                 data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                            <!--src="image/delete_update.png"-->
+                                            <!--data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                                        </li>
+
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesIN | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hachnasa && a.hachnasa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                        <!--<li key-navigation-->
+                                            <!--ng-repeat="item in appData.transactionTypesEX | typeListFilter:a.searchType"-->
+                                            <!--tabindex="{{$index}}"-->
+                                            <!--ng-click="$event.stopPropagation();updateTransactionTypeName(a, item)"-->
+                                            <!--ng-if="a.hozaa && a.hozaa !== null && item.ind_create_default_supplier !== 2">-->
+                                            <!--<input type="text" data-ng-model="item.trans_type_name"-->
+                                                   <!--data-ng-init="item.edits = false" ng-disabled="!item.edits"-->
+                                                   <!--ng-click="$event.stopPropagation();">-->
+                                            <!--<img ng-if="item.ind_create_default_supplier !== 1"-->
+                                                 <!--src="image/edit_title.png"-->
+                                                 <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesEX');">-->
+                                            <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;src="image/delete_update.png"&ndash;&gt;-->
+                                            <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesEX');">&ndash;&gt;-->
+                                        <!--</li>-->
+                                    </ul>
+                                    <div ng-click="showAddTransTypeDialog(a)">
+                                        הוסף סוג פעולה
+                                    </div>
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div ng-init="asmachtaEmpty(a)">
+                                <input number-only-asmachta type="text" ng-model="a.asmachta"
+                                       ng-disabled="a.asmachtaDisabled">&nbsp;
+                            </div>
+                            <div tooltips-acc-elipsis-hover tooltip="{{a.trans_name}}">
+                                <input type="text" ng-model="a.trans_name" ng-disabled="a.transName">
+                            </div>
+                            <div class="iconChecks">
+                                <i ng-if="a.picture_link && checkPictureLink(a.picture_link)"
+                                   ng-click="openCheckImg(a.picture_link, a.company_account_id, a.trans_id)" class="fa fa-picture-o"
+                                   ng-style="{'color': a.picture_link !== 'x' ? '#5a5e61' : '#ec3c66'}"></i>&nbsp;
+                            </div>
+                            <div class="hachnasa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hachnasa)"
+                                       ng-model="a.hachnasa"
+                                       ng-show="!a.sumEdit"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hachnasa)"
+                                     ng-show="a.sumEdit">
+                                    {{getTotal(a.hachnasa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div class="hozaa">
+                                <input number-only type="text"
+                                       ng-if="isObj(a.hozaa)" ng-show="!a.sumEdit"
+                                       ng-model="a.hozaa"
+                                       ng-disabled="a.sumEdit"
+                                       ng-change="a.changeRef = true">
+
+                                <div ng-if="isObj(a.hozaa)" ng-show="a.sumEdit">
+                                    {{getTotal(a.hozaa)}}&nbsp;
+                                </div>
+                                &nbsp;
+                            </div>
+                            <div class="itrot">
+                                <div ng-model="a.union_itra" ng-if="appData.selectedItem.company_account_id == 'null'"
+                                     class="{{a.union_itra_color}}">{{round2Fixed(a.union_itra)}}
+                                </div>
+
+                                <div ng-if="appData.selectedItem.company_account_id !== 'null'"
+                                     class="{{a.itracolor}}">
+                                    {{round2Fixed(a.itra)}}
+                                </div>
+
+                                <i tooltips-tazrim title="צפויה חריגה בחשבון זה"
+                                   ng-if="a.union_itra_color == 'green' && a.ind_hariga == true && appData.selectedItem.company_account_id == 'null'"></i>
+
+                            </div>
+                            <div class="edits">
+                                <i>
+                                    &nbsp;
+                                </i>
+                                <i ng-click="toggleEdit(a)"
+                                   class="editToggle"
+                                   ng-hide="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    <span ng-hide="a.cancelEdit">עריכה</span>
+                                    <span ng-hide="!a.cancelEdit">שמירה</span>
+                                </i>
+                                <i ng-show="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    &nbsp;
+                                </i>
+                                <i ng-show="a.cancelEdit" ng-click="cancelRow(a)" class="cancelIcon">בטל</i>
+                                <i ng-hide="a.cancelEdit || a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)"
+                                   ng-click="deleteRow(a,'removeRow')"
+                                   class="removeRowIcon">מחיקה</i>
+                                <!--<i ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"-->
+                                <!--ng-click="deleteRow(a,'removeRow')"-->
+                                <!--class="removeRowIcon">מחיקה</i>-->
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                            <div class="edits smallWidth">
+                                <i>
+                                    &nbsp;
+                                </i>
+                                <i ng-click="toggleEdit(a)" class="editToggle"
+                                   ng-hide="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    <span tooltips-tazrim ng-hide="a.cancelEdit" title="עריכה">&nbsp;</span>
+                                    <span tooltips-tazrim ng-hide="!a.cancelEdit" title="שמירה">&nbsp;</span>
+                                </i>
+                                <i ng-show="a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)">
+                                    &nbsp;
+                                </i>
+                                <i tooltips-tazrim ng-show="a.cancelEdit" ng-click="cancelRow(a)"
+                                   class="cancelIcon"
+                                   title="בטל">
+                                    &nbsp;
+                                </i>
+                                <i tooltips-tazrim
+                                   ng-hide="a.cancelEdit || a.target_type_id == 23 || ((a.target_type_id == 21 || a.target_type_id == 22) && a.ind_zefi !== 0)"
+                                   ng-click="deleteRow(a,'removeRow')"
+                                   class="removeRowIcon"
+                                   title="מחיקה">
+                                    &nbsp;
+                                </i>
+                                <!--<i tooltips-tazrim-->
+                                <!--ng-show="!a.cancelEdit && a.ind_bank == false && a.target_type_id !== 18"-->
+                                <!--ng-click="deleteRow(a,'removeRow')"-->
+                                <!--class="removeRowIcon"-->
+                                <!--title="מחיקה">-->
+                                <!--&nbsp;-->
+                                <!--</i>-->
+                                <i ng-show="a.cancelEdit || a.ind_bank == true || a.target_type_id == 18"
+                                   style="display: inline-block;padding-right: 10px;">
+                                    &nbsp;
+                                </i>
+                            </div>
+                            <small style="display: none">
+                                {{a}}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rowSumAll" ng-if="appData.filterTazrim.length">
+                <div>סה״כ</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+                <div class="hacAll">
+                    {{getTotal(hacAll)}}&nbsp;
+                </div>
+                <div class="hozAll">
+                    {{getTotal(hozAll)}}&nbsp;
+                </div>
+                <div>&nbsp;</div>
+                <div>&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+<div ng-controller="mainAccountantsCardsCtrl">
+    <div class="wrapProgressPop">
+        <i></i>
+        <h2 ng-if="!appData.showSucUpdPassPop">
+            מכין את הקובץ להורדה
+        </h2>
+        <h2 ng-if="appData.showSucUpdPassPop == 'suc'">
+            ההכנה הושלמה בהצלחה
+        </h2>
+        <h2 ng-if="appData.showSucUpdPassPop == 'fail'">
+            הכנת הקובץ נכשלה, נסה שנית
+        </h2>
+        <h2 ng-if="appData.showSucUpdPassPop == '406'">
+            ארעה שגיאה, אנא נסה שנית מאוחר יותר
+        </h2>
+        <div class="meter" ng-if="!appData.showSucUpdPassPop">
+            <span></span>
+        </div>
+
+        <button ng-if="appData.showSucUpdPassPop == 'fail'" ng-click="nextExPopProg();">
+            נסה שנית
+        </button>
+        <button ng-if="appData.showSucUpdPassPop == '406'" ng-click="hidePopup()">
+            סגור
+        </button>
+    </div>
+</div>
+
+

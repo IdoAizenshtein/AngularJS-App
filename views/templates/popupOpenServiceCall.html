@@ -1,0 +1,89 @@
+<div ng-controller="managerAccCtrl">
+    <div class="popup-header">
+        <h2>
+         פתיחת קריאת שירות
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div class="messageBug scrollDesign" style="overflow: auto;max-height: 525px;">
+            <div class="trTask">
+                <p class="widthFix">
+                    קטגוריה
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.closeTaskCategoryID"
+                            ng-options="a.TASK_CATEGORY_ID as a.TASK_CATEGORY_NAME for a in appData.usersWork_task_catagory"></select>
+                </div>
+
+
+                <!--<p class="widthFix">-->
+                <!--שם פותח הקריאה-->
+                <!--</p>-->
+                <!--<div>-->
+                <!--<input ng-model="appData.usersWorkVal.closeTASK_CATEGORY_COMMENT" type="text">-->
+                <!--</div>-->
+                <p class="widthFix"
+                   ng-if="appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d2' || appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d3'">
+                <span ng-if="appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d2'">
+                                        המלצת קטגוריה
+                </span>
+                    <span ng-if="appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d3'">
+                        נושא ההדרכה
+                </span>
+                </p>
+                <div ng-if="appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d2' || appData.usersWorkVal.closeTaskCategoryID == '52ce894f-922f-014a-e053-640aa8c0d3d3'">
+                    <input ng-model="appData.usersWorkVal.closeTASK_CATEGORY_COMMENT" type="text">
+                </div>
+                <p class="widthFix">
+                    פנייה ל:
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.taskUserId"
+                            ng-options="a.USER_ID as a.NAME for a in appData.usersWork"></select>
+                </div>
+                <p class="widthFix">
+                    תיאור
+                </p>
+                <div>
+                    <textarea ng-model="appData.usersWorkVal.taskDesc"></textarea>
+                </div>
+                <p class="widthFix">
+                    סוג פנייה:
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.tasks_type"
+                            ng-style="{'border-color': appData.usersWorkVal.tasks_type ? '#cacaca' : '#ec3c66'}"
+                            ng-options="a.QA_TASK_TYPE_ID as a.QA_TASK_TYPE_DESC for a in appData.usersWork_tasks_type"></select>
+                </div>
+                <p class="widthFix">
+                    סטטוס
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.stateType"
+                            ng-options="a.QA_TASK_STATE_ID as a.QA_TASK_STATE_DESC for a in appData.usersWork_statesPop"></select>
+                </div>
+                <p class="widthFix">
+                    עדיפות
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.priority"
+                            ng-options="a.QA_TASK_PRIORTY_ID as a.QA_TASK_PRIORTY_DESC for a in appData.usersWork_priority"></select>
+                </div>
+                <p class="widthFix">
+                    חברה
+                </p>
+                <div>
+                    <select ng-model="appData.usersWorkVal.companyId"
+                            ng-options="a.COMPANY_ID as a.COMPANY_NAME for a in appData.get_user_companies_det"></select>
+                </div>
+            </div>
+
+            <div class="buttonGr">
+                <button ng-click="qa_task_add()">
+                    אישור
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

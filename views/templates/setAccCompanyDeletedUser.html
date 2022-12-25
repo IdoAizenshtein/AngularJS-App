@@ -1,0 +1,82 @@
+<div ng-controller="mainAccountantsCtrl">
+    <div class="popup-header">
+        <h2>
+בחירת חברה לשחזור
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listAllDeletedCompanyLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" ng-model="filterDeleted" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+        </div>
+
+        <form novalidate ng-submit="setDeletedCompany()" name="formAccUsersDeleted">
+            <div class="formAccUsers">
+
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+שם חברה
+                    </div>
+                    <div>
+שם מלא
+                    </div>
+                    <div>
+תאריך תפוגה
+                    </div>
+                    <div>
+ח.פ.
+                    </div>
+                    <div>
+רואה חשבון
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listAllDeletedCompany | filter:filterDeleted">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setDeletedCompanyList"
+                                   name="uuidAcc"
+                                   value="{{a}}" required/>
+                        </div>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.DEFAULT_USER_NAME}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.EXPIRATION_DATE}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.COMPANY_HP}}
+                            &nbsp;
+                        </div>
+                        <div>
+                            {{a.ACC_NAME}}
+                            &nbsp;
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsersDeleted.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

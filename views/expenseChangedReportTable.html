@@ -1,0 +1,124 @@
+<div class="reportsAccTdWrap">
+    <div class="title">
+        <p>
+            כרטיסים שגדלו/קטנו
+        </p>
+
+        <div>
+            <label>
+                מעל
+                %
+            </label>
+            <input type="text" min="0" max="100" numeric="" ng-model="$parent.defaultsPrecentReports"
+                   ng-change="setDefaultsPrecentAcc()">
+            <label>
+                בחודש
+            </label>
+            <select name="month_nav" ng-model="$parent.monthchanged" ng-change="expenseChangedReport()">
+                <option value="01">ינואר</option>
+                <option value="02">פברואר</option>
+                <option value="03">מרץ</option>
+                <option value="04">אפריל</option>
+                <option value="05">מאי</option>
+                <option value="06">יוני</option>
+                <option value="07">יולי</option>
+                <option value="08">אוגוסט</option>
+                <option value="09">ספטמבר</option>
+                <option value="10">אוקטובר</option>
+                <option value="11">נובמבר</option>
+                <option value="12">דצמבר</option>
+            </select>
+            <label>
+                שנה
+            </label>
+            <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.yearchanged"
+                   ng-change="expenseChangedReport()">
+        </div>
+        <ul class="exports tableExports" ng-show="expenseChangedReportTable && expenseChangedReportTable.length > 0">
+            <li class="excel" exports-excel-change-ex-repo tooltips-tazrim title="ייצוא לExcel">
+                <i></i>
+            </li>
+            <li class="mail" ng-click="sendMailerChangeExRepo()" tooltips-tazrim title="שליחה במייל">
+                <i></i>
+            </li>
+            <li class="print" exports-print-change-ex-repo tooltips-tazrim title="הדפסה">
+                <i></i>
+            </li>
+        </ul>
+        <input type="text" ng-model="$parent.searchMatchBigger"
+               placeholder="חיפוש"
+               ng-change="filterExpenseChangedReport()"
+               class="searchTyping" ng-model-options="{ debounce: {'default': 500 }}"
+               ng-show="appData.expenseChangedReportTable.length > 0 || searchMatchBigger.length > 0"/>
+    </div>
+    <div class="expenseChangedReportTable">
+        <div ng-if="!loaderexpenseChanged" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <table>
+            <thead ng-if="appData.expenseChangedReportTable.length > 0">
+            <tr>
+                <th ng-click="sort_by2('companyName');">
+                    לקוח
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by2('transTypeCatName');">
+                    כרטיס
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by2('avgTotal');">
+                    חודש קודם
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by2('sum');">
+                    סכום
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by2('change.numChange');">
+                    שינוי
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th>
+                    &nbsp;
+                </th>
+            </tr>
+            </thead>
+            <tbody scroll-fill="220" vs-repeat="30" ng-if="appData.expenseChangedReportTable.length !== 0">
+            <tr ng-repeat="a in appData.expenseChangedReportTable | orderBy : predicate2 :reverse2">
+                <td>
+                                   <span data-ng-click="goToLink(a.companyId, 'listCompany')">
+                                       {{a.companyName}}
+                                   </span>
+                </td>
+                <td>
+                                <span data-ng-click="goToAnalisis(a.transTypeCatId, a.target_supplier_type_id, a.companyId, yearchanged)">
+                                       {{a.transTypeCatName}}
+                                </span>
+                </td>
+                <td>
+                    {{roundNum(a.avgTotal)}}
+                </td>
+                <td>
+                    {{roundNum(a.sum)}}
+                </td>
+                <td class="{{a.change.colorType}} {{a.change.direction}}">
+                    {{a.change.numChange}}
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+            </tbody>
+
+
+            <tbody ng-class="{'heightHead': appData.expenseChangedReportTable.length == 0}"
+                  ng-if="appData.expenseChangedReportTable.length == 0" scroll-fill="220">
+            <tr>
+                <td colspan="5" class="notTableData">
+                    אין נתונים
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div ng-controller="mainAccountantsCtrl">
+    <div class="popup-header">
+        <h2>
+בחירת משתמש
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.listUserAccountantsLoader" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchUserAcc">
+            <input type="text" data-ng-model="filterAccUser" ng-model-options="{ debounce: {'default': 500 }}"
+                   placeholder="חיפוש">
+        </div>
+
+        <form novalidate ng-submit="userCopypriv(true)" name="formAccUsers">
+            <div class="formAccUsers regUsers">
+                <div class="headerFormUserAcc">
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div>
+שם משתמש
+                    </div>
+                    <div>
+שם חברה
+                    </div>
+                    <div>
+ח.פ.
+                    </div>
+                </div>
+                <ul vs-repeat="30">
+                    <li ng-repeat="a in appData.listUserRegAccountants | filter:filterAccUser">
+                        <div>
+                            <input type="radio"
+                                   ng-model="$parent.appData.setUserNameAccList"
+                                   name="uuidAcc"
+                                   value="{{a}}" required/>
+                        </div>
+                        <div>
+                            {{a.NAME}}
+                        </div>
+                        <div>
+                            {{a.COMPANY_NAME}}
+                        </div>
+                        <div>
+                            {{a.COMPANY_HP}}
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="buttonGr">
+                <button type="submit" ng-disabled="formAccUsers.$invalid">
+                    אישור
+                </button>
+                <button ng-click="hidePopup()" type="button">
+                    ביטול
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

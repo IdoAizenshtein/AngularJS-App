@@ -1,0 +1,159 @@
+<div ng-controller="exportHashvCtrl">
+    <div class="popup-header">
+        <h2>
+            <span ng-if="appData.adminSoft">
+                            הוספת משימה
+            </span>
+            <span ng-if="!appData.adminSoft">
+                פתיחת קריאת שירות
+</span>
+
+        </h2>
+    </div>
+    <div class="popup-content">
+        <form autocomplete="off" name="supportForm" novalidate ng-submit="qa_task_add()">
+            <div class="wrapPop">
+                <div class="trTask" ng-if="appData.adminSoft">
+                    <p class="widthFix">
+                        משימה ל:
+                    </p>
+                    <div>
+                        <select ng-model="appData.usersWorkVal.taskUserId"
+                                ng-required="false"
+                                ng-options="a.USER_ID as a.NAME for a in appData.usersWork"
+                                ng-change="changeUserWork()"></select>
+                    </div>
+                    <p class="paddRight">
+                        סוג משימה:
+                    </p>
+                    <div>
+                        <select ng-required="false"
+                                ng-model="appData.usersWorkVal.tasks_type" ng-change="changeTypeTitle()"
+                                ng-options="a.QA_TASK_TYPE_ID as a.QA_TASK_TYPE_DESC for a in appData.usersWork_tasks_type"></select>
+                    </div>
+                </div>
+                <div class="trTask"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$invalid}">
+                    <p class="widthFix">
+                        נושא
+                    </p>
+                    <div>
+                        <input type="text" ng-model="appData.usersWorkVal.taskTitle" ng-required="!appData.adminSoft"
+                               autocomplete="off"
+                               name="taskTitle"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$invalid}">
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.taskTitle.$touched) && supportForm.taskTitle.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="trTask"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$invalid}">
+                    <p class="widthFix">
+                        תיאור
+                    </p>
+                    <div>
+                    <textarea ng-required="appData.usersWorkVal.tasks_type !== 8 && !appData.adminSoft"
+                              ng-model="appData.usersWorkVal.taskDesc" autocomplete="off" name="taskDesc"
+                              ng-class="{'redError': (supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$invalid}"></textarea>
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.taskDesc.$touched) && supportForm.taskDesc.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="trTask" ng-if="appData.usersWorkVal.tasks_type !== 8"
+                     ng-class="{'bottomLess': (supportForm.$submitted || supportForm.uEmail.$touched) && supportForm.uEmail.$invalid}">
+
+                    <p class="widthFix">
+                        מייל לחזרה
+                    </p>
+                    <div>
+                        <input style="display:none" type="email" autocomplete="off">
+                        <input name="uEmail" class="usersWorkValMail"
+                               ng-required="appData.usersWorkVal.tasks_type !== 8 && !appData.adminSoft"
+                               type="email"
+                               ng-model="appData.usersWorkVal.mail"
+                               readonly
+                               onfocus="this.removeAttribute('readonly');"
+                               autocomplete="off"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.uEmail.$touched) && (supportForm.uEmail.$error.required || supportForm.uEmail.$error.pattern)}"
+                               ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                    </div>
+                    <div class="alertBottomInput"
+                         ng-show="(supportForm.$submitted || supportForm.uEmail.$touched) && (supportForm.uEmail.$error.required || supportForm.uEmail.$error.pattern)">
+                        <div ng-show="supportForm.uEmail.$error.required">
+                            מידע זה הינו מידע חובה
+                        </div>
+                        <div ng-show="supportForm.uEmail.$error.pattern">
+                            כתובת המייל אינה תקינה
+                        </div>
+                    </div>
+                </div>
+                <div class="trTask" ng-if="appData.usersWorkVal.tasks_type !== 8">
+                    <p class="widthFix">
+                        שם פותח הקריאה
+                    </p>
+                    <div>
+                        <input type="text" ng-model="appData.usersWorkVal.Task_open_name"
+                               ng-required="appData.usersWorkVal.tasks_type !== 8 && !appData.adminSoft"
+                               autocomplete="off"
+                               name="Task_open_name"
+                               ng-class="{'redError': (supportForm.$submitted || supportForm.Task_open_name.$touched) && supportForm.Task_open_name.$invalid}">
+                    </div>
+                    <div ng-show="(supportForm.$submitted || supportForm.Task_open_name.$touched) && supportForm.Task_open_name.$error.required"
+                         class="alertBottomInput">
+                        מידע זה הינו מידע חובה
+                    </div>
+                </div>
+                <div class="trTask" ng-if="appData.adminSoft">
+                    <p class="widthFix">
+                        קישור למסמך
+                    </p>
+
+                    <div>
+                        <input type="text" ng-model="appData.usersWorkVal.driveLink" ng-required="false" class="link">
+                    </div>
+                </div>
+                <div class="trTask" ng-if="appData.adminSoft">
+                    <p class="widthFix">
+                        עדיפות
+                    </p>
+                    <div>
+                        <select ng-model="appData.usersWorkVal.priority" ng-required="false"
+                                ng-options="a.QA_TASK_PRIORTY_ID as a.QA_TASK_PRIORTY_DESC for a in appData.usersWork_priority"></select>
+                    </div>
+
+                    <p class="paddRight">
+                        סדר עדיפות
+                    </p>
+                    <div>
+                        <input type="text" ng-required="false" ng-model="appData.usersWorkVal.order_num"
+                               class="link order_num"
+                               number-only19>
+                    </div>
+                </div>
+                <div class="trTask">
+                    <p class="widthFix">
+                        טלפון לחזרה
+                    </p>
+                    <div>
+                        <input type="text" number-only-asmachta ng-model="appData.usersWorkVal.user_cell_phone"
+                               ng-required="false" autocomplete="off">
+                    </div>
+                </div>
+                <div class="buttonGr">
+                    <button type="submit" ng-disabled="!supportForm.$valid || appData.usersWorkVal.sent">
+                        אישור
+                    </button>
+                    <button ng-click="hidePopup()" type="button">
+                        ביטול
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+

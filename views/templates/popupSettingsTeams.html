@@ -1,0 +1,65 @@
+<div ng-init="init()" ng-controller="managementTeamCtrl">
+    <div class="popup-header">
+        <h2>
+הרשאות עבור
+            {{appData.childUserIdPopUpSett.name}}
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-if="appData.loaderPopSett" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <div class="searchCompanyPop">
+            <input type="text" data-ng-model="searchCompanyPop.companyName" ng-model-options="{ debounce: {'default': 500 }}" placeholder="חיפוש חברה">
+            <p ng-if="searchCompanyPop.companyName">
+
+                נמצאו
+                {{appData.listteamSettings.length}}
+התאמות
+            </p>
+        </div>
+        <div class="wrapPop" ng-show="!appData.loaderPopSett && appData.listteamSettings.length > 0">
+         <table>
+             <thead>
+             <tr>
+                 <th ng-click="sort_by('companyName');">
+                         שם החברה&nbsp;
+                         <i class="glyphicon glyphicon-sort"></i>
+                 </th>
+                 <th>
+ח.פ.
+                 </th>
+                 <th>
+סמן הכל
+                 </th>
+                 <th>
+כספים
+                 </th>
+                 <th>
+הנה״ח
+                 </th>
+             </tr>
+             </thead>
+             <tbody vs-repeat="30">
+             <tr ng-repeat="a in appData.listteamSettings = (appData.teamSettings | filter:searchCompanyPop:strict | orderBy : predicate :reverse)">
+                 <td>
+                     {{a.companyName}}
+                 </td>
+                 <td>
+                     {{a.companyHp}}
+                 </td>
+                 <td>
+                     <input ng-disabled="a.disabled" type="checkbox" ng-change="setCheckAll(a)" ng-model="a.indAccPriv">
+                 </td>
+                 <td ng-repeat="b in a.privTab" ng-if="b.priv_type_id == '43e97298-c80e-4b70-b198-967709716513'">
+                     <input ng-disabled="b.disabled" ng-model="b.priv_value" ng-change="setCheck(b, a.companyId)" type="checkbox">
+                 </td>
+                 <td ng-repeat="b in a.privTab" ng-if="b.priv_type_id == '6b265854-958a-4501-8207-d9f99d8d3f2a'">
+                     <input ng-disabled="b.disabled" ng-model="b.priv_value" ng-change="setCheck(b, a.companyId)" type="checkbox">
+                 </td>
+             </tr>
+             </tbody>
+         </table>
+        </div>
+    </div>
+</div>

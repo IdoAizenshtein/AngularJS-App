@@ -1,0 +1,159 @@
+<div class="funds-table slika-table" style="margin: 20px; border: 1px solid #d4d4d4; border-radius: 3px;">
+    <div ng-hide="filteredDataLoader" class="loader_table">
+        <img src="image/loader.gif" alt="Loading...">
+    </div>
+    <table>
+        <thead>
+        <tr class="funds-table-header funds-table-row">
+            <th>
+                <div>
+                    תאריך
+                </div>
+            </th>
+            <th>
+                <div>
+                    ח-ן
+                </div>
+            </th>
+            <th>
+                <div>
+                    תיאור
+                </div>
+            </th>
+            <th>
+                <div>
+                    עסקאות רגילות
+                </div>
+            </th>
+            <th>
+                <div>
+                    עסקאות תשלומים
+                </div>
+            </th>
+            <th>
+                <div>
+                    סה״כ
+                </div>
+            </th>
+            <th>
+                <div>
+                    צפי לתזרים
+                </div>
+            </th>
+            <th>
+                <div>
+                    אחוז מצפי
+                </div>
+            </th>
+        </tr>
+        </thead>
+    </table>
+    <div class="rows_table_fun" scroll-fill="{{scrollHeightFundsTable}}">
+        <div ng-show="appData.selectedCompany.solekData.length == 0 && hasComany" class="notDataAlerts">אין נתונים לחברה זו</div>
+        <div ng-show="appData.selectedCompany.solekData.length > 0 && !filteredDataAll.length && hasComany" class="notDataAlerts">אין
+            נתונים בסינון זה
+        </div>
+        <div ng-show="hasComany === false" class="notDataAlerts">
+            לא נמצאו חשבונות
+        </div>
+        <table ng-if="filteredDataAll">
+            <tbody>
+            <tr ng-repeat-start="t in filteredDataAll" ng-if="!t.summary" class="funds-table-row clearfix">
+                <td>
+                    <div>
+                        {{t.trans_date}}
+                        <div class="tooltip_kvua" data-ng-style="{display:(t.ind_kvua == 1)?'inline-block':'none'}">
+                            <span>פעולה מחזורית קבועה</span></div>
+                    </div>
+                </td>
+                <td>
+                    <div style="direction:rtl;">
+                        <i class="{{t.bank_id}}"></i>
+                        {{getAccountNum(t.company_account_id)[0]}}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        {{t.tooltip}}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <span>&#8362;</span>{{roundFixed(t.regular_payment_total)}}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <span>&#8362;</span>{{roundFixed(t.payments_total)}}
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <span>&#8362;</span>{{roundFixed(t.trans_total)}}
+                    </div>
+                </td>
+                <td>
+                    <div data-ng-show="t.zefiletazrim" class="editableContent" ng-if="t.zefiletazrim">
+                        <i data-ng-click="zefiChange(t)" class="icon_editable" ng-init="t.zefiChange=false"
+                           data-ng-if="t.indzefi == 1 && t.status == 1"></i>
+                        <span>&#8362;</span>{{roundFixed(t.zefiletazrim)}}
+                        <input type="text" data-ng-model="t.zefiletazrim" contenteditable="{{t.targetNameChange}}"
+                               ng-disabled="!t.zefiChange" data-ng-if="t.zefiChange">
+                    </div>
+                </td>
+                <td>
+                    <div ng-if="t.zefiletazrim">
+                        {{getPercent((t.trans_total / t.zefiletazrim) * 100) }}%
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="t.summary == 'days'" class="funds-table-row clearfix day-sum">
+                <td colspan="3">
+                    <div>
+                        {{t.id}}
+                        - סה"כ
+                    </div>
+                </td>
+                <td>
+                    <div class="transaction-income sum-plus"><span>&#8362;</span>{{roundFixed(t.regular_payment_total)}}
+                    </div>
+                </td>
+                <td>
+                    <div class="transaction-expense sum-plus"><span>&#8362;</span>{{roundFixed(t.payments_total)}}</div>
+                </td>
+                <td>
+                    <div class="transaction-expense sum-plus"><span>&#8362;</span>{{roundFixed(t.trans_total)}}</div>
+                </td>
+                <td colspan="2">
+                    <div class="transaction-expense sum-plus" ng-if="t.zefiletazrim"><span>&#8362;</span>{{roundFixed(t.zefiletazrim)}}
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat-end ng-if="t.summary == 'month'" class="funds-table-row clearfix month-sum">
+                <td colspan="3">
+                    <div>
+                        {{t.id}}
+                        - סה"כ
+                    </div>
+                </td>
+                <td>
+                    <div class="transaction-income sum-plus"><span>&#8362;</span>{{roundFixed(t.regular_payment_total)}}
+                    </div>
+                </td>
+                <td>
+                    <div class="transaction-income sum-plus"><span>&#8362;</span>{{roundFixed(t.payments_total)}}</div>
+                </td>
+                <td>
+                    <div class="transaction-income sum-plus"><span>&#8362;</span>{{roundFixed(t.trans_total)}}</div>
+                </td>
+                <td colspan="2">
+                    <div class="transaction-income sum-plus" ng-if="t.zefiletazrim"><span>&#8362;</span>{{roundFixed(t.zefiletazrim)}}
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

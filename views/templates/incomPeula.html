@@ -1,0 +1,262 @@
+<div ng-controller="regularOpCtrl">
+    <div class="popup-header">
+        <h2 ng-if="!appData.EditDataPeula">
+            הכנסה חדשה
+        </h2>
+
+        <h2 ng-if="appData.EditDataPeula">
+            עריכת הכנסה
+        </h2>
+    </div>
+    <div class="popup-content">
+        <div ng-show="appData.openListThis" class="dropListPeula">
+            <ul>
+                <li key-navigation ng-repeat="item in appData.transactionTypesReg | filter:appData.defTypeNameIn"
+                    tabindex="{{$index}}"
+                    ng-click="$event.stopPropagation();appData.openListThis = false; appData.defTypeIn = item.trans_type_id; appData.defTypeNameIn = item.trans_type_name;"
+                    ng-if="item.ind_shona_screen !== 0 && item.ind_create_default_supplier !== 2">
+                    <input type="text"
+                           ng-model="item.trans_type_name"
+                           ng-init="item.edits = false"
+                           ng-disabled="!item.edits"
+                           ng-click="$event.stopPropagation();">
+                    <img ng-if="item.ind_create_default_supplier !== 1" src="image/edit_title.png"
+                        ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">
+                    <!--<i ng-if="item.ind_create_default_supplier == 1" class="spaceNotEdit">&nbsp;</i>-->
+                    <!--<img ng-if="item.ind_create_default_supplier !== 1" src="image/delete_update.png"-->
+                    <!--data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">-->
+                </li>
+                <!--<li key-navigation ng-repeat="item in appData.transactionTypesIN | filter:appData.defTypeNameIn"-->
+                    <!--tabindex="{{$index}}"-->
+                    <!--ng-click="$event.stopPropagation();appData.openListThis = false; appData.defTypeIn = item.trans_type_id; appData.defTypeNameIn = item.trans_type_name;"-->
+                    <!--ng-if="item.ind_create_default_supplier !== 2">-->
+                    <!--<input type="text" data-ng-model="item.trans_type_name" data-ng-init="item.edits = false"-->
+                           <!--ng-disabled="!item.edits" data-ng-click="$event.stopPropagation();">-->
+                    <!--<img ng-if="item.ind_create_default_supplier !== 1" src="image/edit_title.png"-->
+                         <!--data-ng-click="$event.stopPropagation();item.edits = !item.edits;trans_type_update_ksafim(item, 'transactionTypesIN');">-->
+                    <!--&lt;!&ndash;<i ng-if="item.ind_create_default_supplier == 1" class="spaceNotEdit">&nbsp;</i>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<img ng-if="item.ind_create_default_supplier !== 1" src="image/delete_update.png"&ndash;&gt;-->
+                         <!--&lt;!&ndash;data-ng-click="$event.stopPropagation();trans_type_delete_ksafim(item, 'transactionTypesIN');">&ndash;&gt;-->
+                <!--</li>-->
+            </ul>
+            <div ng-click="appData.addPeulaRows = true;appData.openListThis = false;">
+                הוסף סוג פעולה
+            </div>
+        </div>
+        <div class="table_data">
+            <div class="rows_items" ng-hide="appData.disabledEditPeula">
+                <label for="intrans_type_id">
+                    סוג הפעולה
+                </label>
+                <div class="input_item">
+                    <!--<select ng-model="appData.defTypeIn" ng-disabled="appData.disabledEditPeula"-->
+                    <!--ng-options="item.value as item.display for item in appData.transactionTypesIN"></select>-->
+                    <!--<button class="typePeulaList"-->
+                            <!--ng-click="$event.stopPropagation();appData.openListThis = !appData.openListThis;">-->
+                        <!--<span>{{nameOfType(appData.defTypeIn, appData.transactionTypesIN)}}</span>-->
+                    <!--</button>-->
+                    <input type="text" class="typePeulaList"
+                           data-ng-init="appData.defTypeNameIn = nameOfType(appData.defTypeIn, appData.transactionTypesReg)"
+                           ng-click="$event.stopPropagation();appData.openListThis = !appData.openListThis; appData.defTypeNameIn = '';"
+                           data-ng-model="appData.defTypeNameIn"
+                           ng-change="appData.openListThis = true;"
+                           placeholder="בחר סוג פעולה"
+                           focus-li>
+                </div>
+            </div>
+            <div class="rows_items peulaAddText" ng-if="appData.addPeulaRows">
+                <label>
+                    שם הפעולה:
+                </label>
+
+                <div class="input_item">
+                    <input type="text" data-ng-model="appData.peulaAddText">
+                </div>
+                <div class="buttonInsidePeula">
+                    <button ng-disabled="!appData.peulaAddText.length"
+                            data-ng-click="appData.openListThis = false;appData.addPeulaRows=false; addPeulaText('in');">
+                        הוסף פעולה
+                    </button>
+                    <button data-ng-click="appData.openListThis = false;appData.addPeulaRows=false;">
+                        בטל
+                    </button>
+                </div>
+            </div>
+            <div class="rows_items">
+                <label for="intrans_name">שם ההכנסה</label>
+
+                <div class="input_item">
+                    <input type="text" data-ng-model="appData.setPopDef.intrans_name"
+                           ng-disabled="appData.disabledEditPeula">
+                </div>
+            </div>
+            <div class="rows_items intotal">
+                <label for="intotal">
+                    סכום
+                </label>
+                <div class="input_item">
+                    <input type="text" number-only data-ng-model="appData.setPopDef.intotal" ng-change="changeTotal()" ng-disabled="appData.setPopDef.payNum == '4'">
+                    <div ng-class="{'green': appData.setPopDef.payNum !== '3', 'red': appData.setPopDef.payNum == '3'}">
+                        עדכון אוטומאטי
+                                    <span ng-if="appData.setPopDef.payNum == '3'">
+                                        לא
+                                    </span>
+                        פעיל
+                    </div>
+                </div>
+            </div>
+            <div class="rows_items">
+                <div class="radio_peulot">
+                    <input id="pay1" type="radio" ng-model="appData.setPopDef.payNum" value="1">
+                    <label for="pay1">
+                        עדכן לפי ממוצע חודשי
+                    </label>
+                </div>
+                <div class="radio_peulot">
+                    <input id="pay2" type="radio" ng-model="appData.setPopDef.payNum" value="2">
+                    <label for="pay2">
+                        עדכן לפי חיוב אחרון
+                    </label>
+                </div>
+                <div class="radio_peulot">
+                    <input id="pay3" type="radio" ng-model="appData.setPopDef.payNum" value="3">
+                    <label for="pay3">
+                        לא לעדכן סכומים
+                    </label>
+                </div>
+                <div class="radio_peulot" ng-if="appData.disabledEditPeula">
+                    <input id="pay4" type="radio" ng-model="appData.setPopDef.payNum"
+                           ng-change="appData.setPopDef.intotal = '0'" value="4">
+                    <label for="pay4">
+                        הצג רק הכנסה בפועל
+                    </label>
+                </div>
+            </div>
+            <div class="rows_items" ng-hide="appData.disabledEditPeula">
+                <label for="inpayment_type">אמצעי תשלום</label>
+
+                <div class="input_item">
+                    <select name="inpayment_type" class="inpayment_type"
+                            data-ng-model="appData.setPopDef.inpayment_type">
+                        <option value="40">הוראת קבע</option>
+                        <option value="1">שיק</option>
+                        <option value="9">העברה בנקאית</option>
+                    </select>
+                </div>
+            </div>
+            <div class="rows_items" ng-hide="appData.disabledEditPeula">
+                <label for="intrans_frequency_id">תדירות</label>
+
+                <div class="input_item">
+                    <select name="intrans_frequency_id" class="intrans_frequency_id"
+                            data-ng-model="appData.setPopDef.intrans_frequency_id">
+                        <option value="1">פעם ביום</option>
+                        <option value="2">פעם בשבוע</option>
+                        <option value="3">פעם בחודש</option>
+                        <option value="4">פעם בחודשיים</option>
+                        <option value="5">פעם ברבעון</option>
+                        <option value="6">פעם בשנה</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="rows_items" ng-if="appData.setPopDef.intrans_frequency_id == '2'"
+                 ng-hide="appData.disabledEditPeula">
+                <label>חוזר ביום</label>
+                <div class="groupRadio">
+                    <input id="day1" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[0]}}">
+                    <label for="day1">
+                        א
+                    </label>
+                    <input id="day2" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[1]}}">
+                    <label for="day2">
+                        ב
+                    </label>
+                    <input id="day3" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[2]}}">
+                    <label for="day3">
+                        ג
+                    </label>
+                    <input id="day4" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[3]}}">
+                    <label for="day4">
+                        ד
+                    </label>
+                    <input id="day5" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[4]}}">
+                    <label for="day5">
+                        ה
+                    </label>
+                    <input id="day6" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[5]}}">
+                    <label for="day6">
+                        ו
+                    </label>
+                    <input id="day7" type="radio" ng-model="appData.dayNum" value="{{appData.radioDaysInweek[6]}}">
+                    <label for="day7">
+                        ש
+                    </label>
+                </div>
+            </div>
+            <div class="rows_items" ng-if="appData.setPopDef.intrans_frequency_id == '3'"
+                 ng-hide="appData.disabledEditPeula">
+                <label>יום בחודש</label>
+
+                <div class="input_item">
+                    <select name="intrans_date" class="intrans_date"
+                            ng-model="appData.setPopDef.daysMonthPeulot"
+                            ng-options="option as option for option in monthsDaySelect"></select>
+                </div>
+            </div>
+            <div class="rows_items" ng-if="appData.setPopDef.intrans_frequency_id == '4' || appData.setPopDef.intrans_frequency_id == '5' || appData.setPopDef.intrans_frequency_id == '6'"
+                 ng-hide="appData.disabledEditPeula">
+                <label>תאריך התחלה</label>
+
+                <div class="input_item">
+                    <input class="dp" date-picker-tazrim-min readonly="readonly" type="text" data-ng-model="appData.setPopDef.fromDateFr"
+                           ng-disabled="appData.hide">
+                </div>
+            </div>
+            <div class="content_items_change" ng-hide="appData.disabledEditPeula">
+                <div class="rows_items radio_date">
+                    <label for="date_finished">תאריך סיום</label>
+
+                    <div class="left_content_items">
+                        <div>
+                            <input id="option1" type="radio" ng-model="appData.setPopDef.optionSelect" value="option1">
+                            <label for="option1">
+                                אף פעם
+                            </label>
+                        </div>
+                        <div>
+                            <input id="option2" type="radio" ng-model="appData.setPopDef.optionSelect" value="option2">
+                            <label for="option2">
+                                אחרי
+                                <input type="text" number-only data-ng-model="appData.setPopDef.option2"
+                                       ng-change="appData.setPopDef.optionSelect = 'option2'">
+                                פעמים
+                            </label>
+                        </div>
+                        <div>
+                            <input id="option3" type="radio" ng-model="appData.setPopDef.optionSelect" value="option3">
+                            <label for="option3">
+                                בתאריך
+                               <span> <input date-picker-tazrim-min readonly="readonly" type="text"
+                                             data-ng-model="appData.setPopDef.option3"
+                                             ng-change="appData.setPopDef.optionSelect = 'option3'">
+                               </span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <button data-ng-click="addPeulaSend(appData.defTypeIn, 0)" ng-disabled="(appData.setPopDef.intotal == '' && appData.setPopDef.intotal !== 0) || appData.defTypeNameIn == '' || appData.setPopDef.intrans_name == ''">
+                <span ng-if="!appData.EditDataPeula">
+הוספת הכנסה
+                </span>
+                <span ng-if="appData.EditDataPeula">
+עדכון פעולה
+                </span>
+
+            </button>
+        </div>
+    </div>
+</div>
+

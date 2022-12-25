@@ -1,0 +1,144 @@
+<div class="reportsAccTdWrap">
+    <div class="title">
+        <p>
+            התאמות
+        </p>
+        <div>
+            <label>
+                מחודש
+            </label>
+            <select name="month_nav" data-ng-model="$parent.fromMonthMatch" ng-change="dohMatch()">
+                <option value="01">ינואר</option>
+                <option value="02">פברואר</option>
+                <option value="03">מרץ</option>
+                <option value="04">אפריל</option>
+                <option value="05">מאי</option>
+                <option value="06">יוני</option>
+                <option value="07">יולי</option>
+                <option value="08">אוגוסט</option>
+                <option value="09">ספטמבר</option>
+                <option value="10">אוקטובר</option>
+                <option value="11">נובמבר</option>
+                <option value="12">דצמבר</option>
+            </select>
+            <label>
+                שנה
+            </label>
+            <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.fromYearMatch"
+                   ng-change="dohMatch()">
+            <label class="until">
+                עד
+            </label>
+            <label>
+                חודש
+            </label>
+            <select name="month_nav" data-ng-model="$parent.toMonthMatch" ng-change="dohMatch()">
+                <option value="01">ינואר</option>
+                <option value="02">פברואר</option>
+                <option value="03">מרץ</option>
+                <option value="04">אפריל</option>
+                <option value="05">מאי</option>
+                <option value="06">יוני</option>
+                <option value="07">יולי</option>
+                <option value="08">אוגוסט</option>
+                <option value="09">ספטמבר</option>
+                <option value="10">אוקטובר</option>
+                <option value="11">נובמבר</option>
+                <option value="12">דצמבר</option>
+            </select>
+            <label>
+                שנה
+            </label>
+            <input type="text" min="2009" max="2022" numeric="" ng-model="$parent.toYearMatch"
+                   ng-change="dohMatch()">
+        </div>
+
+
+        <ul class="exports tableExports"  ng-show="appData.dohMatch && appData.dohMatch.length > 0">
+            <li class="excel" exports-excel-doh-match tooltips-tazrim title="ייצוא לExcel">
+                <i></i>
+            </li>
+            <li class="mail" ng-click="sendMailerDohMatch()" tooltips-tazrim title="שליחה במייל">
+                <i></i>
+            </li>
+            <li class="print" exports-print-doh-match tooltips-tazrim title="הדפסה">
+                <i></i>
+            </li>
+        </ul>
+        <input type="text" ng-model="searchMatch"
+               placeholder="חיפוש"
+               class="searchTyping" ng-model-options="{ debounce: {'default': 500 }}"
+               ng-show="appData.dohMatch.length > 0 || searchMatch.length > 0"/>
+    </div>
+
+    <div class="typingReportTable tableMatchDoh" ng-show="appData.itemsAllReportMatch.length > 0">
+        <div ng-if="!loadertyping" class="loader_table">
+            <img src="image/loader.gif" alt="Loading...">
+        </div>
+        <table>
+            <thead ng-if="appData.dohMatch.length > 0">
+            <tr>
+                <th ng-click="sort_by4('COMPANY_NAME')">
+                    שם חברה
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by4('MONTH_ID')">
+                    חודש
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by4('PEULOT_COUNT')">
+                    סה״כ פעולות
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+                <th ng-click="sort_by4('IMP_MATCH_COUNT')">
+                    לא מותאמות
+                    <i class="glyphicon glyphicon-sort"></i>
+                </th>
+            </tr>
+            </thead>
+            <tbody scroll-fill="250">
+            <div class="titleNotFilter" ng-show="appData.itemsAllReportMatch.length == 0">
+                לא נמצאה התאמה
+            </div>
+            <tr ng-repeat="a in appData.itemsAllReportMatch = (appData.dohMatch | filter:searchMatch | orderBy : $parent.predicate4 :$parent.reverse4) | startFrom:($parent.currentPage-1)*$parent.entryLimit | limitTo:$parent.entryLimit">
+                <td>
+                    {{a.COMPANY_NAME}}
+                </td>
+                <td>
+                    {{accoConversions.getDayMonthGraph(a.MONTH_ID)}}
+                </td>
+                <td>
+                    {{a.PEULOT_COUNT}}
+                </td>
+                <td>
+                    {{a.IMP_MATCH_COUNT}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="rowsSort typingPage" data-ng-show="appData.dohMatch.length > 0 && appData.itemsAllReportMatch.length > 0">
+        <div class="selectRows">
+            הצג
+            <select ng-model="$parent.entryLimit" class="form-control" ng-change="entryLimitChange()">
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+                <option>150</option>
+            </select>
+            שורות
+        </div>
+        <div class="sumRows">
+            סה״כ שורות שנמצאו
+            {{appData.itemsAllReportMatch.length}}
+            מתוך
+            {{appData.dohMatch.length}}
+        </div>
+        <div class="pagRows" ng-show="appData.itemsAllReportMatch.length > 0 && appData.itemsAllReportMatch.length > $parent.entryLimit">
+            <pagination max-size="$parent.maxSize" boundary-links="true" on-select-page="setPage(page)"
+                        items-per-page="$parent.entryLimit" total-items="appData.itemsAllReportMatch.length" ng-model="$parent.currentPage"
+                        class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="עמ׳ ראשון"
+                        last-text="עמ׳ אחרון"></pagination>
+        </div>
+    </div>
+</div>

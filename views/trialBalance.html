@@ -1,0 +1,409 @@
+<div ng-init="init()" ng-controller="trialBalanceCtrl">
+    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+
+    <div class="page-content bg-dark" data-ng-class="{'nav-closed': appData.mainNavClosed}">
+        <div class="headerAnalisis">
+            <!--<ul class="tabs_links">-->
+            <!--<li>-->
+            <!--<div ng-click="appData.changeListAnalisis = false;loadPageAnalisis('1000'); targetTab = '1000';"-->
+            <!--ng-class="{'active': targetTab == '1000'}">-->
+            <!--הכנסות-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div ng-click="appData.changeListAnalisis = false;loadPageAnalisis('1022'); targetTab = '1022';"-->
+            <!--ng-class="{'active': targetTab == '1022'}">-->
+            <!--עלות המכירות-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li class="golmi">-->
+            <!--<div ng-click="appData.changeListAnalisis = false;loadPageAnalisis('golmi'); targetTab = 'golmi';"-->
+            <!--ng-class="{'active': targetTab == 'golmi'}">-->
+            <!--רווח גולמי-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div ng-click="appData.changeListAnalisis = false;loadPageAnalisis('1011'); targetTab = '1011';"-->
+            <!--ng-class="{'active': targetTab == '1011'}">-->
+            <!--הוצאות הנהלה וכלליות-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li>-->
+            <!--<div ng-click="appData.changeListAnalisis = false;loadPageAnalisis('1033'); targetTab = '1033';"-->
+            <!--ng-class="{'active': targetTab == '1033'}">-->
+            <!--הוצאות מימון-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--<li class="naki">-->
+            <!--<div ng-click="loadPageAnalisis('naki'); targetTab = 'naki';appData.changeListAnalisis = false;"-->
+            <!--ng-class="{'active': targetTab == 'naki'}">-->
+            <!--רווח נקי-->
+            <!--</div>-->
+            <!--</li>-->
+            <!--</ul>-->
+            <input ng-model="searchFilter" ng-change="filterTrial();openRowsButtonSearch()" class="searchTrial"
+                   placeholder="חיפוש פרטי רמה 2 " ng-model-options="{ debounce: {'default': 500 }}">
+
+            <div class="funds-action-bar clearfix">
+                <div dropdown class="dropdownLeft">
+                    <button class="dropdown-toggle">
+                        תאריך נבחר:
+                        {{appData.datesSelectBalance}}
+                    </button>
+                    <div class="dropdown-content">
+                        <form class="filter-form" autocomplete="off">
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypesTrial" value="00" ng-change="disabledDates();"
+                                       id="dateFilter0">
+                                <label for="dateFilter0" style="width: 300px;">
+                                    לפי יתרה נוכחית
+                                </label>
+
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypesTrial" value="0" id="dateFilter1" ng-change="disabledDates();">
+                                <label for="dateFilter1">
+חודש
+                                </label>
+                                <select ng-model="dateFilter.byMonth"
+                                        ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTrial = '0';disabledDates();"></select>
+                                <select data-ng-model="dateFilter.byYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTrial = '0';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypesTrial" value="1" id="dateFilter2" ng-change="disabledDates();">
+                                <label for="dateFilter2">
+                                    לפי שנה
+                                </label>
+                                <select data-ng-model="dateFilter.byOnlyYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTrial = '1';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <input type="radio" data-ng-model="appData.dateFilterTypesTrial" value="2" id="dateFilter3" ng-change="disabledDates();">
+                                <label for="dateFilter3">
+                                    בין חודשים
+                                </label>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTrial = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.fromYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTrial = '2';disabledDates();"></select>
+
+                                <div>
+                                    עד
+                                </div>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toMonth"
+                                        data-ng-options="months.indexOf(selectedItem) as selectedItem for selectedItem in months"
+                                        ng-change="appData.dateFilterTypesTrial = '2';disabledDates();"></select>
+                                <select ng-class="{'redErrors': appData.redErrorFilterType == '2'}" data-ng-model="dateFilter.toYear" data-ng-options="y for y in years"
+                                        ng-change="appData.dateFilterTypesTrial = '2';disabledDates();"></select>
+                            </div>
+                            <div class="form-control">
+                                <button data-ng-click="loadPageBalance();" class="dropdown-close button" ng-disabled="appData.redErrorFilterType !== false">
+                                    עדכון
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div scroll-fill="{{scrollHeightAnalysis}}" style="margin-top: 55px;" class="scrollDesign">
+            <div ng-show="!loaderTrial" class="loader_table">
+                <img src="image/loader.gif" alt="Loading...">
+            </div>
+            <div ng-show="appData.trialBalance.length == 0" class="title_trialBalance">
+                אין נתונים להצגה
+            </div>
+            <div class="graphAnalisis trialBalance" ng-show="appData.trialBalance.length > 0">
+                <div class="funds-totals">
+                    <div>
+                        <div class="title_sum">
+                            <p class="bolder">
+                                חובה
+                            </p>
+                        </div>
+                        <div class="precentData trialBalanceSum" ng-show="appData.trialBalanceArr"><span>&#8362;</span>{{round2Fixed(appData.trialBalanceArr[appData.trialBalanceArr.length
+                            - 1].totalHova, true)}}
+                        </div>
+                        <div ng-show="!appData.trialBalanceArr" class="precentData trialBalanceSum">
+                            -
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title_sum">
+                            <p class="bolder">
+                                זכות
+                            </p>
+                        </div>
+                        <div class="precentData trialBalanceSum" ng-show="appData.trialBalanceArr"><span>&#8362;</span>{{round2Fixed(appData.trialBalanceArr[appData.trialBalanceArr.length
+                            - 1].totalZhut)}}
+                        </div>
+                        <div ng-show="!appData.trialBalanceArr" class="precentData trialBalanceSum">
+                            -
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title_sum">
+                            <p class="bolder">
+                                הפרש
+                            </p>
+                        </div>
+                        <div class="precentData trialBalanceSum" ng-show="appData.trialBalanceArr"><span>&#8362;</span>{{round2Fixed(appData.trialBalanceArr[appData.trialBalanceArr.length
+                            - 1].totalHefresh)}}
+                        </div>
+                        <div ng-show="!appData.trialBalanceArr" class="precentData trialBalanceSum">
+                            -
+                        </div>
+                    </div>
+                    <div class="sideLeftAnalisis">
+                        <button ng-click="openRowsButtonAlerts()">
+                            {{wordButtonAlert}}
+                            חריגים
+                        </button>
+                        <button ng-click="openRowsButton()">
+                            {{wordButton}}
+                            הכל
+                        </button>
+                        <ul class="exports">
+                            <li class="excel" exports-excel-trial tooltips-tazrim title="ייצוא לExcel">
+                                <i></i>
+                            </li>
+                            <li class="mail" tooltips-tazrim ng-click="sendMailer()" title="שליחה במייל">
+                                <i></i>
+                            </li>
+                            <li class="print" tooltips-tazrim exports-print-trial title="הדפסה">
+                                <i></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="titleBalance">
+                    <div class="w_07">
+                        מיון
+                    </div>
+                    <div class="w_07">
+                        חשבון
+                    </div>
+                    <div class="w_20">
+                        שם חשבון
+                    </div>
+                    <div class="w_25">
+                        סיווג
+                    </div>
+                    <div class="w_10">
+                        חובה
+                    </div>
+                    <div class="w_10">
+                        זכות
+                    </div>
+                    <div class="w_10">
+                        הפרש
+                    </div>
+                </div>
+                <div class="grid_data"
+                     ng-repeat="a in appData.trialBalance"
+                     ng-if="appData.trialBalance && appData.trialBalance.length > 0" ng-show="a.tableShow">
+                    <div class="row_data_grid level_one"
+                          ng-class="{'open_level': a.rowshow}">
+                        <div class="w_80" ng-click="a.rowshow=!a.rowshow"><i></i>
+                            {{a.level_1.number}} - {{a.level_1.name}}
+                        </div>
+                        <div class="w_10 blue_num" ng-click="a.rowshow=!a.rowshow">₪
+                            {{round2Fixed(a.level_1.sum_over_scode_hova, true)}}
+                        </div>
+                        <div class="w_10 blue_num" ng-click="a.rowshow=!a.rowshow">₪
+                            {{round2Fixed(a.level_1.sum_over_scode_zchut)}}
+                        </div>
+                        <div class="w_10 blue_num" ng-click="a.rowshow=!a.rowshow">₪
+                            {{round2Fixed(a.level_1.sum)}}
+                            <i ng-if="a.level_1.alert_ind"
+                               tooltips-tazrim title="קיימים חריגים בקוד מיון זה‎"></i>
+                        </div>
+                            <div class="row_data_grid level_two"
+                                 ng-repeat="v in a.level_1.level_2"
+                                 ng-init="v.targetEdit = true;v.selectItems = appData.cartisCodeGetlist[0];"
+                                 ng-show="a.rowshow && v.rowshow"
+                                 ng-class="{'alertText': v.alert_text}">
+                                <div class="w_07">
+                                    {{a.level_1.number}}
+                                </div>
+                                <div class="w_07" tooltips-elipsis tooltip="{{v.number}}">
+                                    {{v.number}}
+                                </div>
+                                <div class="w_20 ">
+                                    {{v.name}}
+                                </div>
+                                <div class="w_25 ">
+                                    <div class="inputSideTooltip" ng-class="{'editRowSide': !v.targetEdit}">
+                                        <div ng-show="v.targetEdit">
+                                            {{v.target_supp_desc}}
+                                        </div>
+                                        <select ng-show="!v.targetEdit" ng-model="v.selectItems"
+                                                ng-options="item as item.description for item in appData.cartisCodeGetlist">
+                                        </select>
+                                    </div>
+                                    <i ng-if="v.user_target_supp_desc"
+                                       title="מוגדר בתוכנת הנה''ח כ: {{v.user_target_supp_desc}}"
+                                       tooltips-tazrim></i>
+
+                                    <div class="edit_icon_input" ng-click="v.targetEdit = !v.targetEdit; editSend(v)"></div>
+                                </div>
+                                <div class="w_10 " ng-style="{'visibility': (v.sum > 0) ? 'hidden' : 'visibility'}">
+                                    ₪
+                                    {{round2Fixed(v.sum, true)}}
+                                </div>
+                                <div class="w_10 " ng-style="{'visibility': (v.sum < 0) ? 'hidden' : 'visibility'}">
+                                    ₪
+                                    {{round2Fixed(v.sum)}}
+                                </div>
+                                <div class="w_10">
+                                    <button ng-if="v.alert_text" ng-click="v.alert_text = false; unCheckRowAlert(v.id)">לא
+                                        חריג
+                                    </button>
+                                    <img ng-if="v.alert_text" src="image/alert.png" title="{{v.alert_text}}"
+                                         tooltips-tazrim/>
+                                    &nbsp;
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="sumBalanceLast" ng-if="appData.trialBalance[$index + 1].level_1.level0Digits">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index + 1].level_1.level0Digits}}*
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.level0HovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.level0ZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.level0Hefresh)}}
+                        </div>
+                    </div>
+
+
+                    <div class="sumBalanceLast" ng-if="appData.trialBalance[$index + 1].level_1.prevLevelDigit">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index + 1].level_1.prevLevelDigit}}**
+                        </div>
+                        <div class="w_10 ">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.prevLevelHovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.prevLevelZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.prevLevelHefresh)}}
+                        </div>
+                    </div>
+
+
+                    <div class="sumBalanceLast" ng-if="appData.trialBalance[$index + 1].level_1.nextLevelDigits">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index + 1].level_1.nextLevelDigits}}*
+                        </div>
+                        <div class="w_10 ">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.nextLevelHovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.nextLevelZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index + 1].level_1.nextLevelHefresh)}}
+                        </div>
+                    </div>
+
+
+                    <div class="sumBalanceLast"
+                         ng-if="($index + 1) == (appData.trialBalance.length) && appData.trialBalance[$index].level0Digits">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index].level0Digits}}*
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].level0HovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].level0ZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].level0Hefresh)}}
+                        </div>
+                    </div>
+                    <div class="sumBalanceLast"
+                         ng-if="($index + 1) == (appData.trialBalance.length) && appData.trialBalance[$index].prevLevelDigit">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index].prevLevelDigit}}**
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].prevLevelHovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].prevLevelZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].prevLevelHefresh)}}
+                        </div>
+                    </div>
+                    <div class="sumBalanceLast"
+                         ng-if="($index + 1) == (appData.trialBalance.length) && appData.trialBalance[$index].nextLevelDigits">
+                        <div class="w_14">
+                            סה״כ לקבוצה
+                        </div>
+                        <div class="w_45">
+                            {{appData.trialBalance[$index].nextLevelDigits}}*
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].nextLevelHovaSum, true)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].nextLevelZhutSum)}}
+                        </div>
+                        <div class="w_10">
+                            ₪
+                            {{round2Fixed(appData.trialBalance[$index].nextLevelHefresh)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

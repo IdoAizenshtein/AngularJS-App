@@ -1,0 +1,62 @@
+<div class="companyTable">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><a href="" ng-class="{'active': clsHref == 'companyName', 'activeRevers': clsHref == 'companyName' && reverse}" ng-click="reverse=!reverse;order('companyName', reverse)">שם חברה</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'companyHp', 'activeRevers': clsHref == 'companyHp' && reverse}" ng-click="reverse=!reverse;order('companyHp', reverse)">ח.פ./ע.מ.</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'source_program_id', 'activeRevers': clsHref == 'source_program_id' && reverse}" ng-click="reverse=!reverse;order('source_program_id', reverse)">סוג תוכנת רו״ח</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'esder_maam', 'activeRevers': clsHref == 'esder_maam' && reverse}" ng-click="reverse=!reverse;order('esder_maam', reverse)">סוג עסק</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'full_name', 'activeRevers': clsHref == 'full_name' && reverse}" ng-click="reverse=!reverse;order('full_name', reverse)">איש קשר</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'phone_number', 'activeRevers': clsHref == 'phone_number' && reverse}" ng-click="reverse=!reverse;order('phone_number', reverse)">טלפון</a></th>
+            <th><a href="" ng-class="{'active': clsHref == 'mail', 'activeRevers': clsHref == 'mail' && reverse}" ng-click="reverse=!reverse;order('mail', reverse)">דוא״ל</a></th>
+            <th>
+                <a href="" ng-class="{'active': clsHref == 'last_inv_date_sort', 'activeRevers': clsHref == 'last_inv_date_sort' && reverse}" ng-click="reverse=!reverse;order('last_inv_date_sort', reverse)">הזנה אחרונה -</a>
+                <a href="" ng-class="{'active': clsHref == 'sum_inv_cur_mon', 'activeRevers': clsHref == 'sum_inv_cur_mon' && reverse}" ng-click="order('sum_inv_cur_mon',reverse)">מסמכים</a>
+            </th>
+            <th><a href="" ng-class="{'active': clsHref == 'sum_inv_avg', 'activeRevers': clsHref == 'sum_inv_avg' && reverse}" ng-click="reverse=!reverse;order('sum_inv_avg', reverse)">ממוצע חודשי</a></th>
+            <th>שמות אנשי המשרד</th>
+        </tr>
+        </thead>
+        <tbody vs-repeat scroll-fill="220">
+        <tr ng-repeat="a in appData.companyTable">
+            <td>
+                {{a.companyName}}
+            </td>
+            <td>
+                {{a.companyHp}}
+            </td>
+            <td>
+                {{accoConversions.getSourceProgramId(a.source_program_id)}}
+            </td>
+            <td>
+                {{accoConversions.getEsderMaam(a.esder_maam)}}
+            </td>
+            <td>
+                {{a.full_name}}
+            </td>
+            <td>
+                <p ng-if="a.phone_number !== null"><a target="_blank" href="tel:{{a.phone_number}}">{{a.phone_number}}</a>
+                </p>
+            </td>
+            <td>
+                <p ng-if="mailCheck(a.mail)"><a target="_blank" href="mailto:{{a.mail}}">{{a.mail}}</a></p>
+            </td>
+            <td>
+        <span ng-if="a.last_inv_date">
+            {{a.last_inv_date}}
+         </span>
+                <span ng-if="a.sum_inv_cur_mon !== 0">| &nbsp;  {{a.sum_inv_cur_mon }} מסמכים </span>
+            </td>
+            <td>
+                {{a.sum_inv_avg }} מסמכים
+            </td>
+            <td>
+         <span data-ng-repeat="b in a.user_details">
+             {{b.acc_user_full_name}}
+             <i ng-if="$index !== (a.user_details.length - 1)">,</i>
+         </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

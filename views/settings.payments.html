@@ -1,0 +1,886 @@
+<ul class="paymentState" ng-init="initPaymentScreen()">
+    <li ng-repeat="(indexX,a) in appData.user_get_billing_account" ng-if="$index > 0">
+        <div class="titleCards">
+            <p>
+                כרטיס
+                {{a.EXTSP_CARDNUMBER5}} -
+            </p>
+            <p ng-if="a.OPERATIONRESPONSE !== 0" class="redCard"> כרטיס לא תקין - </p>
+            <div class="mainCardText">
+                <p ng-if="a.IND_PRIMARY == 1">
+                    <i class="fa fa-check-square-o"></i>
+                    כרטיס ראשי
+                </p>
+                <p ng-if="a.IND_PRIMARY == 0" ng-click="billing_account_set_primary(a.BILLING_ACCOUNT_ID)"
+                   id="changeToMain">
+                    הפוך לראשי
+                </p>
+            </div>
+        </div>
+        <div class="borderBottomLi">
+            <div class="cardPayment">
+                <strong>
+                    פרטי כ.אשראי
+
+                    <span ng-if="appData.adminSoft && a.IND_DELETED === 1"
+                          style="font-size: 16px; margin-right: 20px; color: #ec3c66;">
+    חשבון מחוק -
+
+    <i style="color: #1387a9;
+    cursor: pointer;
+    text-decoration: underline;" ng-click="restore_billing_account(a.BILLING_ACCOUNT_ID)">
+        שחזר
+    </i>
+</span>
+                </strong>
+                <div class="inputsCard" ng-class="{'redErr': a.OPERATIONRESPONSE !== 0}">
+                    <div>
+                        <div>
+                            <i class="fa fa-cc-visa" ng-if="a.EXTSP_MUTAG24 == 2"></i>
+                            <i class="fa fa-cc-mastercard" ng-if="a.EXTSP_MUTAG24 == 1"></i>
+                            <i class="fa fa-credit-card" ng-if="a.EXTSP_MUTAG24 !== 1 && a.EXTSP_MUTAG24 !== 2"></i>
+                        </div>
+                        <div>
+                            <p id="digitCatdHint">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull;
+                                {{a.EXTSP_CARDNUMBER5}}
+                            </p>
+                            <i class="fi-x-circle" ng-click="billing_account_delete(a.BILLING_ACCOUNT_ID)" tooltips
+                               title="הסרת כרטיס"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            תוקף
+                        </div>
+                        <div>
+                            <span ng-if="a.CARDVALIDITYMONTH !== null">
+                                                            {{a.CARDVALIDITYMONTH}}/{{a.CARDVALIDITYYEAR}}
+                            </span>
+                            &nbsp;
+                            <div ng-click="openBillingPopPassSwitch(a)" class="changeCard">
+                                החלף
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="paysPayment">
+                    <div>
+                        <label>
+                            תאריך התשלום הבא:
+                        </label>
+                        <div>
+                            <input type="text"
+                                   ng-model="a.COMPANY_NEXT_PAYMENT_DATE"
+                                   ng-disabled="!a.editCOMPANY_NEXT_PAYMENT_DATE"
+                                   date-picker-all readonly="readonly">
+
+                            <i ng-if="(a.IND_ACCOUNTANT == 1 || a.IND_ACCOUNTANT == 3) && appData.adminSoft && (appData.defMonth.ind_accountants == 1 || appData.defMonth.ind_accountants == 3) && !a.editCOMPANY_NEXT_PAYMENT_DATE"
+                               class="fa fa-pencil" ng-click="a.editCOMPANY_NEXT_PAYMENT_DATE=true;"></i>
+                            <i ng-if="(a.IND_ACCOUNTANT == 1 || a.IND_ACCOUNTANT == 3) &&  appData.adminSoft && (appData.defMonth.ind_accountants == 1 || appData.defMonth.ind_accountants == 3) && a.editCOMPANY_NEXT_PAYMENT_DATE"
+                               class="fa fa-floppy-o"
+                               ng-click="a.editCOMPANY_NEXT_PAYMENT_DATE=false;editCompanyPayment(a);"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            אופן התשלום:
+                        </label>
+                        <div>
+                            <select ng-model="a.PAYMENT_TYPE_ID" ng-disabled="!a.editPAYMENT_TYPE_ID"
+                                    class="PAYMENT_TYPE_ID">
+                                <option value="1">
+                                    מזומן
+                                </option>
+                                <option value="2">
+                                    שיק
+                                </option>
+                                <option value="3">
+                                    כרטיס אשראי
+                                </option>
+                                <option value="4">
+                                    העברה בנקאית
+                                </option>
+                                <option value="5">
+                                    הרשאה לחיוב
+                                </option>
+                            </select>
+
+                            <i ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && !a.editPAYMENT_TYPE_ID"
+                               class="fa fa-pencil" ng-click="a.editPAYMENT_TYPE_ID=true;"></i>
+                            <i ng-if="appData.adminSoft && appData.defMonth.ind_accountants == 1 && a.editPAYMENT_TYPE_ID"
+                               class="fa fa-floppy-o"
+                               ng-click="a.editPAYMENT_TYPE_ID=false;editCompanyPayment(a);"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            סכום לתשלום:
+                        </label>
+                        <div>
+                            {{a.COMPANY_NEXT_PAYMENT_TOTAL}}
+
+                            <p ng-click="openStateDetails(a.BILLING_ACCOUNT_ID, a.ACCOUNTANT_OFFICE_ID, a.BILLING_ACCOUNT_EMAIL);"
+                               class="perut"
+                               ng-if="appData.adminSoft">
+                                לפירוט
+                            </p>
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div ng-if="appData.adminSoft">
+                        <label>
+                            סוג לקוח:
+                        </label>
+                        <div>
+                            <select ng-model="a.IND_ACCOUNTANT" ng-disabled="!a.editIND_ACCOUNTANT"
+                                    class="PAYMENT_TYPE_ID">
+                                <option value="0">
+                                    תזרים
+                                </option>
+                                <option value="1">
+                                    רואה חשבון
+                                </option>
+                                <option value="2" disabled>
+                                    לקוח מיוחד
+                                </option>
+                                <option value="3">
+                                    תשלום לקוח - רואה חשבון
+                                </option>
+                                <option value="4" disabled>
+                                    רואה חשבון - פירמה
+                                </option>
+                            </select>
+
+                            <i ng-if="!a.editIND_ACCOUNTANT"
+                               class="fa fa-pencil" ng-click="a.editIND_ACCOUNTANT=true;"></i>
+                            <i ng-if="a.editIND_ACCOUNTANT"
+                               class="fa fa-floppy-o"
+                               ng-click="a.editIND_ACCOUNTANT=false;convert_billing_account(a);"></i>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="appData.adminSoft" class="linksAdminPayments">
+                    <ul>
+                        <li>
+                          <span ng-click="openBillingCheckPop(a)">
+                                                        תשלום בשיק
+                          </span>
+                        </li>
+                        <li>
+                          <span ng-click="openBillingTransferPop(a)">
+                              תשלום בהעברה בנקאית
+                          </span>
+                        </li>
+                        <li>
+                          <span>
+                              הוצאת חשבונית עסקה
+                          </span>
+                        </li>
+                        <li>
+                          <span ng-click="openBillingInvoicePop(a)">
+                       הכנסת חשבונית לבילינג
+                          </span>
+                        </li>
+                        <li ng-if="appData.selectedCompany && appData.selectedCompany.companyId">
+                          <span ng-click="openChangeuserPop(a)">
+                          החלף משתמש משלם
+                          </span>
+                        </li>
+                    </ul>
+                </div>
+                <strong style="margin-top: 20px;" ng-if="a.IND_DISCOUNT === 1">
+                    הנחות
+                </strong>
+                <div class="paysPayment discount" ng-if="a.IND_DISCOUNT === 1">
+                    <div>
+                        <label>
+                            סוג הנחה:
+                        </label>
+                        <div>
+                            <span style="padding-right: 8px;">
+                                משרד
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            אחוז:
+                        </label>
+                        <div>
+                            <input id="DISCOUNT_PRC__" name="DISCOUNT_PRC__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly="readonly"
+                                   ng-disabled="!appData.editDISCOUNT || (a.DISCOUNT_SUM + '').length && a.DISCOUNT_SUM !== 0"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-model="a.DISCOUNT_PRC"
+                                   autocomplete="off"
+                                   name="DISCOUNT_PRC"
+                                   ng-required="false"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            סכום:
+                        </label>
+                        <div>
+                            <input id="DISCOUNT_SUM__" name="DISCOUNT_SUM__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly="readonly"
+                                   ng-disabled="!appData.editDISCOUNT || (a.DISCOUNT_PRC + '').length && a.DISCOUNT_PRC !== 0"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-model="a.DISCOUNT_SUM"
+                                   autocomplete="off"
+                                   name="DISCOUNT_SUM"
+                                   ng-required="false"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            תוקף:
+                        </label>
+                        <div>
+                            <input type="text"
+                                   ng-model="a.DISCOUNT_EXP"
+                                   ng-disabled="!appData.editDISCOUNT"
+                                   date-picker-all-change-month-year>
+                        </div>
+                    </div>
+
+                    <div class="groupButtonChecks">
+                        <button type="button" ng-show="!appData.editDISCOUNT" ng-click="editDISCOUNT(true)">
+                            <i class="fa fa-pencil"></i>
+                            עריכה
+                        </button>
+                        <button type="submit" ng-show="appData.editDISCOUNT"
+                                ng-click="set_discount_for_acc_office(a); appData.editDISCOUNT = false;"
+                                ng-disabled="!a.DISCOUNT_SUM.toString().length && !a.DISCOUNT_PRC.toString().length">
+                            <i class="fa fa-floppy-o"></i>
+                            שמירה
+                        </button>
+                        <button type="button" ng-show="appData.editDISCOUNT"
+                                ng-click="appData.editDISCOUNT = false; loadPayments();">
+                            <i class="fa fa-repeat"></i>
+                            ביטול
+                        </button>
+                    </div>
+                </div>
+                <div ng-if="a.IND_DISCOUNT === 1" class="get_discount_4item_4acc">
+                    <table class="table table-striped table-bordered" style="width: 100%;">
+                        <thead>
+                        <tr class="regular">
+                            <th>
+                                סוג הנחה
+                            </th>
+                            <th>
+                                פריט
+                            </th>
+                            <th>
+                                אחוז
+                            </th>
+                            <th>
+                                תוקף
+                            </th>
+                            <th>
+                                &nbsp;
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody style="max-height: 130px; overflow: auto;" class="scrollDesign">
+                        <tr ng-repeat="itemTable in a.get_discount_4item_4acc" ng-if="itemTable.BILLING_ACCOUNT_ID"
+                            class="regular">
+                            <td>
+                                פריט למשרד
+                            </td>
+                            <td style="line-height: 14px;">
+                                {{itemTable.ITEM_DESC}}
+                            </td>
+                            <td>
+                                {{itemTable.DISCOUNT_PRC}}
+                            </td>
+                            <td>
+                                {{itemTable.DISCOUNT_EXP}}
+                            </td>
+                            <td>
+                                <i class="fa fa-trash"
+                                   style="cursor: pointer"
+                                   ng-click="cancel_discount_4item_4acc(itemTable, indexX)"></i>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="itemTable in a.get_discount_4item_4acc" ng-if="!itemTable.BILLING_ACCOUNT_ID"
+                            class="set_discount_4item_4acc regular">
+                            <td>
+                                פריט למשרד
+                            </td>
+                            <td>
+                                <!--                                <input id="itemId__" name="itemId__" style="display: none;" value="" type="text"-->
+                                <!--                                       autocomplete="off">-->
+                                <!--                                <input type="text"-->
+                                <!--                                       readonly-->
+                                <!--                                       ng-model-options="{ updateOn: 'blur'}"-->
+                                <!--                                       onfocus="this.removeAttribute('readonly');"-->
+                                <!--                                       ng-model="itemTable.itemId"-->
+                                <!--                                       name="itemId"-->
+                                <!--                                       required=""-->
+                                <!--                                       ng-required="true"-->
+                                <!--                                       autocomplete="off"-->
+                                <!--                                       replace-and/>-->
+                                <select ng-options="item.ITEM_ID as item.ITEM_DESC for item in appData.get_itemDropDown"
+                                        placeholder="בחירה"
+                                        required=""
+                                        ng-required="true"
+                                        ng-model="itemTable.itemId"></select>
+                            </td>
+                            <td>
+                                <input id="discountPrc__" name="discountPrc__" style="display: none;" value=""
+                                       type="text"
+                                       autocomplete="off">
+                                <input ng-model-options="{ updateOn: 'blur'}"
+                                       readonly="readonly"
+                                       onfocus="this.removeAttribute('readonly');"
+                                       class="ltrSide"
+                                       type="text"
+                                       ng-model="itemTable.discountPrc"
+                                       autocomplete="off"
+                                       name="discountPrc"
+                                       required=""
+                                       ng-required="true"
+                                       number-onlys/>
+                            </td>
+                            <td>
+                                <input type="text"
+                                       ng-required="false"
+                                       ng-model="itemTable.discountExp"
+                                       date-picker-all>
+                            </td>
+                            <td>
+                                <i class="fa fa-trash"
+                                   style="cursor: pointer;margin-left: 2px;"
+                                   ng-click="delete_discount_4item_4acc(indexX, $index)"></i>
+                                <i class="fa fa-floppy-o"
+                                   style="cursor: pointer"
+                                   ng-click="set_discount_4item_4acc(itemTable, indexX);"></i>
+                            </td>
+                        </tr>
+
+
+                        <tr style="
+    height: 41px;
+    background-color: #f7f7f7;
+">
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+
+                            </td>
+                            <td style="position: relative">
+                                <button style="
+    width: 30px;
+    float: none;
+    margin: 0;
+    vertical-align: middle;
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    "
+                                        ng-click="add_discount_4item_4acc(indexX, a.BILLING_ACCOUNT_ID)"
+                                        class="plus-btn">
+                                    +
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="detailsPayment">
+                <strong>
+                    פרטים אישיים
+                </strong>
+                <form name="detailsPaymentForm" class="css-form" novalidate
+                      ng-submit="billing_account_set_gen_data(a, detailsPaymentForm, false)"
+                      autocomplete="off">
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uName.$touched) && detailsPaymentForm.uName.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uName.$touched) && detailsPaymentForm.uName.$valid }">
+                            <label>
+                                שם מלא
+                            </label>
+                            <input id="uName__" name="uName__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input type="text" ng-disabled="!detailsPaymentSett"
+                                   readonly placeholder="שם מלא"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-model="a.BILLING_ACCOUNT_NAME" name="uName" required="" autocomplete="off"
+                                   ng-pattern="/\s/"/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.uName.$touched"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.uName.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="detailsPaymentForm.uName.$error.pattern">
+                                יש לרשום שם פרטי ושם משפחה
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cName.$touched) && detailsPaymentForm.cName.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cName.$touched) && detailsPaymentForm.cName.$valid }">
+                            <label>
+                                שם העסק
+                            </label>
+                            <input id="cName__" name="cName__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input type="text" ng-disabled="!detailsPaymentSett"
+                                   readonly placeholder="שם העסק"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-model="a.BILLING_ACCOUNT_COMPANY_NAME" name="cName" required="" autocomplete="off"/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.cName.$touched"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.cName.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uHp.$touched || detailsPaymentForm.uHp.$invalid), 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uHp.$touched) && detailsPaymentForm.uHp.$valid }">
+                            <label>
+                                ח.פ. / ת.ז.
+                            </label>
+                            <input id="uHp__" name="uHp__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly placeholder="ח.פ. / ת.ז." ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                                   type="text" ng-model="a.BILLING_ACCOUNT_HP" autocomplete="off" name="uHp"
+                                   required="" legal-tz/>
+                        </div>
+                        <div ng-show="(detailsPaymentForm.$submitted || detailsPaymentForm.uHp.$touched) && detailsPaymentForm.uHp.$invalid"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.uHp.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="detailsPaymentForm.uHp.$error.integer">
+                                מספר לא חוקי
+                            </div>
+                            <span ng-show="detailsPaymentForm.uHp.$error.unique">
+ח.פ. זה קיים במערכת
+      </span>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cAddress.$touched) && detailsPaymentForm.cAddress.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cAddress.$touched) && detailsPaymentForm.cAddress.$valid }">
+                            <label>
+                                כתובת
+                            </label>
+                            <input id="cAddress__" name="cAddress__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input type="text" ng-disabled="!detailsPaymentSett"
+                                   readonly placeholder="כתובת"
+                                   ng-required="false"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-model="a.BILLING_ACCOUNT_ADDRESS" name="cAddress" autocomplete="off"
+                                   replace-and/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.cAddress.$touched"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.cAddress.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cCity.$touched) && detailsPaymentForm.cCity.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.cCity.$touched) && detailsPaymentForm.cCity.$valid }">
+                            <label>
+                                עיר
+                            </label>
+                            <input id="cCity__" name="cCity__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input type="text" ng-disabled="!detailsPaymentSett"
+                                   readonly placeholder="עיר"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   ng-model="a.BILLING_ACCOUNT_CITY" name="cCity" required="" autocomplete="off"
+                                   replace-and/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.cCity.$touched"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.cCity.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             data-ng-class="{'errorInput': detailsPaymentForm.$submitted || detailsPaymentForm.uTel.$touched || detailsPaymentForm.uTel.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uTel.$touched) && detailsPaymentForm.uTel.$valid }">
+                            <label>
+                                טלפון
+                            </label>
+                            <input id="uTel__" name="uTel__" style="display: none;" value="" type="tel"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly placeholder="טלפון" ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');" class="ltrSide"
+                                   type="tel" ng-model="a.BILLING_ACCOUNT_PHONE" autocomplete="off" name="uTel"
+                                   required="" ng-minlength="9" ng-maxlength="10"
+                                   ensure-unique/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.uTel.$touched || detailsPaymentForm.uTel.$invalid"
+                             class="alertsMessages">
+                            <div ng-show="detailsPaymentForm.uTel.$error.required">
+                                מידע זה הינו מידע חובה
+                            </div>
+                            <div ng-show="detailsPaymentForm.uTel.$error.minlength || detailsPaymentForm.uTel.$error.maxlength || detailsPaymentForm.uTel.$error.integer">
+                                המספר שהזנת אינו חוקי
+                            </div>
+                            <!--<div ng-show="!appData.isPelephone && !detailsPaymentForm.uTel.$error.required" class="alertPelephone">-->
+                            <!--לתשומת לבך! המספר אינו שייך לרשת פלאפון , ההטבה ניתנת ללקוחות פלאפון בלבד.‎-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm"
+                             ng-class="{'errorInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uEmail.$touched) && detailsPaymentForm.uEmail.$invalid, 'sucInput': (detailsPaymentForm.$submitted || detailsPaymentForm.uEmail.$touched) && detailsPaymentForm.uEmail.$valid }">
+                            <label>
+                                כתובת דוא”ל
+                            </label>
+                            <input id="uEmail__" name="uEmail__" style="display: none;" value="" type="email"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}" type="email"
+                                   ng-model="a.BILLING_ACCOUNT_EMAIL"
+                                   readonly placeholder="כתובת דוא”ל" ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   autocomplete="off" name="uEmail"
+                                   required="" class="ltrSide"
+                                   ng-pattern="/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/"/>
+                        </div>
+                        <div ng-show="detailsPaymentForm.$submitted || detailsPaymentForm.uEmail.$touched"
+                             class="alertsMessages">
+      <span ng-show="detailsPaymentForm.uEmail.$error.required">
+        מידע זה הינו מידע חובה
+      </span>
+                            <span ng-show="detailsPaymentForm.uEmail.$error.pattern">
+        כתובת המייל שהזנת אינה תקינה
+      </span>
+                        </div>
+
+                    </div>
+                    <div class="wrapInputForm">
+                        <div class="inputForm">
+                            <label>
+                                פטור ממע"מ
+                            </label>
+                            <div id="IND_LELO_MAAM">
+                                <input type="checkbox" ng-model="a.IND_LELO_MAAM"
+                                       readonly ng-disabled="!detailsPaymentSett"
+                                       autocomplete="off" name="uCheck" ng-true-value="1" ng-false-value="0"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label>
+                                בנק
+                            </label>
+                            <input id="uBANK_ID__" name="uBANK_ID__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-model="a.BANK_ID"
+                                   autocomplete="off"
+                                   name="uBANK_ID"
+                                   ng-required="false"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label>
+                                סניף
+                            </label>
+                            <input id="uBANK_SNIF_ID__" name="uBANK_SNIF_ID__" style="display: none;" value=""
+                                   type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-required="false"
+                                   ng-model="a.BANK_SNIF_ID"
+                                   autocomplete="off"
+                                   name="uBANK_SNIF_ID"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label>
+                                חשבון
+                            </label>
+                            <input id="uBANK_ACCOUNT_ID__" name="uBANK_ACCOUNT_ID__" style="display: none;" value=""
+                                   type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-model="a.BANK_ACCOUNT_ID"
+                                   autocomplete="off"
+                                   name="uBANK_ACCOUNT_ID"
+                                   ng-required="false"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label style="
+    font-size: 15px;
+">
+                                סוג חשבונית
+                            </label>
+                            <div id="IND_SICUM_CHESHBONIT">
+                                <select class="select_IND_SICUM_CHESHBONIT"
+                                        ng-model="a.IND_SICUM_CHESHBONIT"
+                                        readonly
+                                        ng-disabled="!detailsPaymentSett"
+                                        autocomplete="off"
+                                        name="uCheck">
+                                    <option value="0">
+                                        חשבונית מפורטת
+                                    </option>
+                                    <option value="1">
+                                        חשבונית מסוכמת
+                                    </option>
+                                    <option value="3">
+                                        מסוכמת לפי פריט
+                                    </option>
+                                    <option value="null">
+                                        לא מוגדר
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label>
+                                הגבלת סכום
+                            </label>
+                            <input id="uLIMIT_TOTAL__" name="uLIMIT_TOTAL__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   class="ltrSide"
+                                   type="text"
+                                   ng-model="a.LIMIT_TOTAL"
+                                   autocomplete="off"
+                                   name="uLIMIT_TOTAL"
+                                   ng-required="false"
+                                   number-onlys/>
+                        </div>
+                    </div>
+                    <div class="wrapInputForm" ng-if="appData.adminSoft">
+                        <div class="inputForm">
+                            <label>
+                                הגבלת זמן
+                            </label>
+                            <input id="uLIMIT_DATE__" name="uLIMIT_DATE__" style="display: none;" value="" type="text"
+                                   autocomplete="off">
+                            <input ng-model-options="{ updateOn: 'blur'}"
+                                   readonly
+                                   ng-disabled="!detailsPaymentSett"
+                                   onfocus="this.removeAttribute('readonly');"
+                                   type="text"
+                                   ng-model="a.LIMIT_DATE"
+                                   autocomplete="off"
+                                   name="uLIMIT_DATE"
+                                   ng-required="false"
+                                   date-picker-all/>
+                        </div>
+                    </div>
+                    <div class="groupButtonChecks">
+                        <button type="button" ng-show="!detailsPaymentSett" ng-click="detailsPaymentSett = true;">
+                            <i class="fa fa-pencil"></i>
+                            עריכה
+                        </button>
+                        <button type="submit" ng-show="detailsPaymentSett" ng-disabled="!detailsPaymentForm.$valid">
+                            <i class="fa fa-floppy-o"></i>
+                            שמירה
+                        </button>
+                        <button type="button" ng-show="detailsPaymentSett"
+                                ng-click="detailsPaymentSett = false; loadPayments();">
+                            <i class="fa fa-repeat"></i>
+                            ביטול
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="lastPayments">
+                <strong>
+                    חיובים אחרונים
+                </strong>
+                <div class="tablePays">
+                    <div ng-repeat="b in a.billing_account_getpayhistory" class="trTablePays"
+                         ng-class="{'red': b.STATUS !== 0 || b.INVOICERESPONSE_INVOICETYPE == '2'}">
+                        <div>
+                            {{b.PAYMENT_DATE}} &nbsp;
+                        </div>
+                        <div>
+                            {{b.SUMTOBILL}} &nbsp;
+                        </div>
+                        <div>
+                            {{b.INVOICE_NUMBER}} &nbsp;
+                        </div>
+                        <div>
+                            {{b.DESCRIPTION}} &nbsp;
+                        </div>
+                        <div ng-if="!appData.adminSoft">
+                            <button ng-click="downloadURL(b.INVOICE_NUMBER, b.INVOICERESPONSE_INVOICETYPE)">
+                                לחץ להורדה
+                            </button>
+                        </div>
+                        <div class="grIcons" ng-if="appData.adminSoft">
+                            <i class="fa fa-info"
+                               ng-click="billing_payment_get_items_dtls(b, a.BILLING_ACCOUNT_EMAIL)"></i>
+                            <i class="fa fa-envelope"
+                               ng-click="billing_send_invoice_mail(b, a.BILLING_ACCOUNT_EMAIL)"></i>
+                            <i class="fa fa-download"
+                               ng-click="downloadURL(b.INVOICE_NUMBER, b.INVOICERESPONSE_INVOICETYPE)"></i>
+                        </div>
+                        <i class="fi-x-circle" title="בטל"
+                           ng-if="appData.adminSoft && b.STATUS == 0 && b.INVOICERESPONSE_INVOICETYPE == '1'"
+                           ng-click="showPopCancelPay(b)"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li ng-if="appData.user_get_billing_account.length == 1 || appData.user_get_billing_account[0].COMPANY_NEXT_PAYMENT_TOTAL > 0">
+        <div class="titleCards">
+            <p>
+                תשלום בכרטיס אשראי
+            </p>
+        </div>
+        <div class="borderBottomLi">
+            <div class="cardPayment">
+                <div class="paysPayment">
+                    <div>
+                        <label>
+                            תאריך התשלום הבא:
+                        </label>
+                        <div>
+                            {{appData.user_get_billing_account[0].COMPANY_NEXT_PAYMENT_DATE}}
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            אופן התשלום:
+                        </label>
+                        <div>
+                            <select ng-model="appData.user_get_billing_account[0].PAYMENT_TYPE_ID" ng-disabled="true"
+                                    class="PAYMENT_TYPE_ID">
+                                <option value="1">
+                                    מזומן
+                                </option>
+                                <option value="2">
+                                    שיק
+                                </option>
+                                <option value="3">
+                                    כרטיס אשראי
+                                </option>
+                                <option value="4">
+                                    העברה בנקאית
+                                </option>
+                                <option value="5">
+                                    הרשאה לחיוב
+                                </option>
+                            </select>
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div>
+                        <label>
+                            סכום לתשלום:
+                        </label>
+                        <div>
+                            {{appData.user_get_billing_account[0].COMPANY_NEXT_PAYMENT_TOTAL}}
+                            <p ng-click="openStateDetails(appData.user_get_billing_account[0].BILLING_ACCOUNT_ID, appData.user_get_billing_account[0].ACCOUNTANT_OFFICE_ID, appData.user_get_billing_account[0].BILLING_ACCOUNT_EMAIL)"
+                               class="perut" ng-if="appData.adminSoft">
+                                לפירוט
+                            </p>
+                            &nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div ng-if="appData.adminSoft">
+                        <label>
+                            סוג לקוח:
+                        </label>
+                        <div>
+                            <select ng-model="appData.user_get_billing_account[0].IND_ACCOUNTANT"
+                                    ng-disabled="!appData.user_get_billing_account[0].editIND_ACCOUNTANT"
+                                    class="PAYMENT_TYPE_ID">
+                                <option value="0">
+                                    תזרים
+                                </option>
+                                <option value="1">
+                                    רואה חשבון
+                                </option>
+                                <option value="2" disabled>
+                                    לקוח מיוחד
+                                </option>
+                                <option value="3">
+                                    תשלום לקוח - רואה חשבון
+                                </option>
+                                <option value="4" disabled>
+                                    רואה חשבון - פירמה
+                                </option>
+                            </select>
+
+                            <i ng-if="!appData.user_get_billing_account[0].editIND_ACCOUNTANT"
+                               class="fa fa-pencil"
+                               ng-click="appData.user_get_billing_account[0].editIND_ACCOUNTANT=true;"></i>
+                            <i ng-if="appData.user_get_billing_account[0].editIND_ACCOUNTANT"
+                               class="fa fa-floppy-o"
+                               ng-click="appData.user_get_billing_account[0].editIND_ACCOUNTANT=false;convert_billing_account(appData.user_get_billing_account[0]);"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+
+<button ng-click="openBillingPopPass()" class="openBillingPop" ng-if="appData.existErrOpenBillingPop">
+    הוסף שיטת תשלום
+</button>
+

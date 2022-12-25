@@ -1,0 +1,13 @@
+﻿<div ng-controller="tazrimCtrl">
+    <h1 class="alertTitles"> האם אתה בטוח שאתה רוצה למחוק סוג הפעולה
+        <br>
+        <b>
+            {{appData.trans_type_delete_ksafimItem.item.trans_type_name}}
+        </b>?
+    </h1>
+    <div class="buttons_deleted">
+        <button ng-click="deletedTypePeulaPop()">מחק</button>
+        <button ng-click="hidePopup()">בטל מחיקה</button>
+    </div>
+</div>
+
