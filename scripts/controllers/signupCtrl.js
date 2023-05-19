@@ -568,10 +568,10 @@
 		};
 
 		$scope.popTermosf = function () {
-			$scope.showPopup('views/signup/termosof.html?ver=3.74', 'termosof', false);
+			$scope.showPopup('views/signup/termosof.html?ver=3.80', 'termosof', false);
 		}
 		$scope.popTermosfPrivate = function () {
-			$scope.showPopup('views/signup/popTermosfPrivate.html?ver=3.74', 'termosof', false);
+			$scope.showPopup('views/signup/popTermosfPrivate.html?ver=3.80', 'termosof', false);
 		}
 		$scope.reset = function (form) {
 			if (form) {

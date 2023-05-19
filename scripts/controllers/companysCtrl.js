@@ -231,7 +231,7 @@
 						});
 					}
 					else {
-						$scope.showPopup('views/templates/notPer.html?ver=3.74', 'popAlert', true);
+						$scope.showPopup('views/templates/notPer.html?ver=3.80', 'popAlert', true);
 						setTimeout(function () {
 							$scope.hidePopup();
 						}, 1500)
@@ -322,7 +322,7 @@
 						"indMailToSend": 1,
 						"defUserName": b.full_name
 					};
-					$scope.showPopup('views/templates/default_user_create.html?ver=3.74', 'default_user_create addCompanyWrap');
+					$scope.showPopup('views/templates/default_user_create.html?ver=3.80', 'default_user_create addCompanyWrap');
 				}
 			}
 		}

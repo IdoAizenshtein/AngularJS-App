@@ -80,7 +80,7 @@
             <tr ng-if="appData.expenseMissingReportTable.length" ng-repeat="a in appData.expenseMissingReportTable | orderBy : predicate :reverse">
                 <td>
                                 <span data-ng-click="goToLink(a.companyId, 'listCompany')">
-                                       {{a.companyName}}
+	                                {{!appData.defMonth.hideCompanyName ? a.companyName : a.companyHp}}
                                 </span>
                 </td>
                 <td>

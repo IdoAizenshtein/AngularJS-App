@@ -438,7 +438,7 @@
 		};
 		$scope.showAddTransTypeDialog = function (t) {
 			$scope.appData.newTransParentIndex = t;
-			$scope.showPopup('views/templates/addTransactionTypeDialogTazrim.html?ver=3.74', 'addTransactionTypeDialog');
+			$scope.showPopup('views/templates/addTransactionTypeDialogTazrim.html?ver=3.80', 'addTransactionTypeDialog');
 		};
 		$scope.updateTransactionTypeName = function (t, item) {
 			serverConnection.updateTransactionType({
@@ -657,7 +657,7 @@
 				item: item,
 				type: type
 			};
-			$scope.showPopup('views/templates/alertsDelTypePeula.html?ver=3.74', 'alerts', true);
+			$scope.showPopup('views/templates/alertsDelTypePeula.html?ver=3.80', 'alerts', true);
 		}
 		$scope.selectDatesOnSubmit = function () {
 			function daysInMonth(month, year) {
@@ -1186,7 +1186,7 @@
 					a.changePayVal = false;
 				}, function (error) {
 					console.log(error)
-					$scope.showPopup('views/templates/tazrimError.html?ver=3.74', 'popAlert', true);
+					$scope.showPopup('views/templates/tazrimError.html?ver=3.80', 'popAlert', true);
 					setTimeout(function () {
 						$scope.hidePopup();
 					}, 2000)
@@ -1203,7 +1203,7 @@
 					a.changePayVal = false;
 				}, function (error) {
 					console.log(error)
-					$scope.showPopup('views/templates/tazrimError.html?ver=3.74', 'popAlert', true);
+					$scope.showPopup('views/templates/tazrimError.html?ver=3.80', 'popAlert', true);
 					setTimeout(function () {
 						$scope.hidePopup();
 					}, 2000)
@@ -1240,7 +1240,7 @@
 					$scope.changeItem($scope.appData.selectedItem)
 				}
 			}, function (error) {
-				$scope.showPopup('views/templates/tazrimError.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/tazrimError.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 2000)
@@ -1367,7 +1367,7 @@
 
 				if (errors !== 0) {
 					a.custom = true;
-					$scope.showPopup('views/templates/emptyInputsTazrim.html?ver=3.74', 'popAlert', true);
+					$scope.showPopup('views/templates/emptyInputsTazrim.html?ver=3.80', 'popAlert', true);
 					setTimeout(function () {
 						$scope.hidePopup();
 					}, 2000)
@@ -1469,7 +1469,7 @@
 				a.hachnasa = $scope.totalPrevDelete;
 			}
 			$scope.appData.dataRowTazrimDeleted = a;
-			$scope.showPopup('views/templates/alertsPrevDeleted.html?ver=3.74', 'alerts', true);
+			$scope.showPopup('views/templates/alertsPrevDeleted.html?ver=3.80', 'alerts', true);
 			//$scope.appData.bankTazrim.forEach(function (v) {
 			//    v.rows.forEach(function (a) {
 			//        if ($scope.typeRow == 'hozaa') {
@@ -1602,7 +1602,7 @@
 			if ($scope.appData.selectAccAddTazrim !== "null") {
 				$scope.initDateDef(date)
 			}
-			$scope.showPopup('views/templates/popupAddRowTazrim.html?ver=3.74', 'popupAddRowTazrim');
+			$scope.showPopup('views/templates/popupAddRowTazrim.html?ver=3.80', 'popupAddRowTazrim');
 		};
 		$scope.initDateDef = function (date) {
 			if ($scope.appData.selectAccAddTazrim !== "null") {
@@ -1915,7 +1915,7 @@
 			return names;
 		}
 		$scope.updateFromExcel = function () {
-			$scope.showPopup('views/templates/popupExportExcel.html?ver=3.74', 'popupExportExcel');
+			$scope.showPopup('views/templates/popupExportExcel.html?ver=3.80', 'popupExportExcel');
 		}
 		$scope.downloadExcelTemplate = function () {
 			function download(url) {
@@ -2011,7 +2011,7 @@
 		};
 		$scope.openCheckImg = function (uuid, idBank, bankTransId) {
 			if (uuid == 'x') {
-				$scope.showPopup('views/templates/alertXcheck.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/alertXcheck.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 3000)
@@ -2029,12 +2029,12 @@
 					$scope.filteredDataLoader = true;
 
 					if (picture.length > 0) {
-						$scope.showPopup('views/templates/imgChecks.html?ver=3.74', 'imgChecks', false);
+						$scope.showPopup('views/templates/imgChecks.html?ver=3.80', 'imgChecks', false);
 						return $scope.pictureCheck(picture);
 					}
 					else {
 						$scope.appData.iconCheckAll = '';
-						$scope.showPopup('views/templates/checksnot.html?ver=3.74', 'popAlert', true);
+						$scope.showPopup('views/templates/checksnot.html?ver=3.80', 'popAlert', true);
 						setTimeout(function () {
 							$scope.hidePopup();
 						}, 1500)
@@ -2066,7 +2066,7 @@
 		$scope.sendMailer = function () {
 			$scope.appData.errorSenderMailerExcel = "";
 			$scope.appData.loaderMailerPop = false;
-			$scope.showPopup('views/templates/mailerTazrim.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerTazrim.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.isObj = function (val) {
 			var retVal = angular.isDefined(val) && (val !== null);

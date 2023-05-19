@@ -51,6 +51,13 @@
             serverConnection.getDataMainAccCards().then(function (res) {
                 $scope.appData.sourceCardsAcc = res;
                 if (!$scope.appData.tabCardsAcc && $scope.appData.sourceCardsAcc.length) {
+                    $scope.appData.sourceCardsAcc.forEach(function (v, i) {
+                        $scope.appData.companies.forEach(function (v1, i1) {
+                            if (v.company_id == v1.companyId) {
+                                v.companyHp = v1.companyHp;
+                            }
+                        })
+                    });
                     if ($scope.appData.sourceCardsAcc[0].izu_type !== undefined && $scope.appData.sourceCardsAcc[0].izu_type !== null) {
                         $scope.appData.tabCardsAcc = $scope.appData.sourceCardsAcc[0].izu_type;
                         window.izu_type = $scope.appData.sourceCardsAcc[0].izu_type;
@@ -204,6 +211,7 @@
                     if (i == 0) {
                         var obj = {
                             company_name: v.company_name,
+                            companyHp: v.companyHp,
                             company_id: v.company_id,
                             db_name: v.db_name,
                             tn_last_update_date: v.tn_last_update_date,
@@ -221,6 +229,7 @@
                         if ($scope.appData.listCardsAcc[i].company_id !== $scope.appData.listCardsAcc[i + 1].company_id) {
                             var obj = {
                                 company_name: $scope.appData.listCardsAcc[i + 1].company_name,
+                                companyHp: $scope.appData.listCardsAcc[i + 1].companyHp,
                                 company_id: $scope.appData.listCardsAcc[i + 1].company_id,
                                 db_name: $scope.appData.listCardsAcc[i + 1].db_name,
                                 indMupa: $scope.appData.listCardsAcc[i + 1].indMupa,
@@ -480,11 +489,11 @@
                 $scope.appData.showApply3or7 = false;
                 if (!type) {
                     $scope.hashCartisList(uuid.company_id);
-                    $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.74', 'popupApply');
+                    $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.80', 'popupApply');
                 } else {
                     if (type == 'edit') {
                         $scope.hashCartisList(uuid.company_id, 'edit');
-                        $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.74', 'popupApply');
+                        $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.80', 'popupApply');
                     } else {
                         $scope.hashCartisList(uuid.company_id, 'vi');
                     }
@@ -497,7 +506,7 @@
                 $scope.appData.hashCartisListHashId = $scope.appData.uuidRowApply.izu_cast_id;
                 $scope.appData.hashCartisListHashName = $scope.appData.uuidRowApply.izu_account_cust_id;
                 $scope.applySend();
-                $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.74', 'popupApply');
+                $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.80', 'popupApply');
             }
         };
 
@@ -687,7 +696,7 @@
                     $scope.exportApply();
                 }
                 if (type && type == 'vi' && res.result_status !== 0) {
-                    $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.74', 'popupApply');
+                    $scope.showPopup('views/templates/popupApplyAccCards.html?ver=3.80', 'popupApply');
                 }
                 //$scope.loadcheckboxApprAttr($scope.appData.resBankPageFullCheck.efresh);
             }, function (error) {
@@ -706,7 +715,7 @@
                 });
             } else {
                 $scope.appData.deleteCardId = id;
-                $scope.showPopup('views/templates/alertsCardsMain.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alertsCardsMain.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         }
 
@@ -730,7 +739,7 @@
                 $scope.appData.popupTypeLink = true;
                 $scope.appData.popupDataToken = tok;
                 $scope.appData.popupDataBanks = {BankNumber: Number(item.explain_desc)};
-                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
             }
         };
 
@@ -740,7 +749,7 @@
                 'id': id,
                 'edit': false
             }
-            $scope.showPopup('views/templates/editExHashCards.html?ver=3.74', 'exHashEditPop');
+            $scope.showPopup('views/templates/editExHashCards.html?ver=3.80', 'exHashEditPop');
         }
 
         $scope.asmachtaSettSbmit = function () {
@@ -753,7 +762,7 @@
                     if ($scope.appData.digitFilters) {
                         $scope.appData.digitFilters = false;
                         $scope.appData.radioFilterExPop = '0';
-                        $scope.showPopup('views/templates/popupExportsFiltersCards.html?ver=3.74', 'popupExportsFilters');
+                        $scope.showPopup('views/templates/popupExportsFiltersCards.html?ver=3.80', 'popupExportsFilters');
                     } else {
                         $scope.export();
                     }
@@ -765,7 +774,7 @@
 
         $scope.exportPop = function (admin) {
             if ($scope.appData.defMonth.ind_phone_exist === 1) {
-                $scope.showPopup('views/templates/alertHashavshevet.html?ver=3.74', 'alertHashavshevet', false);
+                $scope.showPopup('views/templates/alertHashavshevet.html?ver=3.80', 'alertHashavshevet', false);
                 return;
             }
             if (!$scope.appData.adminSoft || admin) {
@@ -792,10 +801,10 @@
                     $scope.export();
                 } else {
                     $scope.appData.radioFilterExPop = '0';
-                    $scope.showPopup('views/templates/popupExportsFiltersCards.html?ver=3.74', 'popupExportsFilters');
+                    $scope.showPopup('views/templates/popupExportsFiltersCards.html?ver=3.80', 'popupExportsFilters');
                 }
             } else {
-                $scope.showPopup('views/templates/alertAdminCards.html?ver=3.74', 'alerts', true);
+                $scope.showPopup('views/templates/alertAdminCards.html?ver=3.80', 'alerts', true);
             }
         }
 
@@ -837,7 +846,7 @@
                         $scope.appData.blacklistCheckCards.text = 'שים לב, כרטיס זה יוצא בפעם האחרונה בפורמט דפי בנק, פעולה זו תשנה את פורמט הייצוא לפורמט פקודות יומן, האם ברצונך להמשיך?';
                     }
 
-                    $scope.showPopup('views/templates/blacklistCheckCards.html?ver=3.74', 'blacklistCheckCards');
+                    $scope.showPopup('views/templates/blacklistCheckCards.html?ver=3.80', 'blacklistCheckCards');
                 }
             }
         };
@@ -876,7 +885,7 @@
                 $scope.appData.idExportsCards = id;
                 $scope.appData.lengthExTime = 0;
 
-                $scope.showPopup('views/templates/exportAlerts.html?ver=3.74', 'exportAlerts', true);
+                $scope.showPopup('views/templates/exportAlerts.html?ver=3.80', 'exportAlerts', true);
                 return;
             }
             if (isPop === false) {
@@ -924,7 +933,7 @@
             if ($scope.appData.tabCardsAcc == 2 && indexBank > 0) {
                 $scope.appData.lengthExTime = 0;
 
-                $scope.showPopup('views/templates/alertNotExData.html?ver=3.74', 'popAlert', true);
+                $scope.showPopup('views/templates/alertNotExData.html?ver=3.80', 'popAlert', true);
                 setTimeout(function () {
                     $scope.hidePopup();
                 }, 2000)
@@ -944,7 +953,7 @@
                         "id": id,
                         "isPop": isPop
                     }
-                    $scope.showPopup('views/templates/progressBarPop.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                    $scope.showPopup('views/templates/progressBarPop.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
                     timeOutStr = $timeout(function () {
                         $scope.appData.showSucUpdPassPop = "fail";
                     }, 30000)
@@ -963,7 +972,7 @@
                     $timeout(function () {
                         if (res == '' || res == '0' || res == 0) {
                             $scope.hidePopup();
-                            $scope.showPopup('views/templates/alertNoneData.html?ver=3.74', 'alertNoneData');
+                            $scope.showPopup('views/templates/alertNoneData.html?ver=3.80', 'alertNoneData');
                             $scope.loadAccCardsPage();
                         } else {
                             if ($scope.appData.tabCardsAcc == 2) {
@@ -1049,7 +1058,7 @@
                         it.IZU_ACCOUNT_CUST_ID = inizu_account_cust_id
                     }
                 });
-                $scope.showPopup('views/templates/ccard_izu_cust_curr_get.html?ver=3.74', 'company_db_year_set ccard_izu_cust_curr_get', false);
+                $scope.showPopup('views/templates/ccard_izu_cust_curr_get.html?ver=3.80', 'company_db_year_set ccard_izu_cust_curr_get', false);
             } else {
                 $scope.appData.lengthExTime += 1;
 
@@ -1074,7 +1083,7 @@
                 var timeOutStr;
                 if ($scope.appData.exportHashProg) {
                     $scope.appData.showSucUpdPassPop = false;
-                    $scope.showPopup('views/templates/progressBarPop.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                    $scope.showPopup('views/templates/progressBarPop.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
                     $scope.appData.dataOfProg = {
                         "name": "exportApply",
                         "type": type
@@ -1155,11 +1164,11 @@
             } else {
                 $scope.appData.openSettingsAccCards = '1';
             }
-            $scope.showPopup('views/templates/openSettingsAccCards.html?ver=3.74', 'openSettingsAccCards');
+            $scope.showPopup('views/templates/openSettingsAccCards.html?ver=3.80', 'openSettingsAccCards');
         }
 
         $scope.showPopupPre_get_fictive = function () {
-            $scope.showPopup('views/templates/showPopupPre_get_fictive_card.html?ver=3.74', 'exportAlertsMipuy', true);
+            $scope.showPopup('views/templates/showPopupPre_get_fictive_card.html?ver=3.80', 'exportAlertsMipuy', true);
         }
 
         $scope.get_fictive_bank_transes = function () {
@@ -1182,7 +1191,7 @@
             } else {
                 $scope.appData.openSettingsAccCardsCalendar = '1';
             }
-            $scope.showPopup('views/templates/openSettingsAccCardsCalendar.html?ver=3.74', 'openSettingsAccCards');
+            $scope.showPopup('views/templates/openSettingsAccCardsCalendar.html?ver=3.80', 'openSettingsAccCards');
         }
 
         $scope.sendSettingsAccCards = function () {
@@ -1287,7 +1296,7 @@
         });
         $scope.userGetAccountants = function () {
             $scope.appData.listUserAccountantsLoader = true;
-            $scope.showPopup('views/templates/setAccUser.html?ver=3.74', 'setAccUser setAccUserWide');
+            $scope.showPopup('views/templates/setAccUser.html?ver=3.80', 'setAccUser setAccUserWide');
             serverConnection.userGetAccountants().then(function (res) {
                 $scope.appData.listUserAccountants = res;
                 $scope.appData.listUserAccountantsLoader = false;
@@ -1301,7 +1310,7 @@
             $scope.appData.uuidRowApply.programName = $scope.getNameSoft($scope.appData.uuidRowApply.izu_source_program_id);
             $scope.appData.list_ccard_izu_cust_curr_getLoader = true;
             if (!dontOpen) {
-                $scope.showPopup('views/templates/ccard_izu_cust_curr_get.html?ver=3.74', 'company_db_year_set ccard_izu_cust_curr_get', false);
+                $scope.showPopup('views/templates/ccard_izu_cust_curr_get.html?ver=3.80', 'company_db_year_set ccard_izu_cust_curr_get', false);
             }
             serverConnection.ccard_izu_cust_curr_get({
                 creditCardId: uuid.credit_card_id
@@ -1338,6 +1347,15 @@
                     $q.all([$scope.getGeneralDataCompanies(), $scope.getGeneralDataPermission()]).then(function (data) {
                         $scope.appData.companies = data[0];
                         $scope.appData.defMonth = data[1];
+                        try {
+                            if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                $scope.appData.defMonth.hideCompanyName = true;
+                            } else {
+                                $scope.appData.defMonth.hideCompanyName = false;
+                            }
+                        } catch (e) {
+
+                        }
                         if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                             $scope.logout();
                         }
@@ -1360,7 +1378,7 @@
             });
         };
         $scope.sendMailer = function () {
-            $scope.showPopup('views/templates/mailerAccCards.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerAccCards.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.$watch('appData.showPopup', function (newVal, oldVal) {
             if (newVal == false) {
@@ -1422,7 +1440,7 @@
                 if (!$scope.appData.adminSoft) {
                     cls = "notAdmin";
                 }
-                $scope.showPopup('views/templates/addTaskCard.html?ver=3.74', 'addTask ' + cls);
+                $scope.showPopup('views/templates/addTaskCard.html?ver=3.80', 'addTask ' + cls);
             }
         }
         $scope.changeTypeTitle = function () {
@@ -1500,7 +1518,7 @@
         $scope.clearAccBank = function (id) {
             $scope.appData.disabledBtnClearData = false;
             $scope.appData.idClearDataBankCard = id;
-            $scope.showPopup('views/templates/clearAccBankCard.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/clearAccBankCard.html?ver=3.80', 'alerts', true);
         };
         $scope.clearData = function () {
             $scope.appData.disabledBtnClearData = true;

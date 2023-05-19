@@ -54,13 +54,13 @@
 
 		$scope.openMoreMangWindows = function (a) {
 			$scope.appData.openMoreMangWindows = a;
-			$scope.showPopup('views/templates/openMoreMangWindows.html?ver=3.74', 'openMoreDataMangWit');
+			$scope.showPopup('views/templates/openMoreMangWindows.html?ver=3.80', 'openMoreDataMangWit');
 		}
 
 		$scope.openPeulot = function (row) {
 			$scope.appData.loaderWindowsInside = true;
 			$scope.appData.qa_itrot_list_row = row;
-			$scope.showPopup('views/templates/qaItrotGetBanktrans.html?ver=3.74', 'qaItrotGetBanktrans');
+			$scope.showPopup('views/templates/qaItrotGetBanktrans.html?ver=3.80', 'qaItrotGetBanktrans');
 			serverConnection.qa_itrot_get_banktrans(row.QA_ITROT_ID).then(function (res) {
 				$scope.appData.qa_itrot_get_banktrans = res;
 				$scope.appData.loaderWindowsInside = false;
@@ -103,7 +103,7 @@
 			else{
 				$scope.appData.editIndescription = '';
 			}
-			$scope.showPopup('views/templates/editRowWindowsManag.html?ver=3.74', 'openMoreDataMangWit');
+			$scope.showPopup('views/templates/editRowWindowsManag.html?ver=3.80', 'openMoreDataMangWit');
 		}
 
 		$scope.update_qa_itrot = function () {
@@ -173,7 +173,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerQaitrot.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerQaitrot.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 			if (newVal == false) {
@@ -206,7 +206,7 @@
 						$scope.appData.usersWorkVal.priority = v.QA_TASK_PRIORTY_ID;
 					}
 				})
-				$scope.showPopup('views/templates/addTaskWinMang.html?ver=3.74', 'addTask');
+				$scope.showPopup('views/templates/addTaskWinMang.html?ver=3.80', 'addTask');
 			});
 		}
 

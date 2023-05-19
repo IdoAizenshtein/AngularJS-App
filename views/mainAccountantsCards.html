@@ -309,8 +309,11 @@
                     ng-class="{'titlelistCardsAcc': a.title}">
                     <td>
                         <span ng-if="a.title" tooltips-tazrim title="{{tooltipsRet(a)}}">
-                          {{a.company_name}}
+                          {{!appData.defMonth.hideCompanyName ? a.company_name : a.companyHp}}
                         </span>
+	                    <span ng-if="appData.adminSoft && a.ind_folder_plus === 1">
+ - קליטה אוטומטית
+</span>
                         <span ng-if="a.title && a.programId">
                             -
                           {{a.programId}}

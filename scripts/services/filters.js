@@ -381,7 +381,7 @@
             var letterMatch = new RegExp(term, 'i'), len = input.length;
             for (var i = 0; i < len; i++) {
                 if (!input[i].title) {
-                    if ((input[i].company_name !== null && letterMatch.test(input[i].company_name)) || (input[i].bank_account_id !== null && letterMatch.test(input[i].bank_account_id.toString()))) {
+                    if ((input[i].company_name !== null && letterMatch.test(input[i].company_name)) || (input[i].companyHp && input[i].companyHp !== null && letterMatch.test(input[i].companyHp.toString())) || (input[i].company_hp && input[i].company_hp !== null && letterMatch.test(input[i].company_hp.toString())) || (input[i].bank_account_id !== null && letterMatch.test(input[i].bank_account_id.toString()))) {
                         obj.push(input[i]);
                     }
                 }
@@ -613,6 +613,12 @@
                     }
                 }
 
+                if (typesFilters.MISPAR_SHUROT_PKUDOT_YMN == true) {
+                    if (v.IND_PKUDOT_YMN_ITEM === 1) {
+                        filteredArr.push(v);
+                    }
+                }
+
                 if (typesFilters.IND_CARD_ITEM == true) {
                     if (v.IND_CARD_ITEM === 1) {
                         filteredArr.push(v);
@@ -799,7 +805,7 @@
             var obj = [];
             input.forEach(function (v) {
                 if (!v.title) {
-                    if ((v.izu_cast_id !== null && v.izu_cast_id.indexOf(term) > -1) || (v.company_name !== null && v.company_name.indexOf(term) > -1) || (v.credit_card_nickname !== null && v.credit_card_nickname.indexOf(term) > -1) || (v.izu_account_cust_nickname !== null && v.izu_account_cust_nickname.indexOf(term) > -1)) {
+                    if ((v.izu_cast_id !== null && v.izu_cast_id.indexOf(term) > -1) || (v.company_name !== null && v.company_name.indexOf(term) > -1) || (v.companyHp && v.companyHp !== null && v.companyHp.toString().indexOf(term) > -1) || (v.credit_card_nickname !== null && v.credit_card_nickname.indexOf(term) > -1) || (v.izu_account_cust_nickname !== null && v.izu_account_cust_nickname.indexOf(term) > -1)) {
                         obj.push(v);
                     }
                 }
@@ -830,7 +836,7 @@
 
             var obj = [];
             input.forEach(function (v) {
-                if (v.companyName.indexOf(term) > -1 || (v.full_name && v.full_name.indexOf(term) > -1) || v.companyHp.toString().indexOf(term) > -1) {
+                if (v.companyName.indexOf(term) > -1 || (v.full_name && v.full_name.indexOf(term) > -1) || (v.companyHp && v.companyHp.toString().indexOf(term) > -1)) {
                     obj.push(v);
                 }
             });

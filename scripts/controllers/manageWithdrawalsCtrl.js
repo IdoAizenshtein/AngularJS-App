@@ -86,7 +86,7 @@
 
 		$scope.openMoreData = function (a) {
 			$scope.appData.openMoreDataMangWit = a;
-			$scope.showPopup('views/templates/openMoreDataMangWit.html?ver=3.74', 'openMoreDataMangWit');
+			$scope.showPopup('views/templates/openMoreDataMangWit.html?ver=3.80', 'openMoreDataMangWit');
 		}
 
 		$scope.showRunType = function (acc, type) {
@@ -126,7 +126,7 @@
 				]
 			}
 
-			$scope.showPopup('views/templates/popupRunTypeManag.html?ver=3.74', 'popupRunType');
+			$scope.showPopup('views/templates/popupRunTypeManag.html?ver=3.80', 'popupRunType');
 		}
 
 		$scope.playRunType = function () {

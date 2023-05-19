@@ -1,6 +1,6 @@
 {
   "name": "bizibox",
-  "version": "3.74",
+  "version": "3.80",
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-cache": "^1.1.3",

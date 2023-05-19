@@ -91,20 +91,26 @@
             <tr ng-if="!searchTyping"
                 ng-repeat="a in appData.itemsAllReport = (appData.arrTypingSmall) | startFrom:($parent.currentPage-1)*$parent.entryLimit | limitTo:$parent.entryLimit | orderBy : $parent.predicate3 :$parent.reverse3"
                 ng-class-even="'even'">
-                <td ng-repeat="v in a" ng-if="$index == 0" ng-style="{'width': widthTd + '%'}">
+                <td ng-repeat="v in a" ng-if="$index == 0 && !appData.defMonth.hideCompanyName" ng-style="{'width': widthTd + '%'}">
                     {{a['name' + $index]}}
                 </td>
-                <td ng-repeat="v in a" ng-if="$index !== 0" ng-style="{'width': widthTd + '%'}">
+	            <td ng-repeat="v in a" ng-if="$index == 1 && appData.defMonth.hideCompanyName" ng-style="{'width': widthTd + '%'}">
+		            {{a['name' + $index]}}
+	            </td>
+                <td ng-repeat="v in a" ng-if="$index !== 0 && $index !== 1" ng-style="{'width': widthTd + '%'}">
                     {{roundNum(a['name' + $index])}}
                 </td>
             </tr>
             <tr ng-if="searchTyping"
                 ng-repeat="a in appData.itemsAllReport = (appData.arrTyping | filter:searchTyping) | startFrom:($parent.currentPage-1)*$parent.entryLimit | limitTo:$parent.entryLimit"
                 ng-class="{'prevColor': a.prev}">
-                <td ng-repeat="v in a" ng-if="$index == 0" style="width: {{widthTd}}%">
+                <td ng-repeat="v in a" ng-if="$index == 0 && !appData.defMonth.hideCompanyName" style="width: {{widthTd}}%">
                     {{a['name' + $index]}}
                 </td>
-                <td ng-repeat="v in a" ng-if="$index !== 0" style="width: {{widthTd}}%">
+	            <td ng-repeat="v in a" ng-if="$index == 1 && appData.defMonth.hideCompanyName" style="width: {{widthTd}}%">
+		            {{a['name' + $index]}}
+	            </td>
+                <td ng-repeat="v in a" ng-if="$index !== 0 && $index !== 1" style="width: {{widthTd}}%">
                     {{roundNum(a['name' + $index])}}
                 </td>
             </tr>

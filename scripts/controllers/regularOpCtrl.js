@@ -501,7 +501,7 @@
 		$scope.bankLoadDismissbysk2 = function (trans_id, ind) {
 			$scope.appData.bankLoadDismissbysk2Id = trans_id;
 			$scope.appData.bankLoadDismissbysk2Ind = ind;
-			$scope.showPopup('views/templates/alertsPrevDeletedReg.html?ver=3.74', 'alerts', true);
+			$scope.showPopup('views/templates/alertsPrevDeletedReg.html?ver=3.80', 'alerts', true);
 		};
 
 		$scope.bankLoadDismissbysk2Delete = function () {
@@ -543,7 +543,7 @@
 			serverConnection.transkvuaGetpeulot(data).then(function (response) {
 				$scope.appData.transkvuotHtmlGetlistPopTable = angular.copy(a);
 				$scope.appData.transkvuotHtmlGetlistPopTable.dataTable = response;
-				$scope.showPopup('views/templates/transkvuotHtmlGetlistPopTable.html?ver=3.74', 'transkvuotHtmlGetlistPopTable');
+				$scope.showPopup('views/templates/transkvuotHtmlGetlistPopTable.html?ver=3.80', 'transkvuotHtmlGetlistPopTable');
 			}, function (error) {
 			});
 		};
@@ -612,7 +612,7 @@
 			serverConnection.bankLoadPeulotBysk($scope.appData.selectedCompany.companyId, $scope.appData.selectedItem.company_account_id, a.searchkey_id).then(function (response) {
 				$scope.appData.bankLoadPeulotByskPopTable = angular.copy(a);
 				$scope.appData.bankLoadPeulotByskPopTable.dataTable = response;
-				$scope.showPopup('views/templates/bankLoadPeulotByskPopTable.html?ver=3.74', 'transkvuotHtmlGetlistPopTable');
+				$scope.showPopup('views/templates/bankLoadPeulotByskPopTable.html?ver=3.80', 'transkvuotHtmlGetlistPopTable');
 			}, function (error) {
 			});
 		};
@@ -666,7 +666,7 @@
 		}
 		$scope.setAppr = function (a) {
 			if (a.avg_total.length == 0 || a.searchkey.length == 0) {
-				$scope.showPopup('views/templates/peulotTextPop.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/peulotTextPop.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 2000)
@@ -828,7 +828,7 @@
 
 			if (a.target_type_id !== 11 && a.target_type_id !== 9 && a.target_type_id !== 17) {
 				$scope.appData.EditDataPeula = false;
-				$scope.showPopup('views/templates/peulotNotEdit.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/peulotNotEdit.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 2000)
@@ -916,7 +916,7 @@
 						$scope.appData.setPopDef17.disabledOption1 = true;
 					}
 
-					$scope.showPopup('views/templates/incomPeulaType17.html?ver=3.74', 'incomPeulaType17', false);
+					$scope.showPopup('views/templates/incomPeulaType17.html?ver=3.80', 'incomPeulaType17', false);
 				}
 				else {
 					if (a.target_type_id == 11) {
@@ -957,24 +957,24 @@
 						if (a.ind_expense == 1) {
 							$scope.appData.defTypeEx = a.trans_type_id;
 							$scope.appData.defTypeNameEx = a.trans_type_name;
-							$scope.showPopup('views/templates/expencePeula.html?ver=3.74', 'popupAddPeula', false);
+							$scope.showPopup('views/templates/expencePeula.html?ver=3.80', 'popupAddPeula', false);
 						}
 						else {
 							$scope.appData.defTypeIn = a.trans_type_id;
 							$scope.appData.defTypeNameIn = a.trans_type_name;
-							$scope.showPopup('views/templates/incomPeula.html?ver=3.74', 'popupAddPeula', false);
+							$scope.showPopup('views/templates/incomPeula.html?ver=3.80', 'popupAddPeula', false);
 						}
 					}
 					else {
 						if (a.ind_expense == 1) {
 							$scope.appData.defTypeEx = a.trans_type_id;
 							$scope.appData.defTypeNameEx = a.trans_type_name;
-							$scope.showPopup('views/templates/expencePeula.html?ver=3.74', 'popupAddPeula-small', false);
+							$scope.showPopup('views/templates/expencePeula.html?ver=3.80', 'popupAddPeula-small', false);
 						}
 						else {
 							$scope.appData.defTypeIn = a.trans_type_id;
 							$scope.appData.defTypeNameIn = a.trans_type_name;
-							$scope.showPopup('views/templates/incomPeula.html?ver=3.74', 'popupAddPeula-small', false);
+							$scope.showPopup('views/templates/incomPeula.html?ver=3.80', 'popupAddPeula-small', false);
 						}
 					}
 				}
@@ -1307,7 +1307,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerregularOp.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerregularOp.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.help = function () {
 			window.open('http://bizibox.biz/help/cashflowdetailed', '_blank');

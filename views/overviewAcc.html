@@ -1,6 +1,6 @@
 <div ng-init="init()">
-    <div data-ng-include src="'views/templates/header.html?ver=3.74'"></div>
-    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.74'"></div>
+    <div data-ng-include src="'views/templates/header.html?ver=3.80'"></div>
+    <div data-ng-include src="'views/templates/alertLinePer.html?ver=3.80'"></div>
 
     <div class="page-content" data-ng-class="{'nav-closed': appData.mainNavClosed}">
         <div class="bgHelpAcc" ng-if="appData.showhelpSkira">&nbsp;</div>
@@ -312,7 +312,7 @@
                     <img src="image/bag_icon.png" alt="">
                 </div>
                 <h2 class="name_company_profile"  ng-if="appData.selectedCompany">
-                    {{appData.selectedCompany.companyName}}
+                    {{!appData.defMonth.hideCompanyName ? appData.selectedCompany.companyName : appData.selectedCompany.companyHp}}
                     <i ng-click="openBug()" ng-if="appData.adminSoft" class="fa fa-bug" title="פתיחת באג" tooltips></i>
                     <i ng-click="bizibox_downgrade()" class="fa fa-arrow-circle-o-down" ng-if="appData.adminSoft"  title="downgrage" tooltips></i>
                 </h2>
@@ -325,8 +325,8 @@
                         {{appData.selectedCompany.street}},
                         {{appData.selectedCompany.city_name}}
                     </li>
-                    <li class="split_profile">●</li>
-                    <li class="hp_profile">
+                    <li class="split_profile" ng-if="!appData.defMonth.hideCompanyName">●</li>
+                    <li class="hp_profile" ng-if="!appData.defMonth.hideCompanyName">
                         ח.פ.
                         {{appData.selectedCompany.companyHp}}
                     </li>

@@ -149,8 +149,12 @@
                                 </div>
                             </td>
                             <td>
-                                <div ng-if="a.COMPANY_NAME == null">&nbsp;</div>
-                                {{a.COMPANY_NAME}}
+                                <div ng-if="(!appData.defMonth.hideCompanyName ? a.COMPANY_NAME == null : a.COMPANY_HP == null)">&nbsp;</div>
+	                            {{!appData.defMonth.hideCompanyName ? a.COMPANY_NAME : a.COMPANY_HP}}
+	                            
+	                            <span ng-if="appData.adminSoft && a.IND_FOLDER_PLUS === 1">
+- קליטה אוטומטית
+</span>
                             </td>
                             <td>
                                 <div ng-if="a.STATE_TYPE == null">&nbsp;</div>

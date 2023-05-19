@@ -58,12 +58,12 @@
 
 
         $scope.popupOpenServiceCall = function () {
-            $scope.showPopup('views/templates/popupOpenServiceCall.html?ver=3.74' + new Date().getTime(), 'popupOpenServiceCall');
+            $scope.showPopup('views/templates/popupOpenServiceCall.html?ver=3.80' + new Date().getTime(), 'popupOpenServiceCall');
         }
 
         $scope.userGetAccountants = function () {
             $scope.appData.listUserAccountantsLoader = true;
-            $scope.showPopup('views/templates/setAccUserManager.html?ver=3.74' + new Date().getTime(), 'setAccUser setAccUserWide');
+            $scope.showPopup('views/templates/setAccUserManager.html?ver=3.80' + new Date().getTime(), 'setAccUser setAccUserWide');
             serverConnection.userGetAccountants().then(function (res) {
                 $scope.appData.listUserAccountants = res;
                 $scope.appData.listUserAccountants.forEach(function (v) {
@@ -76,7 +76,7 @@
         }
         $scope.getRegularUsers = function () {
             $scope.appData.listUserAccountantsLoader = true;
-            $scope.showPopup('views/templates/setAccUsersRegularManager.html?ver=3.74', 'setAccUser');
+            $scope.showPopup('views/templates/setAccUsersRegularManager.html?ver=3.80', 'setAccUser');
             serverConnection.getRegularUsers().then(function (res) {
                 $scope.appData.listUserRegAccountants = res;
                 $scope.appData.listUserAccountantsLoader = false;
@@ -107,6 +107,15 @@
                         })
                     }
                     $scope.appData.defMonth = data[1];
+                    try {
+                        if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                            $scope.appData.defMonth.hideCompanyName = true;
+                        } else {
+                            $scope.appData.defMonth.hideCompanyName = false;
+                        }
+                    } catch (e) {
+
+                    }
                     if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                         $scope.logout();
                         return;
@@ -714,7 +723,7 @@
         };
 
         $scope.add_office_privs_password = function () {
-            $scope.showPopup('views/templates/add_office_privs_password.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+            $scope.showPopup('views/templates/add_office_privs_password.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
         };
         $scope.add_office_privs = function (showPopPasswordForm) {
             if (showPopPasswordForm.$valid) {
@@ -768,7 +777,7 @@
             });
         };
         $scope.sendMailer = function () {
-            $scope.showPopup('views/templates/mailerAccCards.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerAccCards.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.$watch('appData.showPopup', function (newVal, oldVal) {
             if (newVal == false) {

@@ -541,7 +541,7 @@
 		};
 
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailer.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailer.html?ver=3.80', 'mailerPopup', false);
 		};
 
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
@@ -687,7 +687,7 @@
 		$scope.openCheckImg = function (uuid, idBank, bankTransId) {
 			debugger
 			if (uuid == 'x') {
-				$scope.showPopup('views/templates/alertXcheck.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/alertXcheck.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 3000)
@@ -704,12 +704,12 @@
 				serverConnection.copyCheks(uuid, folder_name, bankTransId).then(function (picture) {
 					$scope.loader = true;
 					if (picture.length > 0) {
-						$scope.showPopup('views/templates/imgChecks.html?ver=3.74', 'imgChecks', false);
+						$scope.showPopup('views/templates/imgChecks.html?ver=3.80', 'imgChecks', false);
 						return $scope.pictureCheck(picture);
 					}
 					else {
 						$scope.appData.iconCheckAll = '';
-						$scope.showPopup('views/templates/checksnot.html?ver=3.74', 'popAlert', true);
+						$scope.showPopup('views/templates/checksnot.html?ver=3.80', 'popAlert', true);
 						setTimeout(function () {
 							$scope.hidePopup();
 						}, 1500)
@@ -729,7 +729,7 @@
 				$scope.appData.bankdetailAll = res;
 				$scope.appData.bankdetailIndex = 0;
 				$scope.appData.bankdetail = res[$scope.appData.bankdetailIndex];
-				$scope.showPopup('views/templates/bankdetail.html?ver=3.74', 'bankdetail');
+				$scope.showPopup('views/templates/bankdetail.html?ver=3.80', 'bankdetail');
 			}, function (error) {
 			});
 		};
@@ -742,7 +742,7 @@
 		};
 		$scope.showAddTransTypeDialog = function (t) {
 			$scope.appData.newTransParentIndex = t;
-			$scope.showPopup('views/templates/addTransactionTypeDialog.html?ver=3.74', 'addTransactionTypeDialog');
+			$scope.showPopup('views/templates/addTransactionTypeDialog.html?ver=3.80', 'addTransactionTypeDialog');
 		};
 		$scope.updateTransactionTypeName = function (t, item) {
 			var items, trans_name, data;
@@ -929,14 +929,14 @@
 		}
 		$scope.openExportsHash = function () {
 			if ($scope.accountFilter.company_account_id == '' || $scope.accountFilter.company_account_id == null) {
-				$scope.showPopup('views/templates/popAlert.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/popAlert.html?ver=3.80', 'popAlert', true);
 
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 2000)
 			}
 			else {
-				$scope.showPopup('views/templates/exportsHash.html?ver=3.74', 'exportsHashPop', false);
+				$scope.showPopup('views/templates/exportsHash.html?ver=3.80', 'exportsHashPop', false);
 			}
 		}
 	}

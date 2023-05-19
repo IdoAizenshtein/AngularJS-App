@@ -99,7 +99,7 @@
 		$scope.openSettingsTeam = function (id, name) {
 			$scope.appData.loaderPopSett = true;
 			$scope.appData.teamSettings = [];
-			$scope.showPopup('views/templates/popupSettingsTeams.html?ver=3.74', 'popupSettingsTeams');
+			$scope.showPopup('views/templates/popupSettingsTeams.html?ver=3.80', 'popupSettingsTeams');
 			$scope.appData.childUserIdPopUpSett = {'id': id, 'name': name};
 			serverConnection.userGetchildusercompanies(id).then(function (res) {
 				$scope.appData.teamSettings = res;
@@ -206,7 +206,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

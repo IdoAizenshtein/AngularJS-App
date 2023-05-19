@@ -309,7 +309,7 @@
                     </thead>
                     <tbody style="overflow: auto; max-height: 64vh;">
                     <tr ng-repeat="a in appData.get_user_companies_det">
-                        <td><span>{{a.COMPANY_NAME}}</span></td>
+                        <td><span>{{!appData.defMonth.hideCompanyName ? a.COMPANY_NAME : a.COMPANY_HP}}</span></td>
                         <td><span ng-if="a.LAST_LOGIN !== null">{{a.LAST_LOGIN}}</span><span
                                 ng-if="a.LAST_LOGIN == null">&nbsp;</span></td>
                         <td><span ng-if="a.STEP !== null">{{a.STEP}}</span><span ng-if="a.STEP == null">&nbsp;</span>

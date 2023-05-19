@@ -374,7 +374,7 @@
 					//$scope.appData.match_link_id = $scope.appData.peulotTableCancel[0].match_link_id;
 					$scope.checkRadioAll();
 				}
-				$scope.showPopup('views/templates/loadTablePeulotRemove.html?ver=3.74', 'loadTablePeulotRemovePop');
+				$scope.showPopup('views/templates/loadTablePeulotRemove.html?ver=3.80', 'loadTablePeulotRemovePop');
 				$scope.appData.loaderMatchTable = true;
 				$scope.loaderMatch = true;
 			}, function (error) {
@@ -666,7 +666,7 @@
 			});
 		}
 		$scope.removeListAllPeulot = function () {
-			$scope.showPopup('views/templates/alertRemoveListOnePeula.html?ver=3.74', 'alerts alertRemoveListOnePeula', true);
+			$scope.showPopup('views/templates/alertRemoveListOnePeula.html?ver=3.80', 'alerts alertRemoveListOnePeula', true);
 		}
 		$scope.matchPeulot = function () {
 			var data = [];
@@ -736,7 +736,7 @@
 		}
 		$scope.openCheckImg = function (uuid, idBank, bankTransId) {
 			if (uuid == 'x') {
-				$scope.showPopup('views/templates/alertXcheck.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/alertXcheck.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 3000)
@@ -755,12 +755,12 @@
 					$scope.loaderMatch = true;
 
 					if (picture.length > 0) {
-						$scope.showPopup('views/templates/imgChecks.html?ver=3.74', 'imgChecks', false);
+						$scope.showPopup('views/templates/imgChecks.html?ver=3.80', 'imgChecks', false);
 						return $scope.pictureCheck(picture);
 					}
 					else {
 						$scope.appData.iconCheckAll = '';
-						$scope.showPopup('views/templates/checksnot.html?ver=3.74', 'popAlert', true);
+						$scope.showPopup('views/templates/checksnot.html?ver=3.80', 'popAlert', true);
 						setTimeout(function () {
 							$scope.hidePopup();
 						}, 1500)

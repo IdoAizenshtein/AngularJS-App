@@ -66,10 +66,10 @@
                     </div>
                 </td>
                 <td>
-                    <div ng-if="a.COMPANY_NAME !== null">
-                        {{a.COMPANY_NAME}}
+                    <div ng-if="(!appData.defMonth.hideCompanyName ? a.COMPANY_NAME!== null : a.COMPANY_HP!== null)">
+	                    {{!appData.defMonth.hideCompanyName ? a.COMPANY_NAME : a.COMPANY_HP}}
                     </div>
-                    <div ng-if="a.COMPANY_NAME == null">
+                    <div ng-if="(!appData.defMonth.hideCompanyName ? a.COMPANY_NAME== null : a.COMPANY_HP== null)">
                         &nbsp;
                     </div>
                 </td>

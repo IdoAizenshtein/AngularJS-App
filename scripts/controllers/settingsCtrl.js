@@ -183,7 +183,7 @@
             });
         }
         $scope.changeAsimon = function () {
-            $scope.showPopup('views/templates/alertsPrevSetChangeAsimon.html?ver=3.74' + new Date().getTime(), 'alertsPrevChangeAsimon');
+            $scope.showPopup('views/templates/alertsPrevSetChangeAsimon.html?ver=3.80' + new Date().getTime(), 'alertsPrevChangeAsimon');
         }
         $scope.PAYMENT_TYPE_ID = function (PAYMENT_TYPE_ID) {
             switch (PAYMENT_TYPE_ID) {
@@ -208,7 +208,7 @@
                     index: index,
                     BILLING_ACCOUNT_ID: BILLING_ACCOUNT_ID
                 }
-                $scope.showPopup('views/templates/setPass.html?ver=3.74' + new Date().getTime(), 'set_sug_hiuv');
+                $scope.showPopup('views/templates/setPass.html?ver=3.80' + new Date().getTime(), 'set_sug_hiuv');
             } else {
                 $scope.hidePopup();
                 $scope.appData.user_get_billing_account[$scope.appData.add_discount_4item_4acc.index].get_discount_4item_4acc.push({
@@ -247,7 +247,7 @@
                     a: a,
                     index: index
                 }
-                $scope.showPopup('views/templates/setPass.html?ver=3.74' + new Date().getTime(), 'set_sug_hiuv');
+                $scope.showPopup('views/templates/setPass.html?ver=3.80' + new Date().getTime(), 'set_sug_hiuv');
             } else {
                 $scope.hidePopup();
                 serverConnection.cancel_discount_4item_4acc({
@@ -265,8 +265,8 @@
                     });
             }
         }
-        $scope.initPaymentScreen = function (){
-            if($scope.appData.savePositionScroll_paymentState){
+        $scope.initPaymentScreen = function () {
+            if ($scope.appData.savePositionScroll_paymentState) {
                 $('.bg-dark.scrollDesign').animate({scrollTop: $scope.appData.savePositionScroll_paymentState + "px"}, 10);
                 $scope.appData.savePositionScroll_paymentState = 0;
             }
@@ -274,7 +274,7 @@
         $scope.loadPayments = function () {
             serverConnection.get_item().then(function (data) {
                 $scope.appData.get_itemDropDown = data.filter(function (it) {
-                    return it.ITEM_ID === 40 || it.ITEM_ID === 41 || it.ITEM_ID === 42
+                    return it.ITEM_ID === 40 || it.ITEM_ID === 41 || it.ITEM_ID === 42 || it.ITEM_ID === 11 || it.ITEM_ID === 12 || it.ITEM_ID === 15 || it.ITEM_ID === 16
                 });
             }, function (error) {
             });
@@ -427,14 +427,14 @@
             } else {
                 $scope.appData.cardSettAcc = b.company_account_id;
             }
-            $scope.showPopup('views/templates/cardSett.html?ver=3.74' + new Date().getTime(), 'cardSettPop');
+            $scope.showPopup('views/templates/cardSett.html?ver=3.80' + new Date().getTime(), 'cardSettPop');
         }
 
 
         $scope.editDISCOUNT = function (a) {
             if (a) {
                 $scope.appData.editDISCOUNT = false;
-                $scope.showPopup('views/templates/setPass.html?ver=3.74' + new Date().getTime(), 'set_sug_hiuv');
+                $scope.showPopup('views/templates/setPass.html?ver=3.80' + new Date().getTime(), 'set_sug_hiuv');
             } else {
                 $scope.hidePopup();
                 $scope.appData.editDISCOUNT = true
@@ -484,7 +484,7 @@
                 }
             })
             serverConnection.userSetmsgtypeCat(data).then(function (res) {
-                $scope.showPopup('views/templates/apprSettingAlert.html?ver=3.74' + new Date().getTime(), 'popAlert', true);
+                $scope.showPopup('views/templates/apprSettingAlert.html?ver=3.80' + new Date().getTime(), 'popAlert', true);
                 setTimeout(function () {
                     $scope.hidePopup();
                 }, 1000)
@@ -706,47 +706,47 @@
         $scope.updateAccount = function (account) {
             $scope.appData.popupType = 0;
             $scope.appData.popupData = account;
-            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePopup');
+            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePopup');
         };
         $scope.updateCard = function (account) {
             $scope.appData.popupType = 1;
             $scope.appData.popupData = account;
-            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.74', 'accountUpdatePopup');
+            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.80', 'accountUpdatePopup');
         };
         $scope.updateSlika = function (account) {
             $scope.appData.popupType = 2;
             $scope.appData.popupData = account;
-            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.74', 'accountUpdatePopup');
+            $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.80', 'accountUpdatePopup');
         };
         $scope.updateAccountPassword = function (account) {
             $scope.appData.popupType = 0;
             $scope.appData.popupData = account;
             $scope.appData.popupTypeLink = false;
-            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
         };
         $scope.updateCardPassword = function (account) {
             $scope.appData.popupType = 1;
             $scope.appData.popupData = account;
             $scope.appData.popupTypeLink = false;
-            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
         };
         $scope.updateSlikaPassword = function (account) {
             $scope.appData.popupType = 2;
             $scope.appData.popupData = account;
             $scope.appData.popupTypeLink = false;
-            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
         };
         $scope.openBankAccountsPopup = function () {
             $scope.appData.popupType = 0;
-            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.74' + new Date().getTime(), 'regularOperationsPopup');
+            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.80' + new Date().getTime(), 'regularOperationsPopup');
         };
         $scope.openCardsPopup = function () {
             $scope.appData.popupType = 1;
-            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.74' + new Date().getTime(), 'regularOperationsPopup');
+            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.80' + new Date().getTime(), 'regularOperationsPopup');
         };
         $scope.openSlikaPopup = function () {
             $scope.appData.popupType = 2;
-            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.74' + new Date().getTime(), 'regularOperationsPopup');
+            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.80' + new Date().getTime(), 'regularOperationsPopup');
         };
         $scope.deleteNext = function () {
             $scope.hidePopup();
@@ -788,7 +788,7 @@
                 $scope.appData.deleteTokenToken = tokens.token;
                 $scope.appData.deleteTokenIndex = index;
                 $scope.appData.data = 1;
-                $scope.showPopup('views/templates/alerts.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alerts.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         };
         $scope.sethamlaza = function (dataType) {
@@ -812,7 +812,7 @@
             }
             if (dataType == true) {
                 $scope.appData.toggleChangeSet = false;
-                $scope.showPopup('views/templates/changeSettingsCheck.html?ver=3.74' + new Date().getTime(), 'changeSettingsCheck');
+                $scope.showPopup('views/templates/changeSettingsCheck.html?ver=3.80' + new Date().getTime(), 'changeSettingsCheck');
             } else {
                 var data = {
                     'companyId': $scope.appData.selectedCompany.companyId,
@@ -861,7 +861,7 @@
                 $scope.appData.deleteBankAccounttokenIndex = tokenIndex;
                 $scope.appData.deleteBankAccountaccountIndex = accountIndex;
                 $scope.appData.data = 2;
-                $scope.showPopup('views/templates/alerts.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alerts.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         };
         $scope.deleteCreditCard = function (account, tokenIndex, accountIndex) {
@@ -881,7 +881,7 @@
                 $scope.appData.deleteCreditCardaccountIndex = accountIndex;
 
                 $scope.appData.data = 3;
-                $scope.showPopup('views/templates/alerts.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alerts.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         };
         $scope.deleteCreditCardInside = function (account, tokenIndex, accountIndex, cardIndex) {
@@ -900,7 +900,7 @@
                 $scope.appData.deleteCreditCardIndexInside = cardIndex;
 
                 $scope.appData.data = 5;
-                $scope.showPopup('views/templates/alerts.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alerts.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         };
         $scope.deleteSlika = function (account, tokenIndex, accountIndex) {
@@ -920,7 +920,7 @@
                 $scope.appData.deleteSlikatokenIndex = tokenIndex;
                 $scope.appData.deleteSlikaaccountIndex = accountIndex;
                 $scope.appData.data = 4;
-                $scope.showPopup('views/templates/alerts.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alerts.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
 
 
@@ -1052,15 +1052,15 @@
                 if ($scope.appData.typeForPopUpCompaiesTab === 'edit') {
                     $scope.appData.editCompaniesTab = false;
                 } else if ($scope.appData.typeForPopUpCompaiesTab === 'delete') {
-                    $scope.showPopup('views/templates/alertsDeleteSettComAcc.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                    $scope.showPopup('views/templates/alertsDeleteSettComAcc.html?ver=3.80' + new Date().getTime(), 'alerts', true);
                 }
             }
         };
 
-        $scope.openBillingPopPassSwitch = function (a){
+        $scope.openBillingPopPassSwitch = function (a) {
             $scope.appData.typePopPasswordFormSwitchEx = a;
             if ($scope.appData.adminSoft) {
-                $scope.showPopup('views/templates/showPopPasswordFormSwitchEx.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+                $scope.showPopup('views/templates/showPopPasswordFormSwitchEx.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
             } else {
                 $scope.openBillingPop($scope.appData.typePopPasswordFormSwitchEx);
             }
@@ -1071,9 +1071,9 @@
                 $scope.openBillingPop($scope.appData.typePopPasswordFormSwitchEx);
             }
         };
-        $scope.openBillingPopPass = function (){
+        $scope.openBillingPopPass = function () {
             if ($scope.appData.adminSoft) {
-                $scope.showPopup('views/templates/showPopPasswordFormAddPaymentMethod.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+                $scope.showPopup('views/templates/showPopPasswordFormAddPaymentMethod.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
             } else {
                 $scope.openBillingPop(null);
             }
@@ -1086,7 +1086,7 @@
         };
         $scope.editCompaniesTabClick = function () {
             $scope.appData.typeForPopUpCompaiesTab = 'edit';
-            $scope.showPopup('views/templates/showPopPasswordForm.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+            $scope.showPopup('views/templates/showPopPasswordForm.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
         };
         $scope.update_company = function (settingsCompaniesForm) {
             if ($scope.appData.dataCompanyDet.EXPIRATION_DATE_PIC == null) {
@@ -1168,7 +1168,7 @@
             serverConnection.get_item().then(function (res) {
                 $scope.appData.itemCollectetions = res;
                 if (!param) {
-                    $scope.showPopup('views/templates/addItemCollectionSett.html?ver=3.74' + new Date().getTime(), 'addItemCollectionSett');
+                    $scope.showPopup('views/templates/addItemCollectionSett.html?ver=3.80' + new Date().getTime(), 'addItemCollectionSett');
                 }
                 $scope.appData.itemCollectetionsLoader = false;
             }, function (error) {
@@ -1260,7 +1260,7 @@
         }
         $scope.openEditCardPays = function () {
             $scope.appData.billingAccountsLoader = true;
-            $scope.showPopup('views/templates/setCardUserCompany.html?ver=3.74' + new Date().getTime(), 'setAccUser');
+            $scope.showPopup('views/templates/setCardUserCompany.html?ver=3.80' + new Date().getTime(), 'setAccUser');
             serverConnection.get_billing_accounts().then(function (res) {
                 $scope.appData.listBillingAccounts = res;
                 $scope.appData.billingAccountsLoader = false;
@@ -1281,7 +1281,7 @@
         }
         $scope.deleteCompaniesTab = function () {
             $scope.appData.typeForPopUpCompaiesTab = 'delete';
-            $scope.showPopup('views/templates/showPopPasswordForm.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+            $scope.showPopup('views/templates/showPopPasswordForm.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
         }
         $scope.deleteCompaniesTabAppr = function () {
             $scope.hidePopup();
@@ -1373,7 +1373,7 @@
         }
         $scope.changePasswordToDefault = function (id) {
             $scope.appData.resetPassIdSett = id;
-            $scope.showPopup('views/templates/alertsResetPass.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+            $scope.showPopup('views/templates/alertsResetPass.html?ver=3.80' + new Date().getTime(), 'alerts', true);
         }
         $scope.changePasswordToDefaultAppr = function () {
             $scope.hidePopup();
@@ -1439,7 +1439,7 @@
                     }
                 ]
             }
-            $scope.showPopup('views/templates/popupRunTypeSett.html?ver=3.74' + new Date().getTime(), 'popupRunType');
+            $scope.showPopup('views/templates/popupRunTypeSett.html?ver=3.80' + new Date().getTime(), 'popupRunType');
         }
         $scope.playRunType = function () {
             var sum = 0;
@@ -1535,7 +1535,7 @@
                 incheckpic_days: false,
                 intoken: token
             }
-            $scope.showPopup('views/templates/tokenUpdatedatesmeshicha.html?ver=3.74' + new Date().getTime(), 'tokenUpdatedatesmeshicha');
+            $scope.showPopup('views/templates/tokenUpdatedatesmeshicha.html?ver=3.80' + new Date().getTime(), 'tokenUpdatedatesmeshicha');
         }
         $scope.token_updatedatesmeshicha = function () {
             function matchBetweenDates(firstDates) {
@@ -1586,7 +1586,7 @@
                         $scope.appData.usersWorkVal.priority = v.QA_TASK_PRIORTY_ID;
                     }
                 })
-                $scope.showPopup('views/templates/addTask.html?ver=3.74' + new Date().getTime(), 'addTask');
+                $scope.showPopup('views/templates/addTask.html?ver=3.80' + new Date().getTime(), 'addTask');
             });
         }
         $scope.qa_task_add = function () {
@@ -1632,7 +1632,7 @@
                     }
                 })
             });
-            $scope.showPopup('views/templates/accConsolidation.html?ver=3.74' + new Date().getTime(), 'setAccUser');
+            $scope.showPopup('views/templates/accConsolidation.html?ver=3.80' + new Date().getTime(), 'setAccUser');
         };
         $scope.openConsolidationCards = function (editable, id) {
             if (!editable.editable) {
@@ -1696,7 +1696,7 @@
         $scope.setAccConsolidation = function (val) {
             if (val) {
                 $scope.hidePopup();
-                $scope.showPopup('views/templates/alertsConsolidation.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alertsConsolidation.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         };
         $scope.openTranfer = function (id, type) {
@@ -1704,7 +1704,7 @@
             $scope.appData.accTranferLoader = true;
             if (type) {
                 $scope.appData.accTranferList = angular.copy($scope.appData.companies);
-                $scope.showPopup('views/templates/accTranferSolek.html?ver=3.74' + new Date().getTime(), 'setAccUser');
+                $scope.showPopup('views/templates/accTranferSolek.html?ver=3.80' + new Date().getTime(), 'setAccUser');
                 $scope.appData.accTranferLoader = false;
             } else {
                 serverConnection.get_all_company().then(function (res) {
@@ -1714,19 +1714,19 @@
                     $scope.appData.accTranferLoader = false;
                     alert("שגיאה בקבלת הנתונים");
                 });
-                $scope.showPopup('views/templates/accTranfer.html?ver=3.74' + new Date().getTime(), 'setAccUser');
+                $scope.showPopup('views/templates/accTranfer.html?ver=3.80' + new Date().getTime(), 'setAccUser');
             }
         };
         $scope.setTransfers = function (val) {
             if (val) {
                 $scope.hidePopup();
-                $scope.showPopup('views/templates/alertsTransfers.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alertsTransfers.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         }
         $scope.setTransfersSolek = function (val) {
             if (val) {
                 $scope.hidePopup();
-                $scope.showPopup('views/templates/alertsTransfersSolek.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+                $scope.showPopup('views/templates/alertsTransfersSolek.html?ver=3.80' + new Date().getTime(), 'alerts', true);
             }
         }
         $scope.setApprove = function (type) {
@@ -1825,7 +1825,7 @@
                 text = name;
             }
             $scope.appData.userIndNameId = text;
-            $scope.showPopup('views/templates/nameUserId.html?ver=3.74' + new Date().getTime(), 'nameUserId');
+            $scope.showPopup('views/templates/nameUserId.html?ver=3.80' + new Date().getTime(), 'nameUserId');
         }
         $scope.appData.loaderPopSett = true;
         $scope.openSettingsTeam = function (name, id) {
@@ -1833,7 +1833,7 @@
             $scope.appData.showItemPopInsidePassword = false;
 
             $scope.appData.teamSettings = [];
-            $scope.showPopup('views/templates/popupSettingsTeamsSett.html?ver=3.74' + new Date().getTime(), 'popupSettingsTeams');
+            $scope.showPopup('views/templates/popupSettingsTeamsSett.html?ver=3.80' + new Date().getTime(), 'popupSettingsTeams');
             $scope.appData.childUserIdPopUpSett = {'id': id, 'name': name};
             serverConnection.get_all_company(id).then(function (res) {
                 $scope.appData.teamSettings = res;
@@ -1979,6 +1979,64 @@
             }, function (error) {
             });
         }
+        $scope.get_billing_payment_jt_details_hide = function () {
+            if ($scope.show_rows_popup) {
+                $scope.show_rows_popup = false;
+            } else {
+                $scope.get_billing_payment_jt_details_data = false;
+            }
+        }
+        $scope.get_billing_payment_jt_details = function (BILLING_ACCOUNT_ID, $event) {
+            // BILLING_ACCOUNT_ID = 'F63B354ADF4C38ABE0530100007F6481'
+            serverConnection.get_billing_payment_jt_details(BILLING_ACCOUNT_ID).then(function (data) {
+                var objAll = {}
+                data.forEach(function (item) {
+                    if (!objAll[item.COMPANY_ID]) {
+                        objAll[item.COMPANY_ID] = JSON.parse(JSON.stringify(item));
+                        objAll[item.COMPANY_ID].rows = [JSON.parse(JSON.stringify(item))];
+                    } else {
+                        objAll[item.COMPANY_ID].rows.push(JSON.parse(JSON.stringify(item)));
+                        objAll[item.COMPANY_ID].TOTAL_JRNL_TRNS_FOR_BILL += JSON.parse(JSON.stringify(item)).TOTAL_JRNL_TRNS_FOR_BILL;
+                        objAll[item.COMPANY_ID].TOTAL_PAYMENT_FOR_JT += JSON.parse(JSON.stringify(item)).TOTAL_PAYMENT_FOR_JT;
+                    }
+                })
+                var arrayData = Object.values(objAll);
+                var sum = arrayData.reduce(function (sum, value) {
+                    return sum + value.SUM_TOTAL_PAYMENT_FOR_JT
+                }, 0);
+                console.log(arrayData, sum)
+                var rect = $event.target.getBoundingClientRect();
+                var setTop = (rect.top + window.scrollY) - 32;
+                var tableHeight = (62.21 + ((arrayData.length * 31.9) > 223.3 ? 223.3 : (arrayData.length * 31.9)));
+                var spaceFromBottom = (window.innerHeight - setTop);
+                // if((window.innerHeight - setTop) < )
+                $scope.get_billing_payment_jt_details_data = {
+                    arrayData: arrayData,
+                    sum: sum,
+                    left: (rect.left + window.scrollX) - 217 + 'px',
+                }
+                if ((spaceFromBottom - 45) > (tableHeight)) {
+                    $scope.get_billing_payment_jt_details_data.top = setTop + 'px';
+                } else {
+                    $scope.get_billing_payment_jt_details_data.top = setTop - tableHeight - 31 + 'px';
+                }
+            }, function (error) {
+            });
+        }
+        $scope.show_rows = function (item, event) {
+            var rect = event.target.getBoundingClientRect();
+            var setTop = (rect.top + window.scrollY) - 32;
+            var tableHeight = (48 + ((item.rows.length * 23) > 200 ? 200 : (item.rows.length * 23)));
+            var spaceFromBottom = (window.innerHeight - setTop);
+            $scope.show_rows_popup = !$scope.show_rows_popup ? JSON.parse(JSON.stringify(item)) : false;
+            if ($scope.show_rows_popup) {
+                if ((spaceFromBottom - 45) > (tableHeight)) {
+                    $scope.show_rows_popup.top = setTop + 'px';
+                } else {
+                    $scope.show_rows_popup.top = setTop - tableHeight - 29 + 'px';
+                }
+            }
+        }
         $scope.openBillingPop = function (biling_account, type) {
             if (biling_account === null) {
                 $scope.appData.openBillingPop = false;
@@ -1990,9 +2048,9 @@
                 $scope.appData.billingAccountNow = biling_account;
             }
             if ($scope.appData.adminSoft) {
-                $scope.showPopup('views/templates/billingPop.html?ver=3.74' + new Date().getTime(), 'billingPop isAdmin');
+                $scope.showPopup('views/templates/billingPop.html?ver=3.80' + new Date().getTime(), 'billingPop isAdmin');
             } else {
-                $scope.showPopup('views/templates/billingPop.html?ver=3.74' + new Date().getTime(), 'billingPop noAdmin');
+                $scope.showPopup('views/templates/billingPop.html?ver=3.80' + new Date().getTime(), 'billingPop noAdmin');
             }
         }
         $scope.openBillingCheckPop = function (biling_Dea) {
@@ -2021,7 +2079,7 @@
             };
             $scope.appData.billingAccountCheckNowSum = biling_Dea.COMPANY_NEXT_PAYMENT_TOTAL;
             $scope.appData.billingAccountCheckNowDate = biling_Dea.COMPANY_NEXT_PAYMENT_DATE;
-            $scope.showPopup('views/templates/billingCheckPop.html?ver=3.74' + new Date().getTime(), 'billingCheckPop');
+            $scope.showPopup('views/templates/billingCheckPop.html?ver=3.80' + new Date().getTime(), 'billingCheckPop');
         }
         $scope.billing_account_set_cheque = function (data, forms) {
             if (forms.$valid) {
@@ -2041,7 +2099,7 @@
                 "paymentDate": "",
                 "billingAccountId": biling_Dea.BILLING_ACCOUNT_ID
             };
-            $scope.showPopup('views/templates/create_billing_invoicePop.html?ver=3.74' + new Date().getTime(), 'billingCheckPop short create_billing_invoicePop');
+            $scope.showPopup('views/templates/create_billing_invoicePop.html?ver=3.80' + new Date().getTime(), 'billingCheckPop short create_billing_invoicePop');
         }
 
         $scope.create_billing_invoice = function (data, forms) {
@@ -2077,11 +2135,11 @@
             };
             $scope.appData.billingAccountCheckNowSum = biling_Dea.COMPANY_NEXT_PAYMENT_TOTAL;
             $scope.appData.billingAccountCheckNowDate = biling_Dea.COMPANY_NEXT_PAYMENT_DATE;
-            $scope.showPopup('views/templates/billingTransferPop.html?ver=3.74' + new Date().getTime(), 'billingCheckPop short');
+            $scope.showPopup('views/templates/billingTransferPop.html?ver=3.80' + new Date().getTime(), 'billingCheckPop short');
         }
         $scope.openChangeuserPop = function (biling_Dea) {
             $scope.appData.listUserAccountantsLoader = true;
-            $scope.showPopup('views/templates/changeuserPop.html?ver=3.74', 'setAccUser');
+            $scope.showPopup('views/templates/changeuserPop.html?ver=3.80', 'setAccUser');
             $scope.appData.changeuserPop = {
                 fromUserId: $scope.appData.get_accountant_det.USER_ID,
                 toUserId: null,
@@ -2154,7 +2212,7 @@
         $scope.billing_account_delete = function (BILLING_ACCOUNT_ID) {
             $scope.appData.BILLING_TYPE_NEXT = 'BILLING_ACCOUNT_ID';
             $scope.appData.BILLING_ACCOUNT_ID = BILLING_ACCOUNT_ID;
-            $scope.showPopup('views/templates/alertHiuvim.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/alertHiuvim.html?ver=3.80', 'alerts', true);
         }
 
         $scope.billing_account_getitems = function (BILLING_ACCOUNT_ID) {
@@ -2164,7 +2222,7 @@
             };
             serverConnection.billing_account_getitems(data).then(function (data) {
                 $scope.appData.billing_account_getitems = data;
-                $scope.showPopup('views/templates/billingPopDeat.html?ver=3.74' + new Date().getTime(), 'billingPopDeat' + ($scope.appData.adminSoft ? ' pagePopDeatBillAdmin' : ''));
+                $scope.showPopup('views/templates/billingPopDeat.html?ver=3.80' + new Date().getTime(), 'billingPopDeat' + ($scope.appData.adminSoft ? ' pagePopDeatBillAdmin' : ''));
             }, function (error) {
             });
         }
@@ -2179,13 +2237,13 @@
             };
             serverConnection.billing_account_getitems(data).then(function (data) {
                 $scope.appData.billing_account_getitems = data;
-                $scope.showPopup('views/templates/billingPopDeat.html?ver=3.74' + new Date().getTime(), 'billingPopDeat' + ($scope.appData.adminSoft ? ' pagePopDeatBillAdmin' : ''));
+                $scope.showPopup('views/templates/billingPopDeat.html?ver=3.80' + new Date().getTime(), 'billingPopDeat' + ($scope.appData.adminSoft ? ' pagePopDeatBillAdmin' : ''));
             }, function (error) {
             });
         }
         $scope.set_default_user_id = function (id) {
             $scope.appData.set_default_user_id_def = id;
-            $scope.showPopup('views/templates/set_default_user_id.html?ver=3.74' + new Date().getTime(), 'payment_cancel');
+            $scope.showPopup('views/templates/set_default_user_id.html?ver=3.80' + new Date().getTime(), 'payment_cancel');
         }
         $scope.set_default_user_id_def = function (showPopPasswordFormCancel) {
             if (showPopPasswordFormCancel.$valid) {
@@ -2203,7 +2261,7 @@
         }
         $scope.showPopCancelPay = function (id) {
             $scope.appData.BILLING_PAYMENT_ID = id;
-            $scope.showPopup('views/templates/payment_cancel.html?ver=3.74' + new Date().getTime(), 'payment_cancel');
+            $scope.showPopup('views/templates/payment_cancel.html?ver=3.80' + new Date().getTime(), 'payment_cancel');
         }
         $scope.payment_cancel = function (showPopPasswordFormCancel) {
             if (showPopPasswordFormCancel.$valid) {
@@ -2263,7 +2321,7 @@
             $scope.appData.existing_company_calc_mail = a;
             $scope.appData.loaderPopSett = true;
             $scope.appData.titleDtlsPay = "פירוט חשבונית " + b.INVOICE_NUMBER + " לתאריך " + b.PAYMENT_DATE + " ע״ס  " + b.SUMTOBILL + " כולל מע״מ";
-            $scope.showPopup('views/templates/paymentGetItemsDtls.html?ver=3.74', 'paymentGetItemsDtls');
+            $scope.showPopup('views/templates/paymentGetItemsDtls.html?ver=3.80', 'paymentGetItemsDtls');
             var data = {
                 billing_payment_id: b.BILLING_PAYMENT_ID
             }
@@ -2281,7 +2339,7 @@
             $scope.appData.mailerAddrSett = a;
             $scope.appData.errorSenderMailerExcel = "";
             $scope.appData.loaderMailerPop = false;
-            $scope.showPopup('views/templates/mailerSettHiuvim.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerSettHiuvim.html?ver=3.80', 'mailerPopup', false);
         }
         $scope.sending_billing_send_invoice_mail = function () {
             var data = Object.assign({emailAddress: $scope.appData.mailerAddrSett}, $scope.appData.billing_send_invoice_mail);
@@ -2295,7 +2353,7 @@
             });
         };
         $scope.scrollHeightTable = 250;
-        $scope.scrollHeightTableInside = 400;
+        $scope.scrollHeightTableInside = 405;
         $scope.currentPage = 1; //current page
         if (!localStorage.getItem('entryLimit')) {
             $scope.entryLimit = 50;
@@ -2386,7 +2444,7 @@
         $scope.editCompanyPayment = function (a) {
             $scope.appData.BILLING_TYPE_NEXT = 'update_billing_next_date';
             $scope.appData.BILLING_update_billing_next_date = a;
-            $scope.showPopup('views/templates/alertHiuvim.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/alertHiuvim.html?ver=3.80', 'alerts', true);
         }
         $scope.existing_company_calc = function () {
             $scope.loaderSettPays = true;
@@ -2509,22 +2567,22 @@
         $scope.sendMailer = function () {
             $scope.appData.errorSenderMailerExcel = "";
             $scope.appData.loaderMailerPop = false;
-            $scope.showPopup('views/templates/mailerHiuvim.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerHiuvim.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.sendMailerClients = function () {
             $scope.appData.errorSenderMailerExcel = "";
             $scope.appData.loaderMailerPop = false;
-            $scope.showPopup('views/templates/mailerClients.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerClients.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.sendMailerClientsPoten = function () {
             $scope.appData.errorSenderMailerExcel = "";
             $scope.appData.loaderMailerPop = false;
-            $scope.showPopup('views/templates/mailerClientsPoten.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerClientsPoten.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.sendMailerPays = function () {
             $scope.appData.errorSenderMailerExcel = "";
             $scope.appData.loaderMailerPop = false;
-            $scope.showPopup('views/templates/mailerClientsPays.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerClientsPays.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.sort_by_client = function (predicate) {
             //$scope.ignore = false;

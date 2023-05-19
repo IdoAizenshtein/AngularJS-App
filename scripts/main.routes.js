@@ -1,6 +1,6 @@
 (function () {
     function routes($locationProvider, $httpProvider, $stateProvider, $urlRouterProvider, $provide, $compileProvider, $ocLazyLoadProvider) {
-        //$locationProvider.html?ver=3.745Mode({
+        //$locationProvider.html?ver=3.805Mode({
         //	enabled: true,
         //	requireBase: false
         //});
@@ -25,14 +25,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'loginCtrl',
-                        templateUrl: 'views/login.html?ver=3.74'
+                        templateUrl: 'views/login.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/loginCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/loginCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -48,14 +48,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'loginCtrl',
-                        templateUrl: 'views/promo.html?ver=3.74'
+                        templateUrl: 'views/promo.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/loginCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/loginCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -68,14 +68,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'signupCtrl',
-                        templateUrl: 'views/signup.html?ver=3.74'
+                        templateUrl: 'views/signup.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/signupCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/signupCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -86,7 +86,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/signup/step1.html?ver=3.74"
+                        templateUrl: "views/signup/step1.html?ver=3.80"
                     }
                 },
                 data: {pageTitle: 'bizibox'}
@@ -97,7 +97,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/signup/step2.html?ver=3.74"
+                        templateUrl: "views/signup/step2.html?ver=3.80"
                     }
                 },
                 data: {pageTitle: 'bizibox'}
@@ -108,7 +108,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/signup/step3.html?ver=3.74"
+                        templateUrl: "views/signup/step3.html?ver=3.80"
                     }
                 },
                 data: {pageTitle: 'bizibox'}
@@ -121,14 +121,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'alertsCtrl',
-                        templateUrl: 'views/allAlerts.html?ver=3.74'
+                        templateUrl: 'views/allAlerts.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/alertsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/alertsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -141,14 +141,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'forgotPasswordCtrl',
-                        templateUrl: 'views/forgotPassword.html?ver=3.74'
+                        templateUrl: 'views/forgotPassword.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/forgotPasswordCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/forgotPasswordCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -161,14 +161,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'settingsCtrl',
-                        templateUrl: 'views/settings.html?ver=3.74'
+                        templateUrl: 'views/settings.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/settingsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/settingsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -179,7 +179,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.accounts.html?ver=3.74"
+                        templateUrl: "views/settings.accounts.html?ver=3.80"
                     }
                 },
                 data: {pageTitle: 'bizibox'}
@@ -190,7 +190,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.changePassword.html?ver=3.74"
+                        templateUrl: "views/settings.changePassword.html?ver=3.80"
                     }
                 },
                 data: {pageTitle: 'bizibox'}
@@ -201,7 +201,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.alerts.html?ver=3.74"
+                        templateUrl: "views/settings.alerts.html?ver=3.80"
                     }
                 }
             })
@@ -211,7 +211,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.cards.html?ver=3.74"
+                        templateUrl: "views/settings.cards.html?ver=3.80"
                     }
                 }
             })
@@ -221,7 +221,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.about.html?ver=3.74"
+                        templateUrl: "views/settings.about.html?ver=3.80"
                     }
                 }
             })
@@ -231,7 +231,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.companies.html?ver=3.74"
+                        templateUrl: "views/settings.companies.html?ver=3.80"
                     }
                 }
             })
@@ -241,7 +241,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.users.html?ver=3.74"
+                        templateUrl: "views/settings.users.html?ver=3.80"
                     }
                 }
             })
@@ -251,7 +251,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.payments.html?ver=3.74"
+                        templateUrl: "views/settings.payments.html?ver=3.80"
                     }
                 }
             })
@@ -262,7 +262,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.payments.payments.html?ver=3.74"
+                        templateUrl: "views/settings.payments.payments.html?ver=3.80"
                     }
                 }
             })
@@ -272,7 +272,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.payments.details.html?ver=3.74"
+                        templateUrl: "views/settings.payments.details.html?ver=3.80"
                     }
                 }
             })
@@ -282,7 +282,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.payments.clients.html?ver=3.74"
+                        templateUrl: "views/settings.payments.clients.html?ver=3.80"
                     }
                 }
             })
@@ -292,7 +292,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/settings.payments.potentialCustomers.html?ver=3.74"
+                        templateUrl: "views/settings.payments.potentialCustomers.html?ver=3.80"
                     }
                 }
             })
@@ -304,14 +304,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'regularOperationsCtrl',
-                        templateUrl: 'views/regularOperations.html?ver=3.74'
+                        templateUrl: 'views/regularOperations.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/regularOperationsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/regularOperationsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -324,14 +324,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'periodicalCtrl',
-                        templateUrl: 'views/periodical.html?ver=3.74'
+                        templateUrl: 'views/periodical.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/periodicalCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/periodicalCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -344,14 +344,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'fundMGMTCtrl',
-                        templateUrl: 'views/funds.html?ver=3.74'
+                        templateUrl: 'views/funds.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/fundMGMTCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/fundMGMTCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -364,14 +364,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'fundMGMTAccountsCtrl',
-                        templateUrl: 'views/fundMGMTAccounts.html?ver=3.74'
+                        templateUrl: 'views/fundMGMTAccounts.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/fundMGMTAccountsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/fundMGMTAccountsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -383,7 +383,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/fundBankAccountsTable.html?ver=3.74"
+                        templateUrl: "views/fundBankAccountsTable.html?ver=3.80"
                     }
                 }
             })
@@ -394,7 +394,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/fundBankAccountsGraph.html?ver=3.74"
+                        templateUrl: "views/fundBankAccountsGraph.html?ver=3.80"
                     }
                 }
             })
@@ -406,14 +406,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'fundMGMTSlikaCtrl',
-                        templateUrl: 'views/fundMGMTSlika.html?ver=3.74'
+                        templateUrl: 'views/fundMGMTSlika.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/fundMGMTSlikaCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/fundMGMTSlikaCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -425,7 +425,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: 'views/fundSlikaTable.html?ver=3.74'
+                        templateUrl: 'views/fundSlikaTable.html?ver=3.80'
                     }
                 }
             })
@@ -436,7 +436,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/fundSlikaGraph.html?ver=3.74"
+                        templateUrl: "views/fundSlikaGraph.html?ver=3.80"
                     }
                 }
             })
@@ -448,14 +448,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'fundMGMTCardsCtrl',
-                        templateUrl: 'views/fundMGMTCards.html?ver=3.74'
+                        templateUrl: 'views/fundMGMTCards.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/fundMGMTCardsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/fundMGMTCardsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -467,7 +467,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/fundCardsTable.html?ver=3.74"
+                        templateUrl: "views/fundCardsTable.html?ver=3.80"
                     }
                 }
             })
@@ -478,7 +478,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/fundCardsGraph.html?ver=3.74"
+                        templateUrl: "views/fundCardsGraph.html?ver=3.80"
                     }
                 }
             })
@@ -490,14 +490,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'generalCtrl',
-                        templateUrl: 'views/general.html?ver=3.74'
+                        templateUrl: 'views/general.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/generalCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/generalCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -510,14 +510,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'generalFundsCtrl',
-                        templateUrl: 'views/generalFunds.html?ver=3.74'
+                        templateUrl: 'views/generalFunds.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/generalFundsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/generalFundsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -529,7 +529,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: 'views/generalFunds.html?ver=3.74'
+                        templateUrl: 'views/generalFunds.html?ver=3.80'
                     }
                 }
             })
@@ -541,14 +541,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'generalAccountant',
-                        templateUrl: 'views/generalAccountant.html?ver=3.74'
+                        templateUrl: 'views/generalAccountant.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/generalAccountant.js?ver=3.74']
+                            files: ['scripts/controllers/generalAccountant.js?ver=3.80']
                         });
                     }]
                 }
@@ -561,14 +561,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'tazrimCtrl',
-                        templateUrl: 'views/tazrim.html?ver=3.74'
+                        templateUrl: 'views/tazrim.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/tazrimCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/tazrimCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -581,14 +581,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'analysisCtrl',
-                        templateUrl: 'views/analysis.html?ver=3.74'
+                        templateUrl: 'views/analysis.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/analysisCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/analysisCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -601,14 +601,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'trialBalanceCtrl',
-                        templateUrl: 'views/trialBalance.html?ver=3.74'
+                        templateUrl: 'views/trialBalance.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/trialBalanceCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/trialBalanceCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -621,14 +621,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'bankMatchCtrl',
-                        templateUrl: 'views/bankMatch.html?ver=3.74'
+                        templateUrl: 'views/bankMatch.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/bankMatchCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/bankMatchCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -640,7 +640,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/setBankMatch.html?ver=3.74"
+                        templateUrl: "views/setBankMatch.html?ver=3.80"
                     }
                 }
             })
@@ -651,7 +651,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/cancelBankMatch.html?ver=3.74"
+                        templateUrl: "views/cancelBankMatch.html?ver=3.80"
                     }
                 }
             })
@@ -663,14 +663,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'tazrimMeuhadCtrl',
-                        templateUrl: 'views/tazrimMeuhad.html?ver=3.74'
+                        templateUrl: 'views/tazrimMeuhad.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/tazrimMeuhadCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/tazrimMeuhadCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -682,7 +682,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/tazrimMeuhadTable.html?ver=3.74"
+                        templateUrl: "views/tazrimMeuhadTable.html?ver=3.80"
                     }
                 }
             })
@@ -693,7 +693,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/tazrimMeuhadGraph.html?ver=3.74"
+                        templateUrl: "views/tazrimMeuhadGraph.html?ver=3.80"
                     }
                 }
             })
@@ -705,14 +705,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'regularOpCtrl',
-                        templateUrl: 'views/regularOp.html?ver=3.74'
+                        templateUrl: 'views/regularOp.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/regularOpCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/regularOpCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -724,7 +724,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/regularOpCube.html?ver=3.74"
+                        templateUrl: "views/regularOpCube.html?ver=3.80"
                     }
                 }
             })
@@ -735,7 +735,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/regularOpGraph.html?ver=3.74"
+                        templateUrl: "views/regularOpGraph.html?ver=3.80"
                     }
                 }
             })
@@ -746,7 +746,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/regularOpTable.html?ver=3.74"
+                        templateUrl: "views/regularOpTable.html?ver=3.80"
                     }
                 }
             })
@@ -758,14 +758,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'reportCtrl',
-                        templateUrl: 'views/report.html?ver=3.74'
+                        templateUrl: 'views/report.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/reportCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/reportCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -778,14 +778,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'checksAnalysisCtrl',
-                        templateUrl: 'views/checksAnalysis.html?ver=3.74'
+                        templateUrl: 'views/checksAnalysis.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/checksAnalysisCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/checksAnalysisCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -798,14 +798,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'mainAccountCtrl',
-                        templateUrl: "views/mainAccountants.html?ver=3.74"
+                        templateUrl: "views/mainAccountants.html?ver=3.80"
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/mainAccountCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/mainAccountCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -818,14 +818,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'mainAccountantsCtrl',
-                        templateUrl: "views/mainAcc.html?ver=3.74"
+                        templateUrl: "views/mainAcc.html?ver=3.80"
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/mainAccountantsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/mainAccountantsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -838,14 +838,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'companysCtrl',
-                        templateUrl: 'views/companys.html?ver=3.74'
+                        templateUrl: 'views/companys.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/companysCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/companysCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -857,7 +857,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/companysCube.html?ver=3.74"
+                        templateUrl: "views/companysCube.html?ver=3.80"
                     }
                 }
             })
@@ -868,7 +868,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/companysTable.html?ver=3.74"
+                        templateUrl: "views/companysTable.html?ver=3.80"
                     }
                 }
             })
@@ -880,14 +880,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'exportHashvCtrl',
-                        templateUrl: 'views/exportHashv.html?ver=3.74'
+                        templateUrl: 'views/exportHashv.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/exportHashvCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/exportHashvCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -900,14 +900,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'ocrLandingPageCtrl',
-                        templateUrl: 'views/ocrLandingPage.html?ver=3.74'
+                        templateUrl: 'views/ocrLandingPage.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/ocrLandingPageCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/ocrLandingPageCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -920,14 +920,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'ocrLandingPageCtrl',
-                        templateUrl: 'views/ocrLandingPage.html?ver=3.74'
+                        templateUrl: 'views/ocrLandingPage.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/ocrLandingPageCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/ocrLandingPageCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -940,14 +940,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'managementTeamCtrl',
-                        templateUrl: 'views/managementTeam.html?ver=3.74'
+                        templateUrl: 'views/managementTeam.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/managementTeamCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/managementTeamCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -960,14 +960,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'mainAccountantsCardsCtrl',
-                        templateUrl: 'views/mainAccountantsCards.html?ver=3.74'
+                        templateUrl: 'views/mainAccountantsCards.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/mainAccountantsCardsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/mainAccountantsCardsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -980,14 +980,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'managerAccCtrl',
-                        templateUrl: 'views/managerAcc.html?ver=3.74'
+                        templateUrl: 'views/managerAcc.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/managerAccCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/managerAccCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -999,7 +999,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/mainAccountants.managerAcc.companyDetails.html?ver=3.74"
+                        templateUrl: "views/mainAccountants.managerAcc.companyDetails.html?ver=3.80"
                     }
                 }
             })
@@ -1010,7 +1010,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/mainAccountants.managerAcc.office.html?ver=3.74"
+                        templateUrl: "views/mainAccountants.managerAcc.office.html?ver=3.80"
                     }
                 }
             })
@@ -1022,14 +1022,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'reportsAccCtrl',
-                        templateUrl: 'views/reportsAcc.html?ver=3.74'
+                        templateUrl: 'views/reportsAcc.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/reportsAccCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/reportsAccCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1041,7 +1041,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/reportsAccMain.html?ver=3.74"
+                        templateUrl: "views/reportsAccMain.html?ver=3.80"
                     }
                 }
             })
@@ -1052,7 +1052,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/expenseMissingReportTable.html?ver=3.74"
+                        templateUrl: "views/expenseMissingReportTable.html?ver=3.80"
                     }
                 }
             })
@@ -1063,7 +1063,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/expenseChangedReportTable.html?ver=3.74"
+                        templateUrl: "views/expenseChangedReportTable.html?ver=3.80"
                     }
                 }
             })
@@ -1074,7 +1074,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/typingReportTable.html?ver=3.74"
+                        templateUrl: "views/typingReportTable.html?ver=3.80"
                     }
                 }
             })
@@ -1085,7 +1085,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/matchReportTable.html?ver=3.74"
+                        templateUrl: "views/matchReportTable.html?ver=3.80"
                     }
                 }
             })
@@ -1097,14 +1097,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'bankDataManagementCtrl',
-                        templateUrl: 'views/bankDataManagement.html?ver=3.74'
+                        templateUrl: 'views/bankDataManagement.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/bankDataManagementCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/bankDataManagementCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1116,7 +1116,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/mainBankDataManagementView.html?ver=3.74"
+                        templateUrl: "views/mainBankDataManagementView.html?ver=3.80"
                     }
                 }
             })
@@ -1127,7 +1127,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/reportsManagement.html?ver=3.74",
+                        templateUrl: "views/reportsManagement.html?ver=3.80",
                     }
                 }
             })
@@ -1139,14 +1139,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'poalimAsakimCtrl',
-                        templateUrl: 'views/poalimAsakim.html?ver=3.74'
+                        templateUrl: 'views/poalimAsakim.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/poalimAsakimCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/poalimAsakimCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1159,14 +1159,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'spiderListCtrl',
-                        templateUrl: 'views/spiderList.html?ver=3.74'
+                        templateUrl: 'views/spiderList.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/spiderListCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/spiderListCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1179,14 +1179,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'manageWithdrawalsCtrl',
-                        templateUrl: 'views/manageWithdrawals.html?ver=3.74'
+                        templateUrl: 'views/manageWithdrawals.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/manageWithdrawalsCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/manageWithdrawalsCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1199,14 +1199,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'windowsManagCtrl',
-                        templateUrl: 'views/windowsManag.html?ver=3.74'
+                        templateUrl: 'views/windowsManag.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/windowsManagCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/windowsManagCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1219,14 +1219,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'taskManagerCtrl',
-                        templateUrl: 'views/taskManager.html?ver=3.74'
+                        templateUrl: 'views/taskManager.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/taskManagerCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/taskManagerCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1239,14 +1239,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'billingCtrl',
-                        templateUrl: 'views/billing.html?ver=3.74'
+                        templateUrl: 'views/billing.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/billingCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/billingCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1259,14 +1259,14 @@
                     "lazyLoadView": {
                         cache: defaultsCache,
                         controller: 'overviewAccCtrl',
-                        templateUrl: 'views/overviewAcc.html?ver=3.74'
+                        templateUrl: 'views/overviewAcc.html?ver=3.80'
                     }
                 },
                 resolve: {
                     loadMyCtrl: ['$ocLazyLoad', function ($ocLazyLoad) {
                         return $ocLazyLoad.load({
                             cache: defaultsCache,
-                            files: ['scripts/controllers/overviewAccCtrl.js?ver=3.74']
+                            files: ['scripts/controllers/overviewAccCtrl.js?ver=3.80']
                         });
                     }]
                 }
@@ -1278,7 +1278,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/overviewAcc.statistics.html?ver=3.74"
+                        templateUrl: "views/overviewAcc.statistics.html?ver=3.80"
                     }
                 }
             })
@@ -1289,7 +1289,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/overviewAcc.ksafim.html?ver=3.74"
+                        templateUrl: "views/overviewAcc.ksafim.html?ver=3.80"
                     }
                 }
             })
@@ -1300,7 +1300,7 @@
                 views: {
                     "lazyLoadView": {
                         cache: defaultsCache,
-                        templateUrl: "views/overviewAcc.businessInfo.html?ver=3.74"
+                        templateUrl: "views/overviewAcc.businessInfo.html?ver=3.80"
                     }
                 }
             })

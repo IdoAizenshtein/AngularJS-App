@@ -9,9 +9,9 @@
             <div class="icon_customer">
                 <img src="image/customer_icon.png">
             </div>
-            <strong>{{b.companyName}}</strong>
+            <strong>{{!appData.defMonth.hideCompanyName ? b.companyName : b.companyHp}}</strong>
 
-            <p>
+            <p ng-if="!appData.defMonth.hideCompanyName">
                 ח.פ./ע.מ.
                 {{b.companyHp}}
             </p>
@@ -86,10 +86,10 @@
             <div class="icon_customer">
                 <img src="image/customer_icon.png">
             </div>
-            <strong>{{b.companyName}}</strong>
-
-            <p>
-                ח.פ./ע.מ.
+	        <strong>{{!appData.defMonth.hideCompanyName ? b.companyName : b.companyHp}}</strong>
+	        
+	        <p ng-if="!appData.defMonth.hideCompanyName">
+	        ח.פ./ע.מ.
                 {{b.companyHp}}
             </p>
 
@@ -166,10 +166,10 @@
             <div class="icon_customer">
                 <img src="image/customer_icon.png">
             </div>
-            <strong>{{b.companyName}}</strong>
-
-            <p>
-                ח.פ./ע.מ.
+	        <strong>{{!appData.defMonth.hideCompanyName ? b.companyName : b.companyHp}}</strong>
+	        
+	        <p ng-if="!appData.defMonth.hideCompanyName">
+	        ח.פ./ע.מ.
                 {{b.companyHp}}
             </p>
 
@@ -249,9 +249,9 @@
                     <div class="icon_customer">
                         <img src="image/customer_icon.png">
                     </div>
-                    <strong>{{b.companyName}}</strong>
-                    <p>
-                        ח.פ./ע.מ.
+	                <strong>{{!appData.defMonth.hideCompanyName ? b.companyName : b.companyHp}}</strong>
+	                <p ng-if="!appData.defMonth.hideCompanyName">
+	                ח.פ./ע.מ.
                         {{b.companyHp}}
                     </p>
                     <p class="id_program">

@@ -431,7 +431,7 @@
 
 		$scope.sendMailer = function () {
 			$scope.appData.mailFilteredData = $scope.filteredData
-			$scope.showPopup('views/templates/mailerCard.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerCard.html?ver=3.80', 'mailerPopup', false);
 		};
 
 		$scope.sending = function (dataExcel) {
@@ -444,7 +444,7 @@
 		};
 		$scope.openCheckImg = function (uuid, idBank, bankTransId) {
 			if (uuid == 'x') {
-				$scope.showPopup('views/templates/alertXcheck.html?ver=3.74', 'popAlert', true);
+				$scope.showPopup('views/templates/alertXcheck.html?ver=3.80', 'popAlert', true);
 				setTimeout(function () {
 					$scope.hidePopup();
 				}, 3000)
@@ -458,7 +458,7 @@
 				});
 				serverConnection.copyCheks(uuid, folder_name, bankTransId).then(function (res) {
 					$scope.appData.iconCheck = res;
-					$scope.showPopup('views/templates/imgChecks.html?ver=3.74', 'imgChecks', false);
+					$scope.showPopup('views/templates/imgChecks.html?ver=3.80', 'imgChecks', false);
 				}, function (error) {
 				});
 			}

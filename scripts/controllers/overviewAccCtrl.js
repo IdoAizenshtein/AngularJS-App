@@ -712,7 +712,7 @@
         $scope.addTask = function () {
             $scope.appData.addTaskSkira = {};
             $scope.appData.addTaskSkira.day_id = ('0' + (new Date().getDate())).slice(-2) + '/' + ('0' + (new Date().getMonth() + 1)).slice(-2) + '/' + new Date().getFullYear();
-            $scope.showPopup('views/templates/addTaskSkira.html?ver=3.74', 'addTaskSkira');
+            $scope.showPopup('views/templates/addTaskSkira.html?ver=3.80', 'addTaskSkira');
         }
         $scope.goToBankAccountsTable = function (type, num) {
             var fromDate, toDate;
@@ -920,7 +920,7 @@
                 $scope.appData.popupTypeLink = true;
                 $scope.appData.popupDataToken = tok;
                 $scope.appData.popupDataBanks = {BankNumber: item.bank_id};
-                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
             }
         };
         $scope.editAlerts = function (acc, id) {
@@ -930,7 +930,7 @@
                 'edit': false
             }
 
-            $scope.showPopup('views/templates/editExHashSkira.html?ver=3.74', 'exHashEditPop');
+            $scope.showPopup('views/templates/editExHashSkira.html?ver=3.80', 'exHashEditPop');
         }
         $scope.resetExports = function (data) {
             serverConnection.resetExports(data).then(function (res) {
@@ -1010,7 +1010,7 @@
                     $scope.appData.fileDownload = true;
                     $scope.downloadFile();
                 } else {
-                    $scope.showPopup('views/templates/alertNoneData.html?ver=3.74', 'alertNoneData');
+                    $scope.showPopup('views/templates/alertNoneData.html?ver=3.80', 'alertNoneData');
                 }
             });
         };
@@ -1138,7 +1138,7 @@
                 }
                 $scope.applySend()
             }
-            $scope.showPopup('views/templates/popupApplyAccSkira.html?ver=3.74', 'popupApply');
+            $scope.showPopup('views/templates/popupApplyAccSkira.html?ver=3.80', 'popupApply');
         }
         $scope.openListCompanys = function (openUsersList) {
             if (openUsersList) {
@@ -1164,7 +1164,7 @@
                     if (res == 0) {
                         $scope.loadCompanysForThis();
                     } else {
-                        $scope.showPopup('views/templates/notPer.html?ver=3.74', 'popAlert', true);
+                        $scope.showPopup('views/templates/notPer.html?ver=3.80', 'popAlert', true);
                         setTimeout(function () {
                             $scope.hidePopup();
                         }, 1500)
@@ -1563,7 +1563,7 @@
             if (obj) {
                 $scope.appData.objPopUp = obj;
                 $scope.appData.objPopUp.types = types;
-                $scope.showPopup('views/templates/popupDetailsAcc.html?ver=3.74', 'popupDetailsSkira', false);
+                $scope.showPopup('views/templates/popupDetailsAcc.html?ver=3.80', 'popupDetailsSkira', false);
             }
         };
         $scope.goToAnalisis = function (sortCodeId, tabs) {
@@ -1759,7 +1759,7 @@
                         $scope.appData.usersWorkVal.priority = v.QA_TASK_PRIORTY_ID;
                     }
                 })
-                $scope.showPopup('views/templates/addTaskOver.html?ver=3.74', 'addTask');
+                $scope.showPopup('views/templates/addTaskOver.html?ver=3.80', 'addTask');
             });
         }
         $scope.qa_task_add = function () {
@@ -1796,7 +1796,7 @@
             localStorage.setItem('usersWorkVal', $scope.appData.usersWorkVal.taskUserId)
         }
         $scope.clearHaanah = function () {
-            $scope.showPopup('views/templates/clearAccData.html?ver=3.74', 'clearAccData');
+            $scope.showPopup('views/templates/clearAccData.html?ver=3.80', 'clearAccData');
         }
         $scope.clearHaanahSend = function () {
             serverConnection.company_clean_haanah($scope.appData.companySource.companyId).then(function (res) {
@@ -1807,7 +1807,7 @@
             });
         }
         $scope.bizibox_downgrade = function () {
-            $scope.showPopup('views/templates/bizibox_downgrade.html?ver=3.74', 'clearAccData');
+            $scope.showPopup('views/templates/bizibox_downgrade.html?ver=3.80', 'clearAccData');
         }
         $scope.bizibox_downgrade_send = function () {
             serverConnection.bizibox_downgrade({
@@ -1873,7 +1873,7 @@
         }
         $scope.openAlertsApr = function (type) {
             $scope.appData.peulaApprOverview = type;
-            $scope.showPopup('views/templates/alertsPeula.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/alertsPeula.html?ver=3.80', 'alerts', true);
         }
     }
 

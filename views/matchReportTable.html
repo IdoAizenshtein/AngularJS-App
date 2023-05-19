@@ -102,7 +102,7 @@
             </div>
             <tr ng-repeat="a in appData.itemsAllReportMatch = (appData.dohMatch | filter:searchMatch | orderBy : $parent.predicate4 :$parent.reverse4) | startFrom:($parent.currentPage-1)*$parent.entryLimit | limitTo:$parent.entryLimit">
                 <td>
-                    {{a.COMPANY_NAME}}
+	                {{!appData.defMonth.hideCompanyName ? a.COMPANY_NAME : a.companyHp}}
                 </td>
                 <td>
                     {{accoConversions.getDayMonthGraph(a.MONTH_ID)}}

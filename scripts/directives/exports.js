@@ -7,7 +7,10 @@
 	else {
 		hostnameWsPhp = '../ProjectsBiziboxMaven/api/excelExports/download';
 	}
-
+	function getTotalGlobal(num) {
+		var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (2 || -1) + '})?');
+		return num.toString().match(re)[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+	}
 	function getStringJson(str) {
 		if (str !== undefined && str !== null) {
 			return str.toString().replace(/&quot;/g, "\"").replace(/>/g, "").replace(/</g, "").replace(/"/g, "\"").replace(/&rlm;/g, "").replace(/&/g, "___").replace(//g, "");
@@ -239,6 +242,10 @@
 					if (scope.appData.sortDateAll) {
 						arrAcc = arrAcc.reverse();
 					}
+					function getTotal(num) {
+						var re = new RegExp('^-?\\d+(?:\.\\d{0,' + (2 || -1) + '})?');
+						return num.toString().match(re)[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+					}
 					$(arrAcc).each(function (i, v) {
 						var tooltip = '';
 						var ind_expence1 = '';
@@ -248,16 +255,15 @@
 						var payment_type_name = '';
 						if (!v.sumRow) {
 							if (v.ind_expence == 1) {
-								ind_expence1 = Number(v.next_total) * -1;
-							}
-							else {
-								ind_expence0 = v.next_total;
+								ind_expence1 = (Number(v.next_total) * -1).toString();
+							} else {
+								ind_expence0 = (v.next_total).toString();
 							}
 							if (v.asmachta) {
 								asmachta = v.asmachta.toString().substring(0, 9);
 							}
 							if (v.itra !== null) {
-								itra = v.itra;
+								itra = (v.itra).toString();
 							}
 							var rows = {
 								"cell": [
@@ -278,11 +284,11 @@
 										type: "cell"
 									},
 									{
-										val: ind_expence1,
+										val: (ind_expence1),
 										type: "cell"
 									},
 									{
-										val: ind_expence0,
+										val: (ind_expence0),
 										type: "cell"
 									},
 									{
@@ -290,7 +296,7 @@
 										type: "cell"
 									},
 									{
-										val: itra,
+										val: (itra),
 										type: "cellBorderLeft"
 									}
 								]
@@ -538,16 +544,16 @@
 								tooltip = '↺';
 							}
 							if (v.ind_expence == 1) {
-								ind_expence1 = v.next_total;
+								ind_expence1 = v.next_total.toString();
 							}
 							else {
-								ind_expence0 = v.next_total;
+								ind_expence0 = v.next_total.toString();
 							}
 							if (v.asmachta) {
 								asmachta = v.asmachta.toString().substring(0, 9);
 							}
 							if (v.itra !== null) {
-								itra = v.itra;
+								itra = v.itra.toString();
 							}
 							var rows = {
 								"cell": [
@@ -624,11 +630,11 @@
 										"type": "cellBold"
 									},
 									{
-										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalIncome,
+										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalIncome.toString(),
 										"type": "cellBold"
 									},
 									{
-										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalExpenses,
+										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalExpenses.toString(),
 										"type": "cellBold"
 									},
 									{
@@ -1083,11 +1089,11 @@
 										type: "cell"
 									},
 									{
-										val: ind_expence0,
+										val: ind_expence0.toString(),
 										type: "cell"
 									},
 									{
-										val: ind_expence1,
+										val: ind_expence1.toString(),
 										type: "cell"
 									},
 									{
@@ -1095,7 +1101,7 @@
 										type: "cell"
 									},
 									{
-										val: itra,
+										val: itra.toString(),
 										type: "cellBorderLeft"
 									}
 								]
@@ -1130,11 +1136,11 @@
 										"type": "cellBold"
 									},
 									{
-										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalIncome,
+										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalIncome.toString(),
 										"type": "cellBold"
 									},
 									{
-										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalExpenses,
+										"val": scope.appData.totalsObj[v.due_date.split("/")[1]].totalExpenses.toString(),
 										"type": "cellBold"
 									},
 									{
@@ -12862,7 +12868,7 @@
 									type: "cell"
 								},
 								{
-									val: val.sum,
+									val: val.sum.toString(),
 									type: "cellBorderLeft"
 								}
 							]
@@ -13107,7 +13113,7 @@
 									type: "cell"
 								},
 								{
-									val: val.sum,
+									val: val.sum.toString(),
 									type: "cellBorderLeft"
 								}
 							]
@@ -13460,11 +13466,11 @@
 									type: "cell"
 								},
 								{
-									val: val.avgTotal,
+									val: val.avgTotal.toString(),
 									type: "cell"
 								},
 								{
-									val: val.sum,
+									val: val.sum.toString(),
 									type: "cell"
 								},
 								{
@@ -13760,11 +13766,11 @@
 									type: "cell"
 								},
 								{
-									val: val.avgTotal,
+									val: val.avgTotal.toString(),
 									type: "cell"
 								},
 								{
-									val: val.sum,
+									val: val.sum.toString(),
 									type: "cell"
 								},
 								{
@@ -17230,7 +17236,7 @@
 									type: "cell"
 								},
 								{
-									val: next_total,
+									val: next_total.toString(),
 									type: "cell"
 								},
 								{
@@ -20804,7 +20810,7 @@
 									vals = '';
 								}
 								data.rows[1].cell.push({
-									"val": vals,
+									"val": vals.toString(),
 									"type": "header"
 								});
 							}
@@ -20828,7 +20834,7 @@
 										type = "cellBorderLeft";
 									}
 									rows.cell.push({
-										val: vals,
+										val: vals.toString(),
 										type: type
 									});
 								}

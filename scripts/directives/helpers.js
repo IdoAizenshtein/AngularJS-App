@@ -4314,7 +4314,7 @@
     function dropdownAll() {
         return {
             restrict: "E",
-            templateUrl: "views/templates/dropdown.html?ver=3.74",
+            templateUrl: "views/templates/dropdown.html?ver=3.80",
             scope: {
                 placeholder: "@",
                 list: "=",

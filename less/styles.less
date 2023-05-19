@@ -14408,14 +14408,17 @@ form.login-form .form-control:not(.remember) label > i {
       float: right;
       width: 20%;
     }
+
     .email_user {
       float: right;
       width: 18%;
     }
+
     .tz_user {
       float: right;
       width: 20%;
     }
+
     .button_user {
       width: 10%;
       overflow: hidden;
@@ -28696,6 +28699,7 @@ dropdown-all > div > div.dropdown-list {
       color: #ec3c66;
     }
 
+
     > div {
       float: right;
       font: 16px/27px esterregular;
@@ -28731,6 +28735,27 @@ dropdown-all > div > div.dropdown-list {
       }
     }
 
+    &.adminRow {
+      > div {
+
+        &:nth-child(1) {
+          width: 18%;
+        }
+
+        &:nth-child(2) {
+          width: 18%;
+        }
+
+        &:nth-child(3) {
+          width: 18%;
+        }
+
+        &:nth-child(4) {
+          width: 21%;
+        }
+
+      }
+    }
   }
 }
 
@@ -30163,7 +30188,7 @@ dropdown-all > div > div.dropdown-list {
       font: 22px/30px esterregular;
       text-align: center;
 
-      .alertTitles{
+      .alertTitles {
         margin-top: 40px;
       }
     }
@@ -30267,27 +30292,27 @@ dropdown-all > div > div.dropdown-list {
       float: right;
 
       &:nth-child(1) {
-        width: 15%;
+        width: 8%;
         padding-left: 1%;
       }
 
       &:nth-child(2) {
-        width: 8%;
+        width: 4%;
         padding-left: 1%;
       }
 
       &:nth-child(3) {
-        width: 8%;
-        padding-left: 1%;
-      }
-
-      &:nth-child(4) {
         width: 5%;
         padding-left: 1%;
       }
 
+      &:nth-child(4) {
+        width: 4%;
+        padding-left: 1%;
+      }
+
       &:nth-child(5) {
-        width: 6%;
+        width: 4%;
         padding-left: 1%;
       }
 
@@ -30297,12 +30322,12 @@ dropdown-all > div > div.dropdown-list {
       }
 
       &:nth-child(7) {
-        width: 5%;
+        width: 4%;
         padding-left: 1%;
       }
 
       &:nth-child(8) {
-        width: 5%;
+        width: 4%;
         padding-left: 1%;
       }
 
@@ -30327,11 +30352,20 @@ dropdown-all > div > div.dropdown-list {
       }
 
       &:nth-child(13) {
-        width: 9%;
-
+        width: 5%;
+        padding-left: 1%;
       }
 
       &:nth-child(14) {
+        width: 6%;
+
+      }
+
+      &:nth-child(15) {
+        width: 6%;
+      }
+
+      &:nth-child(16) {
         width: 6%;
       }
     }
@@ -30369,6 +30403,23 @@ dropdown-all > div > div.dropdown-list {
       }
     }
   }
+
+  &.scrollElem {
+    overflow-x: scroll;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+      height: 5px;
+    }
+
+    & > div {
+      float: unset;
+      display: inline-block;
+      border-bottom: 3px solid transparent;
+    }
+  }
+
 
   .leftSideState {
     float: left;
@@ -33403,4 +33454,264 @@ dropdown-all > div > div.dropdown-list {
     }
   }
 
+}
+
+
+.billing_payment_img {
+  position: absolute;
+  left: 15px;
+  width: 19px;
+  cursor: pointer;
+  top: 5px;
+}
+
+.show_rows {
+  background: #FFFFFF;
+  position: absolute;
+  min-height: 48px;
+  width: 300px;
+  box-shadow: 0px 6.38037px 6.38037px rgba(0, 0, 0, 0.25);
+  z-index: 99999;
+
+  span.deci {
+    color: #BFC9D6;
+  }
+
+  ul {
+    li {
+      overflow: hidden;
+      padding: 0px 16.5px 0px 0px;
+
+      > div {
+        float: right;
+        text-align: right;
+
+        &:nth-child(1) {
+          width: 60.5px;
+        }
+        &:nth-child(2) {
+          width: 115px;
+          padding-right: 16.5px;
+        }
+        &:nth-child(3) {
+          width: 70px;
+          padding-right: 16.5px;
+        }
+      }
+
+      &.header {
+        background: #F5F5F5;
+        font-family: esterebold;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 24px;
+        color: #000000;
+        height: 25px;
+        vertical-align: middle;
+
+        > div{
+          &:nth-child(1),  &:nth-child(2) {
+            border-left: 1px solid #FFFFFF;
+            box-sizing: border-box;
+          }
+        }
+      }
+
+      &.row {
+        height: 23px;
+        line-height: 22px;
+        border-bottom: 1px solid #F5F5F5;
+        box-sizing: border-box;
+
+        > div {
+          &:nth-child(1) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+            border-left: 1px solid #F5F5F5;
+            box-sizing: border-box;
+          }
+          &:nth-child(2) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+            border-left: 1px solid #F5F5F5;
+            box-sizing: border-box;
+          }
+          &:nth-child(3) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+          }
+        }
+      }
+
+      &.total {
+        background: #F5F5F5;
+        height: 23px;
+        line-height: 22px;
+
+        > div {
+          &:nth-child(1) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+            border-left: 1px solid #FFFFFF;
+            box-sizing: border-box;
+          }
+          &:nth-child(2) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+            border-left: 1px solid #FFFFFF;
+            box-sizing: border-box;
+          }
+          &:nth-child(3) {
+            font-family: esterebold;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: right;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}
+
+.get_billing_payment_jt_details_data_bg {
+  position: fixed;
+  background: #00000040;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+}
+
+.get_billing_payment_jt_details_data {
+  position: absolute;
+  min-height: 62.21px;
+  width: 300px;
+  background: #FFFFFF;
+  box-shadow: 0px 6.38037px 6.38037px rgba(0, 0, 0, 0.25);
+  z-index: 9999;
+
+  span.deci {
+    color: #BFC9D6;
+  }
+
+  i.fa-chevron-down {
+    font-size: 9px;
+    color: #3A90C2;
+    margin-right: 5px;
+  }
+
+  ul {
+    li {
+      overflow: hidden;
+      padding: 0px 16.5px 0px 0px;
+
+      > div {
+        float: right;
+
+        &:nth-child(1) {
+          width: 140.5px;
+        }
+
+        &:nth-child(2) {
+          width: 105px;
+          padding-right: 16.5px;
+
+        }
+      }
+
+      &.header {
+        background: #000000;
+        font-family: esterebold;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 30px;
+        color: #FFFFFF;
+        height: 31.9px;
+        vertical-align: middle;
+      }
+
+      &.row {
+        height: 31.9px;
+        line-height: 30px;
+        border-bottom: 1px solid #F5F5F5;
+        box-sizing: border-box;
+
+        > div {
+          &:nth-child(1) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            text-align: right;
+            color: #000000;
+            border-left: 1px solid #F5F5F5;
+            box-sizing: border-box;
+          }
+
+          &:nth-child(2) {
+            font-family: esterebold;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: right;
+            text-decoration-line: underline;
+            color: #009CDE;
+          }
+        }
+      }
+
+      &.total {
+        background: #F5F5F5;
+        height: 30.31px;
+        line-height: 30px;
+
+        > div {
+          &:nth-child(1) {
+            font-family: esterregular;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            text-align: right;
+            color: #000000;
+          }
+
+          &:nth-child(2) {
+            font-family: esterebold;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: right;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
 }

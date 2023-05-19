@@ -194,7 +194,7 @@
 					type: 2
 				}
 			]
-			$scope.showPopup('views/templates/popupRunType.html?ver=3.74', 'popupRunType');
+			$scope.showPopup('views/templates/popupRunType.html?ver=3.80', 'popupRunType');
 		}
 		$scope.playRunType = function (notAll) {
 			if (!notAll) {
@@ -227,7 +227,7 @@
 				$scope.appData.runtypeRows = false;
 				$scope.appData.loaderPoalim = false;
 				$scope.loaIntervalLogs();
-				$scope.showPopup('views/templates/popupStateConnectToBank.html?ver=3.74', 'popupStateConnectToBank');
+				$scope.showPopup('views/templates/popupStateConnectToBank.html?ver=3.80', 'popupStateConnectToBank');
 			}, function (error) {
 
 			});
@@ -445,7 +445,7 @@
 			$scope.appData.spiderUpdatePopSave = angular.copy(data);
 			$scope.appData.spiderUpdatePopTab1 = data;
 			$scope.appData.spiderUpdatePopTab2 = data;
-			$scope.showPopup('views/templates/spiderUpdatePopPoalim.html?ver=3.74', 'spiderUpdatePop');
+			$scope.showPopup('views/templates/spiderUpdatePopPoalim.html?ver=3.80', 'spiderUpdatePop');
 		}
 
 		$scope.$parent.refresh = function () {
@@ -460,7 +460,7 @@
 			$scope.appData.showAddTokenPopInside = false;
 			serverConnection.get_OtpToken().then(function (res) {
 				$scope.appData.get_OtpToken = res;
-				$scope.showPopup('views/templates/tokensOtpLists.html?ver=3.74', 'tokensOtpLists');
+				$scope.showPopup('views/templates/tokensOtpLists.html?ver=3.80', 'tokensOtpLists');
 			})
 		}
 
@@ -497,7 +497,7 @@
 				$scope.appData.show_token_run_manual_PopInside = false;
 				$scope.appData.otpTokenFromPopUp = $scope.appData.token_run_manual_PopInside.intoken;
 				$scope.appData.passPoalim = "";
-				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.74', 'mailerPopup', false);
+				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.80', 'mailerPopup', false);
 			})
 		}
 		$scope.token_run_manual = function (token) {
@@ -597,12 +597,12 @@
 					"inrun_type_to_do": 0,
 					"intoken": $scope.appData.otpList[0].OTP_TOKEN
 				}).then(function (res) {
-					$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.74', 'mailerPopup', false);
+					$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.80', 'mailerPopup', false);
 				})
 			}
 			else {
 				$scope.appData.otpTokenFromPopUp = $scope.appData.otpList[0].OTP_TOKEN;
-				$scope.showPopup('views/templates/setTokenPoalimAsakim.html?ver=3.74', 'mailerPopup');
+				$scope.showPopup('views/templates/setTokenPoalimAsakim.html?ver=3.80', 'mailerPopup');
 			}
 		}
 
@@ -614,7 +614,7 @@
 			}).then(function (res) {
 				$scope.hidePopup();
 				$scope.appData.passPoalim = "";
-				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.74', 'mailerPopup', false);
+				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.80', 'mailerPopup', false);
 			})
 		}
 
@@ -626,7 +626,7 @@
 			}).then(function (res) {
 				$scope.hidePopup();
 				$scope.appData.passPoalim = "";
-				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.74', 'mailerPopup', false);
+				$scope.showPopup('views/templates/passPoalimAsakim.html?ver=3.80', 'mailerPopup', false);
 			})
 		}
 
@@ -647,13 +647,13 @@
 				$scope.appData.runtypeRows = false;
 				$scope.appData.loaderPoalim = false;
 				$scope.loaIntervalLogs();
-				$scope.showPopup('views/templates/popupStateConnectToBank.html?ver=3.74', 'popupStateConnectToBank');
+				$scope.showPopup('views/templates/popupStateConnectToBank.html?ver=3.80', 'popupStateConnectToBank');
 			})
 		}
 		$scope.openOtpPop = function (a) {
 			$scope.appData.alertOTP = false;
 			$scope.appData.otpUserPass = a;
-			$scope.showPopup('views/templates/otpUserPass.html?ver=3.74', 'otpUserPass');
+			$scope.showPopup('views/templates/otpUserPass.html?ver=3.80', 'otpUserPass');
 		}
 		$scope.updatePassPoalim = function () {
 			$scope.appData.alertOTP = false;
@@ -686,7 +686,7 @@
 				$scope.cleanSpidersService($scope.appData.spidersLists[0].SPIDER_ID);
 			}
 			else {
-				$scope.showPopup('views/templates/spidersListCleans.html?ver=3.74', 'spidersListCleans');
+				$scope.showPopup('views/templates/spidersListCleans.html?ver=3.80', 'spidersListCleans');
 			}
 		}
 		$scope.cleanSpidersService = function (id) {

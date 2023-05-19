@@ -4,7 +4,7 @@
              title="חזור" tooltips-mess="">
     </div>
 
-    <div class="titlesState">
+    <div class="titlesState scrollElem scrollDesign">
         <div ng-click="filters_SettPays(false, 'allFiltersSett');"
              style="cursor: pointer;" class="hover"
              ng-class="{'active': typesFilters.allFiltersSett==true}">
@@ -160,7 +160,7 @@
              class="hover"
              ng-class="{'active': typesFilters.IND_SRIKA_ITEM==true}">
             <h3>
-                פ.יומן
+	            פ.יומן ספקים
             </h3>
             <p>
              <span ng-if="appData.billing_report_4company_sum.SRIKA_CNT || appData.billing_report_4company_sum.SRIKA_CUP_CNT">
@@ -178,7 +178,30 @@
                 </span>
             </p>
         </div>
-        <div>
+	    <div ng-click="filters_SettPays(true, 'MISPAR_SHUROT_PKUDOT_YMN');"
+	         style="cursor: pointer;"
+	         class="hover"
+	         ng-class="{'active': typesFilters.MISPAR_SHUROT_PKUDOT_YMN==true}">
+		    <h3>
+			    פ.יומן
+		    </h3>
+		    <p>
+             <span ng-if="appData.billing_report_4company_sum.PKUDOT_YMN_BNK_CNT">
+                                    {{appData.billing_report_4company_sum.PKUDOT_YMN_BNK_CNT}}
+                </span>
+			    <span ng-if="(appData.billing_report_4company_sum.PKUDOT_YMN_BNK_CNT && appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE)"
+			          class="separator">
+                        |
+                </span>
+			    <span ng-if="(appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE) > 0">
+                                   <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE)}}
+                </span>
+			    <span ng-if="!appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE">
+                    -
+                </span>
+		    </p>
+	    </div>
+	    <div>
             <h3>
                 הנחה למסמך
             </h3>
@@ -220,10 +243,33 @@
                 </span>
             </p>
         </div>
-        <div>
+	    <div>
+		    <h3>
+			    הנחה פ.יומן
+		    </h3>
+		    <p>
+            <span ng-if="appData.billing_report_4company_sum.DISCOUNT_FOR_PKUDOT_YOMAN_ITEM">
+                                   <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.DISCOUNT_FOR_PKUDOT_YOMAN_ITEM)}}
+                </span>
+			    <span ng-if="!appData.billing_report_4company_sum.DISCOUNT_FOR_PKUDOT_YOMAN_ITEM">
+                    -
+                </span>
+		    </p>
+	    </div>
+        <div style="
+    margin: 0;
+">
             <h3>
                 סה"כ לתשלום כולל מע"מ
             </h3>
+	        <p ng-if="typesFilters.MISPAR_SHUROT_PKUDOT_YMN==true">
+                   <span ng-if="appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE_MAAM">
+                        <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE_MAAM)}}
+                </span>
+		        <span ng-if="!appData.billing_report_4company_sum.TOTAL_PKUDOT_YMN_PRICE_MAAM">
+                -
+                </span>
+	        </p>
             <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS==true">
                    <span ng-if="appData.billing_report_4company_sum.TOTAL_PER_OTHER_ITEMS_MAAM">
                         <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PER_OTHER_ITEMS_MAAM)}}
@@ -256,7 +302,7 @@
                 -
                 </span>
             </p>
-            <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true && (!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2)">
+            <p ng-if="typesFilters.MISPAR_SHUROT_PKUDOT_YMN!==true && typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true && (!appData.sums_existing_billing.length || appData.sums_existing_billing.length === 2)">
                 <span ng-if="appData.billing_report_4company_sum.TOTAL_PAYMENT">
                         <small>₪</small>{{roundNumPoints(appData.billing_report_4company_sum.TOTAL_PAYMENT)}}
                 </span>
@@ -264,13 +310,11 @@
                 -
                 </span>
             </p>
-            <p ng-if="typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true &&  appData.sums_existing_billing.length && appData.sums_existing_billing.length>2">
+            <p ng-if="typesFilters.MISPAR_SHUROT_PKUDOT_YMN!==true && typesFilters.ITEM_PRICE_PER_OTHER_ITEMS_DIS!==true && typesFilters.IND_SRIKA_ITEM!==true && typesFilters.IND_CARD_ITEM!==true && typesFilters.IND_BANK_ITEM!==true &&  appData.sums_existing_billing.length && appData.sums_existing_billing.length>2">
                 <span>
                         <small>₪</small>{{roundNumPoints(appData.sums_existing_billing[2] + appData.sums_existing_billing[4])}}
                 </span>
             </p>
-
-
         </div>
         <div class="leftSideState" style="
     position: absolute;
@@ -375,13 +419,25 @@
                     סכום
                 </th>
                 <th>
-                    פ.יומן
+	                פ.ספקים
                 </th>
                 <th>
                     סכום
                 </th>
                 <th>
-                    פריטים נוספים
+	                פ.יומן
+                </th>
+                <th>
+	                חיוב עבר
+                </th>
+                <th>
+	                סכום
+                </th>
+                <th>
+	                קאפ לחברה
+                </th>
+                <th>
+	                פ. נוספים
                 </th>
                 <th>
                     סה"כ לתשלום
@@ -459,6 +515,37 @@
 
                         </div>
                     </td>
+	
+	
+	                <td>
+		                <div>
+			                {{a.MISPAR_SHUROT_PKUDOT_YMN}}
+			                &nbsp;
+		
+		                </div>
+	                </td>
+	                <td>
+		                <div>
+			                {{a.PREV_MONTHS_PRICE_PKDT_YMN}}
+			                &nbsp;
+		                
+		                </div>
+	                </td>
+	                <td>
+		                <div>
+			                {{a.TOTAL_PKUDOT_YMN_PRICE}}
+			                &nbsp;
+		
+		                </div>
+	                </td>
+	             
+	                <td>
+		                <div>
+			                {{a.TOTAL_COMPANY_CUP_PRICE}}
+			                &nbsp;
+		
+		                </div>
+	                </td>
                     <td>
                         <div>
                             {{a.ITEM_PRICE_PER_OTHER_ITEMS_DIS}}

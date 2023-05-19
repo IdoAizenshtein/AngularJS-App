@@ -75,7 +75,7 @@
                     <tr ng-repeat="a in expenseMissingReportTable  | orderBy : predicate :reverse">
                         <td>
                                 <span data-ng-click="goToLink(a.companyId, 'listCompany')">
-                                       {{a.companyName}}
+	                                {{!appData.defMonth.hideCompanyName ? a.companyName : a.companyHp}}
                                 </span>
                         </td>
                         <td>
@@ -190,7 +190,7 @@
                     <tr ng-repeat="a in expenseChangedReportTable  | orderBy : predicate2 :reverse2">
                         <td>
                                    <span data-ng-click="goToLink(a.companyId, 'listCompany')">
-                                       {{a.companyName}}
+	                                   	                                {{!appData.defMonth.hideCompanyName ? a.companyName : a.companyHp}}
                                    </span>
                         </td>
                         <td>
@@ -324,10 +324,13 @@
                     </thead>
                     <tbody vs-repeat="30" ng-if="appData.typing.months.length !== 0">
                     <tr ng-repeat="a in itemsAll = (appData.arrTypingSmall) | orderBy : predicate3 :reverse3">
-                        <td ng-repeat="v in a" ng-if="$index == 0">
+                        <td ng-repeat="v in a" ng-if="$index == 0 && !appData.defMonth.hideCompanyName">
                             {{a['name' + $index]}}
                         </td>
-                        <td ng-repeat="v in a" ng-if="$index !== 0 && $index < 4">
+	                    <td ng-repeat="v in a" ng-if="$index == 1 && appData.defMonth.hideCompanyName">
+		                    {{a['name' + $index]}}
+	                    </td>
+                        <td ng-repeat="v in a" ng-if="$index !== 0 && $index !== 1 && $index < 5">
                             {{roundNum(a['name' + $index])}}
                         </td>
                     </tr>
@@ -433,7 +436,7 @@
                     <tbody vs-repeat="30" ng-if="appData.dohMatch.length !== 0">
                     <tr ng-repeat="a in itemsAll = (appData.dohMatch) | orderBy : predicate4 :reverse4">
                         <td>
-                            {{a.COMPANY_NAME}}
+	                        {{!appData.defMonth.hideCompanyName ? a.COMPANY_NAME : a.companyHp}}
                         </td>
                         <td>
                             {{accoConversions.getDayMonthGraph(a.MONTH_ID)}}

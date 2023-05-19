@@ -58,7 +58,8 @@ font: bold 18px esterregular;
 ">
                         תפקיד
                     </div>
-                    <div style="
+                    <div ng-if="!appData.defMonth.hideCompanyName"
+		                    style="
     width: 185px;
 ">
                         שם חברה
@@ -96,7 +97,7 @@ font: bold 18px esterregular;
 ">
                             {{a.JOB_TITLE_NAME}}
                         </div>
-                        <div
+                        <div ng-if="!appData.defMonth.hideCompanyName"
                                 ng-style="{'color': a.IND_DELETED === 1 ? 'red' : '#494c53'}"
                                 style="
     width: 185px;

@@ -22,7 +22,7 @@
                     <div>
 שם משתמש
                     </div>
-                    <div>
+                    <div ng-if="!appData.defMonth.hideCompanyName">
 שם חברה
                     </div>
                     <div>
@@ -40,7 +40,7 @@
                         <div>
                             {{a.NAME}}
                         </div>
-                        <div>
+                        <div ng-if="!appData.defMonth.hideCompanyName">
                             {{a.COMPANY_NAME}}
                         </div>
                         <div>

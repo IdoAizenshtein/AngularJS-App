@@ -132,7 +132,7 @@
             return deferred.promise;
         };
         $scope.showPopupPre_get_fictive = function () {
-            $scope.showPopup('views/templates/showPopupPre_get_fictive_bank.html?ver=3.74', 'exportAlertsMipuy', true);
+            $scope.showPopup('views/templates/showPopupPre_get_fictive_bank.html?ver=3.80', 'exportAlertsMipuy', true);
         }
         $scope.get_fictive_bank_transes = function () {
             serverConnection.get_fictive_bank_transes(JSON.stringify({
@@ -207,6 +207,11 @@
             $scope.loadExports().then(function (res) {
                 $scope.appData.exportsHashavArr = res;
                 $scope.appData.exportsHashavArr.forEach(function (v, i) {
+                    $scope.appData.companies.forEach(function (v1, i1) {
+                        if (v.company_id == v1.companyId) {
+                            v.companyHp = v1.companyHp;
+                        }
+                    })
                     v.data.forEach(function (v1, i1) {
                         if (v1.last_export_date !== null && v1.bank_account_id !== null) {
                             if (v1.ind_blacklist == 0) {
@@ -248,7 +253,7 @@
             $scope.appData.listUserAccountantsComLoader = true;
             $scope.appData.listCompaniesAccountantsId = uuid;
             $scope.appData.listCompaniesAccountants = angular.copy($scope.appData.companies);
-            $scope.showPopup('views/templates/setAccCompaniesEx.html?ver=3.74', 'setAccUser listCompaniesAccountants');
+            $scope.showPopup('views/templates/setAccCompaniesEx.html?ver=3.80', 'setAccUser listCompaniesAccountants');
             $scope.appData.listUserAccountantsComLoader = false;
         }
         $scope.transferAccount = function () {
@@ -516,6 +521,8 @@
                         var obj = {
                             ind_yearly_program: v.ind_yearly_program,
                             company_name: v.company_name,
+                            companyHp: v.companyHp,
+                            ind_folder_plus: v.ind_folder_plus,
                             company_id: v.company_id,
                             title: true,
                             showRowInside: v.showRowInside,
@@ -538,6 +545,8 @@
                                 ind_year_alert: $scope.appData.exportsHashav[i + 1].ind_year_alert,
                                 company_name: $scope.appData.exportsHashav[i + 1].company_name,
                                 company_id: $scope.appData.exportsHashav[i + 1].company_id,
+                                companyHp: $scope.appData.exportsHashav[i + 1].companyHp,
+                                ind_folder_plus: $scope.appData.exportsHashav[i + 1].ind_folder_plus,
                                 title: true,
                                 indMupa: $scope.appData.exportsHashav[i + 1].indMupa,
                                 showRowInside: $scope.appData.exportsHashav[i + 1].showRowInside,
@@ -639,7 +648,7 @@
         }
         $scope.update_account_blklist = function (item) {
             $scope.appData.companyAccountidToken = item.token;
-            $scope.showPopup('views/templates/update_account_blklist.html?ver=3.74', 'update_account_blklist');
+            $scope.showPopup('views/templates/update_account_blklist.html?ver=3.80', 'update_account_blklist');
         };
         $scope.update_account_blklist_ws = function () {
             $scope.hidePopup();
@@ -754,6 +763,8 @@
             res.forEach(function (v, i) {
                 v.data.forEach(function (v1, i1) {
                     v1.company_name = v.company_name;
+                    v1.companyHp = v.companyHp;
+                    v1.ind_folder_plus = v.ind_folder_plus;
                     v1.company_id = v.company_id;
                     v1.showRowInside = v.showRowInside;
                     v1.showRow = v.showRow;
@@ -867,11 +878,11 @@
         };
         $scope.exportPop = function (admin) {
             if (admin && $scope.appData.defMonth.ind_phone_exist === 1) {
-                $scope.showPopup('views/templates/alertHashavshevet.html?ver=3.74', 'alertHashavshevet', false);
+                $scope.showPopup('views/templates/alertHashavshevet.html?ver=3.80', 'alertHashavshevet', false);
                 return;
             }
             if (admin) {
-                $scope.showPopup('views/templates/alertAdminEx.html?ver=3.74', 'exportAlerts', true);
+                $scope.showPopup('views/templates/alertAdminEx.html?ver=3.80', 'exportAlerts', true);
                 return;
             }
             var time = 0;
@@ -914,15 +925,15 @@
                     if (digit == 1) {
                         $scope.export();
                     } else {
-                        $scope.showPopup('views/templates/popupExportsAsmacta.html?ver=3.74', 'popupExportsAsmacta');
+                        $scope.showPopup('views/templates/popupExportsAsmacta.html?ver=3.80', 'popupExportsAsmacta');
                     }
                 } else {
                     if (digit == 1) {
                         $scope.appData.radioFilterExPop = '0';
-                        $scope.showPopup('views/templates/popupExportsFilters.html?ver=3.74', 'popupExportsFilters');
+                        $scope.showPopup('views/templates/popupExportsFilters.html?ver=3.80', 'popupExportsFilters');
                     } else {
                         $scope.appData.digitFilters = true;
-                        $scope.showPopup('views/templates/popupExportsAsmacta.html?ver=3.74', 'popupExportsAsmacta');
+                        $scope.showPopup('views/templates/popupExportsAsmacta.html?ver=3.80', 'popupExportsAsmacta');
                     }
                 }
             }, time)
@@ -938,7 +949,7 @@
                     if ($scope.appData.digitFilters) {
                         $scope.appData.digitFilters = false;
                         $scope.appData.radioFilterExPop = '0';
-                        $scope.showPopup('views/templates/popupExportsFilters.html?ver=3.74', 'popupExportsFilters');
+                        $scope.showPopup('views/templates/popupExportsFilters.html?ver=3.80', 'popupExportsFilters');
                     } else {
                         $scope.export();
                     }
@@ -1000,7 +1011,7 @@
                     timeOutStr = $timeout(function () {
                         $scope.appData.showSucUpdPassPop = "fail";
                     }, 30000);
-                    $scope.showPopup('views/templates/progressBarPopEx.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup progressBarPopEx');
+                    $scope.showPopup('views/templates/progressBarPopEx.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup progressBarPopEx');
                 }
                 $scope.oshtnuFile(jsonData).then(function (res) {
                     $scope.appData.lengthExTime = 0;
@@ -1018,7 +1029,7 @@
                                 $scope.appData.fileDownload = true;
                                 $scope.downloadFile();
                             } else {
-                                $scope.showPopup('views/templates/alertNoneData.html?ver=3.74', 'alertNoneData');
+                                $scope.showPopup('views/templates/alertNoneData.html?ver=3.80', 'alertNoneData');
                             }
                         }, 1500);
                     } else {
@@ -1080,11 +1091,11 @@
         $scope.openBankAccountsPopup = function (id) {
             $scope.appData.companyIdPopUp = id;
             $scope.appData.popupType = 0;
-            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.74', 'regularOperationsPopup');
+            $scope.showPopup('views/templates/regularOperationsPopup.html?ver=3.80', 'regularOperationsPopup');
         }
         $scope.popUpExports = function (uuid) {
             $scope.appData.uuidRow = uuid;
-            $scope.showPopup('views/templates/popupExports.html?ver=3.74', 'popupExports');
+            $scope.showPopup('views/templates/popupExports.html?ver=3.80', 'popupExports');
         }
         $scope.exportApply = function () {
             $scope.appData.lengthExTime += 1;
@@ -1106,7 +1117,7 @@
                 timeOutStr = $timeout(function () {
                     $scope.appData.showSucUpdPassPop = "fail";
                 }, 30000)
-                $scope.showPopup('views/templates/progressBarPopEx.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                $scope.showPopup('views/templates/progressBarPopEx.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
             }
 
             var jsonData = JSON.stringify(data);
@@ -1176,11 +1187,11 @@
 
                 if (!type) {
                     $scope.hashCartisList(dataCompany.company_id);
-                    $scope.showPopup('views/templates/popupApply.html?ver=3.74', 'popupApply');
+                    $scope.showPopup('views/templates/popupApply.html?ver=3.80', 'popupApply');
                 } else {
                     if (type == 'edit') {
                         $scope.hashCartisList(dataCompany.company_id, 'edit');
-                        $scope.showPopup('views/templates/popupApply.html?ver=3.74', 'popupApply');
+                        $scope.showPopup('views/templates/popupApply.html?ver=3.80', 'popupApply');
                     } else {
                         $scope.hashCartisList(dataCompany.company_id, 'vi');
                     }
@@ -1191,7 +1202,7 @@
                     hash_id: dataCompany.izu_cust_id
                 }
                 $scope.applySend();
-                $scope.showPopup('views/templates/popupApply.html?ver=3.74', 'popupApply');
+                $scope.showPopup('views/templates/popupApply.html?ver=3.80', 'popupApply');
             }
         }
 
@@ -1202,7 +1213,7 @@
                 'edit': false
             }
 
-            $scope.showPopup('views/templates/editExHash.html?ver=3.74', 'exHashEditPop');
+            $scope.showPopup('views/templates/editExHash.html?ver=3.80', 'exHashEditPop');
         }
 
         $scope.sendApprHash = function () {
@@ -1255,7 +1266,7 @@
             } else {
                 $scope.appData.openSettingsAccExport = '';
             }
-            $scope.showPopup('views/templates/openSettingsAccExport.html?ver=3.74', 'openSettingsAccExportPop');
+            $scope.showPopup('views/templates/openSettingsAccExport.html?ver=3.80', 'openSettingsAccExportPop');
         }
 
         $scope.sendSettingsAccExport = function () {
@@ -1301,7 +1312,7 @@
             } else {
                 $scope.appData.deleteBankAccId = account;
                 $scope.appData.deleteAccTypeXpHash = 1;
-                $scope.showPopup('views/templates/alertsBeforeDelAccExHash.html?ver=3.74', 'alerts', true);
+                $scope.showPopup('views/templates/alertsBeforeDelAccExHash.html?ver=3.80', 'alerts', true);
             }
         };
 
@@ -1324,7 +1335,7 @@
                     $scope.exportApply();
                 }
                 if (type && type == 'vi' && res.result_status !== 0) {
-                    $scope.showPopup('views/templates/popupApply.html?ver=3.74', 'popupApply');
+                    $scope.showPopup('views/templates/popupApply.html?ver=3.80', 'popupApply');
                 }
                 $scope.loadcheckboxApprAttr($scope.appData.resBankPageFullCheck.efresh);
             }, function (error) {
@@ -1384,7 +1395,7 @@
                 $scope.appData.popupTypeLink = true;
                 $scope.appData.popupDataToken = tok;
                 $scope.appData.popupDataBanks = {BankNumber: item.bank_id};
-                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+                $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
             } else if (item.status == 3) {
                 $scope.appData.popupData = {
                     token: {
@@ -1392,7 +1403,7 @@
                         token: tok
                     }
                 };
-                $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePopup');
+                $scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePopup');
             }
         };
         $scope.sending = function (dataExcel) {
@@ -1404,7 +1415,7 @@
             });
         };
         $scope.sendMailer = function () {
-            $scope.showPopup('views/templates/mailerHash.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerHash.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.$watch('appData.showPopup', function (newVal, oldVal) {
 
@@ -1464,7 +1475,7 @@
                 if (!$scope.appData.adminSoft) {
                     cls = "notAdmin";
                 }
-                $scope.showPopup('views/templates/addTaskExHash.html?ver=3.74', 'addTask ' + cls);
+                $scope.showPopup('views/templates/addTaskExHash.html?ver=3.80', 'addTask ' + cls);
             }
         }
         $scope.changeTypeTitle = function () {
@@ -1533,7 +1544,7 @@
         $scope.clearAccBank = function (id) {
             $scope.appData.disabledBtnClearData = false;
             $scope.appData.idClearDataBankEx = id;
-            $scope.showPopup('views/templates/clearAccBank.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/clearAccBank.html?ver=3.80', 'alerts', true);
         };
         $scope.clearData = function () {
             $scope.appData.disabledBtnClearData = true;
@@ -1547,7 +1558,7 @@
         }
         $scope.clean_izu_bt = function (id) {
             $scope.appData.clean_izu_bt = id;
-            $scope.showPopup('views/templates/alertAdminExClean.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/alertAdminExClean.html?ver=3.80', 'alerts', true);
         }
         $scope.clean_izu_bt_send = function () {
             serverConnection.clean_izu_bt($scope.appData.clean_izu_bt).then(function (res) {
@@ -1582,7 +1593,7 @@
 
         $scope.openAlertsApr = function (company_id) {
             $scope.appData.peulaApprcompanyID = company_id;
-            $scope.showPopup('views/templates/alertsPeulaHash.html?ver=3.74', 'alerts', true);
+            $scope.showPopup('views/templates/alertsPeulaHash.html?ver=3.80', 'alerts', true);
         }
         $scope.setApprove = function () {
             serverConnection.company_exporter_settime({
@@ -1598,7 +1609,7 @@
         $scope.company_db_year_get = function (a, reload) {
             $scope.appData.company_db_year_setLoader = true;
             if (!reload) {
-                $scope.showPopup('views/templates/company_db_year_set.html?ver=3.74', 'company_db_year_set', false);
+                $scope.showPopup('views/templates/company_db_year_set.html?ver=3.80', 'company_db_year_set', false);
             }
             serverConnection.company_db_year_get({
                 companyId: a.company_id,

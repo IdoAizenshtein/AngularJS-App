@@ -99,20 +99,20 @@
         // 	// 			if ($scope.appData.defMonth.ind_sample == 1) {
         // 	// 				$scope.appData.showPopWalkme = false;
         // 	// 				if (event == "true") {
-        // 	// 					$scope.showPopup('views/templates/popWalkthrus.html?ver=3.74', 'popWalkthrus', false);
+        // 	// 					$scope.showPopup('views/templates/popWalkthrus.html?ver=3.80', 'popWalkthrus', false);
         // 	// 				}
         // 	// 				else if (event == "close") {
         // 	// 					$scope.appData.showPopWalkme = true;
         // 	// 				}
         // 	// 				else {
         // 	// 					if ($state.includes('general')) {
-        // 	// 						$scope.showPopup('views/templates/popUpHelpWalkMe.html?ver=3.74', 'popUpHelpWalkMe', false);
+        // 	// 						$scope.showPopup('views/templates/popUpHelpWalkMe.html?ver=3.80', 'popUpHelpWalkMe', false);
         // 	// 					}
         // 	// 				}
         // 	// 			}
         // 	// 			else {
         // 	// 				if (event == "true") {
-        // 	// 					$scope.showPopup('views/templates/popWalkthrus.html?ver=3.74', 'popWalkthrus', false);
+        // 	// 					$scope.showPopup('views/templates/popWalkthrus.html?ver=3.80', 'popWalkthrus', false);
         // 	// 				}
         // 	// 				$scope.appData.showPopWalkme = true;
         // 	// 			}
@@ -421,38 +421,47 @@
                     if (new Date().getTime() < new Date(2021, 5, 24, 20).getTime()) {
                         var hideModalUpdateSystem = localStorage.getItem('hideModalUpdateSystem');
                         if (hideModalUpdateSystem === null) {
-                            $scope.showPopup('views/templates/modalUpdateSystem.html?ver=3.74', 'modalUpdateSystem');
+                            $scope.showPopup('views/templates/modalUpdateSystem.html?ver=3.80', 'modalUpdateSystem');
                         }
                     }
 
                     // $timeout(function () {
                     //     var alertFIBI = window.localStorage.getItem("alertFIBI");
                     //     if (alertFIBI == null) {
-                    //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.74', 'modalUpdateSystem');
+                    //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.80', 'modalUpdateSystem');
                     //     }
                     // }, 2000);
                     $scope.appData.companies = data[0];
                     $scope.appData.defMonth = data[1];
+                    try {
+                        if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                            $scope.appData.defMonth.hideCompanyName = true;
+                        } else {
+                            $scope.appData.defMonth.hideCompanyName = false;
+                        }
+                    } catch (e) {
+
+                    }
                     if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                         $scope.logout();
                         return;
                     }
                     if ($scope.appData.defMonth.outind_ocr !== 1 && $scope.appData.defMonth.outind_ocr !== 3 && $scope.appData.defMonth.outind_ocr_popup === 1) {
-                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.74', 'ocrLandingPageSupplierPopUp', true);
+                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.80', 'ocrLandingPageSupplierPopUp', true);
                     }
 
                     // if ($scope.appData.defMonth.ind_phone_exist === 0) {
                     // 	$scope.appData.phoneNumber = "";
                     // 	$scope.appData.codeNumber = "";
                     // 	$scope.appData.stepPhone = 1;
-                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.74', 'indPhoneExist', false, true);
+                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.80', 'indPhoneExist', false, true);
                     // }
 
                     // if ($scope.appData.defMonth.ind_phone_exist === 0) {
                     // 	$scope.appData.phoneNumber = "";
                     // 	$scope.appData.codeNumber = "";
                     // 	$scope.appData.stepPhone = 1;
-                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.74', 'indPhoneExist', false, true);
+                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.80', 'indPhoneExist', false, true);
                     // }
 
                     //$scope.loadApiWalkMe();
@@ -700,7 +709,7 @@
         //		//$("#walkme-player").removeClass("right0");
         //		//$("#walkme-player, #walkme-attengrab, #walkme-menu").removeClass("importantRuleBlock").addClass("importantRule");
         //		//WalkMePlayerAPI.hidePlayer();
-        //		//$scope.showPopup('views/templates/popUpHelpWalkMe.html?ver=3.74', 'popUpHelpWalkMe', false);
+        //		//$scope.showPopup('views/templates/popUpHelpWalkMe.html?ver=3.80', 'popUpHelpWalkMe', false);
         //		//$scope.appData.getWalkthrus = WalkMeAPI.getTasks();
         //		//arr.forEach(function(v, i){
         //		//	if(i == 0){
@@ -809,7 +818,7 @@
         }
         $scope.popWalkthrusClose = function () {
             $scope.hidePopup();
-            $scope.showPopup('views/templates/popWalkthrusClose.html?ver=3.74', 'popWalkthrusClose', true);
+            $scope.showPopup('views/templates/popWalkthrusClose.html?ver=3.80', 'popWalkthrusClose', true);
         };
         $scope.hideWt = function () {
             //$scope.hidePopup();
@@ -822,7 +831,7 @@
         };
         $scope.gotoPopWalkthrus = function () {
             $scope.hidePopup();
-            $scope.showPopup('views/templates/popWalkthrus.html?ver=3.74', 'popWalkthrus', false);
+            $scope.showPopup('views/templates/popWalkthrus.html?ver=3.80', 'popWalkthrus', false);
         }
         $scope.openListMatchMess = function (open) {
             $scope.appData.contentPopMatchInside = false;
@@ -848,11 +857,11 @@
 
             if (!open) {
                 $scope.appData.contentPopMatch = 'contentPop1';
-                $scope.showPopup('views/templates/popMatchMess.html?ver=3.74', 'popMatchMess');
+                $scope.showPopup('views/templates/popMatchMess.html?ver=3.80', 'popMatchMess');
             } else {
                 $scope.appData.contentPopMatch = 'contentPop2';
                 $scope.appData.contentPopMatchInside = 'matchPeulaPop';
-                $scope.showPopup('views/templates/popMatchMess.html?ver=3.74', 'popMatchMess contentPopWrap2');
+                $scope.showPopup('views/templates/popMatchMess.html?ver=3.80', 'popMatchMess contentPopWrap2');
                 if (!$scope.appData.messMatchPassPeulot[0].innerData.length) {
                     $scope.matchPeulaPop();
                 }
@@ -1168,7 +1177,7 @@
                 $scope.appData.messMatchPassPeulot = $scope.appData.messMatchPass.nigrarot;
                 $scope.appData.contentPopMatch = 'contentPop2';
                 $scope.appData.contentPopMatchInside = 'matchPeulaPop';
-                $scope.showPopup('views/templates/popMatchMess.html?ver=3.74', 'popMatchMess contentPopWrap2');
+                $scope.showPopup('views/templates/popMatchMess.html?ver=3.80', 'popMatchMess contentPopWrap2');
                 if (!$scope.appData.messMatchPassPeulot[0].innerData.length) {
                     $scope.matchPeulaPop();
                 }
@@ -1226,7 +1235,7 @@
         $scope.$on('errorLog', function (event, data) {
             if (!$scope.appData.adminSoft) {
                 if (data.statusCode == 500) {
-                    //$scope.showPopup('views/templates/error500.html?ver=3.74', 'popAlert', true);
+                    //$scope.showPopup('views/templates/error500.html?ver=3.80', 'popAlert', true);
                     //setTimeout(function () {
                     //	if ($scope.$state && $scope.$state.current.name == 'login') {
                     //		localStorage.clear()
@@ -1374,7 +1383,7 @@
             }
             serverConnection.getPeulotToday(data).then(function (response) {
                 $scope.appData.peulotMessages = response;
-                $scope.showPopup('views/templates/peulotMessages.html?ver=3.74', 'peulotMessages');
+                $scope.showPopup('views/templates/peulotMessages.html?ver=3.80', 'peulotMessages');
             }, function (error) {
             });
         };
@@ -1394,7 +1403,7 @@
             $scope.appData.popupType = 0;
             $scope.appData.popupDataToken = token;
             $scope.appData.popupDataBanks = account;
-            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
         };
         $scope.getTotalComma = function (num) {
             if (num) {
@@ -1580,11 +1589,20 @@
         }
         $scope.reloadAccData = function () {
             if ($scope.appData.accSet && $scope.appData.accSet.length > 1) {
-                $scope.showPopup('views/signup/popupAcc.html?ver=3.74', 'popupAcc', true);
+                $scope.showPopup('views/signup/popupAcc.html?ver=3.80', 'popupAcc', true);
             } else {
                 $q.all([$scope.getGeneralDataCompanies(), $scope.getGeneralDataPermission()]).then(function (data) {
                     $scope.appData.companies = data[0];
                     $scope.appData.defMonth = data[1];
+                    try {
+                        if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                            $scope.appData.defMonth.hideCompanyName = true;
+                        } else {
+                            $scope.appData.defMonth.hideCompanyName = false;
+                        }
+                    } catch (e) {
+
+                    }
                     if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                         $scope.logout();
                         return;
@@ -1612,6 +1630,15 @@
                     $q.all([$scope.getGeneralDataCompanies(), $scope.getGeneralDataPermission()]).then(function (data) {
                         $scope.appData.companies = data[0];
                         $scope.appData.defMonth = data[1];
+                        try {
+                            if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                $scope.appData.defMonth.hideCompanyName = true;
+                            } else {
+                                $scope.appData.defMonth.hideCompanyName = false;
+                            }
+                        } catch (e) {
+
+                        }
                         if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                             $scope.logout();
                             return;
@@ -1733,6 +1760,12 @@
                 return fullSplitNum[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") + (fullSplitNum[1] ? ('.' + fullSplitNum[1].substring(0, 2)) : '');
             }
         }
+        $scope.roundNumPointsHTML = function (value, isRows) {
+            if (value !== undefined && value !== null) {
+                var fullSplitNum = value.toString().split('.');
+                return '<span>' +fullSplitNum[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")+ '</span><span class="deci">'+(fullSplitNum[1] ? ('.' + fullSplitNum[1].substring(0, 2)) : '.00')+'</span>' + (isRows ?  '<i class="fa fa-chevron-down"></i>' : '');
+            }
+        }
         $scope.checkIfFuture = function (date) {
             if (date) {
                 var d = new Date(Number(date.split('/')[2]), Number(date.split('/')[1]), Number(date.split('/')[0]));
@@ -1759,7 +1792,7 @@
             }
         };
         $scope.openPopUpNewWebApp = function () {
-            $scope.showPopup('views/templates/newWebApp.html?ver=3.74', 'ind_show_agreement', true, true);
+            $scope.showPopup('views/templates/newWebApp.html?ver=3.80', 'ind_show_agreement', true, true);
         }
         $scope.goToManagerAcc = function () {
             if (localStorage.getItem('ACCOUNTANT_OFFICE_ID') && localStorage.getItem('ACCOUNTANT_OFFICE_ID') !== '') {
@@ -1812,21 +1845,30 @@
                                 $scope.appData.companies = res;
                                 $scope.getGeneralDataPermission().then(function (res) {
                                     $scope.appData.defMonth = res;
+                                    try {
+                                        if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                            $scope.appData.defMonth.hideCompanyName = true;
+                                        } else {
+                                            $scope.appData.defMonth.hideCompanyName = false;
+                                        }
+                                    } catch (e) {
+
+                                    }
                                     if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                                         $scope.logout();
                                         return;
                                     }
                                     if ($scope.appData.defMonth.ind_show_agreement === 1) {
-                                        $scope.showPopup('views/templates/ind_show_agreement.html?ver=3.74', 'ind_show_agreement', true, true);
+                                        $scope.showPopup('views/templates/ind_show_agreement.html?ver=3.80', 'ind_show_agreement', true, true);
                                     }
                                     if ($scope.appData.defMonth.outind_ocr !== 1 && $scope.appData.defMonth.outind_ocr !== 3 && $scope.appData.defMonth.outind_ocr_popup === 1) {
-                                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.74', 'ocrLandingPageSupplierPopUp', true);
+                                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.80', 'ocrLandingPageSupplierPopUp', true);
                                     }
                                     // else if ($scope.appData.defMonth.ind_phone_exist === 0) {
                                     // 	$scope.appData.phoneNumber = "";
                                     // 	$scope.appData.codeNumber = "";
                                     // 	$scope.appData.stepPhone = 1;
-                                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.74', 'indPhoneExist', false, true);
+                                    // 	$scope.showPopup('views/templates/ind_phone_exist.html?ver=3.80', 'indPhoneExist', false, true);
                                     // }
                                     deferred.resolve(success);
                                     if (!sign) {
@@ -1982,13 +2024,22 @@
                                     if (acchas.length > 0) {
                                         if (acchas.length > 1) {
                                             $scope.appData.accSet = acchas;
-                                            $scope.showPopup('views/signup/popupAcc.html?ver=3.74', 'popupAcc', true);
+                                            $scope.showPopup('views/signup/popupAcc.html?ver=3.80', 'popupAcc', true);
                                         } else {
                                             $scope.appData.helpSignUp = false;
                                             $scope.appData.helpSignUpInd = 0;
                                             $q.all([$scope.getGeneralDataCompanies(), $scope.getGeneralDataPermission()]).then(function (data) {
                                                 $scope.appData.companies = data[0];
                                                 $scope.appData.defMonth = data[1];
+                                                try {
+                                                    if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                                        $scope.appData.defMonth.hideCompanyName = true;
+                                                    } else {
+                                                        $scope.appData.defMonth.hideCompanyName = false;
+                                                    }
+                                                } catch (e) {
+
+                                                }
                                                 if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                                                     $scope.logout();
                                                     return;
@@ -2148,7 +2199,7 @@
                 serverConnection.create_lead_ocr($scope.params_create_lead_ocr).then(function (res) {
                     form.$setPristine();
                     form.$setUntouched();
-                    $scope.showPopup('views/templates/create_lead_ocr_sent.html?ver=3.74', 'create_lead_ocr_sent', true);
+                    $scope.showPopup('views/templates/create_lead_ocr_sent.html?ver=3.80', 'create_lead_ocr_sent', true);
                     setTimeout(function () {
                         $scope.hidePopup();
                         // if ($scope.appData.leadSource_create_lead_ocr === 'supplier') {
@@ -2307,7 +2358,7 @@
             $scope.appData.usersWorkVal = {};
             $scope.appData.usersWorkVal.companyId = angular.copy($scope.appData.selectedCompany.companyId);
             $scope.appData.usersWorkVal.taskTitle = "קריאת שירות לחברת " + $scope.appData.selectedCompany.companyName;
-            $scope.showPopup('views/templates/openSupportService.html?ver=3.74', 'addTask notAdmin');
+            $scope.showPopup('views/templates/openSupportService.html?ver=3.80', 'addTask notAdmin');
         }
         $scope.sendSupportService = function (supportForm) {
             if (supportForm.$valid) {
@@ -2347,7 +2398,7 @@
             $scope.appData.popupTypeLink = true;
             $scope.appData.popupDataToken = item.token;
             $scope.appData.popupDataBanks = {BankNumber: item.website_target_type_id};
-            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+            $scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
         };
         $scope.getDate = function (str) {
             var formatted = str.split('-').reverse().join('/');
@@ -2570,7 +2621,7 @@
             $scope.get_exporter_companies();
         }
         $scope.addCompanyOpenModal = function () {
-            $scope.showPopup('views/templates/addCompany.html?ver=3.74', 'addCompanyWrap', false);
+            $scope.showPopup('views/templates/addCompany.html?ver=3.80', 'addCompanyWrap', false);
         }
         $scope.get_exporter_companies = function () {
             $scope.appData.counterExporter = {
@@ -2579,7 +2630,7 @@
             };
             $scope.hidePopup();
             $scope.appData.loaderPopExporter = true;
-            $scope.showPopup('views/templates/exporter_companies.html?ver=3.74', 'exporter_companies', true);
+            $scope.showPopup('views/templates/exporter_companies.html?ver=3.80', 'exporter_companies', true);
             serverConnection.get_exporter_companies()
                 .then(function (response) {
                     $scope.appData.exporter_companies = response;
@@ -2631,7 +2682,7 @@
             });
         };
         $scope.sendMailerRevah = function () {
-            $scope.showPopup('views/templates/mailerRevah.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerRevah.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.openLinkTasks = function (link) {
             var url = '#/mainAccountants/taskManager' + link;
@@ -2778,7 +2829,7 @@
             return $scope.navHide($scope.appData.imgPtr, $scope.appData.max);
         };
         $scope.successAlertSend = function () {
-            $scope.showPopup('views/templates/succAlertSend.html?ver=3.74', 'popAlertSender', true);
+            $scope.showPopup('views/templates/succAlertSend.html?ver=3.80', 'popAlertSender', true);
             $timeout(function () {
                 $scope.hidePopup();
             }, 1500)
@@ -2792,7 +2843,7 @@
                 valTextFileName: undefined,
                 hyperlink: undefined
             };
-            $scope.showPopup('views/templates/tfsPop.html?ver=3.74', 'tfsPop');
+            $scope.showPopup('views/templates/tfsPop.html?ver=3.80', 'tfsPop');
         }
         $scope.sendToTfs = function () {
             var company = "";
@@ -3013,10 +3064,10 @@
         };
         $scope.openTerms = function (type) {
             if (type == "1") {
-                $scope.showPopup('views/signup/termosof.html?ver=3.74', 'openTerms');
+                $scope.showPopup('views/signup/termosof.html?ver=3.80', 'openTerms');
             }
             if (type == "2") {
-                $scope.showPopup('views/signup/popTermosfPrivate.html?ver=3.74', 'openTerms');
+                $scope.showPopup('views/signup/popTermosfPrivate.html?ver=3.80', 'openTerms');
             }
         }
         $scope.checkIfIsHtml = function (text) {
@@ -3034,7 +3085,7 @@
         }
         $scope.userGetAccountants = function () {
             $scope.appData.listUserAccountantsLoader = true;
-            $scope.showPopup('views/templates/setAccUserManager.html?ver=3.74' + new Date().getTime(), 'setAccUser setAccUserWide');
+            $scope.showPopup('views/templates/setAccUserManager.html?ver=3.80' + new Date().getTime(), 'setAccUser setAccUserWide');
             serverConnection.userGetAccountants().then(function (res) {
                 $scope.appData.listUserAccountants = res;
                 $scope.appData.listUserAccountants.forEach(function (v) {
@@ -3048,7 +3099,7 @@
         $scope.getRegularUsers = function (isRefresh) {
             $scope.appData.listUserAccountantsLoader = true;
             if (!isRefresh) {
-                $scope.showPopup('views/templates/setAccUsersRegularManager.html?ver=3.74', 'setAccUser');
+                $scope.showPopup('views/templates/setAccUsersRegularManager.html?ver=3.80', 'setAccUser');
             }
 
             function CreateObjectStore(dbName, storeName) {
@@ -3203,6 +3254,15 @@
                         })
                     }
                     $scope.appData.defMonth = data[1];
+                    try {
+                        if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                            $scope.appData.defMonth.hideCompanyName = true;
+                        } else {
+                            $scope.appData.defMonth.hideCompanyName = false;
+                        }
+                    } catch (e) {
+
+                    }
                     if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                         $scope.logout();
                         return;

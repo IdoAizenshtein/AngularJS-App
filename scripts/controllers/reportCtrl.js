@@ -89,7 +89,7 @@
 
 		$scope.exportPrintsAll = function (type) {
 			$scope.appData.typeExportReports = type;
-			$scope.showPopup('views/templates/popSelectRowReport.html?ver=3.74', 'popSelectRowReport');
+			$scope.showPopup('views/templates/popSelectRowReport.html?ver=3.80', 'popSelectRowReport');
 		}
 		$scope.appData.redErrorFilterType = false;
 		$scope.disabledDates = function () {

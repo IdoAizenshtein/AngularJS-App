@@ -207,7 +207,7 @@
 					}
 				};
 			}
-			$scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePopup');
+			$scope.showPopup('views/templates/accountUpdatePopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePopup');
 		};
 	}
 

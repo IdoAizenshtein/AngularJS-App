@@ -344,7 +344,7 @@
 		$scope.sendMailer = function () {
 			$scope.appData.errorSenderMailerExcel = "";
 			$scope.appData.loaderMailerPop = false;
-			$scope.showPopup('views/templates/mailerMehuad.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMehuad.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.refresh = function () {
 			$scope.loadPage()

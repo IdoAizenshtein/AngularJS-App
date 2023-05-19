@@ -36,12 +36,12 @@
                             <li ng-repeat="c in (filteredItems = ($parent.appData.companies | companyFilter:companySearch))"
                                 ng-click="selectCompany(c)" tabindex="{{$index}}">
                                 <div class="avatar" ng-if="$parent.appData.defMonth.ind_accountants == 0">
-                                    <img src="image/customer_icon.png" alt="{{c.companyName}}">
+                                    <img src="image/customer_icon.png" alt="{{!$parent.appData.defMonth.hideCompanyName ? c.companyName : c.companyHp}}">
                                 </div>
                                 <div class="content_company">
-                                    <strong>{{c.companyName}}</strong>
-                                    <span ng-if="$parent.appData.defMonth.ind_accountants == 0">{{c.full_name}} -</span>
-                                    <span ng-if="$parent.appData.defMonth.ind_accountants == 0">{{c.companyHp}}</span>
+                                    <strong>{{!$parent.appData.defMonth.hideCompanyName ? c.companyName : c.companyHp}}</strong>
+                                    <span ng-if="!$parent.appData.defMonth.hideCompanyName && $parent.appData.defMonth.ind_accountants == 0">{{c.full_name}} -</span>
+                                    <span ng-if="!$parent.appData.defMonth.hideCompanyName && $parent.appData.defMonth.ind_accountants == 0">{{c.companyHp}}</span>
                                 </div>
                             </li>
                         </ul>
@@ -50,19 +50,18 @@
                             הוספת חברה חדשה +
                         </button>
                     </div>
-
-                    <div class="company-list-cnt" ng-class="{'showListCompany': showList}"
+	                <div class="company-list-cnt" ng-class="{'showListCompany': showList}"
                          ng-if="$parent.appData.companies.length < 500">
                         <ul ng-class="{'hAutoAddButton': $parent.appData.defMonth.ind_accountants == 1}">
                             <li ng-repeat="c in (filteredItems = ($parent.appData.companies | companyFilter:companySearch))"
                                 ng-click="selectCompany(c)" tabindex="{{$index}}">
                                 <div class="avatar" ng-if="$parent.appData.defMonth.ind_accountants == 0">
-                                    <img src="image/customer_icon.png" alt="{{c.companyName}}">
+                                    <img src="image/customer_icon.png" alt="{{!$parent.appData.defMonth.hideCompanyName ? c.companyName : c.companyHp}}">
                                 </div>
                                 <div class="content_company">
-                                    <strong>{{c.companyName}}</strong>
-                                    <span ng-if="$parent.appData.defMonth.ind_accountants == 0">{{c.full_name}} -</span>
-                                    <span ng-if="$parent.appData.defMonth.ind_accountants == 0">{{c.companyHp}}</span>
+                                    <strong>{{!$parent.appData.defMonth.hideCompanyName ? c.companyName : c.companyHp}}</strong>
+	                                <span ng-if="!$parent.appData.defMonth.hideCompanyName && $parent.appData.defMonth.ind_accountants == 0">{{c.full_name}} -</span>
+	                                <span ng-if="!$parent.appData.defMonth.hideCompanyName && $parent.appData.defMonth.ind_accountants == 0">{{c.companyHp}}</span>
                                 </div>
                             </li>
                         </ul>

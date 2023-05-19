@@ -57,7 +57,7 @@
 				scope.$parent.selectCompany = function (company) {
 					scope.onSelect({company: company});
 					scope.$parent.showList = false;
-					scope.$parent.companySearch = company.companyName;
+					scope.$parent.companySearch = scope.$parent.appData.defMonth.hideCompanyName ? company.companyHp : company.companyName;
 				};
 
 				scope.$watch('selectedIndex', function (newVal, oldVal) {
@@ -72,7 +72,7 @@
 	function cubeHtml() {
 		return {
 			restrict: 'A',
-			templateUrl: 'views/templates/cubeHTML.html?ver=3.74',
+			templateUrl: 'views/templates/cubeHTML.html?ver=3.80',
 			scope: {
 				action: '=',
 				onShowTable: '&'
@@ -120,7 +120,7 @@
 	function cubeHtmlTable() {
 		return {
 			restrict: 'A',
-			templateUrl: 'views/templates/cubeHTMLTable.html?ver=3.74',
+			templateUrl: 'views/templates/cubeHTMLTable.html?ver=3.80',
 			link: function postLink(scope, element, attrs) {
 
 				scope.setGraph = function () {
@@ -163,7 +163,7 @@
 	function transactionDropdown() {
 		return {
 			restrict: 'A',
-			templateUrl: 'views/templates/transactionDropdown.html?ver=3.74',
+			templateUrl: 'views/templates/transactionDropdown.html?ver=3.80',
 			scope: {
 				selectedTransaction: '=',
 				onSelectedChanged: '&',

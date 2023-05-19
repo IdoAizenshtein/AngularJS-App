@@ -4,13 +4,13 @@
 		// hostnameWs = 'https://10.50.0.70:8443/web-0.0.1/ang/protected';
 		// hostnameWs = 'https://secure.bizibox.biz/ang/protected';
 		// hostnameWs = 'https://adm-stg.bizibox.biz/ang/protected';
-		// hostnameWs = 'https://adm-pre.bizibox.biz/ang/protected';
+		hostnameWs = 'https://adm-pre.bizibox.biz/ang/protected';
 		//hostnameWs = 'https://int-pre-prod.bizibox.biz/ang/protected';
 		// hostnameWs = "https://adm.bizibox.biz/ang/protected";
 		//hostnameWs = "https://adm-pre.bizibox.biz/ang/protected";
 		// hostnameWs = "https://secure-stg.bizibox.biz/ang/protected";
 		//hostnameWsMail = '/api/excelExports/sendMail';
-		hostnameWs = "https://secure-dev.bizibox.biz/ang/protected";
+		// hostnameWs = "https://secure-dev.bizibox.biz/ang/protected";
 		hostnameWsMail = '/ProjectsBiziboxMaven/api/excelExports/sendMail';
 	}
 	else {
@@ -1311,6 +1311,12 @@
 					accountant_office_id: null
 				}
 				return this.sendHttp('POST', 'billing_account_set_primary', connection.url, data);
+			},
+			get_billing_payment_jt_details: function (id) {
+				var data = {
+					billing_payment_id: id,
+				}
+				return this.sendHttp('POST', 'get_billing_payment_jt_details', connection.url, data);
 			},
 			cardcom_client: function (data) {
 				return this.sendHttp('POST', 'cardcom_client', connection.url, data);

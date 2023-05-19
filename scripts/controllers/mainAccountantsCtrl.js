@@ -238,7 +238,7 @@
 			$scope.appData.popupTypeLink = true;
 			$scope.appData.popupDataToken = tok;
 			$scope.appData.popupDataBanks = {BankNumber: item.bank_id};
-			$scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.74' + new Date().getTime(), 'accountUpdatePasswordPopup');
+			$scope.showPopup('views/templates/accountUpdatePasswordPopup.html?ver=3.80' + new Date().getTime(), 'accountUpdatePasswordPopup');
 		};
 		$scope.editAlerts = function (acc, id) {
 			$scope.appData.editAlertsHash = {
@@ -247,7 +247,7 @@
 				'edit': false
 			}
 
-			$scope.showPopup('views/templates/editExHashMain.html?ver=3.74', 'exHashEditPop');
+			$scope.showPopup('views/templates/editExHashMain.html?ver=3.80', 'exHashEditPop');
 		}
 		$scope.sendApprHash = function () {
 			var data = {
@@ -277,7 +277,7 @@
 		});
 		$scope.userGetAccountants = function () {
 			$scope.appData.listUserAccountantsLoader = true;
-			$scope.showPopup('views/templates/setAccUser.html?ver=3.74', 'setAccUser setAccUserWide');
+			$scope.showPopup('views/templates/setAccUser.html?ver=3.80', 'setAccUser setAccUserWide');
 			serverConnection.userGetAccountants().then(function (res) {
 				$scope.appData.listUserAccountants = res;
 				$scope.appData.listUserAccountants.forEach(function (v) {
@@ -290,7 +290,7 @@
 		}
 		$scope.getRegularUsers = function () {
 			$scope.appData.listUserAccountantsLoader = true;
-			$scope.showPopup('views/templates/setAccUsersRegular.html?ver=3.74', 'setAccUser');
+			$scope.showPopup('views/templates/setAccUsersRegular.html?ver=3.80', 'setAccUser');
 			serverConnection.getRegularUsers().then(function (res) {
 				$scope.appData.listUserRegAccountants = res;
 				$scope.appData.listUserAccountantsLoader = false;
@@ -299,14 +299,14 @@
 			});
 		}
 		$scope.getAllDeletedCompany = function () {
-			$scope.showPopup('views/templates/showPopPasswordFormMainAcc.html?ver=3.74' + new Date().getTime(), 'showPopPasswordForm', true);
+			$scope.showPopup('views/templates/showPopPasswordFormMainAcc.html?ver=3.80' + new Date().getTime(), 'showPopPasswordForm', true);
 		}
 		$scope.checkpopPasswordCompaiesTab = function (showPopPasswordForm) {
 			if (showPopPasswordForm.$valid) {
 				$scope.hidePopup();
 
 				$scope.appData.listAllDeletedCompanyLoader = true;
-				$scope.showPopup('views/templates/setAccCompanyDeletedUser.html?ver=3.74', 'setAccCompanyDeletedUser');
+				$scope.showPopup('views/templates/setAccCompanyDeletedUser.html?ver=3.80', 'setAccCompanyDeletedUser');
 				serverConnection.get_all_deleted_company().then(function (res) {
 					$scope.appData.listAllDeletedCompany = res;
 					$scope.appData.listAllDeletedCompanyLoader = false;
@@ -319,7 +319,7 @@
 		$scope.setDeletedCompany = function () {
 			$scope.appData.setDeletedCompanyList = JSON.parse($scope.appData.setDeletedCompanyList);
 			$scope.hidePopup();
-			$scope.showPopup('views/templates/setAccCompanyDeletedDate.html?ver=3.74', 'setAccCompanyDeletedDate');
+			$scope.showPopup('views/templates/setAccCompanyDeletedDate.html?ver=3.80', 'setAccCompanyDeletedDate');
 		}
 
 		$scope.companyUndeleted = function () {
@@ -385,6 +385,15 @@
 					$q.all([$scope.getGeneralDataCompanies(), $scope.getGeneralDataPermission()]).then(function (data) {
 						$scope.appData.companies = data[0];
 						$scope.appData.defMonth = data[1];
+						try {
+							if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+								$scope.appData.defMonth.hideCompanyName = true;
+							} else {
+								$scope.appData.defMonth.hideCompanyName = false;
+							}
+						} catch (e) {
+
+						}
 						if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
 							$scope.logout();
 							return;
@@ -423,7 +432,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

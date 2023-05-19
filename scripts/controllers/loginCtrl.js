@@ -27,16 +27,25 @@
                     $scope.error = '';
                     $scope.getGeneralDataPermission().then(function (data) {
                         $scope.appData.defMonth = data;
+                        try {
+                            if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                $scope.appData.defMonth.hideCompanyName = true;
+                            } else {
+                                $scope.appData.defMonth.hideCompanyName = false;
+                            }
+                        } catch (e) {
+
+                        }
 
                         if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                             $scope.logout();
                             return;
                         }
                         if($scope.appData.defMonth.outind_ocr !== 1 && $scope.appData.defMonth.outind_ocr !== 3 && $scope.appData.defMonth.outind_ocr_popup === 1){
-                            $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.74', 'ocrLandingPageSupplierPopUp', true);
+                            $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.80', 'ocrLandingPageSupplierPopUp', true);
                         }
                         //if ($scope.appData.user.email == $scope.appData.user.password || $scope.appData.user.password.indexOf("B$") !== -1) {
-                        //	$scope.showPopup('views/templates/terms.html?ver=3.74', 'termsPopUp', false);
+                        //	$scope.showPopup('views/templates/terms.html?ver=3.80', 'termsPopUp', false);
                         //	return;
                         //}
                         //else {
@@ -62,7 +71,7 @@
                                         } else {
                                             $scope.appData.skipPopAgree = skipPopAgree;
                                         }
-                                        //$scope.showPopup('views/templates/agreement.html?ver=3.74', 'agreement', true);
+                                        //$scope.showPopup('views/templates/agreement.html?ver=3.80', 'agreement', true);
                                     }
                                     $state.go('mainAccountants.main');
                                 }
@@ -73,7 +82,7 @@
                         // $timeout(function () {
                         //     var alertFIBI = window.localStorage.getItem("alertFIBI");
                         //     if (alertFIBI == null) {
-                        //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.74', 'modalUpdateSystem');
+                        //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.80', 'modalUpdateSystem');
                         //     }
                         // }, 2000);
                         //}
@@ -107,16 +116,25 @@
                         $scope.getGeneralDataPermission()
                             .then(function (data) {
                                 $scope.appData.defMonth = data;
+                                try {
+                                    if (($scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE' || $scope.appData.defMonth.biziboxRole === 'REPRESENTATIVE_MANAGER') && $scope.appData.adminSoft) {
+                                        $scope.appData.defMonth.hideCompanyName = true;
+                                    } else {
+                                        $scope.appData.defMonth.hideCompanyName = false;
+                                    }
+                                } catch (e) {
+
+                                }
                                 if (!$scope.appData.adminSoft && $scope.appData.defMonth.bizibox_employee === 1) {
                                     $scope.logout();
                                     return;
                                 }
                                 if ($scope.appData.user.email == $scope.appData.user.password || $scope.appData.user.password.indexOf("B$") !== -1) {
-                                    $scope.showPopup('views/templates/terms.html?ver=3.74', 'termsPopUp', false);
+                                    $scope.showPopup('views/templates/terms.html?ver=3.80', 'termsPopUp', false);
                                     return;
                                 } else {
                                     if($scope.appData.defMonth.outind_ocr !== 1 && $scope.appData.defMonth.outind_ocr !== 3 && $scope.appData.defMonth.outind_ocr_popup === 1){
-                                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.74', 'ocrLandingPageSupplierPopUp', true);
+                                        $scope.showPopup('views/templates/ocrLandingPageSupplier.html?ver=3.80', 'ocrLandingPageSupplierPopUp', true);
                                     }
                                     if ($scope.appData.adminSoft) {
                                         if (location.hash == '#/login') {
@@ -155,7 +173,7 @@
                                                     } else {
                                                         $scope.appData.skipPopAgree = skipPopAgree;
                                                     }
-                                                    //$scope.showPopup('views/templates/agreement.html?ver=3.74', 'agreement', true);
+                                                    //$scope.showPopup('views/templates/agreement.html?ver=3.80', 'agreement', true);
                                                 }
                                                 dataLayer.push({
                                                     'event': 'User Login',
@@ -174,7 +192,7 @@
                                 // $timeout(function () {
                                 //     var alertFIBI = window.localStorage.getItem("alertFIBI");
                                 //     if (alertFIBI == null) {
-                                //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.74', 'modalUpdateSystem');
+                                //         $scope.showPopup('views/templates/alertFIBI.html?ver=3.80', 'modalUpdateSystem');
                                 //     }
                                 // }, 2000);
                             });
@@ -200,7 +218,7 @@
         };
 
         $scope.readTerms = function () {
-            $scope.showPopup('views/changePassLogin.html?ver=3.74', 'changePassword', true);
+            $scope.showPopup('views/changePassLogin.html?ver=3.80', 'changePassword', true);
         };
     }
 

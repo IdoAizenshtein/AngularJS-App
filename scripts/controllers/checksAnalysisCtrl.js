@@ -340,7 +340,7 @@
 		$scope.openCheckMatch = function (a) {
 			$scope.appData.checksForMatch = a;
 			$scope.openChecksListPop($scope.appData.tabStatusPopStatus);
-			$scope.showPopup('views/templates/checksForMatch.html?ver=3.74', 'checksForMatch');
+			$scope.showPopup('views/templates/checksForMatch.html?ver=3.80', 'checksForMatch');
 		}
 		$scope.refresh = function () {
 			$scope.loadPage();
@@ -360,7 +360,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerChecks.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerChecks.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

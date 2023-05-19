@@ -144,7 +144,7 @@
 				id: id,
 				name: name
 			}
-			$scope.showPopup('views/templates/alertPaysAppr.html?ver=3.74' + new Date().getTime(), 'alerts', true);
+			$scope.showPopup('views/templates/alertPaysAppr.html?ver=3.80' + new Date().getTime(), 'alerts', true);
 		}
 
 		$scope.paysAppr = function () {
@@ -408,10 +408,10 @@
 		};
 		$scope.sendMailer = function (type) {
 			if (type == 1) {
-				$scope.showPopup('views/templates/mailerAccBill.html?ver=3.74', 'mailerPopup', false);
+				$scope.showPopup('views/templates/mailerAccBill.html?ver=3.80', 'mailerPopup', false);
 			}
 			if (type == 2) {
-				$scope.showPopup('views/templates/mailerAccBill2.html?ver=3.74', 'mailerPopup', false);
+				$scope.showPopup('views/templates/mailerAccBill2.html?ver=3.80', 'mailerPopup', false);
 			}
 		};
 		$scope.$on('refresh', function () {

@@ -255,7 +255,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

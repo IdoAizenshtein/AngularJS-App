@@ -3,7 +3,7 @@
         $scope.$location =  $location;
         $scope.$state = $state;
         $scope.appData = AppData;
-        $scope.popupTemplate = 'views/templates/alertPopup.html?ver=3.74';
+        $scope.popupTemplate = 'views/templates/alertPopup.html?ver=3.80';
 
         $scope.init = function() {
             $scope.showPopup = true;

@@ -154,7 +154,7 @@
 			$scope.appData.spiderUpdatePopSave = angular.copy(data);
 			$scope.appData.spiderUpdatePopTab1 = data;
 			$scope.appData.spiderUpdatePopTab2 = data;
-			$scope.showPopup('views/templates/spiderUpdatePop.html?ver=3.74', 'spiderUpdatePop');
+			$scope.showPopup('views/templates/spiderUpdatePop.html?ver=3.80', 'spiderUpdatePop');
 		}
 
 
@@ -173,7 +173,7 @@
 				id: id,
 				restInterval: true
 			};
-			$scope.showPopup('views/templates/spiderLogs.html?ver=3.74', 'spiderLogs');
+			$scope.showPopup('views/templates/spiderLogs.html?ver=3.80', 'spiderLogs');
 			serverConnection.spider_get_log($scope.appData.spider_get_log.id).then(function (res) {
 				$scope.appData.spider_get_log.log = res;
 				$scope.loaIntervalLogs()

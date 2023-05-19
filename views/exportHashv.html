@@ -260,7 +260,9 @@
                         </th>
                     </tr>
                     <tr ng-repeat="item in appData.userAccGettokensalerts">
-                        <td>{{item.company_name}}</td>
+                        <td>
+	                        {{(!appData.defMonth.hideCompanyName || !item.company_hp) ? item.company_name : item.company_hp}}
+                        </td>
                         <td>{{item.bank_name}}</td>
                         <td>
                         <span ng-if="item.status == 2 || item.status == 4 || item.status == 3 || item.status == 158 || item.status == 157 || item.status == 1"
@@ -319,8 +321,11 @@
                             <td>
                                 <div class="titlesRows">
                                 <span tooltips-tazrim title="{{tooltipsRet(a)}}">
-                                    {{a.company_name}}
+	                                {{!appData.defMonth.hideCompanyName ? a.company_name : a.companyHp}}
                                </span>
+	                                <span ng-if="appData.adminSoft && a.ind_folder_plus === 1">
+ - קליטה אוטומטית
+</span>
                                 <span>
                                     -
                                    <select class="selectProgramId" ng-model="a.izu_source_program_id"

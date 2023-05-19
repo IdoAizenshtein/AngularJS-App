@@ -66,7 +66,7 @@
 			// $scope.appData.addTaskPop.taskUserId
 			// $scope.appData.addTaskPop.description
 			$timeout(function () {
-				$scope.showPopup('views/templates/openPopEmail.html?ver=3.74', 'addTaskPop openPopEmail');
+				$scope.showPopup('views/templates/openPopEmail.html?ver=3.80', 'addTaskPop openPopEmail');
 			}, 50);
 		};
 		$scope.prepare_return_mail = function () {
@@ -294,7 +294,7 @@
 				taskId: true,
 				order_num: true
 			}
-			$scope.showPopup('views/templates/addTaskPopEdit.html?ver=3.74', 'addTaskPop');
+			$scope.showPopup('views/templates/addTaskPopEdit.html?ver=3.80', 'addTaskPop');
 		}
 		$scope.getNameCategory = function (id) {
 			var txt = "";
@@ -351,7 +351,7 @@
 			$scope.appData.historyIdTask = taskId;
 			serverConnection.get_qa_tasks_hist({'taskId': taskId}).then(function (res) {
 				$scope.appData.tasks_hist = res;
-				$scope.showPopup('views/templates/tasks_hist.html?ver=3.74', 'tasks_hist');
+				$scope.showPopup('views/templates/tasks_hist.html?ver=3.80', 'tasks_hist');
 			}, function (error) {
 			});
 		}
@@ -397,7 +397,7 @@
 			if (!$scope.appData.usersWork_task_catagory || !$scope.appData.usersWork_task_catagory.length || a.TASK_CATEGORY_ID === null) {
 				$scope.appData.closeTaskCategoryID = "null";
 			}
-			$scope.showPopup('views/templates/closeRowTask.html?ver=3.74', 'addTask closeRowTask');
+			$scope.showPopup('views/templates/closeRowTask.html?ver=3.80', 'addTask closeRowTask');
 		}
 
 		$scope.closeRowTaskSender = function () {
@@ -438,7 +438,7 @@
 					$scope.appData.usersWorkVal.priority = v.QA_TASK_PRIORTY_ID;
 				}
 			})
-			$scope.showPopup('views/templates/addTaskMain.html?ver=3.74', 'addTask');
+			$scope.showPopup('views/templates/addTaskMain.html?ver=3.80', 'addTask');
 		}
 
 		$scope.qa_task_add = function () {
@@ -491,7 +491,7 @@
 					desc: ''
 				}
 			}
-			$scope.showPopup('views/templates/qa_task_by_serach_popup.html?ver=3.74' + new Date().getTime(), 'billingPop qa_task_by_serach_popup');
+			$scope.showPopup('views/templates/qa_task_by_serach_popup.html?ver=3.80' + new Date().getTime(), 'billingPop qa_task_by_serach_popup');
 		}
 		$scope.qa_task_by_serach = function (forms) {
 			if (forms.$valid) {
@@ -519,7 +519,7 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerTasksExport.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerTasksExport.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

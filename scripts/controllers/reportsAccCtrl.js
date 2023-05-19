@@ -91,8 +91,18 @@
 
 			serverConnection.expenseMissingReport(data).then(function (res) {
 				$scope.expenseMissingReportTable = res;
-				$scope.filterExpenseMissingReport();
+				if($scope.expenseMissingReportTable){
+					$scope.expenseMissingReportTable.forEach(function (v, i) {
+						$scope.appData.companies.forEach(function (v1, i1) {
+							if (v.companyId == v1.companyId) {
+								v.companyHp = v1.companyHp;
+							}
+						})
+					});
+					$scope.filterExpenseMissingReport();
+				}
 				$scope.loaderexpenseMissing = true;
+
 
 			}, function (error) {
 
@@ -134,7 +144,8 @@
 				var arr = [];
 
 				$scope.appData.typing.dataArray.forEach(function (v, i) {
-					v.splice(1, 1)
+
+					v.splice(2, 1)
 
 					var obj = {};
 					if (i % 2 == 0) {
@@ -144,7 +155,7 @@
 						obj['prev'] = true;
 					}
 					v.forEach(function (v1, i1) {
-						if (i1 == 0) {
+						if (i1 == 0 || i1 == 1) {
 							obj['name' + i1] = v1;
 						}
 						else {
@@ -163,7 +174,6 @@
 						$scope.appData.arrTypingSmall.push(v)
 					}
 				})
-
 				var month = [];
 				$scope.appData.typing.months.forEach(function (v, i) {
 					if (i == 0) {
@@ -196,7 +206,13 @@
 				$scope.expenseChangedReportTable = res;
 				$scope.filterExpenseChangedReport();
 				$scope.loaderexpenseChanged = true;
-
+				$scope.expenseChangedReportTable.forEach(function (v, i) {
+					$scope.appData.companies.forEach(function (v1, i1) {
+						if (v.companyId == v1.companyId) {
+							v.companyHp = v1.companyHp;
+						}
+					})
+				});
 			}, function (error) {
 
 			});
@@ -282,7 +298,13 @@
 			serverConnection.nomatched_report(data).then(function (res) {
 				$scope.loaderMatch = true;
 				$scope.appData.dohMatch = res;
-
+				$scope.appData.dohMatch.forEach(function (v, i) {
+					$scope.appData.companies.forEach(function (v1, i1) {
+						if (v.COMPANY_ID == v1.companyId) {
+							v.companyHp = v1.companyHp;
+						}
+					})
+				});
 				$scope.sort_by4('COMPANY_NAME');
 				$scope.reverse4 = false;
 			}, function (error) {
@@ -301,23 +323,23 @@
 			});
 		};
 		$scope.sendMailer = function () {
-			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMainAcc.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.sendMailerMiss = function () {
 			$scope.appData.nameDochForMail = 'פעולות שכיחות שלא הופיעו -' + 'בחודש' + ' ' + $scope.monthexpens + ' ' + 'שנה' + ' ' + $scope.yearexpens + ' -';
-			$scope.showPopup('views/templates/mailerMailerMiss.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerMailerMiss.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.sendMailerChangeExRepo = function () {
 			$scope.appData.nameDochForMail = 'כרטיסים שגדלו/קטנו מעל' + '  ' + $scope.defaultsPrecentReports + '% ' + ' בחודש ' + $scope.monthchanged + ' שנה ' + $scope.yearchanged + ' - ';
-			$scope.showPopup('views/templates/mailerChangeExRepo.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerChangeExRepo.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.sendMailerDohMatch = function () {
 			$scope.appData.nameDochForMail = 'התאמות מחודש' + '  ' + $scope.fromMonthMatch + ' ' + ' שנה ' + $scope.fromYearMatch + ' עד חודש ' + $scope.toMonthMatch + ' שנה ' + $scope.toYearMatch + ' - ';
-			$scope.showPopup('views/templates/mailerDohMatch.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerDohMatch.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.sendMailerTypereport = function () {
 			$scope.appData.nameDochForMail = 'הקלדות מחודש' + '  ' + $scope.fromMonthType + ' ' + ' שנה ' + $scope.fromYearType + ' עד חודש ' + $scope.toMonthType + ' שנה ' + $scope.toYearType + ' - ';
-			$scope.showPopup('views/templates/mailerTypereport.html?ver=3.74', 'mailerPopup', false);
+			$scope.showPopup('views/templates/mailerTypereport.html?ver=3.80', 'mailerPopup', false);
 		};
 		$scope.$watch('appData.showPopup', function (newVal, oldVal) {
 

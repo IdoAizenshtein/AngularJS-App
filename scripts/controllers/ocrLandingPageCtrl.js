@@ -60,7 +60,7 @@
                 serverConnection.create_lead_ocr($scope.params).then(function (res) {
                     form.$setPristine();
                     form.$setUntouched();
-                    $scope.showPopup('views/templates/create_lead_ocr_sent.html?ver=3.74', 'create_lead_ocr_sent', true);
+                    $scope.showPopup('views/templates/create_lead_ocr_sent.html?ver=3.80', 'create_lead_ocr_sent', true);
                     setTimeout(function () {
                         $scope.hidePopup();
                         // if ($scope.appData.leadSource_create_lead_ocr === 'supplier') {
@@ -74,7 +74,7 @@
         };
 
         $scope.sendMailer = function () {
-            $scope.showPopup('views/templates/mailerChecks.html?ver=3.74', 'mailerPopup', false);
+            $scope.showPopup('views/templates/mailerChecks.html?ver=3.80', 'mailerPopup', false);
         };
         $scope.$watch('appData.showPopup', function (newVal, oldVal) {
             if (newVal == false) {
