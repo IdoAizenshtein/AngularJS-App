@@ -329,6 +329,7 @@
                                 <span>
                                     -
                                    <select class="selectProgramId" ng-model="a.izu_source_program_id"
+                                           style="margin-left: 0;"
                                            ng-options="b.PROGRAM_ID as b.PROGRAM_NAME for b in appData.get_source_programs"
                                            ng-disabled="!a.disabledChangeTypeSoft"></select>
                                     <i class="selectProgramIdChange fa"
@@ -340,7 +341,7 @@
                             -
                         בוצע מיפוי
                         </span>
-                                    <span ng-if="appData.adminSoft && a.izu_source_program_id == null" class="redSoft">
+                                    <span ng-if="appData.adminSoft && a.izu_source_program_id == null" class="redSoft" style="margin-right: 10px;">
 נא לבחור סוג תוכנה
                                     </span>
 

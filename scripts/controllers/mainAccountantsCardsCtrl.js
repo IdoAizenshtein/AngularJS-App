@@ -81,6 +81,11 @@
                     }
                 } else {
                     $scope.appData.sourceCardsAcc.forEach(function (v, i) {
+                        $scope.appData.companies.forEach(function (v1, i1) {
+                            if (v.company_id == v1.companyId) {
+                                v.companyHp = v1.companyHp;
+                            }
+                        })
                         if (v.izu_type == $scope.appData.tabCardsAcc || v.izu_type == null) {
                             v.checked = true;
                         } else {
@@ -204,6 +209,9 @@
             });
             return name;
         }
+        $scope.aaa = function (abc){
+            console.log('abc: ', abc)
+        }
         $scope.filterCompaniesNamesAndSum = function (sums, first) {
             var arr = [], sum = 0;
             if ($scope.appData.listCardsAcc && $scope.appData.listCardsAcc.length > 0) {
@@ -212,6 +220,7 @@
                         var obj = {
                             company_name: v.company_name,
                             companyHp: v.companyHp,
+                            ind_folder_plus: v.ind_folder_plus,
                             company_id: v.company_id,
                             db_name: v.db_name,
                             tn_last_update_date: v.tn_last_update_date,
@@ -230,6 +239,7 @@
                             var obj = {
                                 company_name: $scope.appData.listCardsAcc[i + 1].company_name,
                                 companyHp: $scope.appData.listCardsAcc[i + 1].companyHp,
+                                ind_folder_plus: $scope.appData.listCardsAcc[i + 1].ind_folder_plus,
                                 company_id: $scope.appData.listCardsAcc[i + 1].company_id,
                                 db_name: $scope.appData.listCardsAcc[i + 1].db_name,
                                 indMupa: $scope.appData.listCardsAcc[i + 1].indMupa,
